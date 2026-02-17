@@ -1,0 +1,61 @@
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+
+// Pages
+import Landing from './pages/Landing';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
+import Chat from './pages/Chat';
+import Settings from './pages/Settings';
+import Pricing from './pages/Pricing';
+import Success from './pages/Success';
+
+// Protected Route wrapper
+function ProtectedRoute({ children }) {
+  const { currentUser } = useAuth();
+  
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
+}
+
+// Public Route wrapper (redirect if logged in)
+function PublicRoute({ children }) {
+  const { currentUser } = useAuth();
+  
+  if (currentUser) {
+    return <Navigate to="/chat" />;
+  }
+  
+  return children;
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+      <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+      <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
+      <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+      <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
+    </BrowserRouter>
+  );
+}
