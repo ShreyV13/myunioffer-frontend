@@ -29,13 +29,13 @@ export default function Landing() {
     },
     {
       icon: Target,
-      title: "250+ Real Interview Questions",
-      description: "Practice with actual questions from Oxford, Cambridge, and top UK universities."
+      title: "1000+ Resources",
+      description: "Access interview questions, sample answers, and personal statements from Oxford, Cambridge, and top UK universities."
     },
     {
       icon: Users,
-      title: "5 Subject Specialists",
-      description: "Medicine, STEM, Economics, Humanities, Arts — each with tailored expertise."
+      title: "Subject-Specific Coaching",
+      description: "Tailored guidance for Medicine, STEM, Economics, Humanities, Arts and more."
     },
     {
       icon: Zap,
@@ -49,7 +49,7 @@ export default function Landing() {
       name: 'Free', 
       price: 0, 
       desc: 'Try it out',
-      features: ['3 messages per day', 'Access all subjects', 'Basic PS coaching'],
+      features: ['3 messages per day', 'All subjects', 'Basic coaching'],
       cta: 'Get Started',
       featured: false
     },
@@ -57,7 +57,7 @@ export default function Landing() {
       name: 'Personal Statement', 
       price: 19, 
       desc: 'Perfect your statement',
-      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', 'Example statements'],
+      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', 'Sample statements'],
       cta: 'Start Now',
       featured: false
     },
@@ -65,7 +65,7 @@ export default function Landing() {
       name: 'Premium', 
       price: 39, 
       desc: 'Complete preparation',
-      features: ['200 messages per day', 'PS + Interview prep', 'All subjects', 'Priority support'],
+      features: ['200 messages per day', 'PS + Interview prep', '1000+ resources', 'Priority support'],
       cta: 'Go Premium',
       featured: true
     },
@@ -98,8 +98,8 @@ export default function Landing() {
       a: "No. We believe your statement should be authentically yours. Our AI coaches ask thoughtful questions to help you discover and articulate your own story. We guide your thinking — we never write for you."
     },
     {
-      q: "Where do the interview questions come from?",
-      a: "Our 250+ interview questions are sourced from verified resources including official university materials, published interview guides, and real student experiences from Oxford, Cambridge, and other top UK universities."
+      q: "What resources do you have?",
+      a: "We have over 1000 resources including real interview questions, sample answers, and successful personal statements from Oxford, Cambridge, and other top UK universities."
     },
     {
       q: "Can I cancel anytime?",
@@ -107,11 +107,11 @@ export default function Landing() {
     },
     {
       q: "What subjects do you cover?",
-      a: "We have specialist AI coaches for Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business, Humanities (History, Law, English, Philosophy, PPE), and Arts (Art, Music, Architecture)."
+      a: "We have specialist AI coaches for Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business, Humanities (History, Law, English, Philosophy, PPE), Arts (Art, Music, Architecture), and many more."
     },
     {
       q: "How is this different from ChatGPT?",
-      a: "Our AI is specifically trained for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to hundreds of real interview questions and successful personal statement examples."
+      a: "Our AI is specifically trained for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to over 1000 interview questions, sample answers, and successful personal statements."
     }
   ];
 
@@ -221,22 +221,14 @@ export default function Landing() {
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto"
+            className="flex justify-center mt-16"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">86+</div>
-              <div className="text-gray-500 text-sm mt-1">Example Statements</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">250+</div>
-              <div className="text-gray-500 text-sm mt-1">Interview Questions</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">5</div>
-              <div className="text-gray-500 text-sm mt-1">Subject Areas</div>
+            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">1000+</div>
+              <div className="text-gray-500 text-sm mt-1">Interview questions, sample answers & personal statements</div>
             </div>
           </motion.div>
         </div>

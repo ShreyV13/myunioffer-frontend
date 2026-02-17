@@ -47,7 +47,7 @@ export default function Signup() {
 
   const benefits = [
     '3 free messages every day',
-    'Access to all 5 subject areas',
+    'Access to all subjects',
     'Personal statement coaching',
     'Interview preparation'
   ];

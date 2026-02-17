@@ -16,7 +16,8 @@ import {
   X,
   Crown,
   Trash2,
-  AlertCircle
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -251,10 +252,35 @@ export default function Chat() {
 
   async function handleLogout() {
     try {
+      // Clear all local chat history for this user
+      if (currentUser) {
+        localStorage.removeItem(`chats_${currentUser.uid}`);
+      }
+      // Clear current state
+      setMessages([]);
+      setChats([]);
+      setCurrentChatId(null);
+      // Logout from Firebase
       await logout();
-      navigate('/');
+      navigate('/login');
     } catch (err) {
       console.error('Failed to logout:', err);
+    }
+  }
+
+  async function handleSwitchAccount() {
+    try {
+      // Clear current user's chat history
+      if (currentUser) {
+        localStorage.removeItem(`chats_${currentUser.uid}`);
+      }
+      setMessages([]);
+      setChats([]);
+      setCurrentChatId(null);
+      await logout();
+      navigate('/login');
+    } catch (err) {
+      console.error('Failed to switch account:', err);
     }
   }
 
@@ -343,18 +369,28 @@ export default function Chat() {
             <Link 
               to="/settings" 
               className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+              title="Settings"
             >
               <Settings className="w-4 h-4" />
             </Link>
             <Link 
               to="/pricing" 
               className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-coral-600 hover:bg-coral-50 rounded-lg transition-colors"
+              title="Upgrade"
             >
               <Sparkles className="w-4 h-4" />
             </Link>
             <button
-              onClick={handleLogout}
+              onClick={handleSwitchAccount}
               className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+              title="Switch Account"
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleLogout}
+              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors"
+              title="Log out"
             >
               <LogOut className="w-4 h-4" />
             </button>
@@ -458,8 +494,15 @@ export default function Chat() {
                           Upgrade
                         </Link>
                         <button
-                          onClick={handleLogout}
+                          onClick={handleSwitchAccount}
                           className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
+                        >
+                          <RefreshCw className="w-4 h-4" />
+                          Switch Account
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
                         >
                           <LogOut className="w-4 h-4" />
                           Log out

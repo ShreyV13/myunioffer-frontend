@@ -11,7 +11,8 @@ import {
   Crown,
   Sparkles,
   LogOut,
-  ExternalLink
+  ExternalLink,
+  RefreshCw
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -22,10 +23,10 @@ export default function Settings() {
   const [loadingPortal, setLoadingPortal] = useState(false);
 
   const planDetails = {
-    free: { name: 'Free', messages: 3, features: ['Basic PS coaching', 'All subjects'] },
-    ps: { name: 'Personal Statement', messages: 50, features: ['Advanced PS coaching', 'Example statements', 'Priority support'] },
-    interview: { name: 'Interview Prep', messages: 50, features: ['250+ real questions', 'Answer frameworks', 'Mock interviews'] },
-    premium: { name: 'Premium', messages: 200, features: ['Everything in PS + Interview', 'Unlimited subjects', 'Priority support'] }
+    free: { name: 'Free', messages: 3, features: ['Basic coaching', 'All subjects'] },
+    ps: { name: 'Personal Statement', messages: 50, features: ['Advanced PS coaching', 'Sample statements', 'Email support'] },
+    interview: { name: 'Interview Prep', messages: 50, features: ['Real interview questions', 'Sample answers', 'Email support'] },
+    premium: { name: 'Premium', messages: 200, features: ['PS + Interview prep', '1000+ resources', 'Priority support'] }
   };
 
   const currentPlan = planDetails[userProfile?.plan || 'free'];
@@ -54,10 +55,25 @@ export default function Settings() {
 
   async function handleLogout() {
     try {
+      if (currentUser) {
+        localStorage.removeItem(`chats_${currentUser.uid}`);
+      }
       await logout();
       navigate('/');
     } catch (err) {
       console.error('Failed to logout:', err);
+    }
+  }
+
+  async function handleSwitchAccount() {
+    try {
+      if (currentUser) {
+        localStorage.removeItem(`chats_${currentUser.uid}`);
+      }
+      await logout();
+      navigate('/login');
+    } catch (err) {
+      console.error('Failed to switch account:', err);
     }
   }
 
@@ -151,16 +167,25 @@ export default function Settings() {
             </div>
           </div>
 
-          {/* Danger Zone */}
-          <div className="card p-6 border-red-100">
+          {/* Account Actions */}
+          <div className="card p-6">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Account Actions</h2>
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 text-red-600 hover:text-red-700 font-medium"
-            >
-              <LogOut className="w-5 h-5" />
-              Sign out
-            </button>
+            <div className="space-y-3">
+              <button
+                onClick={handleSwitchAccount}
+                className="flex items-center gap-2 text-gray-600 hover:text-gray-800 font-medium"
+              >
+                <RefreshCw className="w-5 h-5" />
+                Switch Account
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-red-600 hover:text-red-700 font-medium"
+              >
+                <LogOut className="w-5 h-5" />
+                Sign out
+              </button>
+            </div>
           </div>
         </motion.div>
       </main>

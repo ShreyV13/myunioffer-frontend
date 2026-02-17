@@ -26,9 +26,9 @@ export default function Pricing() {
       icon: Sparkles,
       features: [
         '50 messages per day',
-        'All 5 subject areas',
+        'All subjects',
         'Advanced PS coaching',
-        'Example statements library',
+        'Sample statements',
         'Email support'
       ],
       color: 'coral'
@@ -42,10 +42,9 @@ export default function Pricing() {
       features: [
         '200 messages per day',
         'PS + Interview prep',
-        'All 5 subject areas',
-        '250+ real interview questions',
-        'Priority support',
-        'Mock interview sessions'
+        'All subjects',
+        '1000+ resources',
+        'Priority support'
       ],
       color: 'amber',
       popular: true
@@ -58,9 +57,9 @@ export default function Pricing() {
       icon: Zap,
       features: [
         '50 messages per day',
-        'All 5 subject areas',
-        '250+ real questions',
-        'Answer frameworks',
+        'All subjects',
+        'Real interview questions',
+        'Sample answers',
         'Email support'
       ],
       color: 'blue'
