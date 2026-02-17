@@ -365,34 +365,34 @@ export default function Chat() {
               <div className="text-xs text-gray-500">{planName} Plan</div>
             </div>
           </div>
-          <div className="flex gap-2 mt-2">
+          <div className="space-y-1 mt-2">
             <Link 
               to="/settings" 
-              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-              title="Settings"
+              className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               <Settings className="w-4 h-4" />
+              <span>Settings</span>
             </Link>
             <Link 
               to="/pricing" 
-              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-coral-600 hover:bg-coral-50 rounded-lg transition-colors"
-              title="Upgrade"
+              className="flex items-center gap-3 px-3 py-2 text-sm text-coral-600 hover:bg-coral-50 rounded-lg transition-colors"
             >
               <Sparkles className="w-4 h-4" />
+              <span>Upgrade Plan</span>
             </Link>
             <button
               onClick={handleSwitchAccount}
-              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-              title="Switch Account"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               <RefreshCw className="w-4 h-4" />
+              <span>Switch Account</span>
             </button>
             <button
               onClick={handleLogout}
-              className="flex-1 flex items-center justify-center gap-1 py-2 text-sm text-gray-600 hover:bg-red-50 hover:text-red-600 rounded-lg transition-colors"
-              title="Log out"
+              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
             >
               <LogOut className="w-4 h-4" />
+              <span>Sign Out</span>
             </button>
           </div>
         </div>
@@ -775,17 +775,41 @@ export default function Chat() {
 
               {/* User Section */}
               <div className="p-3 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-2 px-2">
+                <div className="text-sm text-gray-500 mb-3 px-2">
                   {usage.used}/{usage.limit} messages used today
                 </div>
-                <Link 
-                  to="/pricing" 
-                  className="flex items-center gap-2 px-3 py-2 text-coral-600 bg-coral-50 rounded-lg text-sm font-medium"
-                  onClick={() => setShowSidebar(false)}
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Upgrade Plan
-                </Link>
+                <div className="space-y-1">
+                  <Link 
+                    to="/pricing" 
+                    className="flex items-center gap-3 px-3 py-2 text-coral-600 bg-coral-50 rounded-lg text-sm font-medium"
+                    onClick={() => setShowSidebar(false)}
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Upgrade Plan
+                  </Link>
+                  <Link 
+                    to="/settings" 
+                    className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg text-sm"
+                    onClick={() => setShowSidebar(false)}
+                  >
+                    <Settings className="w-4 h-4" />
+                    Settings
+                  </Link>
+                  <button
+                    onClick={handleSwitchAccount}
+                    className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg text-sm"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    Switch Account
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
+                </div>
               </div>
             </motion.aside>
           </>
