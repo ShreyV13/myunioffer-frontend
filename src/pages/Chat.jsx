@@ -190,13 +190,13 @@ export default function Chat() {
     }
 
     try {
-      // Increment message count first
-      await incrementMessageCount(currentUser.uid);
-      
       const data = await fetchWithRetry(3, 3000);
 
       clearTimeout(wakingTimeout);
       setServerWaking(false);
+      
+      // Only increment message count AFTER successful response
+      await incrementMessageCount(currentUser.uid);
       
       setMessages(prev => [...prev, { 
         role: 'assistant', 
@@ -213,12 +213,10 @@ export default function Chat() {
       setServerWaking(false);
       console.error(err);
       
-      setError('Having trouble connecting. Please try again.');
+      // Don't count failed messages - remove the user message from display
+      setMessages(prev => prev.slice(0, -1));
       
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: 'Sorry, I couldn\'t get a response after several attempts. Please try again — the server should be awake now!'
-      }]);
+      setError('Couldn\'t connect to the server. Your message was not counted. Please try again.');
     }
 
     setLoading(false);
