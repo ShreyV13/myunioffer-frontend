@@ -27,6 +27,7 @@ const TIER_LIMITS = {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const [studentProfile, setStudentProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
   // Create user profile in Firestore
@@ -38,10 +39,16 @@ export function AuthProvider({ children }) {
       plan: 'free',
       messagesUsedToday: 0,
       lastMessageDate: new Date().toISOString().split('T')[0],
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
+      studentProfile: {
+        subject: null,
+        universities: [],
+        activities: []
+      }
     };
     
     await setDoc(userRef, userData);
+    setStudentProfile(userData.studentProfile);
     return userData;
   }
 
@@ -51,9 +58,37 @@ export function AuthProvider({ children }) {
     const userSnap = await getDoc(userRef);
     
     if (userSnap.exists()) {
-      return userSnap.data();
+      const data = userSnap.data();
+      setStudentProfile(data.studentProfile || { subject: null, universities: [], activities: [] });
+      return data;
     }
     return null;
+  }
+
+  // Update student profile
+  async function updateStudentProfile(uid, updates) {
+    try {
+      const userRef = doc(db, 'users', uid);
+      const current = studentProfile || { subject: null, universities: [], activities: [] };
+      
+      // Merge updates intelligently
+      const newProfile = {
+        subject: updates.subject || current.subject,
+        universities: updates.universities?.length > 0 
+          ? [...new Set([...current.universities, ...updates.universities])].slice(0, 10)
+          : current.universities,
+        activities: updates.activities?.length > 0 
+          ? [...new Set([...current.activities, ...updates.activities])].slice(0, 20)
+          : current.activities
+      };
+      
+      await updateDoc(userRef, { studentProfile: newProfile });
+      setStudentProfile(newProfile);
+      return newProfile;
+    } catch (err) {
+      console.error('Failed to update student profile:', err);
+      return null;
+    }
   }
 
   // Sign up
@@ -81,6 +116,7 @@ export function AuthProvider({ children }) {
   // Logout
   async function logout() {
     setUserProfile(null);
+    setStudentProfile(null);
     return signOut(auth);
   }
 
@@ -153,6 +189,7 @@ export function AuthProvider({ children }) {
         setUserProfile(profile);
       } else {
         setUserProfile(null);
+        setStudentProfile(null);
       }
       
       setLoading(false);
@@ -164,13 +201,15 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     userProfile,
+    studentProfile,
     signup,
     login,
     logout,
     resetPassword,
     checkDailyMessages,
     incrementMessageCount,
-    updateUserPlan
+    updateUserPlan,
+    updateStudentProfile
   };
 
   return (

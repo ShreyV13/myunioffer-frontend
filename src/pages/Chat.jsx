@@ -40,7 +40,7 @@ export default function Chat() {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   
-  const { currentUser, userProfile, logout, checkDailyMessages, incrementMessageCount } = useAuth();
+  const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile } = useAuth();
   const navigate = useNavigate();
 
   // Load chats from localStorage
@@ -165,7 +165,8 @@ export default function Chat() {
               session_id: sessionId,
               user_id: currentUser.uid,
               tier: userProfile?.plan || 'free',
-              subject: userSubject
+              subject: userSubject,
+              student_profile: studentProfile
             }),
             signal: controller.signal
           });
@@ -205,6 +206,14 @@ export default function Chat() {
         const subject = data.detected_subject || data.detected_category;
         setUserSubject(subject);
         localStorage.setItem('userSubject', subject);
+      }
+      
+      // Update student profile if AI extracted new info
+      if (data.profile_updates) {
+        const updates = data.profile_updates;
+        if (updates.subject || updates.universities?.length > 0 || updates.activities?.length > 0) {
+          await updateStudentProfile(currentUser.uid, updates);
+        }
       }
       
       setMessages(prev => [...prev, { 
