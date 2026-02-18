@@ -35,6 +35,7 @@ export default function Chat() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
+  const [userSubject, setUserSubject] = useState(() => localStorage.getItem('userSubject') || null);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -163,7 +164,8 @@ export default function Chat() {
               mode: mode,
               session_id: sessionId,
               user_id: currentUser.uid,
-              tier: userProfile?.plan || 'free'
+              tier: userProfile?.plan || 'free',
+              subject: userSubject
             }),
             signal: controller.signal
           });
@@ -197,6 +199,13 @@ export default function Chat() {
       
       // Only increment message count AFTER successful response
       await incrementMessageCount(currentUser.uid);
+      
+      // Save detected subject for use across modes
+      if (data.detected_subject || data.detected_category) {
+        const subject = data.detected_subject || data.detected_category;
+        setUserSubject(subject);
+        localStorage.setItem('userSubject', subject);
+      }
       
       setMessages(prev => [...prev, { 
         role: 'assistant', 
@@ -254,10 +263,12 @@ export default function Chat() {
       if (currentUser) {
         localStorage.removeItem(`chats_${currentUser.uid}`);
       }
+      localStorage.removeItem('userSubject');
       // Clear current state
       setMessages([]);
       setChats([]);
       setCurrentChatId(null);
+      setUserSubject(null);
       // Logout from Firebase
       await logout();
       navigate('/login');
@@ -272,9 +283,11 @@ export default function Chat() {
       if (currentUser) {
         localStorage.removeItem(`chats_${currentUser.uid}`);
       }
+      localStorage.removeItem('userSubject');
       setMessages([]);
       setChats([]);
       setCurrentChatId(null);
+      setUserSubject(null);
       await logout();
       navigate('/login');
     } catch (err) {
