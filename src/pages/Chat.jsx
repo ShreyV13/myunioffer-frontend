@@ -37,38 +37,42 @@ export default function Chat() {
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
   const [userSubject, setUserSubject] = useState(null);
   
-  // Load userSubject from studentProfile when it changes
-  useEffect(() => {
-    if (studentProfile?.subject) {
-      setUserSubject(studentProfile.subject);
-    }
-  }, [studentProfile]);
-  
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   
   const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
 
+  // Load userSubject from studentProfile when it changes
+  useEffect(() => {
+    if (studentProfile?.subject) {
+      setUserSubject(studentProfile.subject);
+    }
+  }, [studentProfile]);
+
   // Load chats from Firebase
   useEffect(() => {
     async function loadChats() {
-      if (currentUser) {
-        const savedChats = await loadChatsFromFirebase(currentUser.uid);
-        if (savedChats && savedChats.length > 0) {
-          setChats(savedChats);
+      if (currentUser && loadChatsFromFirebase) {
+        try {
+          const savedChats = await loadChatsFromFirebase(currentUser.uid);
+          if (savedChats && savedChats.length > 0) {
+            setChats(savedChats);
+          }
+        } catch (err) {
+          console.error('Failed to load chats:', err);
         }
       }
     }
     loadChats();
-  }, [currentUser]);
+  }, [currentUser, loadChatsFromFirebase]);
 
   // Save chats to Firebase whenever chats change
   useEffect(() => {
-    if (currentUser && chats.length > 0) {
+    if (currentUser && chats.length > 0 && saveChatsToFirebase) {
       saveChatsToFirebase(currentUser.uid, chats);
     }
-  }, [chats, currentUser]);
+  }, [chats, currentUser, saveChatsToFirebase]);
 
   // Save messages to current chat whenever messages change
   useEffect(() => {
