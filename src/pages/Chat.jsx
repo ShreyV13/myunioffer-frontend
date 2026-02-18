@@ -35,28 +35,38 @@ export default function Chat() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
-  const [userSubject, setUserSubject] = useState(() => localStorage.getItem('userSubject') || null);
+  const [userSubject, setUserSubject] = useState(null);
+  
+  // Load userSubject from studentProfile when it changes
+  useEffect(() => {
+    if (studentProfile?.subject) {
+      setUserSubject(studentProfile.subject);
+    }
+  }, [studentProfile]);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   
-  const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile } = useAuth();
+  const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
 
-  // Load chats from localStorage
+  // Load chats from Firebase
   useEffect(() => {
-    if (currentUser) {
-      const savedChats = localStorage.getItem(`chats_${currentUser.uid}`);
-      if (savedChats) {
-        setChats(JSON.parse(savedChats));
+    async function loadChats() {
+      if (currentUser) {
+        const savedChats = await loadChatsFromFirebase(currentUser.uid);
+        if (savedChats && savedChats.length > 0) {
+          setChats(savedChats);
+        }
       }
     }
+    loadChats();
   }, [currentUser]);
 
-  // Save chats to localStorage whenever chats change
+  // Save chats to Firebase whenever chats change
   useEffect(() => {
     if (currentUser && chats.length > 0) {
-      localStorage.setItem(`chats_${currentUser.uid}`, JSON.stringify(chats));
+      saveChatsToFirebase(currentUser.uid, chats);
     }
   }, [chats, currentUser]);
 
@@ -205,7 +215,8 @@ export default function Chat() {
       if (data.detected_subject || data.detected_category) {
         const subject = data.detected_subject || data.detected_category;
         setUserSubject(subject);
-        localStorage.setItem('userSubject', subject);
+        // Save to Firebase via student profile
+        await updateStudentProfile(currentUser.uid, { subject });
       }
       
       // Update student profile if AI extracted new info
@@ -268,12 +279,7 @@ export default function Chat() {
 
   async function handleLogout() {
     try {
-      // Clear all local chat history for this user
-      if (currentUser) {
-        localStorage.removeItem(`chats_${currentUser.uid}`);
-      }
-      localStorage.removeItem('userSubject');
-      // Clear current state
+      // Clear local state
       setMessages([]);
       setChats([]);
       setCurrentChatId(null);
@@ -288,11 +294,6 @@ export default function Chat() {
 
   async function handleSwitchAccount() {
     try {
-      // Clear current user's chat history
-      if (currentUser) {
-        localStorage.removeItem(`chats_${currentUser.uid}`);
-      }
-      localStorage.removeItem('userSubject');
       setMessages([]);
       setChats([]);
       setCurrentChatId(null);

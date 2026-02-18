@@ -91,6 +91,33 @@ export function AuthProvider({ children }) {
     }
   }
 
+  // Save chats to Firebase
+  async function saveChatsToFirebase(uid, chats) {
+    try {
+      const userRef = doc(db, 'users', uid);
+      // Keep only last 20 chats to avoid document size limits
+      const chatsToSave = chats.slice(0, 20);
+      await updateDoc(userRef, { savedChats: chatsToSave });
+    } catch (err) {
+      console.error('Failed to save chats:', err);
+    }
+  }
+
+  // Load chats from Firebase
+  async function loadChatsFromFirebase(uid) {
+    try {
+      const userRef = doc(db, 'users', uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        return userSnap.data().savedChats || [];
+      }
+      return [];
+    } catch (err) {
+      console.error('Failed to load chats:', err);
+      return [];
+    }
+  }
+
   // Sign up
   async function signup(email, password, displayName) {
     const result = await createUserWithEmailAndPassword(auth, email, password);
@@ -209,7 +236,9 @@ export function AuthProvider({ children }) {
     checkDailyMessages,
     incrementMessageCount,
     updateUserPlan,
-    updateStudentProfile
+    updateStudentProfile,
+    saveChatsToFirebase,
+    loadChatsFromFirebase
   };
 
   return (
