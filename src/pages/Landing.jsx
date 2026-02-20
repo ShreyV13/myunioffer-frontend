@@ -28,7 +28,7 @@ export default function Landing() {
     {
       icon: Target,
       title: "1000+ Resources",
-      description: "Access real interview questions, sample answers, and successful personal statements from Oxford, Cambridge, and top UK universities."
+      description: "Access real interview questions, sample answers, and successful personal statements from LSE, Cambridge, KCL, Imperial, Warwick, and other top UK universities."
     },
     {
       icon: Users,
