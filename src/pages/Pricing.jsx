@@ -149,13 +149,13 @@ export default function Pricing() {
   const isCurrentPlan = (planId) => planId !== 'free' && userProfile?.plan === planId;
 
   return (
-    <div className="min-h-screen bg-[#2c2c2c]">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="glass border-b border-[rgba(255,255,255,0.06)] px-6 py-4">
+      <header className="glass border-b border-gray-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link 
             to={currentUser ? "/chat" : "/"} 
-            className="flex items-center gap-2 text-[#bbb] hover:text-white"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back</span>
@@ -165,7 +165,7 @@ export default function Pricing() {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-display font-bold hidden sm:inline">
-              myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
+              myuni<span className="text-coral-500">offer</span><span className="text-gray-400">.ai</span>
             </span>
           </Link>
           <div className="w-20" />
@@ -178,22 +178,22 @@ export default function Pricing() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
             Don't leave your application to chance
           </h1>
-          <p className="text-[#bbb] max-w-xl mx-auto">
+          <p className="text-gray-600 max-w-xl mx-auto">
             Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation — and that's exactly what we provide.
           </p>
         </motion.div>
 
         {/* Launch discount banner */}
         <motion.div 
-          className="mb-10 p-4 bg-[rgba(240,122,98,0.1)] border border-[rgba(240,122,98,0.15)] rounded-2xl text-center max-w-2xl mx-auto"
+          className="mb-10 p-4 bg-coral-50 border border-coral-100 rounded-2xl text-center max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <div className="flex items-center justify-center gap-2 text-[#f07a62] font-semibold text-sm">
+          <div className="flex items-center justify-center gap-2 text-coral-600 font-semibold text-sm">
             <Clock className="w-4 h-4" />
             🚀 Launch Discount — lock in early pricing before it increases to £14.99 / £19.99
           </div>
@@ -213,7 +213,7 @@ export default function Pricing() {
                 transition={{ delay: i * 0.1 }}
                 className={`card p-7 relative ${
                   plan.popular 
-                    ? 'border-2 border-[#f07a62] shadow-xl shadow-[rgba(240,122,98,0.15)]' 
+                    ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
                     : ''
                 }`}
               >
@@ -224,31 +224,31 @@ export default function Pricing() {
                 )}
 
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
-                  plan.popular ? 'gradient-primary' : 'bg-[rgba(255,255,255,0.06)]'
+                  plan.popular ? 'gradient-primary' : 'bg-gray-100'
                 }`}>
-                  <Icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-[#bbb]'}`} />
+                  <Icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-gray-600'}`} />
                 </div>
 
-                <h3 className="text-lg font-display font-bold text-white mb-1">{plan.name}</h3>
-                <p className="text-[#999] text-sm mb-4">{plan.description}</p>
+                <h3 className="text-lg font-display font-bold text-gray-900 mb-1">{plan.name}</h3>
+                <p className="text-gray-500 text-sm mb-4">{plan.description}</p>
 
                 <div className="mb-5">
-                  <span className="text-3xl font-display font-bold text-white">£{plan.price}</span>
-                  <span className="text-sm text-[#999]">/mo</span>
+                  <span className="text-3xl font-display font-bold text-gray-900">£{plan.price}</span>
+                  <span className="text-sm text-gray-500">/mo</span>
                   {plan.originalPrice && (
-                    <span className="text-sm text-[#999] line-through ml-2">£{plan.originalPrice}</span>
+                    <span className="text-sm text-gray-400 line-through ml-2">£{plan.originalPrice}</span>
                   )}
                 </div>
 
                 <ul className="space-y-2.5 mb-6">
                   {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-start gap-2.5 text-sm text-[#bbb]">
-                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.popular ? 'text-[#f07a62]' : 'text-[#5cb85c]'}`} />
+                    <li key={j} className="flex items-start gap-2.5 text-sm text-gray-600">
+                      <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.popular ? 'text-coral-500' : 'text-green-500'}`} />
                       {feature}
                     </li>
                   ))}
                   {plan.notIncluded.map((feature, j) => (
-                    <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-[#999]">
+                    <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-gray-400">
                       <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center">—</span>
                       {feature}
                     </li>
@@ -258,7 +258,7 @@ export default function Pricing() {
                 {isCurrent ? (
                   <button
                     disabled
-                    className="w-full py-3 rounded-xl font-semibold bg-[rgba(255,255,255,0.06)] text-[#999] cursor-not-allowed"
+                    className="w-full py-3 rounded-xl font-semibold bg-gray-100 text-gray-500 cursor-not-allowed"
                   >
                     Current Plan
                   </button>
@@ -269,7 +269,7 @@ export default function Pricing() {
                     className={`w-full py-3 rounded-xl font-semibold transition-all ${
                       plan.popular
                         ? 'btn-primary'
-                        : 'bg-[#252525] text-white hover:bg-gray-800'
+                        : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >
                     {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : 'Subscribe'}
@@ -287,7 +287,7 @@ export default function Pricing() {
           transition={{ delay: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-8 text-center">1-on-1 Sessions</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">1-on-1 Sessions</h2>
           
           <div className="card p-8 max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-8">
@@ -295,25 +295,25 @@ export default function Pricing() {
                 <CalendarCheck className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-display font-bold text-white mb-2">Personal session with a specialist</h3>
-                <p className="text-[#bbb] text-sm leading-relaxed mb-4">
+                <h3 className="text-xl font-display font-bold text-gray-900 mb-2">Personal session with a specialist</h3>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   Get matched with a real student from your chosen degree area — someone who successfully applied to the same course at a top university. They'll give you personalised PS feedback or run a realistic mock interview, tailored to your specific application.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
-                    <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> 45-minute session
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
+                    <Check className="w-3.5 h-3.5 text-green-500" /> 45-minute session
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
-                    <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> Subject-matched specialist
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
+                    <Check className="w-3.5 h-3.5 text-green-500" /> Subject-matched specialist
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
-                    <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> PS feedback or mock interview
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
+                    <Check className="w-3.5 h-3.5 text-green-500" /> PS feedback or mock interview
                   </span>
                 </div>
               </div>
               <div className="text-center flex-shrink-0">
-                <div className="text-4xl font-display font-bold text-[#f07a62]">£19.99</div>
-                <div className="text-[#999] text-sm mb-3">per session</div>
+                <div className="text-4xl font-display font-bold text-coral-500">£19.99</div>
+                <div className="text-gray-500 text-sm mb-3">per session</div>
                 <Link to="/signup" className="btn-primary text-sm px-6 py-2.5">
                   Book a Session
                 </Link>
@@ -321,13 +321,13 @@ export default function Pricing() {
             </div>
 
             {/* Bundle */}
-            <div className="mt-8 p-5 bg-[rgba(217,169,60,0.1)] border border-[rgba(217,169,60,0.15)] rounded-xl">
+            <div className="mt-8 p-5 bg-amber-50 border border-amber-100 rounded-xl">
               <div className="flex items-start gap-3">
                 <Gift className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-semibold text-white mb-1">3-Month Bundle Perk</h4>
-                  <p className="text-sm text-[#bbb] leading-relaxed">
-                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-white">1 free 1-on-1 session</span> in your third month. That's a free £19.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
+                  <h4 className="font-semibold text-gray-900 mb-1">3-Month Bundle Perk</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £19.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
                   </p>
                 </div>
               </div>
@@ -342,12 +342,12 @@ export default function Pricing() {
           transition={{ delay: 0.55 }}
           className="mb-16 max-w-2xl mx-auto"
         >
-          <div className="card p-8 text-center bg-[rgba(240,122,98,0.1)] border-[rgba(240,122,98,0.15)]">
-            <p className="text-[#bbb] text-sm mb-2">The same level of coaching would cost</p>
+          <div className="card p-8 text-center bg-coral-50 border-coral-100">
+            <p className="text-gray-600 text-sm mb-2">The same level of coaching would cost</p>
             <div className="text-4xl font-display font-bold text-gray-300 line-through mb-1">£200+/month</div>
-            <p className="text-[#bbb] text-sm mb-4">with a private admissions tutor</p>
-            <div className="text-lg font-display font-bold text-white">
-              With myunioffer.ai: <span className="text-[#f07a62]">from £11.99/month</span>
+            <p className="text-gray-600 text-sm mb-4">with a private admissions tutor</p>
+            <div className="text-lg font-display font-bold text-gray-900">
+              With myunioffer.ai: <span className="text-coral-500">from £11.99/month</span>
             </div>
           </div>
         </motion.div>
@@ -359,47 +359,47 @@ export default function Pricing() {
           transition={{ delay: 0.6 }}
           className="mb-16 max-w-3xl mx-auto"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-8 text-center">How we compare</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">How we compare</h2>
           <div className="card overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-[rgba(255,255,255,0.06)]">
-                  <th className="text-left p-4 font-semibold text-white"></th>
-                  <th className="text-center p-4 font-semibold text-[#f07a62]">myunioffer.ai</th>
-                  <th className="text-center p-4 font-semibold text-[#999]">Private tutors</th>
-                  <th className="text-center p-4 font-semibold text-[#999]">Premium agencies</th>
+                <tr className="border-b border-gray-100">
+                  <th className="text-left p-4 font-semibold text-gray-900"></th>
+                  <th className="text-center p-4 font-semibold text-coral-500">myunioffer.ai</th>
+                  <th className="text-center p-4 font-semibold text-gray-500">Private tutors</th>
+                  <th className="text-center p-4 font-semibold text-gray-500">Premium agencies</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#bbb]">PS Coaching</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
+                  <td className="p-4 text-gray-600">PS Coaching</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-coral-500 mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-gray-400 mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-gray-400 mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#bbb]">Interview Prep</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#999]">Sometimes</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
+                  <td className="p-4 text-gray-600">Interview Prep</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-coral-500 mx-auto" /></td>
+                  <td className="p-4 text-center text-gray-400">Sometimes</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-gray-400 mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#bbb]">Subject-specialist</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#999]">Varies</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
+                  <td className="p-4 text-gray-600">Subject-specialist</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-coral-500 mx-auto" /></td>
+                  <td className="p-4 text-center text-gray-400">Varies</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-gray-400 mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#bbb]">Available 24/7</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#999]">No</td>
-                  <td className="p-4 text-center text-[#999]">No</td>
+                  <td className="p-4 text-gray-600">Available 24/7</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-coral-500 mx-auto" /></td>
+                  <td className="p-4 text-center text-gray-400">No</td>
+                  <td className="p-4 text-center text-gray-400">No</td>
                 </tr>
                 <tr>
-                  <td className="p-4 font-semibold text-white">Price</td>
-                  <td className="p-4 text-center font-bold text-[#f07a62]">From £11.99/mo</td>
-                  <td className="p-4 text-center text-[#999]">£50–100/hr</td>
-                  <td className="p-4 text-center text-[#999]">£6,000–35,000</td>
+                  <td className="p-4 font-semibold text-gray-900">Price</td>
+                  <td className="p-4 text-center font-bold text-coral-500">From £11.99/mo</td>
+                  <td className="p-4 text-center text-gray-500">£50–100/hr</td>
+                  <td className="p-4 text-center text-gray-500">£6,000–35,000</td>
                 </tr>
               </tbody>
             </table>
@@ -413,12 +413,12 @@ export default function Pricing() {
           transition={{ delay: 0.7 }}
           className="max-w-2xl mx-auto mb-8"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-[#999]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500">
             <span className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-[#5cb85c]" /> Cancel anytime, no contracts
+              <Shield className="w-4 h-4 text-green-500" /> Cancel anytime, no contracts
             </span>
             <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#5cb85c]" /> Launch pricing — won't last forever
+              <Clock className="w-4 h-4 text-green-500" /> Launch pricing — won't last forever
             </span>
           </div>
         </motion.div>
@@ -430,9 +430,9 @@ export default function Pricing() {
           transition={{ delay: 0.8 }}
           className="text-center"
         >
-          <p className="text-[#999]">
+          <p className="text-gray-500">
             Not ready to commit?{' '}
-            <Link to={currentUser ? "/chat" : "/signup"} className="text-[#f07a62] font-semibold hover:text-coral-700">
+            <Link to={currentUser ? "/chat" : "/signup"} className="text-coral-600 font-semibold hover:text-coral-700">
               Continue with Free
             </Link>
             {' '}— 3 messages per day, no credit card required.

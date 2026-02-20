@@ -37,7 +37,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#2c2c2c] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -49,20 +49,20 @@ export default function Login() {
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-display font-bold">
-            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
+            myuni<span className="text-coral-500">offer</span><span className="text-gray-400">.ai</span>
           </span>
         </Link>
 
         {/* Card */}
         <div className="card p-8">
-          <h1 className="text-2xl font-display font-bold text-center mb-2 text-white">Welcome back</h1>
-          <p className="text-[#999] text-center mb-8">Sign in to continue your journey</p>
+          <h1 className="text-2xl font-display font-bold text-center mb-2 text-gray-900">Welcome back</h1>
+          <p className="text-gray-500 text-center mb-8">Sign in to continue your journey</p>
 
           {error && (
             <motion.div 
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 p-4 bg-[rgba(229,115,115,0.1)] border border-red-100 rounded-xl mb-6 text-[#e57373] text-sm"
+              className="flex items-center gap-2 p-4 bg-red-50 border border-red-100 rounded-xl mb-6 text-red-600 text-sm"
             >
               <AlertCircle className="w-5 h-5 flex-shrink-0" />
               {error}
@@ -71,9 +71,9 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#ddd] mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 <input
                   type="email"
                   value={email}
@@ -86,9 +86,9 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#ddd] mb-2">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 <input
                   type="password"
                   value={password}
@@ -101,7 +101,7 @@ export default function Login() {
             </div>
 
             <div className="flex justify-end">
-              <Link to="/forgot-password" className="text-sm text-[#f07a62] hover:text-coral-700">
+              <Link to="/forgot-password" className="text-sm text-coral-600 hover:text-coral-700">
                 Forgot password?
               </Link>
             </div>
@@ -117,9 +117,9 @@ export default function Login() {
           </form>
         </div>
 
-        <p className="text-center text-[#bbb] mt-6">
+        <p className="text-center text-gray-600 mt-6">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-[#f07a62] font-semibold hover:text-coral-700">
+          <Link to="/signup" className="text-coral-600 font-semibold hover:text-coral-700">
             Sign up free
           </Link>
         </p>
