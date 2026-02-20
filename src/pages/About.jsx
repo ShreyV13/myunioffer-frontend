@@ -70,6 +70,31 @@ export default function About() {
           </p>
         </motion.div>
 
+        {/* Trust stats row */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-6 mb-20"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <div className="card px-6 py-4 text-center">
+            <div className="text-2xl font-display font-bold text-coral-500">5</div>
+            <div className="text-xs text-gray-500">Universities</div>
+          </div>
+          <div className="card px-6 py-4 text-center">
+            <div className="text-2xl font-display font-bold text-coral-500">1000+</div>
+            <div className="text-xs text-gray-500">Resources Built</div>
+          </div>
+          <div className="card px-6 py-4 text-center">
+            <div className="text-2xl font-display font-bold text-coral-500">5</div>
+            <div className="text-xs text-gray-500">Subject Agents</div>
+          </div>
+          <div className="card px-6 py-4 text-center">
+            <div className="text-2xl font-display font-bold text-coral-500">2025</div>
+            <div className="text-xs text-gray-500">Application Cycle</div>
+          </div>
+        </motion.div>
+
         {/* Why Us - 3 pillars */}
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           <motion.div 

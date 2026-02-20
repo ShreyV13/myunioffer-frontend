@@ -335,6 +335,23 @@ export default function Pricing() {
           </div>
         </motion.div>
 
+        {/* Value Anchoring */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+          className="mb-16 max-w-2xl mx-auto"
+        >
+          <div className="card p-8 text-center bg-coral-50 border-coral-100">
+            <p className="text-gray-600 text-sm mb-2">The same level of coaching would cost</p>
+            <div className="text-4xl font-display font-bold text-gray-300 line-through mb-1">£200+/month</div>
+            <p className="text-gray-600 text-sm mb-4">with a private admissions tutor</p>
+            <div className="text-lg font-display font-bold text-gray-900">
+              With myunioffer.ai: <span className="text-coral-500">from £11.99/month</span>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Comparison to alternatives */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

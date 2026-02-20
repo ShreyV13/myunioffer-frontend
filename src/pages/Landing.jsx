@@ -85,8 +85,14 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Announcement Banner */}
+      <div className="bg-gray-900 text-white text-center py-2.5 px-4 text-sm font-medium">
+        <span className="text-coral-400">🚀 Launch Pricing</span> — from £11.99/mo before prices increase.{' '}
+        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">Lock it in →</Link>
+      </div>
+
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-gray-100">
+      <nav className="fixed top-10 left-0 right-0 z-50 glass border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2.5">
@@ -142,7 +148,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 hero-pattern">
+      <section className="pt-40 pb-20 px-6 hero-pattern">
         <div className="max-w-5xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -171,8 +177,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Personal statement coaching and interview preparation powered by AI. 
-            Guided by real students from top UK universities.
+            AI coaching for personal statements and interviews — built by students at LSE, Cambridge, Imperial, KCL, and Warwick. From £11.99/month.
           </motion.p>
 
           <motion.div 
@@ -181,6 +186,22 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
+            <Link to="/signup" className="btn-primary text-lg px-8 py-4">
+              Start Free <ArrowRight className="w-5 h-5" />
+            </Link>
+            <a href="#how-it-works" className="btn-secondary text-lg px-8 py-4">
+              See How It Works
+            </a>
+          </motion.div>
+
+          <motion.p 
+            className="text-gray-400 text-sm mt-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Free to try · No credit card required
+          </motion.p>
             <Link to="/signup" className="btn-primary text-lg px-8 py-4">
               Start Free <ArrowRight className="w-5 h-5" />
             </Link>
@@ -420,20 +441,70 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Social Proof Teaser */}
+      {/* Social Proof / Trust Section */}
       <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto">
           <motion.div
+            className="text-center mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-gray-900">Built by students from the UK's best universities</h2>
-            <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-              Our team are first-years at LSE, KCL, Cambridge, Imperial, and Warwick. We just went through the exact same application process — and built the tool we wished we had.
+            <p className="text-gray-600 max-w-xl mx-auto">
+              We're first-years who just went through the exact same application process — and built the tool we wished we had.
             </p>
-            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors">
-              Meet the team <ArrowRight className="w-4 h-4" />
+          </motion.div>
+
+          {/* Trust badges row */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-4 mb-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
+            {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (
+              <div key={i} className="px-5 py-2.5 bg-white rounded-xl border border-gray-100 shadow-sm text-sm font-semibold text-gray-700">
+                🎓 {uni}
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Stat badges like Politics Blueprint */}
+          <motion.div 
+            className="flex flex-wrap justify-center gap-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="text-center">
+              <div className="text-2xl font-display font-bold text-coral-500">1000+</div>
+              <div className="text-xs text-gray-500 mt-0.5">Resources</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-display font-bold text-coral-500">5</div>
+              <div className="text-xs text-gray-500 mt-0.5">Specialist Agents</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-display font-bold text-coral-500">99%</div>
+              <div className="text-xs text-gray-500 mt-0.5">Cheaper than tutoring</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-display font-bold text-coral-500">24/7</div>
+              <div className="text-xs text-gray-500 mt-0.5">Available anytime</div>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            className="text-center mt-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors text-sm">
+              Meet the full team <ArrowRight className="w-4 h-4" />
             </Link>
           </motion.div>
         </div>
