@@ -36,8 +36,8 @@ export default function Landing() {
     },
     {
       icon: Target,
-      title: "370+ Real Resources",
-      description: "Access 250 real interview questions and 124 successful personal statements from Oxford, Cambridge, and top UK universities."
+      title: "1000+ Resources",
+      description: "Access real interview questions, sample answers, and successful personal statements from Oxford, Cambridge, and top UK universities."
     },
     {
       icon: Users,
@@ -92,7 +92,7 @@ export default function Landing() {
       price: '11.99',
       originalPrice: '14.99',
       desc: 'Perfect your statement',
-      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', '124 sample statements'],
+      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', '1000+ resources'],
       cta: 'Start Now',
       featured: false
     },
@@ -101,7 +101,7 @@ export default function Landing() {
       price: '16.99',
       originalPrice: '19.99',
       desc: 'PS + Interview prep',
-      features: ['200 messages per day', 'PS + Interview coaching', 'All subjects', '370+ resources', 'Priority support'],
+      features: ['200 messages per day', 'PS + Interview coaching', 'All subjects', '1000+ resources', 'Priority support'],
       cta: 'Go Premium',
       featured: true
     },
@@ -110,7 +110,7 @@ export default function Landing() {
       price: '11.99',
       originalPrice: '14.99',
       desc: 'Ace your interviews',
-      features: ['50 messages per day', 'All subjects', '250 real interview questions', 'Interview coaching'],
+      features: ['50 messages per day', 'All subjects', '1000+ resources', 'Interview coaching'],
       cta: 'Start Now',
       featured: false
     },
@@ -123,7 +123,7 @@ export default function Landing() {
     },
     {
       q: "How is this different from ChatGPT?",
-      a: "Our AI is specifically built for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to 250+ real interview questions and 124 successful personal statements — not generic advice."
+      a: "Our AI is specifically built for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to 1000+ real interview questions, sample answers, and successful personal statements — not generic advice."
     },
     {
       q: "What subjects do you cover?",
@@ -256,17 +256,13 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">124</div>
-              <div className="text-gray-500 text-sm mt-1">Personal Statements</div>
+            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">1000+</div>
+              <div className="text-gray-500 text-sm mt-1">Personal statements, interview questions & sample answers</div>
             </div>
-            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">250</div>
-              <div className="text-gray-500 text-sm mt-1">Interview Questions</div>
-            </div>
-            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
               <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">5</div>
-              <div className="text-gray-500 text-sm mt-1">Subject Specialisms</div>
+              <div className="text-gray-500 text-sm mt-1">Subject specialist AI agents</div>
             </div>
           </motion.div>
         </div>
@@ -391,7 +387,7 @@ export default function Landing() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            Each area coached by verified students from LSE, KCL, Oxford, Cambridge & more.{' '}
+            Each area coached by verified students from LSE, KCL, Cambridge, Imperial, Warwick & more.{' '}
             <a href="mailto:hello@myunioffer.ai" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
               Interested in becoming a coach? Get in touch →
             </a>
@@ -399,8 +395,67 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Why Us - USPs */}
+      <section className="py-24 px-6 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why we're different</h2>
+            <p className="text-gray-600">Built by students who just went through it, for students going through it now</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            <motion.div 
+              className="card p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0 }}
+            >
+              <div className="text-3xl mb-4">🎓</div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The best unis, the right courses</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Our team are first-year students at LSE (PPE, Maths with Econ), KCL (Medicine), Cambridge (Computer Science, Economics), Imperial (Engineering), and Warwick (Economics). The best universities in the UK for their respective subjects — training the AI you'll use.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="card p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="text-3xl mb-4">💡</div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">We literally just did this</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                We're first-years. We just went through UCAS, personal statements, and interviews months ago. We know exactly what it's like, what we struggled with, and how much we wished we had a mentor available whenever we needed one. That's exactly what this AI is.
+              </p>
+            </motion.div>
+
+            <motion.div 
+              className="card p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="text-3xl mb-4">🏷️</div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Premium coaching, fraction of the price</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Other specialist AI tools are either not subject-specific or cost thousands. UniAdmissions charges £6,000–£35,000. Private tutors charge £50–100/hour. We give you a subject-specialist AI coach from £11.99/month. Same quality, 99% less.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
-      <section id="pricing" className="py-24 px-6 bg-gray-50">
+      <section id="pricing" className="py-24 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-16"

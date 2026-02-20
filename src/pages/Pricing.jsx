@@ -29,7 +29,7 @@ export default function Pricing() {
         '50 messages per day',
         'All subjects',
         'Advanced PS coaching',
-        '124 sample statements',
+        '1000+ resources',
         'Email support'
       ],
       color: 'coral'
@@ -45,7 +45,7 @@ export default function Pricing() {
         '200 messages per day',
         'PS + Interview coaching',
         'All subjects',
-        '370+ resources',
+        '1000+ resources',
         'Priority support'
       ],
       color: 'amber',
@@ -61,7 +61,7 @@ export default function Pricing() {
       features: [
         '50 messages per day',
         'All subjects',
-        '250 real interview questions',
+        '1000+ resources',
         'Interview coaching',
         'Email support'
       ],
