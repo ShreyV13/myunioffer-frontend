@@ -323,9 +323,9 @@ export default function Chat() {
 
 
   return (
-    <div className="h-screen flex" style={{background: '#303030'}}>
+    <div className="h-screen flex" style={{background: '#2b2b2b'}}>
       {/* Sidebar */}
-      <aside className="hidden md:flex w-[260px] flex-col" style={{background: '#292929'}}>
+      <aside className="hidden md:flex w-[260px] flex-col" style={{background: '#242424'}}>
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
@@ -392,7 +392,7 @@ export default function Chat() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0" style={{background: '#303030'}}>
+      <div className="flex-1 flex flex-col min-w-0" style={{background: '#2b2b2b'}}>
         <header className="flex-shrink-0 px-4 py-2.5" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -534,7 +534,7 @@ export default function Chat() {
         {/* Input */}
         <div className="flex-shrink-0 px-4 pb-4 pt-2">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="relative rounded-2xl focus-within:ring-1 focus-within:ring-white/10 transition-all" style={{background: '#3a3a3a', border: '1px solid rgba(255,255,255,0.1)'}}>
+            <div className="relative rounded-2xl focus-within:ring-1 focus-within:ring-white/10 transition-all" style={{background: '#353535', border: '1px solid rgba(255,255,255,0.1)'}}>
               <textarea ref={inputRef} value={input}
                 onChange={(e) => { setInput(e.target.value); e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
@@ -566,7 +566,7 @@ export default function Chat() {
       <AnimatePresence>
         {showSidebar && (<>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setShowSidebar(false)} />
-          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] z-50 md:hidden flex flex-col" style={{background: '#292929'}}>
+          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] z-50 md:hidden flex flex-col" style={{background: '#242424'}}>
             <div className="flex items-center justify-between px-5 py-4">
               <Link to="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
