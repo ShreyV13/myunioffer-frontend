@@ -43,7 +43,7 @@ export default function Landing() {
     },
     {
       q: "What subjects do you cover?",
-      a: "We have specialist AI coaches for Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business (including PPE), Humanities (History, Law, English, Psychology), and Arts (Architecture, Art, Music, Design)."
+      a: "We cover Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business (including PPE), Humanities (History, Law, English, Psychology), and Arts (Architecture, Art, Music, Design). Just tell the AI what you're applying for and it automatically tailors the coaching to your subject."
     },
     {
       q: "Can I cancel anytime?",
@@ -79,7 +79,7 @@ export default function Landing() {
             <div className="hidden md:flex items-center gap-8">
               <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
               <a href="#why-us" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
-              <a href="#team" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Team</a>
+              <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Team</Link>
               <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Login</Link>
               <Link to="/signup" className="btn-primary">
@@ -104,7 +104,7 @@ export default function Landing() {
               <div className="flex flex-col gap-3">
                 <a href="#how-it-works" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
                 <a href="#why-us" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Why Us</a>
-                <a href="#team" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Team</a>
+                <Link to="/about" className="text-gray-600 py-2 font-medium">Team</Link>
                 <Link to="/pricing" className="text-gray-600 py-2 font-medium">Pricing</Link>
                 <Link to="/login" className="text-gray-600 py-2 font-medium">Login</Link>
                 <Link to="/signup" className="btn-primary mt-2">Get Started</Link>
@@ -201,7 +201,7 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              { num: "1", title: "Tell us about your application", desc: "Choose your subject — Medicine, STEM, Economics, Humanities, or Arts — and tell the AI what you're applying for. It instantly matches you with a specialist agent trained for your exact area." },
+              { num: "1", title: "Tell the AI about your application", desc: "Just start chatting. Tell the AI what you're applying for, which universities you're targeting, and what stage you're at. It automatically understands your subject area and tailors everything — no menus, no setup, just conversation." },
               { num: "2", title: "Get coached, not written for", desc: "The AI asks you targeted questions based on 1000+ real resources — successful personal statements, past interview questions, and what admissions tutors actually look for. It draws out your authentic story." },
               { num: "3", title: "Build confidence and stand out", desc: "Iterate on your PS with expert feedback. Run mock interviews with real questions. Go into your application knowing exactly how to present yourself — because you've already practised with the best." },
             ].map((step, i) => (

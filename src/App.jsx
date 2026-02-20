@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Pages
@@ -12,6 +12,15 @@ import Settings from './pages/Settings';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
 import Success from './pages/Success';
+
+// Scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // Protected Route wrapper
 function ProtectedRoute({ children }) {
@@ -37,7 +46,9 @@ function PublicRoute({ children }) {
 
 function AppRoutes() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
       <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
@@ -49,6 +60,7 @@ function AppRoutes() {
       <Route path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
+    </>
   );
 }
 

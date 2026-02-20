@@ -91,10 +91,10 @@ export default function About() {
           className="text-center mb-12"
         >
           <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-            Built by students who just did it
+            We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            We're not a faceless company. We're first-year students at the UK's best universities who went through UCAS, personal statements, and interviews months ago. We built myunioffer.ai because we know how stressful it is — and how much a good mentor would have helped.
+            We remember the sleepless nights rewriting our personal statements for the tenth time. The anxiety before interviews. The feeling of "is this even good enough?" We went through it all — and came out the other side with offers from the UK's best universities. Now we've built the tool that would have made it so much easier.
           </p>
         </motion.div>
 
@@ -102,25 +102,25 @@ export default function About() {
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0 }}>
             <div className="text-3xl mb-4">🎓</div>
-            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The best unis in the country</h3>
+            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">We know what gets you rejected</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Our team comes from LSE, KCL, Cambridge, Imperial, and Warwick — some of the most competitive universities in the UK for their respective subjects. The AI is trained by people who actually got in.
+              Generic personal statements. Stumbling in interviews. Not knowing what admissions tutors actually want. We made those mistakes in our own early drafts — and learned exactly how to fix them. The AI is trained on what works, because we lived it.
             </p>
           </motion.div>
 
           <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="text-3xl mb-4">💡</div>
-            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">We literally just did this</h3>
+            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Your mentor at 2am when you need one</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              We're first-years. Not people who applied 10 years ago. We remember the stress, the late-night PS drafts, the interview nerves. We built the mentor we wished we'd had — available 24/7, for a fraction of what tutors charge.
+              The night before your UCAS deadline, your teacher isn't answering emails. Your parents don't understand what Oxbridge wants. Your friends are as stressed as you. We built the mentor that's always there — trained by people who got the offers you're chasing, available whenever you need it.
             </p>
           </motion.div>
 
           <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <div className="text-3xl mb-4">🏷️</div>
-            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Specialist, not generic</h3>
+            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The coaching you deserve, at a price you can afford</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Each person on the team trains a specific AI agent for their subject area. A Medicine student trains the Medicine agent. A Cambridge CS student trains the STEM agent. You're not getting generic advice — you're getting subject-level expertise.
+              Rich kids hire £6,000 consultants and get in. That's not fair. We built something that gives you the same quality of guidance — subject-specific, based on real data from successful applications — for less than the price of a night out. This is the great equaliser.
             </p>
           </motion.div>
         </div>

@@ -146,7 +146,7 @@ export default function Pricing() {
     setLoading(null);
   }
 
-  const isCurrentPlan = (planId) => userProfile?.plan === planId;
+  const isCurrentPlan = (planId) => planId !== 'free' && userProfile?.plan === planId;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -179,10 +179,10 @@ export default function Pricing() {
           className="text-center mb-8"
         >
           <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-            Pricing & plans
+            Don't leave your application to chance
           </h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Start free with 3 messages per day. Upgrade for full access to all coaching features.
+            Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation — and that's exactly what we provide.
           </p>
         </motion.div>
 
@@ -272,7 +272,7 @@ export default function Pricing() {
                         : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >
-                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Get Started' : 'Subscribe'}
+                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : 'Subscribe'}
                   </button>
                 )}
               </motion.div>
