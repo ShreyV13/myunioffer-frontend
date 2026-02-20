@@ -318,40 +318,40 @@ export default function Chat() {
 
   return (
     <div className="h-screen flex bg-white">
-      {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-[260px] flex-col bg-coral-50/40 border-r border-coral-100/50">
+      {/* Sidebar */}
+      <aside className="hidden md:flex w-[260px] flex-col bg-[#f7f7f5] border-r border-[#e8e6e3]">
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
               <GraduationCap className="w-4 h-4 text-white" />
             </div>
-            <span className="font-display font-bold text-gray-900">
+            <span className="font-display font-bold text-[#1a1a1a]">
               myuni<span className="text-coral-500">offer</span>
             </span>
           </Link>
         </div>
 
         <div className="px-3 mb-1">
-          <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-coral-700 hover:bg-coral-100/50 rounded-lg transition-colors border border-coral-200/60">
+          <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#3d3d3d] hover:bg-[#eae8e5] rounded-lg transition-colors border border-[#ddd9d5]">
             <Plus className="w-4 h-4" /> New chat
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 mt-3">
           {recentChats.length === 0 ? (
-            <div className="text-xs text-coral-300 px-2 py-8 text-center">Your conversations will appear here</div>
+            <div className="text-xs text-[#aaa] px-2 py-8 text-center">Your conversations will appear here</div>
           ) : (
             <div className="space-y-0.5">
-              <div className="text-[11px] font-medium text-coral-400 uppercase tracking-wider px-2 mb-2">Recent</div>
+              <div className="text-[11px] font-medium text-[#999] uppercase tracking-wider px-2 mb-2">Recent</div>
               {recentChats.map(chat => (
                 <button key={chat.id} onClick={() => handleSelectChat(chat)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] transition-colors group ${
-                    currentChatId === chat.id ? 'bg-coral-100/60 text-coral-800' : 'text-coral-700/70 hover:bg-coral-100/40'
+                    currentChatId === chat.id ? 'bg-[#eae8e5] text-[#1a1a1a]' : 'text-[#666] hover:bg-[#eeedeb]'
                   }`}>
                   <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
                   <span className="flex-1 truncate">{chat.title}</span>
-                  <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-coral-200/60 rounded transition-all">
-                    <Trash2 className="w-3 h-3 text-coral-400" />
+                  <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-[#ddd] rounded transition-all">
+                    <Trash2 className="w-3 h-3 text-[#999]" />
                   </button>
                 </button>
               ))}
@@ -359,26 +359,26 @@ export default function Chat() {
           )}
         </div>
 
-        <div className="p-3 border-t border-coral-200/40">
+        <div className="p-3 border-t border-[#e8e6e3]">
           <div className="flex items-center gap-2.5 px-2 py-1.5 mb-2">
-            <div className="w-7 h-7 bg-coral-100 rounded-full flex items-center justify-center">
-              <User className="w-3.5 h-3.5 text-coral-500" />
+            <div className="w-7 h-7 bg-[#e8e6e3] rounded-full flex items-center justify-center">
+              <User className="w-3.5 h-3.5 text-[#888]" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[13px] font-medium text-gray-800 truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px] text-coral-400">{planName} · {usage.limit - usage.used} left today</div>
+              <div className="text-[13px] font-medium text-[#1a1a1a] truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
+              <div className="text-[11px] text-[#999]">{planName} · {usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">
             {userProfile?.plan === 'free' && (
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-100/50 rounded-lg transition-colors font-medium">
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-[#eeedeb] rounded-lg transition-colors font-medium">
                 <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
               </Link>
             )}
-            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600/70 hover:bg-coral-100/40 rounded-lg transition-colors">
+            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#666] hover:bg-[#eeedeb] rounded-lg transition-colors">
               <Settings className="w-3.5 h-3.5" /> Settings
             </Link>
-            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-500/60 hover:bg-coral-100/40 rounded-lg transition-colors">
+            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#999] hover:bg-[#eeedeb] rounded-lg transition-colors">
               <LogOut className="w-3.5 h-3.5" /> Sign out
             </button>
           </div>
@@ -386,11 +386,11 @@ export default function Chat() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="flex-shrink-0 border-b border-coral-100/40 px-4 py-2.5 bg-white">
+      <div className="flex-1 flex flex-col min-w-0 bg-white">
+        <header className="flex-shrink-0 border-b border-[#f0f0f0] px-4 py-2.5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button className="md:hidden p-2 -ml-2 text-coral-500 hover:bg-coral-50 rounded-lg" onClick={() => setShowSidebar(true)}>
+              <button className="md:hidden p-2 -ml-2 text-[#666] hover:bg-[#f5f5f5] rounded-lg" onClick={() => setShowSidebar(true)}>
                 <Menu className="w-5 h-5" />
               </button>
               <Link to="/" className="flex items-center gap-1.5 md:hidden">
@@ -399,31 +399,31 @@ export default function Chat() {
                 </div>
               </Link>
             </div>
-            <div className="flex bg-coral-50 p-0.5 rounded-lg">
-              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white text-coral-700 shadow-sm' : 'text-coral-500/70 hover:text-coral-600'}`}>
+            <div className="flex bg-[#f5f5f3] p-0.5 rounded-lg">
+              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white text-[#1a1a1a] shadow-sm' : 'text-[#888] hover:text-[#555]'}`}>
                 <span className="hidden sm:inline">Personal Statement</span><span className="sm:hidden">PS</span>
               </button>
-              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white text-coral-700 shadow-sm' : 'text-coral-500/70 hover:text-coral-600'}`}>
+              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white text-[#1a1a1a] shadow-sm' : 'text-[#888] hover:text-[#555]'}`}>
                 <span className="hidden sm:inline">Interview Prep</span><span className="sm:hidden">Interview</span>
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[12px] text-coral-400 hidden sm:inline">{usage.limit - usage.used} left</span>
+              <span className="text-[12px] text-[#aaa] hidden sm:inline">{usage.limit - usage.used} left</span>
               <div className="md:hidden relative">
-                <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-coral-50 rounded-lg">
-                  <div className="w-7 h-7 bg-coral-100 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-coral-500" /></div>
+                <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-[#f5f5f5] rounded-lg">
+                  <div className="w-7 h-7 bg-[#e8e6e3] rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-[#888]" /></div>
                 </button>
                 {showUserMenu && (<>
                   <div className="fixed inset-0 z-10" onClick={() => setShowUserMenu(false)} />
-                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-coral-100 z-20 overflow-hidden">
-                    <div className="p-3 border-b border-coral-100/50">
-                      <div className="font-medium text-gray-900 truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-coral-400 mt-0.5">{planName} · {usage.limit - usage.used} left</div>
+                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-[#e8e6e3] z-20 overflow-hidden">
+                    <div className="p-3 border-b border-[#f0f0f0]">
+                      <div className="font-medium text-[#1a1a1a] truncate text-[13px]">{currentUser?.email}</div>
+                      <div className="text-[11px] text-[#999] mt-0.5">{planName} · {usage.limit - usage.used} left</div>
                     </div>
                     <div className="p-1.5">
-                      <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-700 hover:bg-coral-50 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-50 rounded-lg" onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
-                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-500/60 hover:bg-coral-50 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+                      <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#555] hover:bg-[#f5f5f5] rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-[#f5f5f5] rounded-lg" onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#999] hover:bg-[#f5f5f5] rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
                     </div>
                   </div>
                 </>)}
@@ -440,10 +440,10 @@ export default function Chat() {
                 <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-coral-500/20">
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
-                <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-3">
+                <h1 className="text-2xl md:text-3xl font-display font-bold text-[#1a1a1a] mb-3">
                   {mode === 'ps' ? 'What are you applying for?' : 'Ready to practise?'}
                 </h1>
-                <p className="text-gray-400 text-sm max-w-md mx-auto leading-relaxed mb-10">
+                <p className="text-[#999] text-sm max-w-md mx-auto leading-relaxed mb-10">
                   {mode === 'ps'
                     ? "Tell me your subject and universities. I'll help you build a statement that's authentically yours."
                     : "Tell me your subject. I'll hit you with real interview questions and coach you through your answers."}
@@ -461,7 +461,7 @@ export default function Chat() {
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
                   ]).map((prompt, i) => (
                     <button key={i} onClick={() => { setInput(prompt.text); inputRef.current?.focus(); }}
-                      className="px-4 py-3 border border-coral-200/60 rounded-xl text-left hover:border-coral-300 hover:bg-coral-50/30 transition-all text-[13px] text-coral-700/70 leading-snug">
+                      className="px-4 py-3 border border-[#e8e6e3] rounded-xl text-left hover:border-[#ccc] hover:bg-[#fafaf9] transition-all text-[13px] text-[#666] leading-snug">
                       {prompt.label} →
                     </button>
                   ))}
@@ -474,20 +474,20 @@ export default function Chat() {
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
                   {msg.role === 'user' ? (
                     <div className="flex justify-end">
-                      <div className="max-w-[75%] gradient-primary text-white px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed shadow-sm">
+                      <div className="max-w-[75%] bg-[#f0efed] text-[#1a1a1a] px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
                         <div className="whitespace-pre-wrap">{msg.content}</div>
                       </div>
                     </div>
                   ) : msg.role === 'system' ? (
                     <div className="flex justify-center">
-                      <div className="bg-coral-50 text-coral-700 border border-coral-200/60 px-4 py-2.5 rounded-xl text-[13px] max-w-md text-center">{msg.content}</div>
+                      <div className="bg-amber-50 text-amber-700 border border-amber-200 px-4 py-2.5 rounded-xl text-[13px] max-w-md text-center">{msg.content}</div>
                     </div>
                   ) : (
                     <div className="flex gap-3">
                       <div className="w-7 h-7 gradient-primary rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
-                      <div className="flex-1 min-w-0 text-[15px] text-gray-800 leading-relaxed">
+                      <div className="flex-1 min-w-0 text-[15px] text-[#2d2d2d] leading-relaxed">
                         <div className="whitespace-pre-wrap prose-ai">{msg.content}</div>
                       </div>
                     </div>
@@ -502,11 +502,11 @@ export default function Chat() {
                   </div>
                   <div className="pt-2">
                     <div className="flex gap-1.5">
-                      <div className="w-2 h-2 bg-coral-300 rounded-full typing-dot" />
-                      <div className="w-2 h-2 bg-coral-300 rounded-full typing-dot" />
-                      <div className="w-2 h-2 bg-coral-300 rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-[#ccc] rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-[#ccc] rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-[#ccc] rounded-full typing-dot" />
                     </div>
-                    {serverWaking && <span className="text-[11px] text-coral-400 mt-1 block">Waking up server...</span>}
+                    {serverWaking && <span className="text-[11px] text-[#aaa] mt-1 block">Waking up server...</span>}
                   </div>
                 </motion.div>
               )}
@@ -518,9 +518,9 @@ export default function Chat() {
 
         {error && (
           <div className="px-4 pb-2">
-            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-coral-50 border border-coral-200 rounded-xl text-coral-700 text-[13px]">
+            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-[13px]">
               <AlertCircle className="w-4 h-4 flex-shrink-0" />{error}
-              <button onClick={() => setError(null)} className="ml-auto text-coral-400 hover:text-coral-600"><X className="w-4 h-4" /></button>
+              <button onClick={() => setError(null)} className="ml-auto text-red-400 hover:text-red-600"><X className="w-4 h-4" /></button>
             </div>
           </div>
         )}
@@ -528,20 +528,20 @@ export default function Chat() {
         {/* Input */}
         <div className="flex-shrink-0 px-4 pb-4 pt-2">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="relative bg-coral-50/30 border border-coral-200/50 rounded-2xl focus-within:border-coral-300 focus-within:shadow-sm transition-all">
+            <div className="relative bg-[#f7f7f5] border border-[#e8e6e3] rounded-2xl focus-within:border-[#ccc] focus-within:shadow-sm transition-all">
               <textarea ref={inputRef} value={input}
                 onChange={(e) => { setInput(e.target.value); e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
                 placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask me anything about interviews..."}
-                className="w-full bg-transparent border-none outline-none resize-none text-gray-900 placeholder-coral-300 text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
+                className="w-full bg-transparent border-none outline-none resize-none text-[#1a1a1a] placeholder-[#bbb] text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
                 rows={1} disabled={loading} />
               <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                <button type="button" onClick={handleNewChat} className="p-1.5 text-coral-400 hover:text-coral-600 hover:bg-coral-100/50 rounded-md transition-colors" title="New chat">
+                <button type="button" onClick={handleNewChat} className="p-1.5 text-[#bbb] hover:text-[#888] hover:bg-[#eeedeb] rounded-md transition-colors" title="New chat">
                   <Plus className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] text-coral-400">{usage.used}/{usage.limit}</span>
-                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 gradient-primary rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all shadow-sm shadow-coral-500/20">
+                  <span className="text-[11px] text-[#bbb]">{usage.used}/{usage.limit}</span>
+                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 gradient-primary rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all">
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
@@ -560,28 +560,28 @@ export default function Chat() {
       <AnimatePresence>
         {showSidebar && (<>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/30 z-40 md:hidden" onClick={() => setShowSidebar(false)} />
-          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] bg-coral-50/40 z-50 md:hidden flex flex-col border-r border-coral-100/50">
+          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] bg-[#f7f7f5] z-50 md:hidden flex flex-col border-r border-[#e8e6e3]">
             <div className="flex items-center justify-between px-5 py-4">
               <Link to="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center"><GraduationCap className="w-4 h-4 text-white" /></div>
-                <span className="font-display font-bold text-gray-900">myuni<span className="text-coral-500">offer</span></span>
+                <span className="font-display font-bold text-[#1a1a1a]">myuni<span className="text-coral-500">offer</span></span>
               </Link>
-              <button onClick={() => setShowSidebar(false)} className="p-1.5 text-coral-400 hover:text-coral-600"><X className="w-5 h-5" /></button>
+              <button onClick={() => setShowSidebar(false)} className="p-1.5 text-[#999] hover:text-[#555]"><X className="w-5 h-5" /></button>
             </div>
             <div className="px-3 mb-1">
-              <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-coral-700 hover:bg-coral-100/50 rounded-lg transition-colors border border-coral-200/60">
+              <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#3d3d3d] hover:bg-[#eae8e5] rounded-lg transition-colors border border-[#ddd9d5]">
                 <Plus className="w-4 h-4" /> New chat
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-3 mt-3">
               {recentChats.length === 0 ? (
-                <div className="text-xs text-coral-300 px-2 py-8 text-center">Your conversations will appear here</div>
+                <div className="text-xs text-[#aaa] px-2 py-8 text-center">Your conversations will appear here</div>
               ) : (
                 <div className="space-y-0.5">
-                  <div className="text-[11px] font-medium text-coral-400 uppercase tracking-wider px-2 mb-2">Recent</div>
+                  <div className="text-[11px] font-medium text-[#999] uppercase tracking-wider px-2 mb-2">Recent</div>
                   {recentChats.map(chat => (
                     <button key={chat.id} onClick={() => handleSelectChat(chat)}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-coral-100/60 text-coral-800' : 'text-coral-700/70 hover:bg-coral-100/40'}`}>
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-[#eae8e5] text-[#1a1a1a]' : 'text-[#666] hover:bg-[#eeedeb]'}`}>
                       <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
                       <span className="flex-1 truncate">{chat.title}</span>
                     </button>
@@ -589,11 +589,11 @@ export default function Chat() {
                 </div>
               )}
             </div>
-            <div className="p-3 border-t border-coral-200/40">
-              <div className="text-[12px] text-coral-400 mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-100/50 rounded-lg font-medium" onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
-              <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600/70 hover:bg-coral-100/40 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-              <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-500/60 hover:bg-coral-100/40 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+            <div className="p-3 border-t border-[#e8e6e3]">
+              <div className="text-[12px] text-[#999] mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-[#eeedeb] rounded-lg font-medium" onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+              <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#666] hover:bg-[#eeedeb] rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+              <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#999] hover:bg-[#eeedeb] rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
             </div>
           </motion.aside>
         </>)}
