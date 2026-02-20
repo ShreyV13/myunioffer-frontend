@@ -315,60 +315,42 @@ export default function Chat() {
 
   const recentChats = chats.slice(0, 10);
 
+
   return (
-    <div className="h-screen flex bg-gray-50">
+    <div className="h-screen flex bg-white">
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex w-64 flex-col bg-white border-r border-gray-100">
-        {/* Logo */}
-        <div className="p-4 border-b border-gray-100">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 gradient-primary rounded-lg flex items-center justify-center">
-              <GraduationCap className="w-5 h-5 text-white" />
+      <aside className="hidden md:flex w-[260px] flex-col bg-gray-50 border-r border-gray-100">
+        <div className="px-5 py-4">
+          <Link to="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
+              <GraduationCap className="w-4 h-4 text-white" />
             </div>
-            <span className="text-lg font-display font-bold">
+            <span className="font-display font-bold text-gray-900">
               myuni<span className="text-coral-500">offer</span>
             </span>
           </Link>
         </div>
 
-        {/* New Chat Button */}
-        <div className="p-3">
-          <button
-            onClick={handleNewChat}
-            className="w-full flex items-center justify-center gap-2 py-2.5 gradient-primary text-white rounded-xl font-medium shadow-sm hover:shadow-md transition-shadow"
-          >
-            <Plus className="w-4 h-4" />
-            New Chat
+        <div className="px-3 mb-1">
+          <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200/60 rounded-lg transition-colors border border-gray-200">
+            <Plus className="w-4 h-4" /> New chat
           </button>
         </div>
 
-        {/* Chat History */}
-        <div className="flex-1 overflow-y-auto px-3">
-          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-2">
-            Recent Chats
-          </div>
+        <div className="flex-1 overflow-y-auto px-3 mt-3">
           {recentChats.length === 0 ? (
-            <div className="text-sm text-gray-400 px-2 py-4">
-              No chats yet. Start a conversation!
-            </div>
+            <div className="text-xs text-gray-400 px-2 py-8 text-center">Your conversations will appear here</div>
           ) : (
-            <div className="space-y-1">
+            <div className="space-y-0.5">
+              <div className="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 mb-2">Recent</div>
               {recentChats.map(chat => (
-                <button
-                  key={chat.id}
-                  onClick={() => handleSelectChat(chat)}
-                  className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-sm transition-colors group ${
-                    currentChatId === chat.id 
-                      ? 'bg-coral-50 text-coral-700' 
-                      : 'text-gray-600 hover:bg-gray-50'
-                  }`}
-                >
-                  <MessageSquare className="w-4 h-4 flex-shrink-0 opacity-50" />
+                <button key={chat.id} onClick={() => handleSelectChat(chat)}
+                  className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] transition-colors group ${
+                    currentChatId === chat.id ? 'bg-gray-200/70 text-gray-900' : 'text-gray-600 hover:bg-gray-200/40'
+                  }`}>
+                  <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
                   <span className="flex-1 truncate">{chat.title}</span>
-                  <button
-                    onClick={(e) => handleDeleteChat(chat.id, e)}
-                    className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-200 rounded transition-all"
-                  >
+                  <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-gray-300 rounded transition-all">
                     <Trash2 className="w-3 h-3 text-gray-400" />
                   </button>
                 </button>
@@ -377,502 +359,243 @@ export default function Chat() {
           )}
         </div>
 
-        {/* User Section */}
-        <div className="p-3 border-t border-gray-100">
-          <div className="flex items-center gap-3 px-2 py-2">
-            <div className="w-8 h-8 bg-coral-100 rounded-full flex items-center justify-center">
-              <User className="w-4 h-4 text-coral-600" />
+        <div className="p-3 border-t border-gray-200/60">
+          <div className="flex items-center gap-2.5 px-2 py-1.5 mb-2">
+            <div className="w-7 h-7 bg-gray-200 rounded-full flex items-center justify-center">
+              <User className="w-3.5 h-3.5 text-gray-500" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-gray-900 truncate">
-                {userProfile?.displayName || currentUser?.email?.split('@')[0]}
-              </div>
-              <div className="text-xs text-gray-500">{planName} Plan</div>
+              <div className="text-[13px] font-medium text-gray-800 truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
+              <div className="text-[11px] text-gray-400">{planName} · {usage.limit - usage.used} left today</div>
             </div>
           </div>
-          <div className="space-y-1 mt-2">
-            <Link 
-              to="/settings" 
-              className="flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-            >
-              <Settings className="w-4 h-4" />
-              <span>Settings</span>
+          <div className="space-y-0.5">
+            {userProfile?.plan === 'free' && (
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-50 rounded-lg transition-colors font-medium">
+                <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
+              </Link>
+            )}
+            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-200/40 rounded-lg transition-colors">
+              <Settings className="w-3.5 h-3.5" /> Settings
             </Link>
-            <Link 
-              to="/pricing" 
-              className="flex items-center gap-3 px-3 py-2 text-sm text-coral-600 hover:bg-coral-50 rounded-lg transition-colors"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>Upgrade Plan</span>
-            </Link>
-            <button
-              onClick={handleSwitchAccount}
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
-            >
-              <RefreshCw className="w-4 h-4" />
-              <span>Switch Account</span>
-            </button>
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>Sign Out</span>
+            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-500 hover:bg-gray-200/40 rounded-lg transition-colors">
+              <LogOut className="w-3.5 h-3.5" /> Sign out
             </button>
           </div>
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
-        <header className="flex-shrink-0 glass border-b border-gray-100 px-4 py-3">
+        <header className="flex-shrink-0 border-b border-gray-100 px-4 py-2.5">
           <div className="flex items-center justify-between">
-            {/* Left: Mobile menu & Logo */}
-            <div className="flex items-center gap-3">
-              <button 
-                className="md:hidden p-2 -ml-2 text-gray-600 hover:bg-gray-100 rounded-lg"
-                onClick={() => setShowSidebar(true)}
-              >
+            <div className="flex items-center gap-2">
+              <button className="md:hidden p-2 -ml-2 text-gray-500 hover:bg-gray-100 rounded-lg" onClick={() => setShowSidebar(true)}>
                 <Menu className="w-5 h-5" />
               </button>
-              <Link to="/" className="flex items-center gap-2 md:hidden">
-                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-                  <GraduationCap className="w-4 h-4 text-white" />
+              <Link to="/" className="flex items-center gap-1.5 md:hidden">
+                <div className="w-7 h-7 gradient-primary rounded-md flex items-center justify-center">
+                  <GraduationCap className="w-3.5 h-3.5 text-white" />
                 </div>
               </Link>
             </div>
-
-            {/* Center: Mode Toggle */}
             <div className="flex bg-gray-100 p-0.5 rounded-lg">
-              <button
-                onClick={() => setMode('ps')}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
-                  mode === 'ps' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <span className="hidden sm:inline">Personal Statement</span>
-                <span className="sm:hidden">PS</span>
+              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+                <span className="hidden sm:inline">Personal Statement</span><span className="sm:hidden">PS</span>
               </button>
-              <button
-                onClick={() => setMode('interview')}
-                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
-                  mode === 'interview' 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                <span className="hidden sm:inline">Interview Prep</span>
-                <span className="sm:hidden">Interview</span>
+              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+                <span className="hidden sm:inline">Interview Prep</span><span className="sm:hidden">Interview</span>
               </button>
             </div>
-
-            {/* Right: Usage & User (mobile) */}
-            <div className="flex items-center gap-3">
-              <div className="text-sm text-gray-500">
-                <span className="hidden sm:inline">{usage.limit - usage.used} left today</span>
-                <span className="sm:hidden">{usage.limit - usage.used}</span>
-              </div>
-              
-              {/* User menu - mobile only */}
+            <div className="flex items-center gap-2">
+              <span className="text-[12px] text-gray-400 hidden sm:inline">{usage.limit - usage.used} left</span>
               <div className="md:hidden relative">
-                <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  <div className="w-8 h-8 bg-coral-100 rounded-full flex items-center justify-center">
-                    <User className="w-4 h-4 text-coral-600" />
-                  </div>
+                <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-gray-100 rounded-lg">
+                  <div className="w-7 h-7 bg-gray-200 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-gray-500" /></div>
                 </button>
-
-                {showUserMenu && (
-                  <>
-                    <div 
-                      className="fixed inset-0 z-10" 
-                      onClick={() => setShowUserMenu(false)}
-                    />
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-20 overflow-hidden">
-                      <div className="p-3 border-b border-gray-100">
-                        <div className="font-medium text-gray-900 truncate text-sm">{currentUser?.email}</div>
-                        <div className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
-                          {userProfile?.plan === 'premium' && <Crown className="w-3 h-3 text-amber-500" />}
-                          {planName} Plan
-                        </div>
-                      </div>
-                      <div className="p-2">
-                        <Link 
-                          to="/settings" 
-                          className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
-                          onClick={() => setShowUserMenu(false)}
-                        >
-                          <Settings className="w-4 h-4" />
-                          Settings
-                        </Link>
-                        <Link 
-                          to="/pricing" 
-                          className="flex items-center gap-3 px-3 py-2 text-sm text-coral-600 hover:bg-coral-50 rounded-lg"
-                          onClick={() => setShowUserMenu(false)}
-                        >
-                          <Sparkles className="w-4 h-4" />
-                          Upgrade
-                        </Link>
-                        <button
-                          onClick={handleSwitchAccount}
-                          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
-                        >
-                          <RefreshCw className="w-4 h-4" />
-                          Switch Account
-                        </button>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Log out
-                        </button>
-                      </div>
+                {showUserMenu && (<>
+                  <div className="fixed inset-0 z-10" onClick={() => setShowUserMenu(false)} />
+                  <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-gray-100 z-20 overflow-hidden">
+                    <div className="p-3 border-b border-gray-100">
+                      <div className="font-medium text-gray-900 truncate text-[13px]">{currentUser?.email}</div>
+                      <div className="text-[11px] text-gray-400 mt-0.5">{planName} · {usage.limit - usage.used} left</div>
                     </div>
-                  </>
-                )}
+                    <div className="p-1.5">
+                      <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-700 hover:bg-gray-50 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-50 rounded-lg" onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-500 hover:bg-gray-50 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+                    </div>
+                  </div>
+                </>)}
               </div>
             </div>
           </div>
         </header>
 
-        {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto px-4 py-6">
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto">
           {messages.length === 0 ? (
-            <div className="max-w-2xl mx-auto h-full flex flex-col items-center justify-center text-center px-4">
-              <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-coral-500/20">
-                <GraduationCap className="w-7 h-7 text-white" />
-              </div>
-              <h2 className="text-2xl font-display font-bold text-gray-900 mb-2">
-                {mode === 'ps' ? 'Personal Statement Coach' : 'Interview Coach'}
-              </h2>
-              <p className="text-gray-500 mb-10 max-w-md text-sm leading-relaxed">
-                {mode === 'ps' 
-                  ? "Tell me what you're applying for and I'll help you craft a personal statement that's authentically yours. I won't write it for you — I'll ask the questions that help you figure out what to say."
-                  : "Tell me your subject and I'll prepare you with real interview questions from top universities. We'll practise together until you feel confident walking into that room."
-                }
-              </p>
-
-              {/* Quick prompts */}
-              <div className="grid sm:grid-cols-2 gap-3 w-full max-w-lg">
-                {mode === 'ps' ? (
-                  <>
-                    <button 
-                      onClick={() => { setInput("I'm applying for medicine at KCL and UCL. I'm not sure how to start my personal statement."); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Help me start my PS</div>
-                      <div className="text-xs text-gray-400">Structure, opening lines, and direction</div>
+            <div className="h-full flex flex-col items-center justify-center px-6">
+              <div className="max-w-xl w-full text-center">
+                <div className="mb-8">
+                  <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-3">
+                    {mode === 'ps' ? 'What are you applying for?' : 'Ready to practise?'}
+                  </h1>
+                  <p className="text-gray-400 text-sm max-w-md mx-auto leading-relaxed">
+                    {mode === 'ps'
+                      ? "Tell me your subject and universities. I'll help you build a statement that's authentically yours."
+                      : "Tell me your subject. I'll hit you with real interview questions and coach you through your answers."}
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-2.5 max-w-lg mx-auto">
+                  {(mode === 'ps' ? [
+                    { text: "I'm applying for medicine — help me start my PS", label: "Start my PS" },
+                    { text: "Help me figure out what experiences to include", label: "Brainstorm experiences" },
+                    { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
+                    { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
+                  ] : [
+                    { text: "Give me a real interview question for my subject", label: "Practise a question" },
+                    { text: "Run a full mock interview with me", label: "Mock interview" },
+                    { text: "How should I structure my answers?", label: "Answer frameworks" },
+                    { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
+                  ]).map((prompt, i) => (
+                    <button key={i} onClick={() => { setInput(prompt.text); inputRef.current?.focus(); }}
+                      className="px-4 py-3 border border-gray-200 rounded-xl text-left hover:border-gray-300 hover:bg-gray-50 transition-all text-[13px] text-gray-600 leading-snug">
+                      {prompt.label} →
                     </button>
-                    <button 
-                      onClick={() => { setInput("Can you help me figure out what experiences and skills to include in my statement?"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Brainstorm what to include</div>
-                      <div className="text-xs text-gray-400">Identify your best experiences</div>
-                    </button>
-                    <button 
-                      onClick={() => { setInput("I've written a draft of my personal statement. Can you help me improve it?"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Review my draft</div>
-                      <div className="text-xs text-gray-400">Get feedback on what you've written</div>
-                    </button>
-                    <button 
-                      onClick={() => { setInput("What makes a personal statement stand out for competitive courses?"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">What makes a great PS?</div>
-                      <div className="text-xs text-gray-400">Learn what admissions tutors want</div>
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button 
-                      onClick={() => { setInput("Give me a practice interview question for my subject"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Give me a question</div>
-                      <div className="text-xs text-gray-400">Practise with real interview questions</div>
-                    </button>
-                    <button 
-                      onClick={() => { setInput("How should I structure my interview answers to impress?"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Answer frameworks</div>
-                      <div className="text-xs text-gray-400">Learn how to structure responses</div>
-                    </button>
-                    <button 
-                      onClick={() => { setInput("Run a full mock interview with me for medicine"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Mock interview</div>
-                      <div className="text-xs text-gray-400">Full practice session with feedback</div>
-                    </button>
-                    <button 
-                      onClick={() => { setInput("What are the most common mistakes in university interviews?"); inputRef.current?.focus(); }}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
-                    >
-                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Common mistakes</div>
-                      <div className="text-xs text-gray-400">Avoid what trips most people up</div>
-                    </button>
-                  </>
-                )}
+                  ))}
+                </div>
               </div>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-3xl mx-auto px-4 py-6 space-y-5">
               {messages.map((msg, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div className={`max-w-[80%]`}>
-                    {msg.role === 'assistant' && (
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <div className="w-6 h-6 gradient-primary rounded-md flex items-center justify-center">
-                          <GraduationCap className="w-3.5 h-3.5 text-white" />
-                        </div>
-                        <span className="text-xs font-medium text-gray-400">
-                          myunioffer
-                        </span>
-                      </div>
-                    )}
-                    <div className={`px-4 py-3 rounded-2xl text-[15px] leading-relaxed ${
-                      msg.role === 'user' 
-                        ? 'gradient-primary text-white rounded-br-md' 
-                        : msg.role === 'system'
-                          ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-bl-md'
-                          : 'bg-white border border-gray-100 rounded-bl-md shadow-sm'
-                    }`}>
-                      <div className={`whitespace-pre-wrap ${msg.role === 'assistant' ? 'prose-ai' : ''}`}>
-                        {msg.content}
+                <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
+                  {msg.role === 'user' ? (
+                    <div className="flex justify-end">
+                      <div className="max-w-[75%] gradient-primary text-white px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
+                        <div className="whitespace-pre-wrap">{msg.content}</div>
                       </div>
                     </div>
-                  </div>
+                  ) : msg.role === 'system' ? (
+                    <div className="flex justify-center">
+                      <div className="bg-amber-50 text-amber-700 border border-amber-200 px-4 py-2.5 rounded-xl text-[13px] max-w-md text-center">{msg.content}</div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-3">
+                      <div className="w-7 h-7 gradient-primary rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <GraduationCap className="w-3.5 h-3.5 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0 text-[15px] text-gray-800 leading-relaxed">
+                        <div className="whitespace-pre-wrap prose-ai">{msg.content}</div>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               ))}
-              
-              {/* Typing indicator */}
+
               {loading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md p-4 shadow-sm">
-                    <div className="flex items-center gap-2">
-                      <div className="flex gap-1.5">
-                        <div className="w-2 h-2 bg-coral-400 rounded-full typing-dot" />
-                        <div className="w-2 h-2 bg-coral-400 rounded-full typing-dot" />
-                        <div className="w-2 h-2 bg-coral-400 rounded-full typing-dot" />
-                      </div>
-                      {serverWaking && (
-                        <span className="text-xs text-gray-400 ml-2">
-                          Server waking up...
-                        </span>
-                      )}
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
+                  <div className="w-7 h-7 gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                    <GraduationCap className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <div className="pt-2">
+                    <div className="flex gap-1.5">
+                      <div className="w-2 h-2 bg-gray-300 rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-gray-300 rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-gray-300 rounded-full typing-dot" />
                     </div>
+                    {serverWaking && <span className="text-[11px] text-gray-400 mt-1 block">Waking up server...</span>}
                   </div>
                 </motion.div>
               )}
-              
+
               <div ref={messagesEndRef} />
             </div>
           )}
         </div>
 
-        {/* Error Banner */}
         {error && (
           <div className="px-4 pb-2">
-            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-700 text-sm">
-              <AlertCircle className="w-4 h-4 flex-shrink-0" />
-              {error}
-              <button 
-                onClick={() => setError(null)}
-                className="ml-auto text-amber-500 hover:text-amber-700"
-              >
-                <X className="w-4 h-4" />
-              </button>
+            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-600 text-[13px]">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />{error}
+              <button onClick={() => setError(null)} className="ml-auto text-red-400 hover:text-red-600"><X className="w-4 h-4" /></button>
             </div>
           </div>
         )}
 
         {/* Input */}
-        <div className="flex-shrink-0 p-4 border-t border-gray-100 bg-white">
+        <div className="flex-shrink-0 px-4 pb-4 pt-2">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="relative flex items-end gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-coral-300 focus-within:ring-2 focus-within:ring-coral-100 transition-all">
-              <button
-                type="button"
-                onClick={handleNewChat}
-                className="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-lg transition-colors mb-0.5"
-                title="New chat"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-              <textarea
-                ref={inputRef}
-                value={input}
-                onChange={(e) => {
-                  setInput(e.target.value);
-                  e.target.style.height = 'auto';
-                  e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    handleSubmit(e);
-                  }
-                }}
-                placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask for a practice question..."}
-                className="flex-1 bg-transparent border-none outline-none resize-none text-gray-900 placeholder-gray-400 text-[15px] leading-relaxed max-h-[120px]"
-                rows={1}
-                disabled={loading}
-              />
-              <button
-                type="submit"
-                disabled={loading || !input.trim()}
-                className="flex-shrink-0 w-8 h-8 gradient-primary rounded-lg flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all mb-0.5"
-              >
-                <Send className="w-4 h-4" />
-              </button>
+            <div className="relative bg-gray-50 border border-gray-200 rounded-2xl focus-within:border-gray-300 focus-within:shadow-sm transition-all">
+              <textarea ref={inputRef} value={input}
+                onChange={(e) => { setInput(e.target.value); e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
+                onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
+                placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask me anything about interviews..."}
+                className="w-full bg-transparent border-none outline-none resize-none text-gray-900 placeholder-gray-400 text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
+                rows={1} disabled={loading} />
+              <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
+                <button type="button" onClick={handleNewChat} className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-200/60 rounded-md transition-colors" title="New chat">
+                  <Plus className="w-4 h-4" />
+                </button>
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] text-gray-400">{usage.used}/{usage.limit}</span>
+                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 gradient-primary rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all">
+                    <Send className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">
-              <span>{usage.used}/{usage.limit} messages today</span>
-              {usage.used >= usage.limit && (
-                <Link to="/pricing" className="text-coral-500 hover:text-coral-600 font-medium">
-                  Upgrade →
-                </Link>
-              )}
-            </div>
+            {usage.used >= usage.limit && (
+              <div className="text-center mt-2">
+                <Link to="/pricing" className="text-[12px] text-coral-500 hover:text-coral-600 font-medium">Daily limit reached — upgrade for more →</Link>
+              </div>
+            )}
           </form>
         </div>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Sidebar */}
       <AnimatePresence>
-        {showSidebar && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/50 z-40 md:hidden"
-              onClick={() => setShowSidebar(false)}
-            />
-            <motion.aside
-              initial={{ x: -280 }}
-              animate={{ x: 0 }}
-              exit={{ x: -280 }}
-              transition={{ type: 'spring', damping: 25 }}
-              className="fixed inset-y-0 left-0 w-72 bg-white z-50 md:hidden flex flex-col shadow-xl"
-            >
-              {/* Mobile sidebar header */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-100">
-                <Link to="/" className="flex items-center gap-2">
-                  <div className="w-9 h-9 gradient-primary rounded-lg flex items-center justify-center">
-                    <GraduationCap className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-lg font-display font-bold">
-                    myuni<span className="text-coral-500">offer</span>
-                  </span>
-                </Link>
-                <button 
-                  onClick={() => setShowSidebar(false)} 
-                  className="p-2 text-gray-400 hover:text-gray-600"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* New Chat Button */}
-              <div className="p-3">
-                <button
-                  onClick={handleNewChat}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 gradient-primary text-white rounded-xl font-medium"
-                >
-                  <Plus className="w-4 h-4" />
-                  New Chat
-                </button>
-              </div>
-
-              {/* Chat History */}
-              <div className="flex-1 overflow-y-auto px-3">
-                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 px-2">
-                  Recent Chats
+        {showSidebar && (<>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/30 z-40 md:hidden" onClick={() => setShowSidebar(false)} />
+          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] bg-gray-50 z-50 md:hidden flex flex-col">
+            <div className="flex items-center justify-between px-5 py-4">
+              <Link to="/" className="flex items-center gap-2">
+                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center"><GraduationCap className="w-4 h-4 text-white" /></div>
+                <span className="font-display font-bold text-gray-900">myuni<span className="text-coral-500">offer</span></span>
+              </Link>
+              <button onClick={() => setShowSidebar(false)} className="p-1.5 text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+            </div>
+            <div className="px-3 mb-1">
+              <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-200/60 rounded-lg transition-colors border border-gray-200">
+                <Plus className="w-4 h-4" /> New chat
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto px-3 mt-3">
+              {recentChats.length === 0 ? (
+                <div className="text-xs text-gray-400 px-2 py-8 text-center">Your conversations will appear here</div>
+              ) : (
+                <div className="space-y-0.5">
+                  <div className="text-[11px] font-medium text-gray-400 uppercase tracking-wider px-2 mb-2">Recent</div>
+                  {recentChats.map(chat => (
+                    <button key={chat.id} onClick={() => handleSelectChat(chat)}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-gray-200/70 text-gray-900' : 'text-gray-600 hover:bg-gray-200/40'}`}>
+                      <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
+                      <span className="flex-1 truncate">{chat.title}</span>
+                    </button>
+                  ))}
                 </div>
-                {recentChats.length === 0 ? (
-                  <div className="text-sm text-gray-400 px-2 py-4">
-                    No chats yet
-                  </div>
-                ) : (
-                  <div className="space-y-1">
-                    {recentChats.map(chat => (
-                      <button
-                        key={chat.id}
-                        onClick={() => handleSelectChat(chat)}
-                        className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-sm ${
-                          currentChatId === chat.id 
-                            ? 'bg-coral-50 text-coral-700' 
-                            : 'text-gray-600 hover:bg-gray-50'
-                        }`}
-                      >
-                        <MessageSquare className="w-4 h-4 flex-shrink-0 opacity-50" />
-                        <span className="flex-1 truncate">{chat.title}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* User Section */}
-              <div className="p-3 border-t border-gray-100">
-                <div className="text-sm text-gray-500 mb-3 px-2">
-                  {usage.used}/{usage.limit} messages used today
-                </div>
-                <div className="space-y-1">
-                  <Link 
-                    to="/pricing" 
-                    className="flex items-center gap-3 px-3 py-2 text-coral-600 bg-coral-50 rounded-lg text-sm font-medium"
-                    onClick={() => setShowSidebar(false)}
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    Upgrade Plan
-                  </Link>
-                  <Link 
-                    to="/settings" 
-                    className="flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg text-sm"
-                    onClick={() => setShowSidebar(false)}
-                  >
-                    <Settings className="w-4 h-4" />
-                    Settings
-                  </Link>
-                  <button
-                    onClick={handleSwitchAccount}
-                    className="w-full flex items-center gap-3 px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg text-sm"
-                  >
-                    <RefreshCw className="w-4 h-4" />
-                    Switch Account
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg text-sm"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </motion.aside>
-          </>
-        )}
+              )}
+            </div>
+            <div className="p-3 border-t border-gray-200/60">
+              <div className="text-[12px] text-gray-400 mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-600 hover:bg-coral-50 rounded-lg font-medium" onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+              <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-600 hover:bg-gray-200/40 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+              <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-gray-500 hover:bg-gray-200/40 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+            </div>
+          </motion.aside>
+        </>)}
       </AnimatePresence>
     </div>
   );
