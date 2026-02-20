@@ -444,13 +444,13 @@ export default function Chat() {
             </div>
 
             {/* Center: Mode Toggle */}
-            <div className="flex bg-gray-100 p-1 rounded-xl">
+            <div className="flex bg-gray-100 p-0.5 rounded-lg">
               <button
                 onClick={() => setMode('ps')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
                   mode === 'ps' 
                     ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <span className="hidden sm:inline">Personal Statement</span>
@@ -458,10 +458,10 @@ export default function Chat() {
               </button>
               <button
                 onClick={() => setMode('interview')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
                   mode === 'interview' 
                     ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <span className="hidden sm:inline">Interview Prep</span>
@@ -544,21 +544,17 @@ export default function Chat() {
         {/* Messages Area */}
         <div className="flex-1 overflow-y-auto px-4 py-6">
           {messages.length === 0 ? (
-            <div className="max-w-2xl mx-auto h-full flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 gradient-primary rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-coral-500/20">
-                {mode === 'ps' ? (
-                  <FileText className="w-8 h-8 text-white" />
-                ) : (
-                  <MessageSquare className="w-8 h-8 text-white" />
-                )}
+            <div className="max-w-2xl mx-auto h-full flex flex-col items-center justify-center text-center px-4">
+              <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mb-5 shadow-lg shadow-coral-500/20">
+                <GraduationCap className="w-7 h-7 text-white" />
               </div>
               <h2 className="text-2xl font-display font-bold text-gray-900 mb-2">
-                {mode === 'ps' ? 'Personal Statement Coach' : 'Interview Preparation'}
+                {mode === 'ps' ? 'Personal Statement Coach' : 'Interview Coach'}
               </h2>
-              <p className="text-gray-500 mb-8 max-w-md">
+              <p className="text-gray-500 mb-10 max-w-md text-sm leading-relaxed">
                 {mode === 'ps' 
-                  ? "I'll help you discover and articulate your unique story. Tell me about yourself and what you want to study."
-                  : "Let's practice interview questions together. Tell me what subject you're applying for."
+                  ? "Tell me what you're applying for and I'll help you craft a personal statement that's authentically yours. I won't write it for you — I'll ask the questions that help you figure out what to say."
+                  : "Tell me your subject and I'll prepare you with real interview questions from top universities. We'll practise together until you feel confident walking into that room."
                 }
               </p>
 
@@ -567,35 +563,63 @@ export default function Chat() {
                 {mode === 'ps' ? (
                   <>
                     <button 
-                      onClick={() => setInput("I want to study medicine and I'm not sure how to start my personal statement")}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all"
+                      onClick={() => { setInput("I'm applying for medicine at KCL and UCL. I'm not sure how to start my personal statement."); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
                     >
-                      <div className="text-sm font-medium text-gray-900 mb-1">Start my statement</div>
-                      <div className="text-xs text-gray-500">Get help with structure and opening</div>
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Help me start my PS</div>
+                      <div className="text-xs text-gray-400">Structure, opening lines, and direction</div>
                     </button>
                     <button 
-                      onClick={() => setInput("Can you help me brainstorm experiences to include in my statement?")}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all"
+                      onClick={() => { setInput("Can you help me figure out what experiences and skills to include in my statement?"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
                     >
-                      <div className="text-sm font-medium text-gray-900 mb-1">Brainstorm experiences</div>
-                      <div className="text-xs text-gray-500">Identify what to include</div>
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Brainstorm what to include</div>
+                      <div className="text-xs text-gray-400">Identify your best experiences</div>
+                    </button>
+                    <button 
+                      onClick={() => { setInput("I've written a draft of my personal statement. Can you help me improve it?"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
+                    >
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Review my draft</div>
+                      <div className="text-xs text-gray-400">Get feedback on what you've written</div>
+                    </button>
+                    <button 
+                      onClick={() => { setInput("What makes a personal statement stand out for competitive courses?"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
+                    >
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">What makes a great PS?</div>
+                      <div className="text-xs text-gray-400">Learn what admissions tutors want</div>
                     </button>
                   </>
                 ) : (
                   <>
                     <button 
-                      onClick={() => setInput("Give me a practice interview question for medicine")}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all"
+                      onClick={() => { setInput("Give me a practice interview question for my subject"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
                     >
-                      <div className="text-sm font-medium text-gray-900 mb-1">Practice questions</div>
-                      <div className="text-xs text-gray-500">Get real interview questions</div>
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Give me a question</div>
+                      <div className="text-xs text-gray-400">Practise with real interview questions</div>
                     </button>
                     <button 
-                      onClick={() => setInput("How should I structure my interview answers?")}
-                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all"
+                      onClick={() => { setInput("How should I structure my interview answers to impress?"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
                     >
-                      <div className="text-sm font-medium text-gray-900 mb-1">Answer frameworks</div>
-                      <div className="text-xs text-gray-500">Learn how to structure responses</div>
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Answer frameworks</div>
+                      <div className="text-xs text-gray-400">Learn how to structure responses</div>
+                    </button>
+                    <button 
+                      onClick={() => { setInput("Run a full mock interview with me for medicine"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
+                    >
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Mock interview</div>
+                      <div className="text-xs text-gray-400">Full practice session with feedback</div>
+                    </button>
+                    <button 
+                      onClick={() => { setInput("What are the most common mistakes in university interviews?"); inputRef.current?.focus(); }}
+                      className="p-4 bg-white border border-gray-200 rounded-xl text-left hover:border-coral-300 hover:shadow-sm transition-all group"
+                    >
+                      <div className="text-sm font-medium text-gray-900 mb-1 group-hover:text-coral-600 transition-colors">Common mistakes</div>
+                      <div className="text-xs text-gray-400">Avoid what trips most people up</div>
                     </button>
                   </>
                 )}
@@ -610,22 +634,22 @@ export default function Chat() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[85%] ${msg.role === 'user' ? 'order-2' : ''}`}>
+                  <div className={`max-w-[80%]`}>
                     {msg.role === 'assistant' && (
-                      <div className="flex items-center gap-2 mb-2">
-                        <div className="w-6 h-6 gradient-primary rounded-lg flex items-center justify-center">
-                          <Sparkles className="w-3 h-3 text-white" />
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <div className="w-6 h-6 gradient-primary rounded-md flex items-center justify-center">
+                          <GraduationCap className="w-3.5 h-3.5 text-white" />
                         </div>
-                        <span className="text-xs font-medium text-gray-500">
-                          myunioffer AI
+                        <span className="text-xs font-medium text-gray-400">
+                          myunioffer
                         </span>
                       </div>
                     )}
-                    <div className={`p-4 rounded-2xl ${
+                    <div className={`px-4 py-3 rounded-2xl text-[15px] leading-relaxed ${
                       msg.role === 'user' 
-                        ? 'gradient-primary text-white rounded-br-md' 
+                        ? 'bg-gray-900 text-white rounded-br-md' 
                         : msg.role === 'system'
-                          ? 'bg-amber-50 text-amber-800 border border-amber-200'
+                          ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-bl-md'
                           : 'bg-white border border-gray-100 rounded-bl-md shadow-sm'
                     }`}>
                       <div className={`whitespace-pre-wrap ${msg.role === 'assistant' ? 'prose-ai' : ''}`}>
@@ -684,37 +708,47 @@ export default function Chat() {
         {/* Input */}
         <div className="flex-shrink-0 p-4 border-t border-gray-100 bg-white">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="flex gap-3">
+            <div className="relative flex items-end gap-2 bg-gray-50 border border-gray-200 rounded-2xl px-4 py-3 focus-within:border-coral-300 focus-within:ring-2 focus-within:ring-coral-100 transition-all">
               <button
                 type="button"
                 onClick={handleNewChat}
-                className="flex-shrink-0 w-11 h-11 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-xl transition-colors"
+                className="flex-shrink-0 w-8 h-8 flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-lg transition-colors mb-0.5"
                 title="New chat"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-4 h-4" />
               </button>
-              <input
+              <textarea
                 ref={inputRef}
-                type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={mode === 'ps' ? "Tell me about yourself and what you want to study..." : "Ask for a practice question or interview help..."}
-                className="input flex-1"
+                onChange={(e) => {
+                  setInput(e.target.value);
+                  e.target.style.height = 'auto';
+                  e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                  }
+                }}
+                placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask for a practice question..."}
+                className="flex-1 bg-transparent border-none outline-none resize-none text-gray-900 placeholder-gray-400 text-[15px] leading-relaxed max-h-[120px]"
+                rows={1}
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="flex-shrink-0 w-11 h-11 gradient-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-coral-500/25 hover:shadow-coral-500/35 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                className="flex-shrink-0 w-8 h-8 gradient-primary rounded-lg flex items-center justify-center text-white disabled:opacity-30 disabled:cursor-not-allowed transition-all mb-0.5"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-4 h-4" />
               </button>
             </div>
-            <div className="flex items-center justify-center gap-2 mt-2 text-xs text-gray-400">
+            <div className="flex items-center justify-center gap-3 mt-2 text-xs text-gray-400">
               <span>{usage.used}/{usage.limit} messages today</span>
               {usage.used >= usage.limit && (
                 <Link to="/pricing" className="text-coral-500 hover:text-coral-600 font-medium">
-                  Upgrade for more →
+                  Upgrade →
                 </Link>
               )}
             </div>
