@@ -647,7 +647,7 @@ export default function Chat() {
                     )}
                     <div className={`px-4 py-3 rounded-2xl text-[15px] leading-relaxed ${
                       msg.role === 'user' 
-                        ? 'bg-gray-900 text-white rounded-br-md' 
+                        ? 'gradient-primary text-white rounded-br-md' 
                         : msg.role === 'system'
                           ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-bl-md'
                           : 'bg-white border border-gray-100 rounded-bl-md shadow-sm'
