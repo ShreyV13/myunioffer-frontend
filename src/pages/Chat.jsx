@@ -39,6 +39,7 @@ export default function Chat() {
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const activeChatRef = useRef(null);
   
   const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
@@ -147,6 +148,7 @@ export default function Chat() {
     if (!currentChatId) {
       const newChatId = 'chat_' + Date.now();
       setCurrentChatId(newChatId);
+      activeChatRef.current = newChatId;
       setChats(prev => [{
         id: newChatId,
         title: chatTitle,
@@ -257,15 +259,19 @@ export default function Chat() {
   }
 
   function handleNewChat() {
+    if (loading) return; // Don't create new chat while waiting for response
     setMessages([]);
     setCurrentChatId(null);
+    activeChatRef.current = null;
     setSessionId('session_' + Math.random().toString(36).substr(2, 9));
     setError(null);
     setShowSidebar(false);
   }
 
   function handleSelectChat(chat) {
+    if (loading) return; // Don't switch while waiting for response
     setCurrentChatId(chat.id);
+    activeChatRef.current = chat.id;
     setMode(chat.mode);
     setSessionId(chat.sessionId || 'session_' + Math.random().toString(36).substr(2, 9));
     setMessages(chat.messages || []);
@@ -346,8 +352,8 @@ export default function Chat() {
               {recentChats.map(chat => (
                 <button key={chat.id} onClick={() => handleSelectChat(chat)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] transition-colors group ${
-                    currentChatId === chat.id ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/6'
-                  }`}>
+                    currentChatId === chat.id ? 'bg-white/10 text-white' : 'hover:bg-white/6'
+                  }`} style={currentChatId !== chat.id ? {color: '#bbb'} : {}}>
                   <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-50" />
                   <span className="flex-1 truncate">{chat.title}</span>
                   <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-white/10 rounded transition-all">
@@ -366,7 +372,7 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px] text-white/50">{planName} · {usage.limit - usage.used} left</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">
@@ -375,10 +381,10 @@ export default function Chat() {
                 <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
               </Link>
             )}
-            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/6 rounded-lg transition-colors">
+            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors" style={{color: '#bbb'}}>
               <Settings className="w-3.5 h-3.5" /> Settings
             </Link>
-            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/6 rounded-lg transition-colors">
+            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors" style={{color: '#999'}}>
               <LogOut className="w-3.5 h-3.5" /> Sign out
             </button>
           </div>
@@ -400,15 +406,15 @@ export default function Chat() {
               </Link>
             </div>
             <div className="flex p-0.5 rounded-lg bg-white/8">
-              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'text-white/60 hover:text-white/80'}`}>
+              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'ps' ? {color: '#aaa'} : {}}>
                 <span className="hidden sm:inline">Personal Statement</span><span className="sm:hidden">PS</span>
               </button>
-              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white/12 text-white' : 'text-white/60 hover:text-white/80'}`}>
+              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'interview' ? {color: '#aaa'} : {}}>
                 <span className="hidden sm:inline">Interview Prep</span><span className="sm:hidden">Interview</span>
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[12px] text-white/50 hidden sm:inline">{usage.limit - usage.used} left</span>
+              <span className="text-[13px] hidden sm:inline" style={{color: '#aaa'}}>{usage.limit - usage.used} messages left</span>
               <div className="md:hidden relative">
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-white/8 rounded-lg">
                   <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-white/60" /></div>
@@ -461,7 +467,7 @@ export default function Chat() {
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
                   ]).map((prompt, i) => (
                     <button key={i} onClick={() => { setInput(prompt.text); inputRef.current?.focus(); }}
-                      className="px-4 py-3 rounded-xl text-left hover:bg-white/8 transition-all text-[13px] text-white/70 leading-snug" style={{border: '1px solid rgba(255,255,255,0.1)'}}>
+                      className="px-4 py-3 rounded-xl text-left hover:bg-white/8 transition-all text-[13px] leading-snug" style={{border: '1px solid rgba(255,255,255,0.12)', color: '#ccc'}}>
                       {prompt.label} →
                     </button>
                   ))}
@@ -487,7 +493,7 @@ export default function Chat() {
                       <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
-                      <div className="flex-1 min-w-0 text-[15px] text-white/90 leading-relaxed">
+                      <div className="flex-1 min-w-0 text-[15px] leading-relaxed" style={{color: '#eee'}}>
                         <div className="whitespace-pre-wrap prose-ai">{msg.content}</div>
                       </div>
                     </div>
@@ -540,7 +546,7 @@ export default function Chat() {
                   <Plus className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] text-white/40">{usage.used}/{usage.limit}</span>
+                  <span className="text-[12px]" style={{color: '#999'}}>{usage.used}/{usage.limit}</span>
                   <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
                     <Send className="w-4 h-4" />
                   </button>

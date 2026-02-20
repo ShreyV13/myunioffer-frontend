@@ -212,7 +212,8 @@ body {
 
 /* Prose styling for AI responses */
 .prose-ai {
-  @apply text-gray-700 leading-relaxed;
+  @apply leading-relaxed;
+  color: inherit;
 }
 
 .prose-ai p {
@@ -232,7 +233,9 @@ body {
 }
 
 .prose-ai strong {
-  @apply font-semibold text-gray-900;
+  @apply font-semibold;
+  color: inherit;
+  opacity: 1;
 }
 
 /* Mobile optimizations */
