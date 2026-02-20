@@ -14,7 +14,14 @@ import {
   Brain,
   Target,
   Users,
-  Zap
+  Zap,
+  Stethoscope,
+  Code,
+  TrendingUp,
+  BookOpen,
+  Palette,
+  Gift,
+  CalendarCheck
 } from 'lucide-react';
 
 export default function Landing() {
@@ -25,29 +32,56 @@ export default function Landing() {
     {
       icon: Brain,
       title: "AI That Guides, Not Writes",
-      description: "Our AI asks the right questions to help you discover your authentic story. Your statement stays yours."
+      description: "Our AI asks the right questions to help you discover your authentic story. Your statement stays genuinely yours."
     },
     {
       icon: Target,
-      title: "1000+ Resources",
-      description: "Access interview questions, sample answers, and personal statements from Oxford, Cambridge, and top UK universities."
+      title: "370+ Real Resources",
+      description: "Access 250 real interview questions and 124 successful personal statements from Oxford, Cambridge, and top UK universities."
     },
     {
       icon: Users,
       title: "Subject-Specific Coaching",
-      description: "Tailored guidance for Medicine, STEM, Economics, Humanities, Arts and more."
+      description: "Tailored guidance for Medicine, STEM, Economics, Humanities, and Arts — each backed by a real student specialist."
     },
     {
       icon: Zap,
       title: "Instant Expert Feedback",
-      description: "Get thoughtful guidance anytime, no waiting for appointments or tutors."
+      description: "Get thoughtful guidance anytime, day or night. No waiting for appointments or tutors — start immediately."
     }
+  ];
+
+  const steps = [
+    {
+      number: "1",
+      title: "Choose your subject",
+      description: "Medicine, STEM, Economics, Humanities, or Arts — pick your area and get matched with a specialist AI coach."
+    },
+    {
+      number: "2",
+      title: "Chat with your coach",
+      description: "The AI asks thoughtful questions to help you discover your authentic story. It guides — it never writes for you."
+    },
+    {
+      number: "3",
+      title: "Stand out & get in",
+      description: "Build a personal statement and interview confidence that shows the real you to admissions tutors."
+    }
+  ];
+
+  const coaches = [
+    { icon: Stethoscope, subject: "Medicine", detail: "Healthcare, Dentistry, Veterinary", status: "Specialist" },
+    { icon: Code, subject: "STEM", detail: "Comp Sci, Engineering, Maths, Physics", status: "Specialist" },
+    { icon: TrendingUp, subject: "Economics", detail: "Economics, Finance, Business, PPE", status: "Specialist" },
+    { icon: BookOpen, subject: "Humanities", detail: "History, Law, English, Psychology", status: "Specialist" },
+    { icon: Palette, subject: "Arts", detail: "Architecture, Art, Music, Design", status: "Coming Soon" },
   ];
 
   const plans = [
     { 
       name: 'Free', 
-      price: 0, 
+      price: '0',
+      originalPrice: null,
       desc: 'Try it out',
       features: ['3 messages per day', 'All subjects', 'Basic coaching'],
       cta: 'Get Started',
@@ -55,41 +89,31 @@ export default function Landing() {
     },
     { 
       name: 'Personal Statement', 
-      price: 19, 
+      price: '11.99',
+      originalPrice: '14.99',
       desc: 'Perfect your statement',
-      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', 'Sample statements'],
+      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', '124 sample statements'],
       cta: 'Start Now',
       featured: false
     },
     { 
       name: 'Premium', 
-      price: 39, 
-      desc: 'Complete preparation',
-      features: ['200 messages per day', 'PS + Interview prep', '1000+ resources', 'Priority support'],
+      price: '16.99',
+      originalPrice: '19.99',
+      desc: 'PS + Interview prep',
+      features: ['200 messages per day', 'PS + Interview coaching', 'All subjects', '370+ resources', 'Priority support'],
       cta: 'Go Premium',
       featured: true
     },
-  ];
-
-  const testimonials = [
     { 
-      text: "The AI asked exactly the questions I needed to think about. My personal statement went from generic to genuinely personal.", 
-      name: "Sarah K.", 
-      school: "Cambridge Medicine",
-      rating: 5
+      name: 'Interview Prep', 
+      price: '11.99',
+      originalPrice: '14.99',
+      desc: 'Ace your interviews',
+      features: ['50 messages per day', 'All subjects', '250 real interview questions', 'Interview coaching'],
+      cta: 'Start Now',
+      featured: false
     },
-    { 
-      text: "Interview practice felt so real. When I got to the actual interview, I'd already thought through most of the questions.", 
-      name: "James L.", 
-      school: "Oxford PPE",
-      rating: 5
-    },
-    { 
-      text: "Finally, something that helps you think instead of just writing for you. My statement sounds like ME now.", 
-      name: "Priya M.", 
-      school: "Imperial CS",
-      rating: 5
-    }
   ];
 
   const faqs = [
@@ -98,20 +122,24 @@ export default function Landing() {
       a: "No. We believe your statement should be authentically yours. Our AI coaches ask thoughtful questions to help you discover and articulate your own story. We guide your thinking — we never write for you."
     },
     {
-      q: "What resources do you have?",
-      a: "We have over 1000 resources including real interview questions, sample answers, and successful personal statements from Oxford, Cambridge, and other top UK universities."
+      q: "How is this different from ChatGPT?",
+      a: "Our AI is specifically built for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to 250+ real interview questions and 124 successful personal statements — not generic advice."
+    },
+    {
+      q: "What subjects do you cover?",
+      a: "We have specialist AI coaches for Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business (including PPE), Humanities (History, Law, English, Psychology), and Arts (Architecture, Art, Music, Design)."
     },
     {
       q: "Can I cancel anytime?",
       a: "Yes, absolutely. There are no contracts or commitments. You can cancel your subscription at any time and continue using the service until the end of your billing period."
     },
     {
-      q: "What subjects do you cover?",
-      a: "We have specialist AI coaches for Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business, Humanities (History, Law, English, Philosophy, PPE), Arts (Art, Music, Architecture), and many more."
+      q: "Who are the specialist coaches?",
+      a: "Our coaches are current students at top UK universities (LSE, KCL, Oxford, Cambridge and more) who successfully went through the same application process. They help train the AI for their subject area and offer optional 1-on-1 sessions."
     },
     {
-      q: "How is this different from ChatGPT?",
-      a: "Our AI is specifically trained for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to over 1000 interview questions, sample answers, and successful personal statements."
+      q: "What are 1-on-1 sessions?",
+      a: "You can book a personal session with a real student specialist from your chosen subject area for tailored PS feedback or mock interview practice. Sessions are £19.99 each, or subscribe for 3 months and get a free session included."
     }
   ];
 
@@ -132,7 +160,8 @@ export default function Landing() {
             
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Features</a>
+              <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
+              <a href="#coaches" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Coaches</a>
               <a href="#pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
               <a href="#faq" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">FAQ</a>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Login</Link>
@@ -158,7 +187,8 @@ export default function Landing() {
               className="md:hidden pt-4 pb-2 border-t border-gray-100 mt-4"
             >
               <div className="flex flex-col gap-3">
-                <a href="#features" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Features</a>
+                <a href="#how-it-works" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
+                <a href="#coaches" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Coaches</a>
                 <a href="#pricing" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
                 <a href="#faq" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
                 <Link to="/login" className="text-gray-600 py-2 font-medium">Login</Link>
@@ -202,7 +232,7 @@ export default function Landing() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Personal statement coaching and interview preparation powered by AI. 
-            Expert guidance, real questions, authentic results.
+            Guided by real students from top UK universities.
           </motion.p>
 
           <motion.div 
@@ -214,23 +244,65 @@ export default function Landing() {
             <Link to="/signup" className="btn-primary text-lg px-8 py-4">
               Start Free <ArrowRight className="w-5 h-5" />
             </Link>
-            <a href="#features" className="btn-secondary text-lg px-8 py-4">
+            <a href="#how-it-works" className="btn-secondary text-lg px-8 py-4">
               See How It Works
             </a>
           </motion.div>
 
           {/* Stats */}
           <motion.div 
-            className="flex justify-center mt-16"
+            className="flex flex-wrap justify-center gap-6 mt-16"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">1000+</div>
-              <div className="text-gray-500 text-sm mt-1">Interview questions, sample answers & personal statements</div>
+            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">124</div>
+              <div className="text-gray-500 text-sm mt-1">Personal Statements</div>
+            </div>
+            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">250</div>
+              <div className="text-gray-500 text-sm mt-1">Interview Questions</div>
+            </div>
+            <div className="text-center px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">5</div>
+              <div className="text-gray-500 text-sm mt-1">Subject Specialisms</div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section id="how-it-works" className="py-24 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">How it works</h2>
+            <p className="text-gray-600">Three steps to a standout application</p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {steps.map((step, i) => (
+              <motion.div 
+                key={i}
+                className="card card-hover p-8 text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mx-auto mb-5">
+                  <span className="text-white font-display font-bold text-lg">{step.number}</span>
+                </div>
+                <h3 className="text-xl font-display font-bold mb-2 text-gray-900">{step.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -243,7 +315,7 @@ export default function Landing() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why students love us</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why students choose us</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">Everything you need to craft a standout application</p>
           </motion.div>
 
@@ -271,9 +343,65 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Coaches */}
+      <section id="coaches" className="py-24 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Meet your specialist coaches</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Real students from top UK universities backing each subject area</p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {coaches.map((coach, i) => {
+              const Icon = coach.icon;
+              return (
+                <motion.div 
+                  key={i}
+                  className="card card-hover p-6 text-center"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                >
+                  <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="font-display font-bold text-gray-900 mb-1">{coach.subject}</h3>
+                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">{coach.detail}</p>
+                  <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
+                    coach.status === 'Coming Soon' 
+                      ? 'bg-gray-100 text-gray-500' 
+                      : 'bg-coral-50 text-coral-600'
+                  }`}>
+                    {coach.status}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          <motion.p 
+            className="text-center text-gray-500 mt-8 text-sm"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            Each area coached by verified students from LSE, KCL, Oxford, Cambridge & more.{' '}
+            <a href="mailto:hello@myunioffer.ai" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
+              Interested in becoming a coach? Get in touch →
+            </a>
+          </motion.p>
+        </div>
+      </section>
+
       {/* Pricing */}
-      <section id="pricing" className="py-24 px-6">
-        <div className="max-w-5xl mx-auto">
+      <section id="pricing" className="py-24 px-6 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -281,14 +409,14 @@ export default function Landing() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Simple, transparent pricing</h2>
-            <p className="text-gray-600">Start free, upgrade when you're ready</p>
+            <p className="text-gray-600">Start free, upgrade when you're ready. Application season discount active.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {plans.map((plan, i) => (
               <motion.div 
                 key={i}
-                className={`card p-8 relative ${
+                className={`card p-7 relative ${
                   plan.featured 
                     ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
                     : ''
@@ -300,18 +428,22 @@ export default function Landing() {
               >
                 {plan.featured && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
-                    Most Popular
+                    Best Value
                   </div>
                 )}
                 <div className="text-sm font-semibold text-gray-500 mb-2">{plan.name}</div>
-                <div className="text-4xl font-display font-bold mb-1 text-gray-900">
-                  £{plan.price}<span className="text-base font-normal text-gray-500">/mo</span>
+                <div className="mb-1">
+                  <span className="text-3xl font-display font-bold text-gray-900">£{plan.price}</span>
+                  <span className="text-sm font-normal text-gray-500">/mo</span>
+                  {plan.originalPrice && (
+                    <span className="text-sm text-gray-400 line-through ml-2">£{plan.originalPrice}</span>
+                  )}
                 </div>
-                <div className="text-gray-600 text-sm mb-6">{plan.desc}</div>
-                <ul className="space-y-3 mb-8">
+                <div className="text-gray-600 text-sm mb-5">{plan.desc}</div>
+                <ul className="space-y-2.5 mb-7">
                   {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm text-gray-600">
-                      <Check className="w-5 h-5 text-coral-500 flex-shrink-0" />
+                    <li key={j} className="flex items-center gap-2.5 text-sm text-gray-600">
+                      <Check className="w-4 h-4 text-coral-500 flex-shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -329,44 +461,35 @@ export default function Landing() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Testimonials */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+          {/* Session Banner */}
           <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
+            className="mt-10 card p-8 flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">What students say</h2>
+            <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center flex-shrink-0">
+              <CalendarCheck className="w-7 h-7 text-white" />
+            </div>
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-xl font-display font-bold text-gray-900 mb-1">1-on-1 Sessions with a Specialist</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                Get matched with a real student from your chosen degree area for personalised PS feedback or mock interview practice.
+              </p>
+              <div className="inline-flex items-center gap-2 mt-3 px-3 py-1.5 bg-amber-50 border border-amber-100 rounded-full text-amber-700 text-xs font-semibold">
+                <Gift className="w-3.5 h-3.5" />
+                Subscribe for 3 months → get 1 free session in month 3
+              </div>
+            </div>
+            <div className="text-center flex-shrink-0">
+              <div className="text-3xl font-display font-bold text-coral-500">£19.99</div>
+              <div className="text-gray-500 text-sm">per session</div>
+              <Link to="/signup" className="btn-primary mt-3 text-sm px-5 py-2.5">
+                Book a Session
+              </Link>
+            </div>
           </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, i) => (
-              <motion.div 
-                key={i}
-                className="card p-8"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <div className="flex gap-1 mb-4">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-                <p className="text-gray-600 mb-6 leading-relaxed">"{testimonial.text}"</p>
-                <div>
-                  <div className="font-semibold text-gray-900">{testimonial.name}</div>
-                  <div className="text-sm text-gray-500">{testimonial.school}</div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 

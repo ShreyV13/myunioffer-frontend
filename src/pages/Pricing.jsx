@@ -21,14 +21,15 @@ export default function Pricing() {
     {
       id: 'ps',
       name: 'Personal Statement',
-      price: 19,
+      price: '11.99',
+      originalPrice: '14.99',
       description: 'Perfect your statement',
       icon: Sparkles,
       features: [
         '50 messages per day',
         'All subjects',
         'Advanced PS coaching',
-        'Sample statements',
+        '124 sample statements',
         'Email support'
       ],
       color: 'coral'
@@ -36,14 +37,15 @@ export default function Pricing() {
     {
       id: 'premium',
       name: 'Premium',
-      price: 39,
-      description: 'Complete preparation',
+      price: '16.99',
+      originalPrice: '19.99',
+      description: 'PS + Interview prep',
       icon: Crown,
       features: [
         '200 messages per day',
-        'PS + Interview prep',
+        'PS + Interview coaching',
         'All subjects',
-        '1000+ resources',
+        '370+ resources',
         'Priority support'
       ],
       color: 'amber',
@@ -52,14 +54,15 @@ export default function Pricing() {
     {
       id: 'interview',
       name: 'Interview Prep',
-      price: 19,
+      price: '11.99',
+      originalPrice: '14.99',
       description: 'Ace your interviews',
       icon: Zap,
       features: [
         '50 messages per day',
         'All subjects',
-        'Real interview questions',
-        'Sample answers',
+        '250 real interview questions',
+        'Interview coaching',
         'Email support'
       ],
       color: 'blue'
@@ -137,7 +140,7 @@ export default function Pricing() {
             Choose your plan
           </h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Start free with 3 messages per day, or upgrade for more features and unlimited coaching.
+            Start free with 3 messages per day, or upgrade for more features and unlimited coaching. Application season discount active.
           </p>
         </motion.div>
 
@@ -161,7 +164,7 @@ export default function Pricing() {
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
-                    Most Popular
+                    Best Value
                   </div>
                 )}
 
@@ -177,6 +180,9 @@ export default function Pricing() {
                 <div className="mb-6">
                   <span className="text-4xl font-display font-bold text-gray-900">£{plan.price}</span>
                   <span className="text-gray-500">/month</span>
+                  {plan.originalPrice && (
+                    <span className="text-sm text-gray-400 line-through ml-2">£{plan.originalPrice}</span>
+                  )}
                 </div>
 
                 <ul className="space-y-3 mb-8">
