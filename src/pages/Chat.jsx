@@ -317,41 +317,41 @@ export default function Chat() {
 
 
   return (
-    <div className="h-screen flex bg-[#1e1e1e]">
+    <div className="h-screen flex" style={{background: '#2b2b2b'}}>
       {/* Sidebar */}
-      <aside className="hidden md:flex w-[260px] flex-col bg-[#171717]">
+      <aside className="hidden md:flex w-[260px] flex-col" style={{background: '#242424'}}>
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}>
               <GraduationCap className="w-4 h-4 text-white" />
             </div>
             <span className="font-display font-bold text-white">
-              myuni<span className="text-coral-500">offer</span>
+              myuni<span style={{color: '#e8836f'}}>offer</span>
             </span>
           </Link>
         </div>
 
         <div className="px-3 mb-1">
-          <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#ccc] hover:bg-[#2a2a2a] rounded-lg transition-colors border border-[#333]">
+          <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 rounded-lg transition-colors" style={{border: '1px solid rgba(255,255,255,0.08)'}}>
             <Plus className="w-4 h-4" /> New chat
           </button>
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 mt-3">
           {recentChats.length === 0 ? (
-            <div className="text-xs text-[#555] px-2 py-8 text-center">Your conversations will appear here</div>
+            <div className="text-xs text-white/25 px-2 py-8 text-center">Your conversations will appear here</div>
           ) : (
             <div className="space-y-0.5">
-              <div className="text-[11px] font-medium text-[#555] uppercase tracking-wider px-2 mb-2">Recent</div>
+              <div className="text-[11px] font-medium text-white/30 uppercase tracking-wider px-2 mb-2">Recent</div>
               {recentChats.map(chat => (
                 <button key={chat.id} onClick={() => handleSelectChat(chat)}
                   className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] transition-colors group ${
-                    currentChatId === chat.id ? 'bg-[#2a2a2a] text-white' : 'text-[#888] hover:bg-[#222]'
+                    currentChatId === chat.id ? 'bg-white/8 text-white' : 'text-white/50 hover:bg-white/5'
                   }`}>
                   <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
                   <span className="flex-1 truncate">{chat.title}</span>
-                  <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-[#444] rounded transition-all">
-                    <Trash2 className="w-3 h-3 text-[#666]" />
+                  <button onClick={(e) => handleDeleteChat(chat.id, e)} className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-white/10 rounded transition-all">
+                    <Trash2 className="w-3 h-3 text-white/40" />
                   </button>
                 </button>
               ))}
@@ -359,26 +359,26 @@ export default function Chat() {
           )}
         </div>
 
-        <div className="p-3 border-t border-[#2a2a2a]">
+        <div className="p-3" style={{borderTop: '1px solid rgba(255,255,255,0.06)'}}>
           <div className="flex items-center gap-2.5 px-2 py-1.5 mb-2">
-            <div className="w-7 h-7 bg-[#2a2a2a] rounded-full flex items-center justify-center">
-              <User className="w-3.5 h-3.5 text-[#888]" />
+            <div className="w-7 h-7 bg-white/8 rounded-full flex items-center justify-center">
+              <User className="w-3.5 h-3.5 text-white/50" />
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-[13px] font-medium text-[#ddd] truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px] text-[#666]">{planName} · {usage.limit - usage.used} left</div>
+              <div className="text-[13px] font-medium text-white/90 truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
+              <div className="text-[11px] text-white/35">{planName} · {usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">
             {userProfile?.plan === 'free' && (
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-400 hover:bg-[#2a2a2a] rounded-lg transition-colors font-medium">
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/5 rounded-lg transition-colors font-medium" style={{color: '#e8836f'}}>
                 <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
               </Link>
             )}
-            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#888] hover:bg-[#2a2a2a] rounded-lg transition-colors">
+            <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/5 rounded-lg transition-colors">
               <Settings className="w-3.5 h-3.5" /> Settings
             </Link>
-            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#666] hover:bg-[#2a2a2a] rounded-lg transition-colors">
+            <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/35 hover:bg-white/5 rounded-lg transition-colors">
               <LogOut className="w-3.5 h-3.5" /> Sign out
             </button>
           </div>
@@ -386,44 +386,44 @@ export default function Chat() {
       </aside>
 
       {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#1e1e1e]">
-        <header className="flex-shrink-0 border-b border-[#2a2a2a] px-4 py-2.5">
+      <div className="flex-1 flex flex-col min-w-0" style={{background: '#2b2b2b'}}>
+        <header className="flex-shrink-0 px-4 py-2.5" style={{borderBottom: '1px solid rgba(255,255,255,0.06)'}}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button className="md:hidden p-2 -ml-2 text-[#888] hover:bg-[#2a2a2a] rounded-lg" onClick={() => setShowSidebar(true)}>
+              <button className="md:hidden p-2 -ml-2 text-white/50 hover:bg-white/5 rounded-lg" onClick={() => setShowSidebar(true)}>
                 <Menu className="w-5 h-5" />
               </button>
               <Link to="/" className="flex items-center gap-1.5 md:hidden">
-                <div className="w-7 h-7 gradient-primary rounded-md flex items-center justify-center">
+                <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}>
                   <GraduationCap className="w-3.5 h-3.5 text-white" />
                 </div>
               </Link>
             </div>
-            <div className="flex bg-[#2a2a2a] p-0.5 rounded-lg">
-              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-[#3a3a3a] text-white shadow-sm' : 'text-[#777] hover:text-[#aaa]'}`}>
+            <div className="flex p-0.5 rounded-lg bg-white/5">
+              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/10 text-white shadow-sm' : 'text-white/40 hover:text-white/60'}`}>
                 <span className="hidden sm:inline">Personal Statement</span><span className="sm:hidden">PS</span>
               </button>
-              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-[#3a3a3a] text-white shadow-sm' : 'text-[#777] hover:text-[#aaa]'}`}>
+              <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white/10 text-white shadow-sm' : 'text-white/40 hover:text-white/60'}`}>
                 <span className="hidden sm:inline">Interview Prep</span><span className="sm:hidden">Interview</span>
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[12px] text-[#666] hidden sm:inline">{usage.limit - usage.used} left</span>
+              <span className="text-[12px] text-white/30 hidden sm:inline">{usage.limit - usage.used} left</span>
               <div className="md:hidden relative">
-                <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-[#2a2a2a] rounded-lg">
-                  <div className="w-7 h-7 bg-[#2a2a2a] rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-[#888]" /></div>
+                <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-white/5 rounded-lg">
+                  <div className="w-7 h-7 bg-white/8 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-white/50" /></div>
                 </button>
                 {showUserMenu && (<>
                   <div className="fixed inset-0 z-10" onClick={() => setShowUserMenu(false)} />
-                  <div className="absolute right-0 mt-2 w-52 bg-[#252525] rounded-xl shadow-2xl border border-[#333] z-20 overflow-hidden">
-                    <div className="p-3 border-b border-[#333]">
-                      <div className="font-medium text-[#ddd] truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-[#666] mt-0.5">{planName} · {usage.limit - usage.used} left</div>
+                  <div className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl z-20 overflow-hidden" style={{background: '#303030', border: '1px solid rgba(255,255,255,0.08)'}}>
+                    <div className="p-3" style={{borderBottom: '1px solid rgba(255,255,255,0.06)'}}>
+                      <div className="font-medium text-white/90 truncate text-[13px]">{currentUser?.email}</div>
+                      <div className="text-[11px] text-white/35 mt-0.5">{planName} · {usage.limit - usage.used} left</div>
                     </div>
                     <div className="p-1.5">
-                      <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#aaa] hover:bg-[#333] rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-400 hover:bg-[#333] rounded-lg" onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
-                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#666] hover:bg-[#333] rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+                      <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/60 hover:bg-white/5 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/5 rounded-lg" style={{color: '#e8836f'}} onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+                      <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/35 hover:bg-white/5 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
                     </div>
                   </div>
                 </>)}
@@ -437,13 +437,13 @@ export default function Chat() {
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center px-6">
               <div className="max-w-xl w-full text-center">
-                <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-coral-500/25">
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)', boxShadow: '0 8px 24px rgba(232,131,111,0.2)'}}>
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
                 <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
                   {mode === 'ps' ? 'What are you applying for?' : 'Ready to practise?'}
                 </h1>
-                <p className="text-[#777] text-sm max-w-md mx-auto leading-relaxed mb-10">
+                <p className="text-white/40 text-sm max-w-md mx-auto leading-relaxed mb-10">
                   {mode === 'ps'
                     ? "Tell me your subject and universities. I'll help you build a statement that's authentically yours."
                     : "Tell me your subject. I'll hit you with real interview questions and coach you through your answers."}
@@ -461,7 +461,7 @@ export default function Chat() {
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
                   ]).map((prompt, i) => (
                     <button key={i} onClick={() => { setInput(prompt.text); inputRef.current?.focus(); }}
-                      className="px-4 py-3 border border-[#333] rounded-xl text-left hover:border-[#555] hover:bg-[#252525] transition-all text-[13px] text-[#999] leading-snug">
+                      className="px-4 py-3 rounded-xl text-left hover:bg-white/5 transition-all text-[13px] text-white/50 leading-snug" style={{border: '1px solid rgba(255,255,255,0.08)'}}>
                       {prompt.label} →
                     </button>
                   ))}
@@ -474,20 +474,20 @@ export default function Chat() {
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
                   {msg.role === 'user' ? (
                     <div className="flex justify-end">
-                      <div className="max-w-[75%] bg-[#2a2a2a] text-[#eee] px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
+                      <div className="max-w-[75%] bg-white/8 text-white/90 px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
                         <div className="whitespace-pre-wrap">{msg.content}</div>
                       </div>
                     </div>
                   ) : msg.role === 'system' ? (
                     <div className="flex justify-center">
-                      <div className="bg-amber-900/30 text-amber-300 border border-amber-800/40 px-4 py-2.5 rounded-xl text-[13px] max-w-md text-center">{msg.content}</div>
+                      <div className="bg-amber-900/20 text-amber-300/80 px-4 py-2.5 rounded-xl text-[13px] max-w-md text-center" style={{border: '1px solid rgba(217,169,60,0.15)'}}>{msg.content}</div>
                     </div>
                   ) : (
                     <div className="flex gap-3">
-                      <div className="w-7 h-7 gradient-primary rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}>
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
-                      <div className="flex-1 min-w-0 text-[15px] text-[#d4d4d4] leading-relaxed">
+                      <div className="flex-1 min-w-0 text-[15px] text-white/85 leading-relaxed">
                         <div className="whitespace-pre-wrap prose-ai">{msg.content}</div>
                       </div>
                     </div>
@@ -497,16 +497,16 @@ export default function Chat() {
 
               {loading && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-                  <div className="w-7 h-7 gradient-primary rounded-lg flex items-center justify-center flex-shrink-0">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}>
                     <GraduationCap className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div className="pt-2">
                     <div className="flex gap-1.5">
-                      <div className="w-2 h-2 bg-[#555] rounded-full typing-dot" />
-                      <div className="w-2 h-2 bg-[#555] rounded-full typing-dot" />
-                      <div className="w-2 h-2 bg-[#555] rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-white/20 rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-white/20 rounded-full typing-dot" />
+                      <div className="w-2 h-2 bg-white/20 rounded-full typing-dot" />
                     </div>
-                    {serverWaking && <span className="text-[11px] text-[#666] mt-1 block">Waking up server...</span>}
+                    {serverWaking && <span className="text-[11px] text-white/30 mt-1 block">Waking up server...</span>}
                   </div>
                 </motion.div>
               )}
@@ -518,9 +518,9 @@ export default function Chat() {
 
         {error && (
           <div className="px-4 pb-2">
-            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-red-900/30 border border-red-800/40 rounded-xl text-red-300 text-[13px]">
+            <div className="max-w-3xl mx-auto flex items-center gap-2 p-3 bg-red-900/20 rounded-xl text-red-300/80 text-[13px]" style={{border: '1px solid rgba(239,68,68,0.15)'}}>
               <AlertCircle className="w-4 h-4 flex-shrink-0" />{error}
-              <button onClick={() => setError(null)} className="ml-auto text-red-500 hover:text-red-400"><X className="w-4 h-4" /></button>
+              <button onClick={() => setError(null)} className="ml-auto text-red-400/60 hover:text-red-300"><X className="w-4 h-4" /></button>
             </div>
           </div>
         )}
@@ -528,20 +528,20 @@ export default function Chat() {
         {/* Input */}
         <div className="flex-shrink-0 px-4 pb-4 pt-2">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="relative bg-[#2a2a2a] border border-[#3a3a3a] rounded-2xl focus-within:border-[#555] transition-all">
+            <div className="relative rounded-2xl focus-within:ring-1 focus-within:ring-white/10 transition-all" style={{background: '#353535', border: '1px solid rgba(255,255,255,0.08)'}}>
               <textarea ref={inputRef} value={input}
                 onChange={(e) => { setInput(e.target.value); e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
                 placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask me anything about interviews..."}
-                className="w-full bg-transparent border-none outline-none resize-none text-[#eee] placeholder-[#666] text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
+                className="w-full bg-transparent border-none outline-none resize-none text-white placeholder-white/30 text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
                 rows={1} disabled={loading} />
               <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                <button type="button" onClick={handleNewChat} className="p-1.5 text-[#666] hover:text-[#aaa] hover:bg-[#3a3a3a] rounded-md transition-colors" title="New chat">
+                <button type="button" onClick={handleNewChat} className="p-1.5 text-white/25 hover:text-white/50 hover:bg-white/5 rounded-md transition-colors" title="New chat">
                   <Plus className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-3">
-                  <span className="text-[11px] text-[#555]">{usage.used}/{usage.limit}</span>
-                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 gradient-primary rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all">
+                  <span className="text-[11px] text-white/20">{usage.used}/{usage.limit}</span>
+                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
@@ -549,7 +549,7 @@ export default function Chat() {
             </div>
             {usage.used >= usage.limit && (
               <div className="text-center mt-2">
-                <Link to="/pricing" className="text-[12px] text-coral-400 hover:text-coral-300 font-medium">Daily limit reached — upgrade for more →</Link>
+                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#e8836f'}}>Daily limit reached — upgrade for more →</Link>
               </div>
             )}
           </form>
@@ -559,29 +559,29 @@ export default function Chat() {
       {/* Mobile Sidebar */}
       <AnimatePresence>
         {showSidebar && (<>
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/50 z-40 md:hidden" onClick={() => setShowSidebar(false)} />
-          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] bg-[#171717] z-50 md:hidden flex flex-col">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/40 z-40 md:hidden" onClick={() => setShowSidebar(false)} />
+          <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] z-50 md:hidden flex flex-col" style={{background: '#242424'}}>
             <div className="flex items-center justify-between px-5 py-4">
               <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center"><GraduationCap className="w-4 h-4 text-white" /></div>
-                <span className="font-display font-bold text-white">myuni<span className="text-coral-500">offer</span></span>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #e8836f, #d46a58)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
+                <span className="font-display font-bold text-white">myuni<span style={{color: '#e8836f'}}>offer</span></span>
               </Link>
-              <button onClick={() => setShowSidebar(false)} className="p-1.5 text-[#666] hover:text-[#aaa]"><X className="w-5 h-5" /></button>
+              <button onClick={() => setShowSidebar(false)} className="p-1.5 text-white/35 hover:text-white/60"><X className="w-5 h-5" /></button>
             </div>
             <div className="px-3 mb-1">
-              <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-[#ccc] hover:bg-[#2a2a2a] rounded-lg transition-colors border border-[#333]">
+              <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-white/80 hover:bg-white/5 rounded-lg transition-colors" style={{border: '1px solid rgba(255,255,255,0.08)'}}>
                 <Plus className="w-4 h-4" /> New chat
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-3 mt-3">
               {recentChats.length === 0 ? (
-                <div className="text-xs text-[#555] px-2 py-8 text-center">Your conversations will appear here</div>
+                <div className="text-xs text-white/25 px-2 py-8 text-center">Your conversations will appear here</div>
               ) : (
                 <div className="space-y-0.5">
-                  <div className="text-[11px] font-medium text-[#555] uppercase tracking-wider px-2 mb-2">Recent</div>
+                  <div className="text-[11px] font-medium text-white/30 uppercase tracking-wider px-2 mb-2">Recent</div>
                   {recentChats.map(chat => (
                     <button key={chat.id} onClick={() => handleSelectChat(chat)}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-[#2a2a2a] text-white' : 'text-[#888] hover:bg-[#222]'}`}>
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-white/8 text-white' : 'text-white/50 hover:bg-white/5'}`}>
                       <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-40" />
                       <span className="flex-1 truncate">{chat.title}</span>
                     </button>
@@ -589,11 +589,11 @@ export default function Chat() {
                 </div>
               )}
             </div>
-            <div className="p-3 border-t border-[#2a2a2a]">
-              <div className="text-[12px] text-[#666] mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-coral-400 hover:bg-[#2a2a2a] rounded-lg font-medium" onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
-              <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#888] hover:bg-[#2a2a2a] rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-              <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-[#666] hover:bg-[#2a2a2a] rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
+            <div className="p-3" style={{borderTop: '1px solid rgba(255,255,255,0.06)'}}>
+              <div className="text-[12px] text-white/30 mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/5 rounded-lg font-medium" style={{color: '#e8836f'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+              <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/5 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
+              <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/35 hover:bg-white/5 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
             </div>
           </motion.aside>
         </>)}
