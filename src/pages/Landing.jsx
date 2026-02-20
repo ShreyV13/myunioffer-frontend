@@ -3,25 +3,16 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   GraduationCap, 
-  MessageSquare, 
   Sparkles,
   Check,
   ChevronDown,
-  Star,
   ArrowRight,
   Menu,
   X,
   Brain,
   Target,
   Users,
-  Zap,
-  Stethoscope,
-  Code,
-  TrendingUp,
-  BookOpen,
-  Palette,
-  Gift,
-  CalendarCheck
+  Zap
 } from 'lucide-react';
 
 export default function Landing() {
@@ -69,53 +60,6 @@ export default function Landing() {
     }
   ];
 
-  const coaches = [
-    { icon: Stethoscope, subject: "Medicine", detail: "Healthcare, Dentistry, Veterinary", status: "Specialist" },
-    { icon: Code, subject: "STEM", detail: "Comp Sci, Engineering, Maths, Physics", status: "Specialist" },
-    { icon: TrendingUp, subject: "Economics", detail: "Economics, Finance, Business, PPE", status: "Specialist" },
-    { icon: BookOpen, subject: "Humanities", detail: "History, Law, English, Psychology", status: "Specialist" },
-    { icon: Palette, subject: "Arts", detail: "Architecture, Art, Music, Design", status: "Coming Soon" },
-  ];
-
-  const plans = [
-    { 
-      name: 'Free', 
-      price: '0',
-      originalPrice: null,
-      desc: 'Try it out',
-      features: ['3 messages per day', 'All subjects', 'Basic coaching'],
-      cta: 'Get Started',
-      featured: false
-    },
-    { 
-      name: 'Personal Statement', 
-      price: '11.99',
-      originalPrice: '14.99',
-      desc: 'Perfect your statement',
-      features: ['50 messages per day', 'All subjects', 'Advanced PS coaching', '1000+ resources'],
-      cta: 'Start Now',
-      featured: false
-    },
-    { 
-      name: 'Premium', 
-      price: '16.99',
-      originalPrice: '19.99',
-      desc: 'PS + Interview prep',
-      features: ['200 messages per day', 'PS + Interview coaching', 'All subjects', '1000+ resources', 'Priority support'],
-      cta: 'Go Premium',
-      featured: true
-    },
-    { 
-      name: 'Interview Prep', 
-      price: '11.99',
-      originalPrice: '14.99',
-      desc: 'Ace your interviews',
-      features: ['50 messages per day', 'All subjects', '1000+ resources', 'Interview coaching'],
-      cta: 'Start Now',
-      featured: false
-    },
-  ];
-
   const faqs = [
     {
       q: "Will the AI write my personal statement for me?",
@@ -135,11 +79,7 @@ export default function Landing() {
     },
     {
       q: "Who are the specialist coaches?",
-      a: "Our coaches are current students at top UK universities (LSE, KCL, Oxford, Cambridge and more) who successfully went through the same application process. They help train the AI for their subject area and offer optional 1-on-1 sessions."
-    },
-    {
-      q: "What are 1-on-1 sessions?",
-      a: "You can book a personal session with a real student specialist from your chosen subject area for tailored PS feedback or mock interview practice. Sessions are £19.99 each, or subscribe for 3 months and get a free session included."
+      a: "Our coaches are first-year students at top UK universities — LSE, KCL, Cambridge, Imperial, Warwick — who just went through the exact same application process. They train the AI and offer optional 1-on-1 sessions."
     }
   ];
 
@@ -161,8 +101,8 @@ export default function Landing() {
             {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
-              <a href="#coaches" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Coaches</a>
-              <a href="#pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
+              <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
+              <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Our Team</Link>
               <a href="#faq" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">FAQ</a>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Login</Link>
               <Link to="/signup" className="btn-primary">
@@ -188,8 +128,8 @@ export default function Landing() {
             >
               <div className="flex flex-col gap-3">
                 <a href="#how-it-works" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-                <a href="#coaches" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Coaches</a>
-                <a href="#pricing" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+                <Link to="/pricing" className="text-gray-600 py-2 font-medium">Pricing</Link>
+                <Link to="/about" className="text-gray-600 py-2 font-medium">Our Team</Link>
                 <a href="#faq" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
                 <Link to="/login" className="text-gray-600 py-2 font-medium">Login</Link>
                 <Link to="/signup" className="btn-primary mt-2">
@@ -339,217 +279,168 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Coaches */}
-      <section id="coaches" className="py-24 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
+      {/* Pricing Teaser */}
+      <section id="pricing" className="py-24 px-6 bg-white">
+        <div className="max-w-4xl mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Meet your specialist coaches</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Real students from top UK universities backing each subject area</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Launch pricing</h2>
+            <p className="text-gray-600">We're just getting started — lock in early pricing before it goes up.</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {coaches.map((coach, i) => {
-              const Icon = coach.icon;
-              return (
-                <motion.div 
-                  key={i}
-                  className="card card-hover p-6 text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                >
-                  <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="font-display font-bold text-gray-900 mb-1">{coach.subject}</h3>
-                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">{coach.detail}</p>
-                  <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
-                    coach.status === 'Coming Soon' 
-                      ? 'bg-gray-100 text-gray-500' 
-                      : 'bg-coral-50 text-coral-600'
-                  }`}>
-                    {coach.status}
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <motion.p 
-            className="text-center text-gray-500 mt-8 text-sm"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            Each area coached by verified students from LSE, KCL, Cambridge, Imperial, Warwick & more.{' '}
-            <a href="mailto:hello@myunioffer.ai" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
-              Interested in becoming a coach? Get in touch →
-            </a>
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Why Us - USPs */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
+          {/* Launch discount banner */}
           <motion.div 
-            className="text-center mb-16"
+            className="mb-10 p-4 bg-coral-50 border border-coral-100 rounded-2xl text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why we're different</h2>
-            <p className="text-gray-600">Built by students who just went through it, for students going through it now</p>
+            <span className="text-coral-600 font-semibold text-sm">🚀 Launch Discount — prices will increase to £14.99 / £19.99 after early access ends</span>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Free */}
             <motion.div 
-              className="card p-8"
+              className="card p-7"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0 }}
             >
-              <div className="text-3xl mb-4">🎓</div>
-              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The best unis, the right courses</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Our team are first-year students at LSE (PPE, Maths with Econ), KCL (Medicine), Cambridge (Computer Science, Economics), Imperial (Engineering), and Warwick (Economics). The best universities in the UK for their respective subjects — training the AI you'll use.
-              </p>
+              <div className="text-sm font-semibold text-gray-500 mb-2">Free</div>
+              <div className="mb-1">
+                <span className="text-3xl font-display font-bold text-gray-900">£0</span>
+                <span className="text-sm font-normal text-gray-500">/mo</span>
+              </div>
+              <div className="text-gray-600 text-sm mb-5">Try it out</div>
+              <ul className="space-y-2.5 mb-7">
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />3 messages per day</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Basic coaching</li>
+              </ul>
+              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
+                Get Started
+              </Link>
             </motion.div>
 
+            {/* PS */}
             <motion.div 
-              className="card p-8"
+              className="card p-7"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              <div className="text-3xl mb-4">💡</div>
-              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">We literally just did this</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                We're first-years. We just went through UCAS, personal statements, and interviews months ago. We know exactly what it's like, what we struggled with, and how much we wished we had a mentor available whenever we needed one. That's exactly what this AI is.
-              </p>
+              <div className="text-sm font-semibold text-gray-500 mb-2">Personal Statement</div>
+              <div className="mb-1">
+                <span className="text-3xl font-display font-bold text-gray-900">£11.99</span>
+                <span className="text-sm font-normal text-gray-500">/mo</span>
+                <span className="text-sm text-gray-400 line-through ml-2">£14.99</span>
+              </div>
+              <div className="text-gray-600 text-sm mb-5">Perfect your statement</div>
+              <ul className="space-y-2.5 mb-7">
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />50 messages per day</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Advanced PS coaching</li>
+              </ul>
+              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
+                Start Now
+              </Link>
             </motion.div>
 
+            {/* Interview */}
             <motion.div 
-              className="card p-8"
+              className="card p-7"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <div className="text-3xl mb-4">🏷️</div>
-              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Premium coaching, fraction of the price</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Other specialist AI tools are either not subject-specific or cost thousands. UniAdmissions charges £6,000–£35,000. Private tutors charge £50–100/hour. We give you a subject-specialist AI coach from £11.99/month. Same quality, 99% less.
-              </p>
+              <div className="text-sm font-semibold text-gray-500 mb-2">Interview Prep</div>
+              <div className="mb-1">
+                <span className="text-3xl font-display font-bold text-gray-900">£11.99</span>
+                <span className="text-sm font-normal text-gray-500">/mo</span>
+                <span className="text-sm text-gray-400 line-through ml-2">£14.99</span>
+              </div>
+              <div className="text-gray-600 text-sm mb-5">Ace your interviews</div>
+              <ul className="space-y-2.5 mb-7">
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />50 messages per day</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Interview coaching</li>
+              </ul>
+              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
+                Start Now
+              </Link>
+            </motion.div>
+
+            {/* Premium */}
+            <motion.div 
+              className="card p-7 relative border-2 border-coral-500 shadow-xl shadow-coral-500/10"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
+                Best Value
+              </div>
+              <div className="text-sm font-semibold text-gray-500 mb-2">Premium</div>
+              <div className="mb-1">
+                <span className="text-3xl font-display font-bold text-gray-900">£16.99</span>
+                <span className="text-sm font-normal text-gray-500">/mo</span>
+                <span className="text-sm text-gray-400 line-through ml-2">£19.99</span>
+              </div>
+              <div className="text-gray-600 text-sm mb-5">PS + Interview prep</div>
+              <ul className="space-y-2.5 mb-7">
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />200 messages per day</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />PS + Interview coaching</li>
+                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Priority support</li>
+              </ul>
+              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all btn-primary w-full">
+                Go Premium
+              </Link>
             </motion.div>
           </div>
+
+          <motion.p 
+            className="text-center mt-8 text-gray-500 text-sm"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            Want the full breakdown including 1-on-1 sessions?{' '}
+            <Link to="/pricing" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
+              See all pricing details →
+            </Link>
+          </motion.p>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="py-24 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <motion.div 
-            className="text-center mb-16"
+      {/* Social Proof Teaser */}
+      <section className="py-20 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Simple, transparent pricing</h2>
-            <p className="text-gray-600">Start free, upgrade when you're ready. Application season discount active.</p>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {plans.map((plan, i) => (
-              <motion.div 
-                key={i}
-                className={`card p-7 relative ${
-                  plan.featured 
-                    ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
-                    : ''
-                }`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                {plan.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
-                    Best Value
-                  </div>
-                )}
-                <div className="text-sm font-semibold text-gray-500 mb-2">{plan.name}</div>
-                <div className="mb-1">
-                  <span className="text-3xl font-display font-bold text-gray-900">£{plan.price}</span>
-                  <span className="text-sm font-normal text-gray-500">/mo</span>
-                  {plan.originalPrice && (
-                    <span className="text-sm text-gray-400 line-through ml-2">£{plan.originalPrice}</span>
-                  )}
-                </div>
-                <div className="text-gray-600 text-sm mb-5">{plan.desc}</div>
-                <ul className="space-y-2.5 mb-7">
-                  {plan.features.map((f, j) => (
-                    <li key={j} className="flex items-center gap-2.5 text-sm text-gray-600">
-                      <Check className="w-4 h-4 text-coral-500 flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link 
-                  to="/signup"
-                  className={`block text-center py-3 rounded-xl font-semibold transition-all ${
-                    plan.featured 
-                      ? 'btn-primary w-full' 
-                      : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Session Banner */}
-          <motion.div 
-            className="mt-10 card p-8 flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center flex-shrink-0">
-              <CalendarCheck className="w-7 h-7 text-white" />
-            </div>
-            <div className="flex-1 text-center md:text-left">
-              <h3 className="text-xl font-display font-bold text-gray-900 mb-1">1-on-1 Sessions with a Specialist</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                Get matched with a real student from your chosen degree area for personalised PS feedback or mock interview practice.
-              </p>
-              <div className="inline-flex items-center gap-2 mt-3 px-3 py-1.5 bg-amber-50 border border-amber-100 rounded-full text-amber-700 text-xs font-semibold">
-                <Gift className="w-3.5 h-3.5" />
-                Subscribe for 3 months → get 1 free session in month 3
-              </div>
-            </div>
-            <div className="text-center flex-shrink-0">
-              <div className="text-3xl font-display font-bold text-coral-500">£19.99</div>
-              <div className="text-gray-500 text-sm">per session</div>
-              <Link to="/signup" className="btn-primary mt-3 text-sm px-5 py-2.5">
-                Book a Session
-              </Link>
-            </div>
+            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-gray-900">Built by students from the UK's best universities</h2>
+            <p className="text-gray-600 mb-6 max-w-xl mx-auto">
+              Our team are first-years at LSE, KCL, Cambridge, Imperial, and Warwick. We just went through the exact same application process — and built the tool we wished we had.
+            </p>
+            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors">
+              Meet the team <ArrowRight className="w-4 h-4" />
+            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section id="faq" className="py-24 px-6">
+      <section id="faq" className="py-24 px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -642,6 +533,7 @@ export default function Landing() {
           <div className="flex gap-8 text-sm text-gray-600">
             <a href="#" className="hover:text-coral-500 transition-colors">Privacy</a>
             <a href="#" className="hover:text-coral-500 transition-colors">Terms</a>
+            <Link to="/about" className="hover:text-coral-500 transition-colors">Our Team</Link>
             <a href="mailto:hello@myunioffer.ai" className="hover:text-coral-500 transition-colors">Contact</a>
           </div>
           <div className="text-sm text-gray-500">

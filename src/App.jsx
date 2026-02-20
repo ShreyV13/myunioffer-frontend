@@ -10,6 +10,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Chat from './pages/Chat';
 import Settings from './pages/Settings';
 import Pricing from './pages/Pricing';
+import About from './pages/About';
 import Success from './pages/Success';
 
 // Protected Route wrapper
@@ -44,6 +45,7 @@ function AppRoutes() {
       <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/pricing" element={<Pricing />} />
+      <Route path="/about" element={<About />} />
       <Route path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
