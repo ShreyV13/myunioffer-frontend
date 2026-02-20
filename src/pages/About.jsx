@@ -5,30 +5,61 @@ import {
   GraduationCap, 
   ArrowLeft,
   ArrowRight,
-  Stethoscope,
-  Code,
-  TrendingUp,
-  BookOpen,
-  Palette,
+  User,
   MapPin,
+  BookOpen,
+  Briefcase,
   Quote
 } from 'lucide-react';
 
 export default function About() {
-  const coaches = [
-    { icon: Stethoscope, subject: "Medicine", detail: "Healthcare, Dentistry, Veterinary", status: "Specialist" },
-    { icon: Code, subject: "STEM", detail: "Comp Sci, Engineering, Maths, Physics", status: "Specialist" },
-    { icon: TrendingUp, subject: "Economics", detail: "Economics, Finance, Business, PPE", status: "Specialist" },
-    { icon: BookOpen, subject: "Humanities", detail: "History, Law, English, Psychology", status: "Specialist" },
-    { icon: Palette, subject: "Arts", detail: "Architecture, Art, Music, Design", status: "Coming Soon" },
-  ];
-
-  const universities = [
-    { name: "LSE", full: "London School of Economics" },
-    { name: "KCL", full: "King's College London" },
-    { name: "Cambridge", full: "University of Cambridge" },
-    { name: "Imperial", full: "Imperial College London" },
-    { name: "Warwick", full: "University of Warwick" },
+  // Replace with real info when you have it
+  const team = [
+    { 
+      name: "Coming Soon", 
+      uni: "LSE", 
+      course: "PPE",
+      role: "Founder & Economics Lead",
+      subjects: "Economics, PPE, Finance, Business",
+      bio: "Founded myunioffer.ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics & PPE specialist agent, training it with real application insights from the LSE admissions process.",
+      contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics interview questions and personal statement database."
+    },
+    { 
+      name: "Coming Soon", 
+      uni: "KCL", 
+      course: "Medicine",
+      role: "Medicine Lead",
+      subjects: "Medicine, Dentistry, Veterinary, Nursing",
+      bio: "A first-year medical student at King's College London who went through one of the most competitive application processes in the UK. Knows exactly what medical school admissions tutors look for — and what trips applicants up.",
+      contribution: "Trains the Medicine AI agent with real MMI questions, personal statement structures, and the specific qualities medical schools look for. Ensures the AI understands work experience, ethical scenarios, and motivation questions."
+    },
+    { 
+      name: "Coming Soon", 
+      uni: "Cambridge", 
+      course: "Computer Science",
+      role: "STEM Lead",
+      subjects: "Computer Science, Mathematics, Physics",
+      bio: "Reading Computer Science at Cambridge. Went through the Cambridge admissions process including the rigorous interview system. Brings deep understanding of how Oxbridge selects for analytical thinking and problem-solving.",
+      contribution: "Leads the STEM agent, training it on Cambridge-style interview questions, technical problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements."
+    },
+    { 
+      name: "Coming Soon", 
+      uni: "Imperial", 
+      course: "Engineering",
+      role: "Engineering Specialist",
+      subjects: "Engineering, Physics, Design",
+      bio: "Studying Engineering at Imperial College London — one of the top engineering schools in the world. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
+      contribution: "Adds Imperial-specific engineering application knowledge to the STEM agent. Helps train the AI on engineering personal statements, technical interviews, and how to demonstrate practical problem-solving."
+    },
+    { 
+      name: "Coming Soon", 
+      uni: "Warwick", 
+      course: "Economics",
+      role: "Economics Specialist",
+      subjects: "Economics, Finance, Quantitative subjects",
+      bio: "Studying Economics at the University of Warwick, known for its world-class Economics department. Successfully navigated the competitive admissions process and understands what makes an Economics application stand out.",
+      contribution: "Strengthens the Economics agent with Warwick-specific insights, econometrics-focused interview preparation, and how to demonstrate mathematical and analytical ability in personal statements."
+    },
   ];
 
   return (
@@ -36,10 +67,7 @@ export default function About() {
       {/* Header */}
       <header className="glass border-b border-gray-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link 
-            to="/" 
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
-          >
+          <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back</span>
           </Link>
@@ -60,106 +88,95 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
             Built by students who just did it
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            We're first-year students at the UK's top universities. We went through UCAS, personal statements, and interviews just months ago — and built the tool we wished we'd had.
+            We're not a faceless company. We're first-year students at the UK's best universities who went through UCAS, personal statements, and interviews months ago. We built myunioffer.ai because we know how stressful it is — and how much a good mentor would have helped.
           </p>
         </motion.div>
 
-        {/* Trust stats row */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-6 mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          <div className="card px-6 py-4 text-center">
-            <div className="text-2xl font-display font-bold text-coral-500">5</div>
-            <div className="text-xs text-gray-500">Universities</div>
-          </div>
-          <div className="card px-6 py-4 text-center">
-            <div className="text-2xl font-display font-bold text-coral-500">1000+</div>
-            <div className="text-xs text-gray-500">Resources Built</div>
-          </div>
-          <div className="card px-6 py-4 text-center">
-            <div className="text-2xl font-display font-bold text-coral-500">5</div>
-            <div className="text-xs text-gray-500">Subject Agents</div>
-          </div>
-          <div className="card px-6 py-4 text-center">
-            <div className="text-2xl font-display font-bold text-coral-500">2025</div>
-            <div className="text-xs text-gray-500">Application Cycle</div>
-          </div>
-        </motion.div>
-
-        {/* Why Us - 3 pillars */}
+        {/* Why trust us pillars */}
         <div className="grid md:grid-cols-3 gap-6 mb-20">
-          <motion.div 
-            className="card p-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0 }}
-          >
+          <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0 }}>
             <div className="text-3xl mb-4">🎓</div>
-            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The best unis, the right courses</h3>
+            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">The best unis in the country</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Our team are first-year students at LSE, KCL, Cambridge, Imperial, and Warwick. Some of the best universities in the UK for their respective subjects — and they're the ones training the AI you'll use.
+              Our team comes from LSE, KCL, Cambridge, Imperial, and Warwick — some of the most competitive universities in the UK for their respective subjects. The AI is trained by people who actually got in.
             </p>
           </motion.div>
 
-          <motion.div 
-            className="card p-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-          >
+          <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="text-3xl mb-4">💡</div>
             <h3 className="text-lg font-display font-bold text-gray-900 mb-2">We literally just did this</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              We're first-years. We just went through UCAS, personal statements, and interviews months ago. We know exactly what it's like, what we struggled with, and how much we wished we had a mentor available whenever we needed one. That's exactly what this AI is.
+              We're first-years. Not people who applied 10 years ago. We remember the stress, the late-night PS drafts, the interview nerves. We built the mentor we wished we'd had — available 24/7, for a fraction of what tutors charge.
             </p>
           </motion.div>
 
-          <motion.div 
-            className="card p-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <motion.div className="card p-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <div className="text-3xl mb-4">🏷️</div>
-            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Premium quality, student price</h3>
+            <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Specialist, not generic</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Other specialist AI tools are either not subject-specific or cost thousands. UniAdmissions charges £6,000–£35,000. Private tutors charge £50–100/hour. We give you a subject-specialist AI coach from £11.99/month.
+              Each person on the team trains a specific AI agent for their subject area. A Medicine student trains the Medicine agent. A Cambridge CS student trains the STEM agent. You're not getting generic advice — you're getting subject-level expertise.
             </p>
           </motion.div>
         </div>
 
-        {/* Our University Network */}
+        {/* Full Team Profiles */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">Our university network</h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            {universities.map((uni, i) => (
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-10 text-center">Meet the team</h2>
+          
+          <div className="space-y-6">
+            {team.map((member, i) => (
               <motion.div 
                 key={i}
-                className="card px-6 py-4 text-center"
-                initial={{ opacity: 0, y: 20 }}
+                className="card p-8 flex flex-col md:flex-row gap-8"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-coral-500" />
-                  <div>
-                    <div className="font-display font-bold text-gray-900">{uni.name}</div>
-                    <div className="text-xs text-gray-500">{uni.full}</div>
+                {/* Photo placeholder */}
+                <div className="flex-shrink-0 text-center md:text-left">
+                  <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto md:mx-0 border-2 border-gray-200">
+                    <User className="w-10 h-10 text-gray-300" />
+                  </div>
+                </div>
+
+                {/* Info */}
+                <div className="flex-1">
+                  <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <h3 className="text-lg font-display font-bold text-gray-900">{member.name}</h3>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-coral-50 text-coral-600 rounded-full text-xs font-semibold">
+                      {member.role}
+                    </span>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                    <span className="flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5" /> {member.uni}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <BookOpen className="w-3.5 h-3.5" /> {member.course}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Briefcase className="w-3.5 h-3.5" /> Covers: {member.subjects}
+                    </span>
+                  </div>
+
+                  <p className="text-gray-600 text-sm leading-relaxed mb-3">{member.bio}</p>
+                  
+                  <div className="p-4 bg-gray-50 rounded-xl">
+                    <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Their contribution to the AI</p>
+                    <p className="text-gray-600 text-sm leading-relaxed">{member.contribution}</p>
                   </div>
                 </div>
               </motion.div>
@@ -167,57 +184,22 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* Subject Coaches */}
+        {/* Become a coach CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mb-20"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-4 text-center">Subject specialist coaches</h2>
-          <p className="text-gray-600 text-center mb-8 max-w-xl mx-auto">
-            Each subject area is led by a student who successfully applied in that field. They train the AI and offer optional 1-on-1 sessions.
-          </p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {coaches.map((coach, i) => {
-              const Icon = coach.icon;
-              return (
-                <motion.div 
-                  key={i}
-                  className="card card-hover p-6 text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                >
-                  <div className="w-14 h-14 gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <Icon className="w-7 h-7 text-white" />
-                  </div>
-                  <h3 className="font-display font-bold text-gray-900 mb-1">{coach.subject}</h3>
-                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">{coach.detail}</p>
-                  <span className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
-                    coach.status === 'Coming Soon' 
-                      ? 'bg-gray-100 text-gray-500' 
-                      : 'bg-coral-50 text-coral-600'
-                  }`}>
-                    {coach.status}
-                  </span>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          <motion.p 
-            className="text-center text-gray-500 mt-8 text-sm"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <a href="mailto:hello@myunioffer.ai" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
-              Are you a student at a top UK uni? Become a subject coach →
+          <div className="card p-8 text-center bg-gray-50 border-gray-100">
+            <h3 className="text-xl font-display font-bold text-gray-900 mb-2">Are you at a top UK university?</h3>
+            <p className="text-gray-600 text-sm mb-4 max-w-lg mx-auto">
+              We're looking for first-year students to become subject coaches — your face on the site, your expertise training the AI, and earn money doing it.
+            </p>
+            <a href="mailto:hello@myunioffer.ai" className="btn-primary inline-flex text-sm px-6 py-3">
+              Get in touch <ArrowRight className="w-4 h-4" />
             </a>
-          </motion.p>
+          </div>
         </motion.div>
 
         {/* Testimonials placeholder */}
@@ -228,7 +210,6 @@ export default function About() {
           className="mb-20"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">What students say</h2>
-          
           <div className="card p-12 text-center max-w-2xl mx-auto">
             <Quote className="w-10 h-10 text-coral-200 mx-auto mb-4" />
             <p className="text-gray-500 italic mb-4">We're just launching — real testimonials from our first users will appear here soon.</p>

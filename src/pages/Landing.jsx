@@ -12,52 +12,24 @@ import {
   Brain,
   Target,
   Users,
-  Zap
+  Zap,
+  Shield,
+  Clock,
+  MessageSquare,
+  User
 } from 'lucide-react';
 
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const features = [
-    {
-      icon: Brain,
-      title: "AI That Guides, Not Writes",
-      description: "Our AI asks the right questions to help you discover your authentic story. Your statement stays genuinely yours."
-    },
-    {
-      icon: Target,
-      title: "1000+ Resources",
-      description: "Access real interview questions, sample answers, and successful personal statements from LSE, Cambridge, KCL, Imperial, Warwick, and other top UK universities."
-    },
-    {
-      icon: Users,
-      title: "Subject-Specific Coaching",
-      description: "Tailored guidance for Medicine, STEM, Economics, Humanities, and Arts — each backed by a real student specialist."
-    },
-    {
-      icon: Zap,
-      title: "Instant Expert Feedback",
-      description: "Get thoughtful guidance anytime, day or night. No waiting for appointments or tutors — start immediately."
-    }
-  ];
-
-  const steps = [
-    {
-      number: "1",
-      title: "Choose your subject",
-      description: "Medicine, STEM, Economics, Humanities, or Arts — pick your area and get matched with a specialist AI coach."
-    },
-    {
-      number: "2",
-      title: "Chat with your coach",
-      description: "The AI asks thoughtful questions to help you discover your authentic story. It guides — it never writes for you."
-    },
-    {
-      number: "3",
-      title: "Stand out & get in",
-      description: "Build a personal statement and interview confidence that shows the real you to admissions tutors."
-    }
+  // Placeholder team - replace names/descriptions when you have real people
+  const team = [
+    { name: "Coming Soon", uni: "LSE", course: "PPE", role: "Founder & Economics Lead", desc: "Built the AI coaching system and leads the Economics & PPE application specialist." },
+    { name: "Coming Soon", uni: "KCL", course: "Medicine", role: "Medicine Lead", desc: "Trains the Medicine AI agent with real interview questions and PS insights from the KCL application process." },
+    { name: "Coming Soon", uni: "Cambridge", course: "Computer Science", role: "STEM Lead", desc: "Brings Cambridge CS application expertise to the STEM coaching agent." },
+    { name: "Coming Soon", uni: "Imperial", course: "Engineering", role: "Engineering Specialist", desc: "Adds Imperial Engineering application knowledge to the STEM agent." },
+    { name: "Coming Soon", uni: "Warwick", course: "Economics", role: "Economics Specialist", desc: "Strengthens the Economics agent with Warwick-specific application insights." },
   ];
 
   const faqs = [
@@ -87,8 +59,8 @@ export default function Landing() {
     <div className="min-h-screen bg-white">
       {/* Announcement Banner */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-4 text-sm font-medium">
-        <span className="text-coral-400">🚀 Launch Pricing</span> — from £11.99/mo before prices increase.{' '}
-        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">Lock it in →</Link>
+        <span className="text-coral-400">🚀 Launch Pricing</span> — early access discount available for a limited time.{' '}
+        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">See plans →</Link>
       </div>
 
       {/* Navigation */}
@@ -104,19 +76,17 @@ export default function Landing() {
               </span>
             </Link>
             
-            {/* Desktop Nav */}
             <div className="hidden md:flex items-center gap-8">
               <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
+              <a href="#why-us" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
+              <a href="#team" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Team</a>
               <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
-              <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Our Team</Link>
-              <a href="#faq" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">FAQ</a>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Login</Link>
               <Link to="/signup" className="btn-primary">
                 Get Started
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
             <button 
               className="md:hidden p-2 text-gray-600"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -125,7 +95,6 @@ export default function Landing() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {mobileMenuOpen && (
             <motion.div 
               initial={{ opacity: 0, height: 0 }}
@@ -134,20 +103,18 @@ export default function Landing() {
             >
               <div className="flex flex-col gap-3">
                 <a href="#how-it-works" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
+                <a href="#why-us" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Why Us</a>
+                <a href="#team" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>Team</a>
                 <Link to="/pricing" className="text-gray-600 py-2 font-medium">Pricing</Link>
-                <Link to="/about" className="text-gray-600 py-2 font-medium">Our Team</Link>
-                <a href="#faq" className="text-gray-600 py-2 font-medium" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
                 <Link to="/login" className="text-gray-600 py-2 font-medium">Login</Link>
-                <Link to="/signup" className="btn-primary mt-2">
-                  Get Started
-                </Link>
+                <Link to="/signup" className="btn-primary mt-2">Get Started</Link>
               </div>
             </motion.div>
           )}
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* ==================== HERO ==================== */}
       <section className="pt-40 pb-20 px-6 hero-pattern">
         <div className="max-w-5xl mx-auto text-center">
           <motion.div
@@ -177,7 +144,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI coaching for personal statements and interviews — built by students at LSE, Cambridge, Imperial, KCL, and Warwick. From £11.99/month.
+            AI coaching for personal statements and interviews — trained by students at LSE, Cambridge, Imperial, KCL, and Warwick who got in last year.
           </motion.p>
 
           <motion.div 
@@ -202,34 +169,24 @@ export default function Landing() {
           >
             Free to try · No credit card required
           </motion.p>
-            <Link to="/signup" className="btn-primary text-lg px-8 py-4">
-              Start Free <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="#how-it-works" className="btn-secondary text-lg px-8 py-4">
-              See How It Works
-            </a>
-          </motion.div>
 
-          {/* Stats */}
+          {/* Uni trust bar */}
           <motion.div 
-            className="flex flex-wrap justify-center gap-6 mt-16"
-            initial={{ opacity: 0, y: 40 }}
+            className="flex flex-wrap justify-center gap-3 mt-12"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
           >
-            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">1000+</div>
-              <div className="text-gray-500 text-sm mt-1">Personal statements, interview questions & sample answers</div>
-            </div>
-            <div className="text-center px-8 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
-              <div className="text-3xl md:text-4xl font-display font-bold text-coral-500">5</div>
-              <div className="text-gray-500 text-sm mt-1">Subject specialist AI agents</div>
-            </div>
+            {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (
+              <div key={i} className="px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm text-sm font-semibold text-gray-600">
+                🎓 {uni}
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* How It Works */}
+      {/* ==================== HOW IT WORKS ==================== */}
       <section id="how-it-works" className="py-24 px-6 bg-white">
         <div className="max-w-5xl mx-auto">
           <motion.div 
@@ -239,33 +196,56 @@ export default function Landing() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">How it works</h2>
-            <p className="text-gray-600">Three steps to a standout application</p>
+            <p className="text-gray-600 max-w-xl mx-auto">Not a writing tool. Not a chatbot. A specialist coaching system designed for UK university applications.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {steps.map((step, i) => (
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {[
+              { num: "1", title: "Tell us about your application", desc: "Choose your subject — Medicine, STEM, Economics, Humanities, or Arts — and tell the AI what you're applying for. It instantly matches you with a specialist agent trained for your exact area." },
+              { num: "2", title: "Get coached, not written for", desc: "The AI asks you targeted questions based on 1000+ real resources — successful personal statements, past interview questions, and what admissions tutors actually look for. It draws out your authentic story." },
+              { num: "3", title: "Build confidence and stand out", desc: "Iterate on your PS with expert feedback. Run mock interviews with real questions. Go into your application knowing exactly how to present yourself — because you've already practised with the best." },
+            ].map((step, i) => (
               <motion.div 
                 key={i}
-                className="card card-hover p-8 text-center"
+                className="card card-hover p-8"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mx-auto mb-5">
-                  <span className="text-white font-display font-bold text-lg">{step.number}</span>
+                <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
+                  <span className="text-white font-display font-bold text-lg">{step.num}</span>
                 </div>
-                <h3 className="text-xl font-display font-bold mb-2 text-gray-900">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                <h3 className="text-lg font-display font-bold mb-3 text-gray-900">{step.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>
+
+          {/* Quick demo-style info */}
+          <motion.div 
+            className="card p-6 flex flex-col sm:flex-row items-center gap-6 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex gap-3 flex-shrink-0">
+              <div className="w-10 h-10 bg-coral-50 rounded-lg flex items-center justify-center"><MessageSquare className="w-5 h-5 text-coral-500" /></div>
+              <div className="w-10 h-10 bg-coral-50 rounded-lg flex items-center justify-center"><Brain className="w-5 h-5 text-coral-500" /></div>
+              <div className="w-10 h-10 bg-coral-50 rounded-lg flex items-center justify-center"><Target className="w-5 h-5 text-coral-500" /></div>
+            </div>
+            <div>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                <span className="font-semibold text-gray-900">PS Mode</span> guides your personal statement. <span className="font-semibold text-gray-900">Interview Mode</span> prepares you for real questions. Both are tailored to your specific subject and university — not generic templates.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="py-24 px-6 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
+      {/* ==================== WHY US (USPs) ==================== */}
+      <section id="why-us" className="py-24 px-6 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
@@ -273,245 +253,187 @@ export default function Landing() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why students choose us</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">Everything you need to craft a standout application</p>
+            <p className="text-gray-600 max-w-xl mx-auto">There are other AI tools out there. Here's why this one is different.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {features.map((feature, i) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div 
-                  key={i}
-                  className="card card-hover p-8"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                >
-                  <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
-                    <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-display font-bold mb-2 text-gray-900">{feature.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{feature.description}</p>
-                </motion.div>
-              );
-            })}
+          <div className="grid md:grid-cols-2 gap-6 mb-10">
+            <motion.div 
+              className="card card-hover p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Coaches your thinking, not your writing</h3>
+              <p className="text-gray-600 leading-relaxed">Most AI tools write your PS for you — which admissions tutors can spot instantly. Ours asks you the questions that help you figure out what to say. Your statement stays authentically yours. That's what gets you the offer.</p>
+            </motion.div>
+
+            <motion.div 
+              className="card card-hover p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
+                <Target className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Subject-specialist, not generic</h3>
+              <p className="text-gray-600 leading-relaxed">A Medicine application is nothing like an Economics one. We have 5 specialist AI agents — each trained on real resources from LSE, Cambridge, KCL, Imperial, Warwick, and other top UK universities. Your coach knows your subject.</p>
+            </motion.div>
+
+            <motion.div 
+              className="card card-hover p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
+                <Users className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Built by people who just got in</h3>
+              <p className="text-gray-600 leading-relaxed">We're not a faceless tech company. We're first-year students who went through UCAS, PS, and interviews months ago. We know exactly what it feels like — the stress, the uncertainty, the "is this good enough?" We built the mentor we wished we'd had.</p>
+            </motion.div>
+
+            <motion.div 
+              className="card card-hover p-8"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+            >
+              <div className="w-12 h-12 gradient-primary rounded-xl flex items-center justify-center mb-5">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Premium coaching, student pricing</h3>
+              <p className="text-gray-600 leading-relaxed">UniAdmissions charges £6,000–£35,000. Private tutors charge £50–100/hour. Other AI tools are either not subject-specific or not built for UK applications. We're specialist, we're affordable, and we're available 24/7. No compromises.</p>
+            </motion.div>
           </div>
+
+          {/* 1000+ Resources callout */}
+          <motion.div 
+            className="card p-6 text-center max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-3xl font-display font-bold text-coral-500 mb-1">1000+</div>
+            <p className="text-gray-600 text-sm">Real interview questions, successful personal statements, and sample answers — all from top UK universities and continually growing.</p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Pricing Teaser */}
-      <section id="pricing" className="py-24 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
+      {/* ==================== TEAM PREVIEW ==================== */}
+      <section id="team" className="py-24 px-6 bg-white">
+        <div className="max-w-5xl mx-auto">
           <motion.div 
             className="text-center mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Launch pricing</h2>
-            <p className="text-gray-600">We're just getting started — lock in early pricing before it goes up.</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">The people behind the AI</h2>
+            <p className="text-gray-600 max-w-xl mx-auto">Every subject agent is trained by a real student who successfully applied in that field. These are the people shaping your coaching experience.</p>
           </motion.div>
 
-          {/* Launch discount banner */}
-          <motion.div 
-            className="mb-10 p-4 bg-coral-50 border border-coral-100 rounded-2xl text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="text-coral-600 font-semibold text-sm">🚀 Launch Discount — prices will increase to £14.99 / £19.99 after early access ends</span>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Free */}
-            <motion.div 
-              className="card p-7"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0 }}
-            >
-              <div className="text-sm font-semibold text-gray-500 mb-2">Free</div>
-              <div className="mb-1">
-                <span className="text-3xl font-display font-bold text-gray-900">£0</span>
-                <span className="text-sm font-normal text-gray-500">/mo</span>
-              </div>
-              <div className="text-gray-600 text-sm mb-5">Try it out</div>
-              <ul className="space-y-2.5 mb-7">
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />3 messages per day</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Basic coaching</li>
-              </ul>
-              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
-                Get Started
-              </Link>
-            </motion.div>
-
-            {/* PS */}
-            <motion.div 
-              className="card p-7"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="text-sm font-semibold text-gray-500 mb-2">Personal Statement</div>
-              <div className="mb-1">
-                <span className="text-3xl font-display font-bold text-gray-900">£11.99</span>
-                <span className="text-sm font-normal text-gray-500">/mo</span>
-                <span className="text-sm text-gray-400 line-through ml-2">£14.99</span>
-              </div>
-              <div className="text-gray-600 text-sm mb-5">Perfect your statement</div>
-              <ul className="space-y-2.5 mb-7">
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />50 messages per day</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Advanced PS coaching</li>
-              </ul>
-              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
-                Start Now
-              </Link>
-            </motion.div>
-
-            {/* Interview */}
-            <motion.div 
-              className="card p-7"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="text-sm font-semibold text-gray-500 mb-2">Interview Prep</div>
-              <div className="mb-1">
-                <span className="text-3xl font-display font-bold text-gray-900">£11.99</span>
-                <span className="text-sm font-normal text-gray-500">/mo</span>
-                <span className="text-sm text-gray-400 line-through ml-2">£14.99</span>
-              </div>
-              <div className="text-gray-600 text-sm mb-5">Ace your interviews</div>
-              <ul className="space-y-2.5 mb-7">
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />50 messages per day</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />All subjects</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Interview coaching</li>
-              </ul>
-              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all bg-gray-100 text-gray-800 hover:bg-gray-200">
-                Start Now
-              </Link>
-            </motion.div>
-
-            {/* Premium */}
-            <motion.div 
-              className="card p-7 relative border-2 border-coral-500 shadow-xl shadow-coral-500/10"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 gradient-primary text-white text-xs font-semibold px-4 py-1 rounded-full">
-                Best Value
-              </div>
-              <div className="text-sm font-semibold text-gray-500 mb-2">Premium</div>
-              <div className="mb-1">
-                <span className="text-3xl font-display font-bold text-gray-900">£16.99</span>
-                <span className="text-sm font-normal text-gray-500">/mo</span>
-                <span className="text-sm text-gray-400 line-through ml-2">£19.99</span>
-              </div>
-              <div className="text-gray-600 text-sm mb-5">PS + Interview prep</div>
-              <ul className="space-y-2.5 mb-7">
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />200 messages per day</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />PS + Interview coaching</li>
-                <li className="flex items-center gap-2.5 text-sm text-gray-600"><Check className="w-4 h-4 text-coral-500 flex-shrink-0" />Priority support</li>
-              </ul>
-              <Link to="/signup" className="block text-center py-3 rounded-xl font-semibold transition-all btn-primary w-full">
-                Go Premium
-              </Link>
-            </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+            {team.map((member, i) => (
+              <motion.div 
+                key={i}
+                className="card card-hover p-5 text-center"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08 }}
+              >
+                {/* Placeholder photo */}
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 border-2 border-gray-200">
+                  <User className="w-7 h-7 text-gray-300" />
+                </div>
+                <div className="font-display font-bold text-gray-900 text-sm mb-0.5">{member.name}</div>
+                <div className="text-coral-500 font-semibold text-xs mb-1">{member.uni} — {member.course}</div>
+                <div className="text-gray-500 text-xs leading-relaxed">{member.role}</div>
+              </motion.div>
+            ))}
           </div>
 
-          <motion.p 
-            className="text-center mt-8 text-gray-500 text-sm"
+          <motion.div 
+            className="text-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            Want the full breakdown including 1-on-1 sessions?{' '}
-            <Link to="/pricing" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">
-              See all pricing details →
+            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors">
+              Learn more about the team <ArrowRight className="w-4 h-4" />
             </Link>
-          </motion.p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Social Proof / Trust Section */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-5xl mx-auto">
+      {/* ==================== SOCIAL PROOF STATS ==================== */}
+      <section className="py-16 px-6 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            className="flex flex-wrap justify-center gap-10"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center">
+              <div className="text-3xl font-display font-bold text-coral-500">5</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Specialist AI Agents</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-display font-bold text-coral-500">1000+</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Resources</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-display font-bold text-coral-500">5</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Top UK Universities</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-display font-bold text-coral-500">99%</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Cheaper Than Tutoring</div>
+            </div>
+            <div className="text-center">
+              <div className="text-3xl font-display font-bold text-coral-500">24/7</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Always Available</div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ==================== PRICING TEASER ==================== */}
+      <section className="py-24 px-6 bg-white">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            className="text-center mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl md:text-3xl font-display font-bold mb-4 text-gray-900">Built by students from the UK's best universities</h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
-              We're first-years who just went through the exact same application process — and built the tool we wished we had.
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Launch pricing available</h2>
+            <p className="text-gray-600 max-w-xl mx-auto mb-6">
+              We're just getting started — so we're offering early access pricing for a limited time. Start free, and upgrade when you're ready. Prices will increase after the launch period.
             </p>
-          </motion.div>
-
-          {/* Trust badges row */}
-          <motion.div 
-            className="flex flex-wrap justify-center gap-4 mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-          >
-            {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (
-              <div key={i} className="px-5 py-2.5 bg-white rounded-xl border border-gray-100 shadow-sm text-sm font-semibold text-gray-700">
-                🎓 {uni}
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Stat badges like Politics Blueprint */}
-          <motion.div 
-            className="flex flex-wrap justify-center gap-8"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-          >
-            <div className="text-center">
-              <div className="text-2xl font-display font-bold text-coral-500">1000+</div>
-              <div className="text-xs text-gray-500 mt-0.5">Resources</div>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link to="/pricing" className="btn-primary px-8 py-4 text-lg">
+                See Plans & Pricing <ArrowRight className="w-5 h-5" />
+              </Link>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-display font-bold text-coral-500">5</div>
-              <div className="text-xs text-gray-500 mt-0.5">Specialist Agents</div>
+            <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-500">
+              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> Free tier available</span>
+              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> No credit card required</span>
+              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> Cancel anytime</span>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-display font-bold text-coral-500">99%</div>
-              <div className="text-xs text-gray-500 mt-0.5">Cheaper than tutoring</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-display font-bold text-coral-500">24/7</div>
-              <div className="text-xs text-gray-500 mt-0.5">Available anytime</div>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            className="text-center mt-8"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors text-sm">
-              Meet the full team <ArrowRight className="w-4 h-4" />
-            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="py-24 px-6 bg-white">
+      {/* ==================== FAQ ==================== */}
+      <section id="faq" className="py-24 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -554,7 +476,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA */}
+      {/* ==================== FINAL CTA ==================== */}
       <section className="py-24 px-6 gradient-primary">
         <div className="max-w-4xl mx-auto text-center">
           <motion.h2 
@@ -590,7 +512,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* ==================== FOOTER ==================== */}
       <footer className="py-12 px-6 border-t border-gray-100">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <Link to="/" className="flex items-center gap-2.5">
@@ -605,6 +527,7 @@ export default function Landing() {
             <a href="#" className="hover:text-coral-500 transition-colors">Privacy</a>
             <a href="#" className="hover:text-coral-500 transition-colors">Terms</a>
             <Link to="/about" className="hover:text-coral-500 transition-colors">Our Team</Link>
+            <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
             <a href="mailto:hello@myunioffer.ai" className="hover:text-coral-500 transition-colors">Contact</a>
           </div>
           <div className="text-sm text-gray-500">
