@@ -78,11 +78,11 @@ export default function Settings() {
   }
 
   return (
-    <div className="min-h-screen bg-[#242424]">
+    <div className="min-h-screen bg-[#2c2c2c]">
       {/* Header */}
       <header className="glass border-b border-[rgba(255,255,255,0.06)] px-6 py-4">
         <div className="max-w-2xl mx-auto flex items-center justify-between">
-          <Link to="/chat" className="flex items-center gap-2 text-[#aaa] hover:text-white">
+          <Link to="/chat" className="flex items-center gap-2 text-[#bbb] hover:text-white">
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back to Chat</span>
           </Link>
@@ -104,18 +104,18 @@ export default function Settings() {
           {/* Account */}
           <div className="card p-6 mb-6">
             <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <User className="w-5 h-5 text-[#777]" />
+              <User className="w-5 h-5 text-[#999]" />
               Account
             </h2>
             <div className="space-y-4">
               <div>
-                <label className="text-sm text-[#888]">Name</label>
+                <label className="text-sm text-[#999]">Name</label>
                 <div className="text-white font-medium">{userProfile?.displayName || 'Not set'}</div>
               </div>
               <div>
-                <label className="text-sm text-[#888]">Email</label>
+                <label className="text-sm text-[#999]">Email</label>
                 <div className="text-white font-medium flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-[#777]" />
+                  <Mail className="w-4 h-4 text-[#999]" />
                   {currentUser?.email}
                 </div>
               </div>
@@ -125,7 +125,7 @@ export default function Settings() {
           {/* Subscription */}
           <div className="card p-6 mb-6">
             <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-[#777]" />
+              <CreditCard className="w-5 h-5 text-[#999]" />
               Subscription
             </h2>
             
@@ -137,11 +137,11 @@ export default function Settings() {
               )}
             </div>
 
-            <div className="bg-[#242424] rounded-xl p-4 mb-4">
-              <div className="text-sm text-[#aaa] mb-2">
+            <div className="bg-[#2c2c2c] rounded-xl p-4 mb-4">
+              <div className="text-sm text-[#bbb] mb-2">
                 <strong>{currentPlan.messages}</strong> messages per day
               </div>
-              <ul className="text-sm text-[#888] space-y-1">
+              <ul className="text-sm text-[#999] space-y-1">
                 {currentPlan.features.map((f, i) => (
                   <li key={i}>• {f}</li>
                 ))}
@@ -173,7 +173,7 @@ export default function Settings() {
             <div className="space-y-3">
               <button
                 onClick={handleSwitchAccount}
-                className="flex items-center gap-2 text-[#aaa] hover:text-white font-medium"
+                className="flex items-center gap-2 text-[#bbb] hover:text-white font-medium"
               >
                 <RefreshCw className="w-5 h-5" />
                 Switch Account

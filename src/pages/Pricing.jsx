@@ -149,13 +149,13 @@ export default function Pricing() {
   const isCurrentPlan = (planId) => planId !== 'free' && userProfile?.plan === planId;
 
   return (
-    <div className="min-h-screen bg-[#242424]">
+    <div className="min-h-screen bg-[#2c2c2c]">
       {/* Header */}
       <header className="glass border-b border-[rgba(255,255,255,0.06)] px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link 
             to={currentUser ? "/chat" : "/"} 
-            className="flex items-center gap-2 text-[#aaa] hover:text-white"
+            className="flex items-center gap-2 text-[#bbb] hover:text-white"
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back</span>
@@ -165,7 +165,7 @@ export default function Pricing() {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-display font-bold hidden sm:inline">
-              myuni<span className="text-[#f07a62]">offer</span><span className="text-[#777]">.ai</span>
+              myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
             </span>
           </Link>
           <div className="w-20" />
@@ -181,7 +181,7 @@ export default function Pricing() {
           <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">
             Don't leave your application to chance
           </h1>
-          <p className="text-[#aaa] max-w-xl mx-auto">
+          <p className="text-[#bbb] max-w-xl mx-auto">
             Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation — and that's exactly what we provide.
           </p>
         </motion.div>
@@ -226,29 +226,29 @@ export default function Pricing() {
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
                   plan.popular ? 'gradient-primary' : 'bg-[rgba(255,255,255,0.06)]'
                 }`}>
-                  <Icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-[#aaa]'}`} />
+                  <Icon className={`w-6 h-6 ${plan.popular ? 'text-white' : 'text-[#bbb]'}`} />
                 </div>
 
                 <h3 className="text-lg font-display font-bold text-white mb-1">{plan.name}</h3>
-                <p className="text-[#888] text-sm mb-4">{plan.description}</p>
+                <p className="text-[#999] text-sm mb-4">{plan.description}</p>
 
                 <div className="mb-5">
                   <span className="text-3xl font-display font-bold text-white">£{plan.price}</span>
-                  <span className="text-sm text-[#888]">/mo</span>
+                  <span className="text-sm text-[#999]">/mo</span>
                   {plan.originalPrice && (
-                    <span className="text-sm text-[#777] line-through ml-2">£{plan.originalPrice}</span>
+                    <span className="text-sm text-[#999] line-through ml-2">£{plan.originalPrice}</span>
                   )}
                 </div>
 
                 <ul className="space-y-2.5 mb-6">
                   {plan.features.map((feature, j) => (
-                    <li key={j} className="flex items-start gap-2.5 text-sm text-[#aaa]">
+                    <li key={j} className="flex items-start gap-2.5 text-sm text-[#bbb]">
                       <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.popular ? 'text-[#f07a62]' : 'text-[#5cb85c]'}`} />
                       {feature}
                     </li>
                   ))}
                   {plan.notIncluded.map((feature, j) => (
-                    <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-[#777]">
+                    <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-[#999]">
                       <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center">—</span>
                       {feature}
                     </li>
@@ -258,7 +258,7 @@ export default function Pricing() {
                 {isCurrent ? (
                   <button
                     disabled
-                    className="w-full py-3 rounded-xl font-semibold bg-[rgba(255,255,255,0.06)] text-[#888] cursor-not-allowed"
+                    className="w-full py-3 rounded-xl font-semibold bg-[rgba(255,255,255,0.06)] text-[#999] cursor-not-allowed"
                   >
                     Current Plan
                   </button>
@@ -269,7 +269,7 @@ export default function Pricing() {
                     className={`w-full py-3 rounded-xl font-semibold transition-all ${
                       plan.popular
                         ? 'btn-primary'
-                        : 'bg-[#1a1a1a] text-white hover:bg-gray-800'
+                        : 'bg-[#252525] text-white hover:bg-gray-800'
                     }`}
                   >
                     {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : 'Subscribe'}
@@ -296,24 +296,24 @@ export default function Pricing() {
               </div>
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-xl font-display font-bold text-white mb-2">Personal session with a specialist</h3>
-                <p className="text-[#aaa] text-sm leading-relaxed mb-4">
+                <p className="text-[#bbb] text-sm leading-relaxed mb-4">
                   Get matched with a real student from your chosen degree area — someone who successfully applied to the same course at a top university. They'll give you personalised PS feedback or run a realistic mock interview, tailored to your specific application.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#aaa] text-xs font-medium">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
                     <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> 45-minute session
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#aaa] text-xs font-medium">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
                     <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> Subject-matched specialist
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#aaa] text-xs font-medium">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[rgba(255,255,255,0.06)] rounded-full text-[#bbb] text-xs font-medium">
                     <Check className="w-3.5 h-3.5 text-[#5cb85c]" /> PS feedback or mock interview
                   </span>
                 </div>
               </div>
               <div className="text-center flex-shrink-0">
                 <div className="text-4xl font-display font-bold text-[#f07a62]">£19.99</div>
-                <div className="text-[#888] text-sm mb-3">per session</div>
+                <div className="text-[#999] text-sm mb-3">per session</div>
                 <Link to="/signup" className="btn-primary text-sm px-6 py-2.5">
                   Book a Session
                 </Link>
@@ -326,7 +326,7 @@ export default function Pricing() {
                 <Gift className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-semibold text-white mb-1">3-Month Bundle Perk</h4>
-                  <p className="text-sm text-[#aaa] leading-relaxed">
+                  <p className="text-sm text-[#bbb] leading-relaxed">
                     Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-white">1 free 1-on-1 session</span> in your third month. That's a free £19.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
                   </p>
                 </div>
@@ -343,9 +343,9 @@ export default function Pricing() {
           className="mb-16 max-w-2xl mx-auto"
         >
           <div className="card p-8 text-center bg-[rgba(240,122,98,0.1)] border-[rgba(240,122,98,0.15)]">
-            <p className="text-[#aaa] text-sm mb-2">The same level of coaching would cost</p>
+            <p className="text-[#bbb] text-sm mb-2">The same level of coaching would cost</p>
             <div className="text-4xl font-display font-bold text-gray-300 line-through mb-1">£200+/month</div>
-            <p className="text-[#aaa] text-sm mb-4">with a private admissions tutor</p>
+            <p className="text-[#bbb] text-sm mb-4">with a private admissions tutor</p>
             <div className="text-lg font-display font-bold text-white">
               With myunioffer.ai: <span className="text-[#f07a62]">from £11.99/month</span>
             </div>
@@ -366,40 +366,40 @@ export default function Pricing() {
                 <tr className="border-b border-[rgba(255,255,255,0.06)]">
                   <th className="text-left p-4 font-semibold text-white"></th>
                   <th className="text-center p-4 font-semibold text-[#f07a62]">myunioffer.ai</th>
-                  <th className="text-center p-4 font-semibold text-[#888]">Private tutors</th>
-                  <th className="text-center p-4 font-semibold text-[#888]">Premium agencies</th>
+                  <th className="text-center p-4 font-semibold text-[#999]">Private tutors</th>
+                  <th className="text-center p-4 font-semibold text-[#999]">Premium agencies</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#aaa]">PS Coaching</td>
+                  <td className="p-4 text-[#bbb]">PS Coaching</td>
                   <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#777] mx-auto" /></td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#777] mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#aaa]">Interview Prep</td>
+                  <td className="p-4 text-[#bbb]">Interview Prep</td>
                   <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#777]">Sometimes</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#777] mx-auto" /></td>
+                  <td className="p-4 text-center text-[#999]">Sometimes</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#aaa]">Subject-specialist</td>
+                  <td className="p-4 text-[#bbb]">Subject-specialist</td>
                   <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#777]">Varies</td>
-                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#777] mx-auto" /></td>
+                  <td className="p-4 text-center text-[#999]">Varies</td>
+                  <td className="p-4 text-center"><Check className="w-4 h-4 text-[#999] mx-auto" /></td>
                 </tr>
                 <tr className="border-b border-gray-50">
-                  <td className="p-4 text-[#aaa]">Available 24/7</td>
+                  <td className="p-4 text-[#bbb]">Available 24/7</td>
                   <td className="p-4 text-center"><Check className="w-4 h-4 text-[#f07a62] mx-auto" /></td>
-                  <td className="p-4 text-center text-[#777]">No</td>
-                  <td className="p-4 text-center text-[#777]">No</td>
+                  <td className="p-4 text-center text-[#999]">No</td>
+                  <td className="p-4 text-center text-[#999]">No</td>
                 </tr>
                 <tr>
                   <td className="p-4 font-semibold text-white">Price</td>
                   <td className="p-4 text-center font-bold text-[#f07a62]">From £11.99/mo</td>
-                  <td className="p-4 text-center text-[#888]">£50–100/hr</td>
-                  <td className="p-4 text-center text-[#888]">£6,000–35,000</td>
+                  <td className="p-4 text-center text-[#999]">£50–100/hr</td>
+                  <td className="p-4 text-center text-[#999]">£6,000–35,000</td>
                 </tr>
               </tbody>
             </table>
@@ -413,7 +413,7 @@ export default function Pricing() {
           transition={{ delay: 0.7 }}
           className="max-w-2xl mx-auto mb-8"
         >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-[#888]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-[#999]">
             <span className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-[#5cb85c]" /> Cancel anytime, no contracts
             </span>
@@ -430,7 +430,7 @@ export default function Pricing() {
           transition={{ delay: 0.8 }}
           className="text-center"
         >
-          <p className="text-[#888]">
+          <p className="text-[#999]">
             Not ready to commit?{' '}
             <Link to={currentUser ? "/chat" : "/signup"} className="text-[#f07a62] font-semibold hover:text-coral-700">
               Continue with Free

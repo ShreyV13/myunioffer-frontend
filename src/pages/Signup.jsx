@@ -53,7 +53,7 @@ export default function Signup() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#242424] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#2c2c2c] flex flex-col items-center justify-center px-6 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -65,14 +65,14 @@ export default function Signup() {
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-display font-bold">
-            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#777]">.ai</span>
+            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
           </span>
         </Link>
 
         {/* Card */}
         <div className="card p-8">
           <h1 className="text-2xl font-display font-bold text-center mb-2 text-white">Create your account</h1>
-          <p className="text-[#888] text-center mb-8">Start your journey to your dream university</p>
+          <p className="text-[#999] text-center mb-8">Start your journey to your dream university</p>
 
           {error && (
             <motion.div 
@@ -87,9 +87,9 @@ export default function Signup() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-[#ccc] mb-2">Name</label>
+              <label className="block text-sm font-medium text-[#ddd] mb-2">Name</label>
               <div className="relative">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#777] pointer-events-none" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
                 <input
                   type="text"
                   value={name}
@@ -102,9 +102,9 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#ccc] mb-2">Email</label>
+              <label className="block text-sm font-medium text-[#ddd] mb-2">Email</label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#777] pointer-events-none" />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
                 <input
                   type="email"
                   value={email}
@@ -117,9 +117,9 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-[#ccc] mb-2">Password</label>
+              <label className="block text-sm font-medium text-[#ddd] mb-2">Password</label>
               <div className="relative">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#777] pointer-events-none" />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
                 <input
                   type="password"
                   value={password}
@@ -144,10 +144,10 @@ export default function Signup() {
 
           {/* Benefits */}
           <div className="mt-8 pt-6 border-t border-[rgba(255,255,255,0.06)]">
-            <p className="text-sm font-medium text-[#ccc] mb-3">Free account includes:</p>
+            <p className="text-sm font-medium text-[#ddd] mb-3">Free account includes:</p>
             <ul className="space-y-2">
               {benefits.map((benefit, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-[#aaa]">
+                <li key={i} className="flex items-center gap-2 text-sm text-[#bbb]">
                   <Check className="w-4 h-4 text-[#f07a62]" />
                   {benefit}
                 </li>
@@ -156,7 +156,7 @@ export default function Signup() {
           </div>
         </div>
 
-        <p className="text-center text-[#aaa] mt-6">
+        <p className="text-center text-[#bbb] mt-6">
           Already have an account?{' '}
           <Link to="/login" className="text-[#f07a62] font-semibold hover:text-coral-700">
             Sign in

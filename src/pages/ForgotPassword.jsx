@@ -34,7 +34,7 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-[#242424] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#2c2c2c] flex flex-col items-center justify-center px-6 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -46,14 +46,14 @@ export default function ForgotPassword() {
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-display font-bold">
-            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#777]">.ai</span>
+            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
           </span>
         </Link>
 
         {/* Card */}
         <div className="card p-8">
           <h1 className="text-2xl font-display font-bold text-center mb-2 text-white">Reset password</h1>
-          <p className="text-[#888] text-center mb-8">We'll send you a link to reset your password</p>
+          <p className="text-[#999] text-center mb-8">We'll send you a link to reset your password</p>
 
           {error && (
             <motion.div 
@@ -76,7 +76,7 @@ export default function ForgotPassword() {
                 <CheckCircle className="w-8 h-8 text-green-600" />
               </div>
               <h2 className="text-lg font-semibold text-white mb-2">Check your email</h2>
-              <p className="text-[#aaa] mb-6">
+              <p className="text-[#bbb] mb-6">
                 We've sent a password reset link to <strong>{email}</strong>
               </p>
               <Link to="/login" className="btn-primary w-full py-4">
@@ -86,9 +86,9 @@ export default function ForgotPassword() {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-[#ccc] mb-2">Email</label>
+                <label className="block text-sm font-medium text-[#ddd] mb-2">Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#777] pointer-events-none" />
+                  <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#999] pointer-events-none" />
                   <input
                     type="email"
                     value={email}
@@ -111,7 +111,7 @@ export default function ForgotPassword() {
           )}
         </div>
 
-        <Link to="/login" className="flex items-center justify-center gap-2 text-[#aaa] mt-6 hover:text-[#f07a62]">
+        <Link to="/login" className="flex items-center justify-center gap-2 text-[#bbb] mt-6 hover:text-[#f07a62]">
           <ArrowLeft className="w-4 h-4" />
           Back to login
         </Link>

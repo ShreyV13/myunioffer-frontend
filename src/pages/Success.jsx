@@ -57,7 +57,7 @@ export default function Success() {
   }, [searchParams, currentUser]);
 
   return (
-    <div className="min-h-screen bg-[#242424] flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#2c2c2c] flex flex-col items-center justify-center px-6 py-12">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -69,7 +69,7 @@ export default function Success() {
             <GraduationCap className="w-6 h-6 text-white" />
           </div>
           <span className="text-2xl font-display font-bold">
-            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#777]">.ai</span>
+            myuni<span className="text-[#f07a62]">offer</span><span className="text-[#999]">.ai</span>
           </span>
         </Link>
 
@@ -83,7 +83,7 @@ export default function Success() {
             >
               <Loader2 className="w-16 h-16 text-[#f07a62] mx-auto mb-4 animate-spin" />
               <h2 className="text-xl font-display font-bold text-white mb-2">Processing...</h2>
-              <p className="text-[#888]">Verifying your payment</p>
+              <p className="text-[#999]">Verifying your payment</p>
             </motion.div>
           )}
 
@@ -98,7 +98,7 @@ export default function Success() {
               <h2 className="text-2xl font-display font-bold text-white mb-2">
                 Welcome to {planName || 'Premium'}!
               </h2>
-              <p className="text-[#aaa] mb-8">
+              <p className="text-[#bbb] mb-8">
                 Your subscription is now active. You have access to all the features included in your plan.
               </p>
               <Link to="/chat" className="btn-primary w-full py-4">
@@ -119,7 +119,7 @@ export default function Success() {
               <h2 className="text-2xl font-display font-bold text-white mb-2">
                 Something went wrong
               </h2>
-              <p className="text-[#aaa] mb-8">
+              <p className="text-[#bbb] mb-8">
                 We couldn't verify your payment. If you were charged, please contact support and we'll sort it out.
               </p>
               <div className="space-y-3">
