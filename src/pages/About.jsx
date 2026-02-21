@@ -100,10 +100,9 @@ export default function About() {
             We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Gemini said
 We’ve been there—the sleepless nights, the "is this good enough?" anxiety, and the endless personal statement rewrites. Despite the stress, we secured offers from the UK’s top universities. Now, we’ve built the tool we wish we’d had.
 
-While we were lucky to have teachers who decoded the admissions process for us, most students aren't as fortunate. After hours and hours, we created this AI to bridge that gap. It embeds everything we learned about what tutors actually want, providing a mentor that's available whenever you need one.
+While we were lucky to have teachers who decoded the admissions process for us, most students aren't as fortunate. After hours and hours, we created this AI to bridge that gap. It embeds everything we learned about what tutors actually want, providing a mentor that's available whenever you need one. </p>
         </motion.div>
 
         {/* Why trust us pillars */}
