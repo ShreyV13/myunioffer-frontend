@@ -147,12 +147,22 @@ export default function WaitlistLanding() {
             AI-powered personal statement coaching and interview preparation — built by students from LSE, Cambridge, Imperial, KCL, and Warwick.
           </motion.p>
 
-          {/* Hero Waitlist Form - HIGH UP */}
+          {/* Discount callout - above form */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-50 border-2 border-green-300 rounded-2xl text-base font-bold text-green-700 mb-6 shadow-sm"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+          >
+            🎁 Waitlist members get an exclusive launch discount — not available after launch
+          </motion.div>
+
+          {/* Hero Waitlist Form */}
           <motion.div 
             className="max-w-md mx-auto mb-5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             {submitted ? renderSuccess() : (
               <form onSubmit={(e) => handleWaitlist(e, email, setSubmitted)} className="flex flex-col sm:flex-row gap-3">
@@ -171,16 +181,6 @@ export default function WaitlistLanding() {
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p className="text-xs text-gray-400 mt-3">Free · No payment required · Early access + exclusive discount</p>
-          </motion.div>
-
-          {/* Discount callout - below form */}
-          <motion.div
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-50 border-2 border-green-300 rounded-2xl text-base font-bold text-green-700 mb-8 shadow-sm"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            🎁 Waitlist members get an exclusive launch discount — not available after launch
           </motion.div>
 
           {/* Trust bar */}
