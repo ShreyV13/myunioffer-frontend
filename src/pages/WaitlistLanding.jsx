@@ -333,7 +333,7 @@ export default function WaitlistLanding() {
             <p className="text-gray-600 max-w-xl mx-auto">Real students at real universities who went through the same process you're about to face.</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {[
               { name: "Shrey Verma", uni: "LSE", course: "PPE", role: "Founder & Humanities Lead" },
               { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine", role: "Medicine Lead" },
@@ -343,7 +343,7 @@ export default function WaitlistLanding() {
             ].map((member, i) => (
               <motion.div 
                 key={i}
-                className="card p-5 text-center"
+                className="card p-5 text-center flex-1"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
