@@ -100,9 +100,9 @@ export default function About() {
             We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-We’ve been there—the sleepless nights, the "is this good enough?" anxiety, and the endless personal statement rewrites. Despite the stress, we secured offers from the UK’s top universities. Now, we’ve built the tool we wish we’d had.
+We remember the sleepless nights and the constant "is this good enough?" anxiety. After countless rewrites, we secured offers from the UK’s top universities—but we realised the process shouldn't be that hard.
 
-While we were lucky to have teachers who decoded the admissions process for us, most students aren't as fortunate. After hours and hours, we created this AI to bridge that gap. It embeds everything we learned about what tutors actually want, providing a mentor that's available whenever you need one. </p>
+While we had teachers who coached us through what admissions tutors actually look for, most students don’t. We’ve embedded every insight and strategy we learned into this AI, giving you a 24/7 mentor to help you navigate the process with confidence.</p>
         </motion.div>
 
         {/* Why trust us pillars */}
