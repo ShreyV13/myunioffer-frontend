@@ -323,7 +323,7 @@ export default function Pricing() {
                 </div>
               </div>
               <div className="text-center flex-shrink-0">
-                <div className="text-4xl font-display font-bold text-coral-500">£19.99</div>
+                <div className="text-4xl font-display font-bold text-coral-500">£23.99</div>
                 <div className="text-gray-500 text-sm mb-3">per session</div>
                 <Link to="/signup" className="btn-primary text-sm px-6 py-2.5">
                   Book a Session
@@ -338,7 +338,7 @@ export default function Pricing() {
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">3-Month Bundle Perk</h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £19.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
+                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £23.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
                   </p>
                 </div>
               </div>
