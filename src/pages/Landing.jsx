@@ -28,6 +28,7 @@ export default function Landing() {
     { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "Economics, PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
     { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
     { name: "Adyan Shahid", role: "STEM Lead", subject: "Maths & Computer Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
+    { name: "Girish Radhakrishnan", role: "Engineering Lead", subject: "Engineering, Physics & Design", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
     { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
 
@@ -338,7 +339,7 @@ export default function Landing() {
             <p className="text-gray-600 max-w-xl mx-auto">Every subject agent is trained by a real student who successfully applied in that field. These are the people shaping your coaching experience.</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
             {team.map((member, i) => (
               <motion.div 
                 key={i}

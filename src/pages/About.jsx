@@ -47,6 +47,16 @@ export default function About() {
       confirmed: true
     },
     { 
+      name: "Girish Radhakrishnan", 
+      uni: "Imperial", 
+      course: "Chemical Engineering",
+      role: "Engineering Lead",
+      subjects: "Chemical Engineering, Engineering, Physics, Design",
+      bio: "Studying Chemical Engineering at Imperial College London — one of the top engineering schools in the world. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
+      contribution: "Leads the Engineering section of the STEM agent, training it on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
+      confirmed: true
+    },
+    { 
       name: "Recruiting", 
       uni: "Top UK University", 
       course: "Arts",
