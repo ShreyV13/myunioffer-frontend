@@ -264,7 +264,7 @@ export default function Pricing() {
                   </button>
                 ) : !currentUser ? (
                   <Link
-                    to="/signup"
+                    to="/signup?redirect=pricing"
                     className={`block text-center w-full py-3 rounded-xl font-semibold transition-all ${
                       plan.popular
                         ? 'btn-primary'

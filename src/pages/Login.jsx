@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { GraduationCap, Mail, Lock, ArrowRight, AlertCircle } from 'lucide-react';
@@ -9,9 +9,11 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
   
   const { login } = useAuth();
   const navigate = useNavigate();
+  const redirect = searchParams.get('redirect');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -23,7 +25,7 @@ export default function Login() {
       fetch(import.meta.env.VITE_API_URL + '/health').catch(() => {});
       
       await login(email, password);
-      navigate('/chat');
+      navigate(redirect === 'pricing' ? '/pricing' : '/chat');
     } catch (err) {
       console.error(err);
       if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
@@ -119,7 +121,7 @@ export default function Login() {
 
         <p className="text-center text-gray-600 mt-6">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-coral-600 font-semibold hover:text-coral-700">
+          <Link to={redirect ? `/signup?redirect=${redirect}` : "/signup"} className="text-coral-600 font-semibold hover:text-coral-700">
             Sign up free
           </Link>
         </p>

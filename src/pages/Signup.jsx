@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import { GraduationCap, Mail, Lock, User, ArrowRight, AlertCircle, Check } from 'lucide-react';
@@ -10,9 +10,11 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [searchParams] = useSearchParams();
   
   const { signup } = useAuth();
   const navigate = useNavigate();
+  const redirect = searchParams.get('redirect');
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +32,7 @@ export default function Signup() {
       fetch(import.meta.env.VITE_API_URL + '/health').catch(() => {});
       
       await signup(email, password, name);
-      navigate('/chat');
+      navigate(redirect === 'pricing' ? '/pricing' : '/chat');
     } catch (err) {
       console.error(err);
       if (err.code === 'auth/email-already-in-use') {
@@ -158,7 +160,7 @@ export default function Signup() {
 
         <p className="text-center text-gray-600 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-coral-600 font-semibold hover:text-coral-700">
+          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"} className="text-coral-600 font-semibold hover:text-coral-700">
             Sign in
           </Link>
         </p>
