@@ -262,6 +262,17 @@ export default function Pricing() {
                   >
                     Current Plan
                   </button>
+                ) : !currentUser ? (
+                  <Link
+                    to="/signup"
+                    className={`block text-center w-full py-3 rounded-xl font-semibold transition-all ${
+                      plan.popular
+                        ? 'btn-primary'
+                        : 'bg-gray-900 text-white hover:bg-gray-800'
+                    }`}
+                  >
+                    Sign Up to Subscribe
+                  </Link>
                 ) : (
                   <button
                     onClick={() => handleSubscribe(plan.id)}
@@ -272,7 +283,7 @@ export default function Pricing() {
                         : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >
-                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : !currentUser ? 'Sign Up to Subscribe' : 'Subscribe'}
+                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : 'Subscribe'}
                   </button>
                 )}
               </motion.div>
