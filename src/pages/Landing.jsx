@@ -349,12 +349,15 @@ export default function Landing() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
-                <div className="text-3xl mb-3">{member.icon}</div>
+                <div className="text-3xl mb-2">{member.icon}</div>
+                {member.confirmed && (
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-coral-50 border border-coral-200 rounded-full text-xs text-coral-600 font-bold mb-2">
+                    🎓 LSE
+                  </div>
+                )}
                 <div className="font-display font-bold text-gray-900 text-sm mb-0.5">{member.name}</div>
                 {member.confirmed && (
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-gray-100 rounded-full text-xs text-gray-600 font-medium mb-1">
-                    <span>🎓</span> LSE — PPE
-                  </div>
+                  <div className="text-gray-500 text-xs font-medium">PPE</div>
                 )}
                 <div className="text-gray-500 text-xs leading-relaxed mt-1">{member.subject}</div>
               </motion.div>
