@@ -20,8 +20,8 @@ export default {
           900: '#853222',
         },
         peach: {
-          50: '#fceee9',
-          100: '#f9e5df',
+          50: '#faf0ec',
+          100: '#f5e8e3',
         },
         slate: {
           850: '#1a2234',
