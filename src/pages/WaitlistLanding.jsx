@@ -174,8 +174,18 @@ export default function WaitlistLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
           >
-            We're putting the finishing touches on our AI. Join the waitlist to be first in line — and lock in an exclusive launch discount.
+            We're putting the finishing touches on our AI. Join the waitlist to be first in line.
           </motion.p>
+
+          {/* Discount callout */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-50 border border-green-200 rounded-full text-sm font-semibold text-green-700 mb-8"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.28 }}
+          >
+            🎁 Waitlist members get an exclusive launch discount — not available after launch
+          </motion.div>
 
           {/* Hero Waitlist Form */}
           <motion.div 
@@ -366,7 +376,10 @@ export default function WaitlistLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Simple pricing</h2>
-            <p className="text-gray-600 max-w-xl mx-auto">Full prices shown below. <span className="text-coral-500 font-semibold">Waitlist members get an exclusive discount at launch.</span></p>
+            <p className="text-gray-600 max-w-xl mx-auto mb-4">Full prices shown below.</p>
+            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-coral-50 border border-coral-200 rounded-xl text-sm font-bold text-coral-600">
+              🔥 Waitlist members pay less — join now to lock in your discount before launch
+            </div>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
@@ -459,8 +472,11 @@ export default function WaitlistLanding() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Don't leave your application to chance</h2>
-            <p className="text-gray-400 mb-8">
-              Join the waitlist now. Be the first to access the AI when we launch — and lock in a price that won't be available later. No payment, no commitment, just your email.
+            <p className="text-gray-300 mb-3">
+              Join the waitlist now. Be the first to access the AI when we launch.
+            </p>
+            <p className="text-coral-400 font-semibold mb-8">
+              🎁 Waitlist members get an exclusive discount — this offer disappears once we go live.
             </p>
             <div className="max-w-md mx-auto mb-4">
               <WaitlistForm emailVal={bottomEmail} setEmailVal={setBottomEmail} isSubmitted={bottomSubmitted} setIsSubmitted={setBottomSubmitted} id="bottom-email" />
