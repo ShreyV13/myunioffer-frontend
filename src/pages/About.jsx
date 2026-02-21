@@ -76,7 +76,7 @@ export default function About() {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-display font-bold hidden sm:inline">
-              myuni<span className="text-coral-500">offer</span><span className="text-gray-400">.ai</span>
+              myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span>
             </span>
           </Link>
           <div className="w-20" />

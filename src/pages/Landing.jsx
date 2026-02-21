@@ -72,7 +72,7 @@ export default function Landing() {
                 <GraduationCap className="w-5 h-5 text-white" />
               </div>
               <span className="text-xl font-display font-bold">
-                myuni<span className="text-coral-500">offer</span><span className="text-gray-400">.ai</span>
+                myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span>
               </span>
             </Link>
             
@@ -520,7 +520,7 @@ export default function Landing() {
               <GraduationCap className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-display font-bold">
-              myuni<span className="text-coral-500">offer</span><span className="text-gray-400">.ai</span>
+              myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span>
             </span>
           </Link>
           <div className="flex gap-8 text-sm text-gray-600">
