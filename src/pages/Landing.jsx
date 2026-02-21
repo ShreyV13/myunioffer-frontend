@@ -38,7 +38,7 @@ export default function Landing() {
     },
     {
       q: "How is this different from ChatGPT?",
-      a: "Our AI is specifically built for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to 1000+ real interview questions, sample answers, and successful personal statements — not generic advice."
+      a: "Our AI is specifically built for UK university applications. It knows what admissions tutors look for, understands UCAS requirements, and has access to 1000+ real interview questions, sample answers, and successful personal statements, not generic advice."
     },
     {
       q: "What subjects do you cover?",
@@ -200,9 +200,9 @@ export default function Landing() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {[
-              { num: "1", title: "Tell the AI about your application", desc: "Just start chatting. Tell the AI what you're applying for, which universities you're targeting, and what stage you're at. It automatically understands your subject area and tailors everything — no menus, no setup, just conversation." },
-              { num: "2", title: "Get coached, not written for", desc: "The AI asks you targeted questions based on 1000+ real resources — successful personal statements, past interview questions, and what admissions tutors actually look for. It draws out your authentic story." },
-              { num: "3", title: "Build confidence and stand out", desc: "Iterate on your PS with expert feedback. Run mock interviews with real questions. Go into your application knowing exactly how to present yourself — because you've already practised with the best." },
+              { num: "1", title: "Tell the AI about your application", desc: "Just start chatting. Tell the AI what you're applying for, which universities you're targeting, and what stage you're at. It automatically understands your subject area and tailors everything. No menus, no setup, just conversation." },
+              { num: "2", title: "Get coached, not written for", desc: "The AI asks you targeted questions based on 1000+ real resources: successful personal statements, past interview questions, and what admissions tutors actually look for. It draws out your authentic story." },
+              { num: "3", title: "Build confidence and stand out", desc: "Iterate on your PS with expert feedback. Run mock interviews with real questions. Go into your application knowing exactly how to present yourself, because you've already practised with the best." },
             ].map((step, i) => (
               <motion.div 
                 key={i}
