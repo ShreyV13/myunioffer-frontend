@@ -25,11 +25,11 @@ export default function Landing() {
 
   // Placeholder team - replace names/descriptions when you have real people
   const team = [
-    { name: "Coming Soon", uni: "LSE", course: "PPE", role: "Founder & Economics Lead", desc: "Built the AI coaching system and leads the Economics & PPE application specialist." },
-    { name: "Coming Soon", uni: "KCL", course: "Medicine", role: "Medicine Lead", desc: "Trains the Medicine AI agent with real interview questions and PS insights from the KCL application process." },
-    { name: "Coming Soon", uni: "Cambridge", course: "Computer Science", role: "STEM Lead", desc: "Brings Cambridge CS application expertise to the STEM coaching agent." },
-    { name: "Coming Soon", uni: "Imperial", course: "Engineering", role: "Engineering Specialist", desc: "Adds Imperial Engineering application knowledge to the STEM agent." },
-    { name: "Coming Soon", uni: "Warwick", course: "Economics", role: "Economics Specialist", desc: "Strengthens the Economics agent with Warwick-specific application insights." },
+    { name: "Shrey Verma", role: "Founder", subject: "Economics & PPE", icon: "🎯", confirmed: true },
+    { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
+    { name: "Recruiting", role: "STEM Lead", subject: "Maths & Computer Science", icon: "💻", confirmed: false },
+    { name: "Recruiting", role: "Humanities Lead", subject: "Law, History & English", icon: "📚", confirmed: false },
+    { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
 
   const faqs = [
@@ -51,7 +51,7 @@ export default function Landing() {
     },
     {
       q: "Who are the specialist coaches?",
-      a: "Our coaches are first-year students at top UK universities — LSE, KCL, Cambridge, Imperial, Warwick — who just went through the exact same application process. They train the AI and offer optional 1-on-1 sessions."
+      a: "Our founder is a PPE student at LSE who built the system. We're actively recruiting specialist coaches from top UK universities across Medicine, STEM, Humanities, and Arts — each one trains the AI for their subject area and offers optional 1-on-1 sessions."
     }
   ];
 
@@ -343,19 +343,18 @@ export default function Landing() {
             {team.map((member, i) => (
               <motion.div 
                 key={i}
-                className="card card-hover p-5 text-center"
+                className={`card card-hover p-5 text-center ${member.confirmed ? 'border-coral-200' : ''}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
-                {/* Placeholder photo */}
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3 border-2 border-gray-200">
-                  <User className="w-7 h-7 text-gray-300" />
-                </div>
+                <div className="text-3xl mb-3">{member.icon}</div>
                 <div className="font-display font-bold text-gray-900 text-sm mb-0.5">{member.name}</div>
-                <div className="text-coral-500 font-semibold text-xs mb-1">{member.uni} — {member.course}</div>
-                <div className="text-gray-500 text-xs leading-relaxed">{member.role}</div>
+                {member.confirmed && (
+                  <div className="text-coral-500 font-semibold text-xs mb-1">LSE — PPE</div>
+                )}
+                <div className="text-gray-500 text-xs leading-relaxed">{member.subject}</div>
               </motion.div>
             ))}
           </div>
