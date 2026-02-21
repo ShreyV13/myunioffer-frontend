@@ -56,7 +56,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fceee9]">
+    <div className="min-h-screen bg-peach-50">
       {/* Announcement Banner */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-4 text-sm font-medium">
         <span className="text-coral-400">🚀 Launch Pricing</span> — early access discount available for a limited time.{' '}
@@ -187,7 +187,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== HOW IT WORKS ==================== */}
-      <section id="how-it-works" className="py-24 px-6 bg-[#fceee9]">
+      <section id="how-it-works" className="py-24 px-6 bg-peach-50">
         <div className="max-w-5xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -244,7 +244,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== WHY US (USPs) ==================== */}
-      <section id="why-us" className="py-24 px-6 bg-[#f9e5df]">
+      <section id="why-us" className="py-24 px-6 bg-peach-100">
         <div className="max-w-5xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -327,7 +327,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== TEAM PREVIEW ==================== */}
-      <section id="team" className="py-24 px-6 bg-[#fceee9]">
+      <section id="team" className="py-24 px-6 bg-peach-50">
         <div className="max-w-5xl mx-auto">
           <motion.div 
             className="text-center mb-16"
@@ -374,7 +374,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== SOCIAL PROOF STATS ==================== */}
-      <section className="py-16 px-6 bg-[#f9e5df]">
+      <section className="py-16 px-6 bg-peach-100">
         <div className="max-w-4xl mx-auto">
           <motion.div 
             className="flex flex-wrap justify-center gap-10"
@@ -407,7 +407,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== PRICING TEASER ==================== */}
-      <section className="py-24 px-6 bg-[#fceee9]">
+      <section className="py-24 px-6 bg-peach-50">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -433,7 +433,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== FAQ ==================== */}
-      <section id="faq" className="py-24 px-6 bg-[#f9e5df]">
+      <section id="faq" className="py-24 px-6 bg-peach-100">
         <div className="max-w-3xl mx-auto">
           <motion.div 
             className="text-center mb-16"

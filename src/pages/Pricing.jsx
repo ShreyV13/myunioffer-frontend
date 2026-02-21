@@ -149,7 +149,7 @@ export default function Pricing() {
   const isCurrentPlan = (planId) => planId !== 'free' && userProfile?.plan === planId;
 
   return (
-    <div className="min-h-screen bg-[#f9e5df]">
+    <div className="min-h-screen bg-peach-100">
       {/* Header */}
       <header className="glass border-b border-gray-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
