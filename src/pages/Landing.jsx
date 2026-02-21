@@ -144,7 +144,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI coaching for personal statements and interviews — trained by students at LSE, Cambridge, Imperial, KCL, and Warwick who got in last year.
+            AI coaching for personal statements and interviews — trained by students at top UK universities who got in last year.
           </motion.p>
 
           <motion.div 
@@ -177,9 +177,9 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5 }}
           >
-            {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (
+            {['Russell Group', 'Medicine', 'STEM', 'Economics', 'Humanities', 'Arts'].map((tag, i) => (
               <div key={i} className="px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm text-sm font-semibold text-gray-600">
-                🎓 {uni}
+                🎓 {tag}
               </div>
             ))}
           </motion.div>
@@ -281,7 +281,7 @@ export default function Landing() {
                 <Target className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Subject-specialist, not generic</h3>
-              <p className="text-gray-600 leading-relaxed">A Medicine application is nothing like an Economics one. We have 5 specialist AI agents — each trained on real resources from LSE, Cambridge, KCL, Imperial, Warwick, and other top UK universities. Your coach knows your subject.</p>
+              <p className="text-gray-600 leading-relaxed">A Medicine application is nothing like an Economics one. We have 5 specialist AI agents — each trained on real resources from successful applications to top UK universities. Your coach knows your subject.</p>
             </motion.div>
 
             <motion.div 
@@ -393,7 +393,7 @@ export default function Landing() {
             </div>
             <div className="text-center">
               <div className="text-3xl font-display font-bold text-coral-500">5</div>
-              <div className="text-xs text-gray-500 mt-1 font-medium">Top UK Universities</div>
+              <div className="text-xs text-gray-500 mt-1 font-medium">Subject Specialisms</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-display font-bold text-coral-500">99%</div>

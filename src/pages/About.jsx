@@ -117,7 +117,7 @@ export default function About() {
             <div className="text-3xl mb-4">💡</div>
             <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Your mentor at 2am when you need one</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              The night before your UCAS deadline, your teacher isn't answering emails. Your parents don't understand what Oxbridge wants. Your friends are as stressed as you. We built the mentor that's always there — trained by people who got the offers you're chasing, available whenever you need it.
+              The night before your UCAS deadline, your teacher isn't answering emails. Your parents don't know what admissions tutors want. Your friends are as stressed as you. We built the mentor that's always there — trained by people who got the offers you're chasing, available whenever you need it.
             </p>
           </motion.div>
 
