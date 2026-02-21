@@ -60,7 +60,7 @@ export default function Privacy() {
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">4. AI and your data</h2>
             <p>Your messages are sent to AI providers (currently Anthropic's Claude) to generate coaching responses. These messages are processed in real-time and are subject to Anthropic's data handling policies.</p>
             <p>We do <strong>not</strong> use your personal statements, interview answers, or any personal content to train AI models. Your application content remains yours.</p>
-            <p>Excerpts from your conversations may be stored on our servers to provide chat history and continuity. You can delete your chat history at any time from within the app.</p>
+            <p>Excerpts from your conversations may be stored on our servers to provide chat history and continuity. You can delete your chat history at any time by deleting the chat on the chatbot page.</p>
           </section>
 
           <section>
