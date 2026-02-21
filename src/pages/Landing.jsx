@@ -545,8 +545,8 @@ export default function Landing() {
             </span>
           </Link>
           <div className="flex gap-8 text-sm text-gray-600">
-            <a href="#" className="hover:text-coral-500 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-coral-500 transition-colors">Terms</a>
+            <Link to="/privacy" className="hover:text-coral-500 transition-colors">Privacy</Link>
+            <Link to="/terms" className="hover:text-coral-500 transition-colors">Terms</Link>
             <Link to="/about" className="hover:text-coral-500 transition-colors">Our Team</Link>
             <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
             <a href="mailto:support@myunioffer.com" className="hover:text-coral-500 transition-colors">Support</a>

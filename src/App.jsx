@@ -11,6 +11,8 @@ import Chat from './pages/Chat';
 import Settings from './pages/Settings';
 import Pricing from './pages/Pricing';
 import About from './pages/About';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import Success from './pages/Success';
 
 // Scroll to top on route change
@@ -57,6 +59,8 @@ function AppRoutes() {
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/success" element={<Success />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
