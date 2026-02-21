@@ -27,14 +27,14 @@ export default function About() {
       confirmed: true
     },
     { 
-      name: "Recruiting", 
-      uni: "Top UK University", 
+      name: "Suhas Parsaboina", 
+      uni: "KCL", 
       course: "Medicine",
       role: "Medicine Lead",
       subjects: "Medicine, Dentistry, Veterinary, Nursing, Biomedical Sciences",
-      bio: "We're looking for a medical student from a top UK university who recently went through the competitive application process. Someone who knows exactly what medical school admissions tutors look for — and what trips applicants up.",
-      contribution: "Will train the Medicine AI agent with real MMI questions, personal statement structures, and the specific qualities medical schools look for.",
-      confirmed: false
+      bio: "Studying Medicine at King's College London. Went through one of the most competitive application processes in the UK — UCAT, personal statement scrutiny, and MMI interviews. Knows exactly what medical school admissions tutors look for and what trips applicants up.",
+      contribution: "Leads the Medicine AI agent, training it with real MMI questions, personal statement structures, and the specific qualities medical schools look for. Ensures the AI understands work experience reflection, ethical scenarios, and motivation questions.",
+      confirmed: true
     },
     { 
       name: "Adyan Shahid", 

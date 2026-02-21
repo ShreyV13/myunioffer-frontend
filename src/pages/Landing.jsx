@@ -26,7 +26,7 @@ export default function Landing() {
   // Placeholder team - replace names/descriptions when you have real people
   const team = [
     { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "Economics, PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
-    { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
+    { name: "Suhas Parsaboina", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: true, uni: "KCL", course: "Medicine" },
     { name: "Adyan Shahid", role: "CS & Maths Lead", subject: "Computer Science, Maths & Data Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
     { name: "Girish Radhakrishnan", role: "Engineering & Sciences Lead", subject: "Engineering, Chemistry & Physics", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
     { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },

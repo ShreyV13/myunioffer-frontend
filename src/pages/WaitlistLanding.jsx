@@ -343,9 +343,10 @@ export default function WaitlistLanding() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
               { name: "Shrey Verma", uni: "LSE", course: "PPE", role: "Founder & Humanities Lead" },
+              { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine", role: "Medicine Lead" },
               { name: "Adyan Shahid", uni: "Cambridge", course: "Computer Science", role: "CS & Maths Lead" },
               { name: "Girish Radhakrishnan", uni: "Imperial", course: "Chemical Engineering", role: "Engineering & Sciences Lead" },
-              { name: "More coming", uni: "Top UK Universities", course: "Medicine, Arts & more", role: "Recruiting" },
+              { name: "More coming", uni: "Top UK Universities", course: "Arts & more", role: "Recruiting" },
             ].map((member, i) => (
               <motion.div 
                 key={i}
