@@ -174,16 +174,16 @@ export default function WaitlistLanding() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             {submitted ? renderSuccess() : (
-              <form onSubmit={(e) => handleWaitlist(e, email, setSubmitted)} className="flex gap-3">
+              <form onSubmit={(e) => handleWaitlist(e, email, setSubmitted)} className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="input flex-1"
+                  className="input flex-1 min-w-0"
                   required
                 />
-                <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap">
+                <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap px-6 py-3">
                   {loading ? 'Joining...' : 'Join Waitlist'}
                 </button>
               </form>
@@ -474,16 +474,16 @@ export default function WaitlistLanding() {
             </p>
             <div className="max-w-md mx-auto mb-4">
               {bottomSubmitted ? renderSuccess() : (
-                <form onSubmit={(e) => handleWaitlist(e, bottomEmail, setBottomSubmitted)} className="flex gap-3">
+                <form onSubmit={(e) => handleWaitlist(e, bottomEmail, setBottomSubmitted)} className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="email"
                     value={bottomEmail}
                     onChange={(e) => setBottomEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="input flex-1"
+                    className="input flex-1 min-w-0"
                     required
                   />
-                  <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap">
+                  <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap px-6 py-3">
                     {loading ? 'Joining...' : 'Join Waitlist'}
                   </button>
                 </form>
