@@ -16,49 +16,54 @@ export default function About() {
   // Replace with real info when you have it
   const team = [
     { 
-      name: "Coming Soon", 
+      name: "Shrey Verma", 
       uni: "LSE", 
       course: "PPE",
-      role: "Founder & Economics Lead",
+      role: "Founder",
       subjects: "Economics, PPE, Finance, Business",
-      bio: "Founded myunioffer.ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics & PPE specialist agent, training it with real application insights from the LSE admissions process.",
-      contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics interview questions and personal statement database."
+      bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics & PPE specialist agent, training it with real application insights from the LSE admissions process.",
+      contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics interview questions and personal statement database.",
+      confirmed: true
     },
     { 
-      name: "Coming Soon", 
-      uni: "KCL", 
+      name: "Recruiting", 
+      uni: "Top UK University", 
       course: "Medicine",
       role: "Medicine Lead",
-      subjects: "Medicine, Dentistry, Veterinary, Nursing",
-      bio: "A first-year medical student at King's College London who went through one of the most competitive application processes in the UK. Knows exactly what medical school admissions tutors look for — and what trips applicants up.",
-      contribution: "Trains the Medicine AI agent with real MMI questions, personal statement structures, and the specific qualities medical schools look for. Ensures the AI understands work experience, ethical scenarios, and motivation questions."
+      subjects: "Medicine, Dentistry, Veterinary, Nursing, Biomedical Sciences",
+      bio: "We're looking for a medical student from a top UK university who recently went through the competitive application process. Someone who knows exactly what medical school admissions tutors look for — and what trips applicants up.",
+      contribution: "Will train the Medicine AI agent with real MMI questions, personal statement structures, and the specific qualities medical schools look for.",
+      confirmed: false
     },
     { 
-      name: "Coming Soon", 
-      uni: "Cambridge", 
-      course: "Computer Science",
+      name: "Recruiting", 
+      uni: "Top UK University", 
+      course: "STEM",
       role: "STEM Lead",
-      subjects: "Computer Science, Mathematics, Physics",
-      bio: "Reading Computer Science at Cambridge. Went through the Cambridge admissions process including the rigorous interview system. Brings deep understanding of how Oxbridge selects for analytical thinking and problem-solving.",
-      contribution: "Leads the STEM agent, training it on Cambridge-style interview questions, technical problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements."
+      subjects: "Computer Science, Mathematics, Physics, Engineering",
+      bio: "We're looking for a STEM student from a top UK university. Someone who went through the rigorous admissions process and understands how to demonstrate analytical thinking and problem-solving ability.",
+      contribution: "Will lead the STEM agent, training it on technical interview questions, problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements.",
+      confirmed: false
     },
     { 
-      name: "Coming Soon", 
-      uni: "Imperial", 
-      course: "Engineering",
-      role: "Engineering Specialist",
-      subjects: "Engineering, Physics, Design",
-      bio: "Studying Engineering at Imperial College London — one of the top engineering schools in the world. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
-      contribution: "Adds Imperial-specific engineering application knowledge to the STEM agent. Helps train the AI on engineering personal statements, technical interviews, and how to demonstrate practical problem-solving."
+      name: "Recruiting", 
+      uni: "Top UK University", 
+      course: "Humanities",
+      role: "Humanities Lead",
+      subjects: "Law, History, English, Philosophy, Politics, Languages",
+      bio: "We're looking for a humanities student from a top UK university. Someone who understands essay-based applications, debate-style interviews, and how to construct compelling arguments in personal statements.",
+      contribution: "Will lead the Humanities agent, training it on analytical interview techniques, essay-style personal statement structures, and subject-specific admissions insights.",
+      confirmed: false
     },
     { 
-      name: "Coming Soon", 
-      uni: "Warwick", 
-      course: "Economics",
-      role: "Economics Specialist",
-      subjects: "Economics, Finance, Quantitative subjects",
-      bio: "Studying Economics at the University of Warwick, known for its world-class Economics department. Successfully navigated the competitive admissions process and understands what makes an Economics application stand out.",
-      contribution: "Strengthens the Economics agent with Warwick-specific insights, econometrics-focused interview preparation, and how to demonstrate mathematical and analytical ability in personal statements."
+      name: "Recruiting", 
+      uni: "Top UK University", 
+      course: "Arts",
+      role: "Arts Lead",
+      subjects: "Architecture, Art, Music, Design, Theatre, Film",
+      bio: "We're looking for an arts student from a top UK university. Someone who understands portfolio-based applications, creative interviews, and how to showcase artistic vision in personal statements.",
+      contribution: "Will lead the Arts agent, training it on creative application approaches, portfolio presentation, and how to demonstrate artistic thinking.",
+      confirmed: false
     },
   ];
 
@@ -144,11 +149,18 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
-                {/* Photo placeholder */}
+                {/* Photo / Status */}
                 <div className="flex-shrink-0 text-center md:text-left">
-                  <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto md:mx-0 border-2 border-gray-200">
-                    <User className="w-10 h-10 text-gray-300" />
-                  </div>
+                  {member.confirmed ? (
+                    <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto md:mx-0 border-2 border-coral-200">
+                      <User className="w-10 h-10 text-coral-300" />
+                    </div>
+                  ) : (
+                    <div className="w-24 h-24 bg-gray-50 rounded-2xl flex flex-col items-center justify-center mx-auto md:mx-0 border-2 border-dashed border-gray-200">
+                      <User className="w-8 h-8 text-gray-300 mb-1" />
+                      <span className="text-[10px] text-gray-400 font-medium">OPEN ROLE</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Info */}
@@ -196,9 +208,28 @@ export default function About() {
             <p className="text-gray-600 text-sm mb-4 max-w-lg mx-auto">
               We're looking for first-year students to become subject coaches — your face on the site, your expertise training the AI, and earn money doing it.
             </p>
-            <a href="mailto:hello@myunioffer.ai" className="btn-primary inline-flex text-sm px-6 py-3">
+            <a href="mailto:shrey@myunioffer.com" className="btn-primary inline-flex text-sm px-6 py-3">
               Get in touch <ArrowRight className="w-4 h-4" />
             </a>
+          </div>
+        </motion.div>
+
+        {/* Support section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <div className="card p-8 text-center">
+            <h3 className="text-xl font-display font-bold text-gray-900 mb-2">Need help or want a refund?</h3>
+            <p className="text-gray-600 text-sm mb-4 max-w-lg mx-auto">
+              We're here for you. Whether you have a question about the AI, need help with your account, or want to cancel and get a refund — just email us.
+            </p>
+            <a href="mailto:support@myunioffer.com" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors">
+              support@myunioffer.com <ArrowRight className="w-4 h-4" />
+            </a>
+            <p className="text-gray-400 text-xs mt-3">Cancel anytime · Full refunds available · We respond within 24 hours</p>
           </div>
         </motion.div>
 

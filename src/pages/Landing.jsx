@@ -46,8 +46,8 @@ export default function Landing() {
       a: "We cover Medicine & Healthcare, STEM (Maths, Physics, Computer Science, Engineering), Economics & Business (including PPE), Humanities (History, Law, English, Psychology), and Arts (Architecture, Art, Music, Design). Just tell the AI what you're applying for and it automatically tailors the coaching to your subject."
     },
     {
-      q: "Can I cancel anytime?",
-      a: "Yes, absolutely. There are no contracts or commitments. You can cancel your subscription at any time and continue using the service until the end of your billing period."
+      q: "Can I cancel or get a refund?",
+      a: "Yes, absolutely. You can cancel your subscription at any time and continue using the service until the end of your billing period. If you'd like a refund, just email us at support@myunioffer.com and we'll sort it out — no questions asked."
     },
     {
       q: "Who are the specialist coaches?",
@@ -352,9 +352,11 @@ export default function Landing() {
                 <div className="text-3xl mb-3">{member.icon}</div>
                 <div className="font-display font-bold text-gray-900 text-sm mb-0.5">{member.name}</div>
                 {member.confirmed && (
-                  <div className="text-coral-500 font-semibold text-xs mb-1">LSE — PPE</div>
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-gray-100 rounded-full text-xs text-gray-600 font-medium mb-1">
+                    <span>🎓</span> LSE — PPE
+                  </div>
                 )}
-                <div className="text-gray-500 text-xs leading-relaxed">{member.subject}</div>
+                <div className="text-gray-500 text-xs leading-relaxed mt-1">{member.subject}</div>
               </motion.div>
             ))}
           </div>
@@ -511,6 +513,23 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ==================== NEED HELP ==================== */}
+      <section className="py-12 px-6 bg-white border-t border-gray-100">
+        <div className="max-w-3xl mx-auto text-center">
+          <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Need help?</h3>
+          <p className="text-gray-600 text-sm mb-4">
+            Got a question, need support, or want to request a refund? We're here to help.
+          </p>
+          <a 
+            href="mailto:support@myunioffer.com" 
+            className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors text-sm"
+          >
+            support@myunioffer.com <ArrowRight className="w-4 h-4" />
+          </a>
+          <p className="text-gray-400 text-xs mt-3">Cancel anytime · Full refunds available · We respond within 24 hours</p>
+        </div>
+      </section>
+
       {/* ==================== FOOTER ==================== */}
       <footer className="py-12 px-6 border-t border-gray-100">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
@@ -527,10 +546,10 @@ export default function Landing() {
             <a href="#" className="hover:text-coral-500 transition-colors">Terms</a>
             <Link to="/about" className="hover:text-coral-500 transition-colors">Our Team</Link>
             <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
-            <a href="mailto:hello@myunioffer.ai" className="hover:text-coral-500 transition-colors">Contact</a>
+            <a href="mailto:support@myunioffer.com" className="hover:text-coral-500 transition-colors">Support</a>
           </div>
           <div className="text-sm text-gray-500">
-            © 2026 myunioffer.ai
+            © 2026 myunioffer ai
           </div>
         </div>
       </footer>

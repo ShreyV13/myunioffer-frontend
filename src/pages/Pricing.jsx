@@ -448,6 +448,11 @@ export default function Pricing() {
             </Link>
             {' '}— 3 messages per day, no credit card required.
           </p>
+          <p className="text-gray-400 text-sm mt-4">
+            Cancel anytime · Full refunds available · Email{' '}
+            <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a>
+            {' '}for help
+          </p>
         </motion.div>
       </main>
     </div>
