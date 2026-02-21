@@ -25,9 +25,9 @@ export default function Landing() {
 
   // Placeholder team - replace names/descriptions when you have real people
   const team = [
-    { name: "Shrey Verma", role: "Founder", subject: "Economics & PPE", icon: "🎯", confirmed: true },
+    { name: "Shrey Verma", role: "Founder", subject: "Economics & PPE", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
     { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
-    { name: "Recruiting", role: "STEM Lead", subject: "Maths & Computer Science", icon: "💻", confirmed: false },
+    { name: "Adyan Shahid", role: "STEM Lead", subject: "Maths & Computer Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
     { name: "Recruiting", role: "Humanities Lead", subject: "Law, History & English", icon: "📚", confirmed: false },
     { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
@@ -352,12 +352,12 @@ export default function Landing() {
                 <div className="text-3xl mb-2">{member.icon}</div>
                 {member.confirmed && (
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-coral-50 border border-coral-200 rounded-full text-xs text-coral-600 font-bold mb-2">
-                    🎓 LSE
+                    🎓 {member.uni}
                   </div>
                 )}
                 <div className="font-display font-bold text-gray-900 text-sm mb-0.5">{member.name}</div>
                 {member.confirmed && (
-                  <div className="text-gray-500 text-xs font-medium">PPE</div>
+                  <div className="text-gray-500 text-xs font-medium">{member.course}</div>
                 )}
                 <div className="text-gray-500 text-xs leading-relaxed mt-1">{member.subject}</div>
               </motion.div>

@@ -36,14 +36,14 @@ export default function About() {
       confirmed: false
     },
     { 
-      name: "Recruiting", 
-      uni: "Top UK University", 
-      course: "STEM",
+      name: "Adyan Shahid", 
+      uni: "Cambridge", 
+      course: "Computer Science",
       role: "STEM Lead",
       subjects: "Computer Science, Mathematics, Physics, Engineering",
-      bio: "We're looking for a STEM student from a top UK university. Someone who went through the rigorous admissions process and understands how to demonstrate analytical thinking and problem-solving ability.",
-      contribution: "Will lead the STEM agent, training it on technical interview questions, problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements.",
-      confirmed: false
+      bio: "Reading Computer Science at the University of Cambridge. Went through one of the most rigorous admissions processes in the country, including the Cambridge interview system. Brings deep understanding of how top universities select for analytical thinking and problem-solving.",
+      contribution: "Leads the STEM agent, training it on Cambridge-style interview questions, technical problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements.",
+      confirmed: true
     },
     { 
       name: "Recruiting", 
