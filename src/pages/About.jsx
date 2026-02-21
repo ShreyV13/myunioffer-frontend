@@ -100,10 +100,7 @@ export default function About() {
             We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            We remember the sleepless nights rewriting our personal statements for the tenth time. The anxiety before interviews. The feeling of "is this even good enough?" We went through it all — and came out the other side with offers from the UK's best universities. Now we've built the tool that would have made it so much easier.
-          </p>
-          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
-            We got lucky. We had incredible teachers who pushed us, spent hours with us perfecting every paragraph, and taught us what admissions tutors actually want to see. But even with that support, it was hard. Most students don't have that. We wished we'd had a mentor available whenever we needed one — so we built one. Everything our teachers taught us, every insight we gained from the application process, is now embedded in this AI.
+            We remember the sleepless nights rewriting personal statements, the anxiety before interviews, the constant "is this even good enough?" We got lucky — we had amazing teachers who spent hours helping us learn what admissions tutors actually want. But most students don't have that. So we built the mentor we wished we'd had, and embedded everything we learned into this AI.
           </p>
         </motion.div>
 
