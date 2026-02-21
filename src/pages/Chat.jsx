@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import ReactMarkdown from 'react-markdown';
 import { useAuth } from '../contexts/AuthContext';
 import { 
   GraduationCap, 
@@ -505,7 +506,16 @@ export default function Chat() {
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0 text-[15px] leading-relaxed" style={{color: '#eee'}}>
-                        <div className="whitespace-pre-wrap prose-ai">{msg.content}</div>
+                        <div className="prose-ai"><ReactMarkdown components={{
+                          p: ({children}) => <p className="mb-3 last:mb-0">{children}</p>,
+                          strong: ({children}) => <strong className="font-semibold" style={{color: 'inherit'}}>{children}</strong>,
+                          ul: ({children}) => <ul className="my-3 pl-5 list-disc">{children}</ul>,
+                          ol: ({children}) => <ol className="my-3 pl-5 list-decimal">{children}</ol>,
+                          li: ({children}) => <li className="mb-1">{children}</li>,
+                          h3: ({children}) => <p className="font-semibold mb-2" style={{color: 'inherit'}}>{children}</p>,
+                          h2: ({children}) => <p className="font-semibold mb-2" style={{color: 'inherit'}}>{children}</p>,
+                          code: ({children}) => <span>{children}</span>,
+                        }}>{(msg.content || '').replace(/\\\(.*?\\\)/g, '').replace(/\\\[.*?\\\]/g, '').replace(/\$\$.*?\$\$/g, '').replace(/\$.*?\$/g, '')}</ReactMarkdown></div>
                       </div>
                     </div>
                   )}
