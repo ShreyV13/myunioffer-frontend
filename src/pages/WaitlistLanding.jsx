@@ -129,7 +129,7 @@ export default function WaitlistLanding() {
           </motion.div>
 
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-[1.1] mb-6 text-gray-900"
+            className="text-4xl sm:text-5xl md:text-6xl font-display font-bold leading-[1.1] mb-4 text-gray-900"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -139,39 +139,20 @@ export default function WaitlistLanding() {
           </motion.h1>
 
           <motion.p 
-            className="text-lg text-gray-600 max-w-2xl mx-auto mb-4"
+            className="text-lg text-gray-600 max-w-2xl mx-auto mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI-powered personal statement coaching and interview preparation — built by students from LSE, Cambridge, Imperial, and Warwick who got in last year.
+            AI-powered personal statement coaching and interview preparation — built by students from LSE, Cambridge, Imperial, KCL, and Warwick.
           </motion.p>
 
-          <motion.p 
-            className="text-sm text-gray-500 max-w-xl mx-auto mb-8"
+          {/* Hero Waitlist Form - HIGH UP */}
+          <motion.div 
+            className="max-w-md mx-auto mb-5"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
-          >
-            We're putting the finishing touches on our AI. Join the waitlist to be first in line.
-          </motion.p>
-
-          {/* Discount callout */}
-          <motion.div
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-50 border-2 border-green-300 rounded-2xl text-base font-bold text-green-700 mb-8 shadow-sm"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.28 }}
-          >
-            🎁 Waitlist members get an exclusive launch discount — not available after launch
-          </motion.div>
-
-          {/* Hero Waitlist Form */}
-          <motion.div 
-            className="max-w-md mx-auto mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
           >
             {submitted ? renderSuccess() : (
               <form onSubmit={(e) => handleWaitlist(e, email, setSubmitted)} className="flex flex-col sm:flex-row gap-3">
@@ -189,7 +170,17 @@ export default function WaitlistLanding() {
               </form>
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-            <p className="text-xs text-gray-400 mt-3">Free to join · No payment required · Waitlist members get early access + discount</p>
+            <p className="text-xs text-gray-400 mt-3">Free · No payment required · Early access + exclusive discount</p>
+          </motion.div>
+
+          {/* Discount callout - below form */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-50 border-2 border-green-300 rounded-2xl text-base font-bold text-green-700 mb-8 shadow-sm"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            🎁 Waitlist members get an exclusive launch discount — not available after launch
           </motion.div>
 
           {/* Trust bar */}
