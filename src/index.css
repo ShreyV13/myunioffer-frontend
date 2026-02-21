@@ -71,7 +71,7 @@ body {
 
 /* Glass effect */
 .glass {
-  background: rgba(252, 238, 233, 0.9);
+  background: #fdf6f3;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
 }
@@ -99,23 +99,21 @@ body {
 }
 
 .btn-secondary {
-  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-200;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  color: #555;
+  @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-gray-700 transition-all duration-200;
+  background: #fdf6f3;
+  border: 1px solid #f0ddd7;
 }
 
 .btn-secondary:hover {
   @apply text-coral-600;
-  border-color: rgba(249, 106, 80, 0.3);
-  background: rgba(255, 255, 255, 0.8);
+  border-color: #e8a99a;
 }
 
 /* Card styles */
 .card {
   @apply rounded-2xl shadow-sm;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  background: #fdf6f3;
+  border: 1px solid #f0ddd7;
 }
 
 .card-hover {
@@ -125,26 +123,21 @@ body {
 .card-hover:hover {
   @apply shadow-lg;
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.7);
-  border-color: rgba(0, 0, 0, 0.06);
+  background: #fff9f7;
 }
 
 /* Input styles */
 .input {
-  @apply w-full py-3 rounded-xl text-gray-900 transition-all duration-200;
+  @apply w-full py-3 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200;
   padding-left: 1rem;
   padding-right: 1rem;
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.input::placeholder {
-  @apply text-gray-400;
+  background: #fdf6f3;
+  border: 1px solid #f0ddd7;
 }
 
 .input:focus {
   @apply outline-none border-coral-500;
-  background: rgba(255, 255, 255, 0.7);
+  background: #fff;
   box-shadow: 0 0 0 3px rgba(249, 106, 80, 0.1);
 }
 
