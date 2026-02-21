@@ -16,12 +16,12 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-// Tier limits
+// Tier limits per mode
 const TIER_LIMITS = {
-  free: 3,
-  ps: 50,
-  interview: 50,
-  premium: 200
+  free: { ps: 3, interview: 3 },
+  ps: { ps: 100, interview: 3 },
+  interview: { ps: 3, interview: 100 },
+  premium: { ps: -1, interview: -1 }
 };
 
 export function AuthProvider({ children }) {
@@ -152,8 +152,8 @@ export function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   }
 
-  // Check and reset daily messages
-  async function checkDailyMessages(uid) {
+  // Check and reset daily messages per mode
+  async function checkDailyMessages(uid, mode = 'ps') {
     const today = new Date().toISOString().split('T')[0];
     const userRef = doc(db, 'users', uid);
     const userSnap = await getDoc(userRef);
@@ -161,36 +161,42 @@ export function AuthProvider({ children }) {
     if (userSnap.exists()) {
       const data = userSnap.data();
       const plan = data.plan || 'free';
-      const limit = TIER_LIMITS[plan] || 3;
+      const tierLimits = TIER_LIMITS[plan] || { ps: 3, interview: 3 };
+      const limit = tierLimits[mode] || 3;
+      
+      const modeKey = `messagesUsed_${mode}`;
       
       // Reset if new day
       if (data.lastMessageDate !== today) {
         await updateDoc(userRef, {
-          messagesUsedToday: 0,
+          messagesUsed_ps: 0,
+          messagesUsed_interview: 0,
           lastMessageDate: today
         });
         return { used: 0, limit, canSend: true };
       }
       
-      const used = data.messagesUsedToday || 0;
-      return { used, limit, canSend: used < limit };
+      const used = data[modeKey] || 0;
+      return { used, limit, canSend: limit === -1 || used < limit };
     }
     
     return { used: 0, limit: 3, canSend: true };
   }
 
-  // Increment message count
-  async function incrementMessageCount(uid) {
+  // Increment message count per mode
+  async function incrementMessageCount(uid, mode = 'ps') {
     const today = new Date().toISOString().split('T')[0];
     const userRef = doc(db, 'users', uid);
     const userSnap = await getDoc(userRef);
     
+    const modeKey = `messagesUsed_${mode}`;
+    
     if (userSnap.exists()) {
       const data = userSnap.data();
-      const currentCount = data.lastMessageDate === today ? (data.messagesUsedToday || 0) : 0;
+      const currentCount = data.lastMessageDate === today ? (data[modeKey] || 0) : 0;
       
       await updateDoc(userRef, {
-        messagesUsedToday: currentCount + 1,
+        [modeKey]: currentCount + 1,
         lastMessageDate: today
       });
     }

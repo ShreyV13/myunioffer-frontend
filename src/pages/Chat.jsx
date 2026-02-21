@@ -91,16 +91,16 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Check daily messages on load
+  // Check daily messages per mode
   useEffect(() => {
     async function checkMessages() {
       if (currentUser) {
-        const status = await checkDailyMessages(currentUser.uid);
+        const status = await checkDailyMessages(currentUser.uid, mode);
         setUsage({ used: status.used, limit: status.limit });
       }
     }
     checkMessages();
-  }, [currentUser]);
+  }, [currentUser, mode]);
 
   // Wake up server on load (pre-warm)
   useEffect(() => {
@@ -130,10 +130,21 @@ export default function Chat() {
     setError(null);
 
     // Check if user can send message
-    if (usage.used >= usage.limit) {
+    if (usage.limit !== -1 && usage.used >= usage.limit) {
+      const plan = userProfile?.plan || 'free';
+      let upgradeMsg;
+      if (plan === 'free') {
+        upgradeMsg = `You've used your 3 free ${mode === 'ps' ? 'Personal Statement' : 'Interview'} messages today. Subscribe to continue!`;
+      } else if (plan === 'ps' && mode === 'interview') {
+        upgradeMsg = "Interview prep isn't included in your PS plan. Upgrade to Premium for both PS and Interview coaching!";
+      } else if (plan === 'interview' && mode === 'ps') {
+        upgradeMsg = "PS coaching isn't included in your Interview plan. Upgrade to Premium for both PS and Interview coaching!";
+      } else {
+        upgradeMsg = "You've reached your daily limit. Upgrade for more messages!";
+      }
       setMessages(prev => [...prev, {
         role: 'system',
-        content: `You've reached your daily limit of ${usage.limit} messages. Upgrade your plan for more messages!`
+        content: upgradeMsg
       }]);
       return;
     }
@@ -215,7 +226,7 @@ export default function Chat() {
       setServerWaking(false);
       
       // Only increment message count AFTER successful response
-      await incrementMessageCount(currentUser.uid);
+      await incrementMessageCount(currentUser.uid, mode);
       
       // Save detected subject for use across modes
       if (data.detected_subject || data.detected_category) {
@@ -372,7 +383,7 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit - usage.used} left</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">
@@ -414,7 +425,7 @@ export default function Chat() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[13px] hidden sm:inline" style={{color: '#aaa'}}>{usage.limit - usage.used} messages left</span>
+              <span className="text-[13px] hidden sm:inline" style={{color: '#aaa'}}>{usage.limit === -1 ? '∞' : usage.limit - usage.used} messages left</span>
               <div className="md:hidden relative">
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-white/8 rounded-lg">
                   <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-white/60" /></div>
@@ -424,7 +435,7 @@ export default function Chat() {
                   <div className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl z-20 overflow-hidden" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}}>
                     <div className="p-3" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
                       <div className="font-medium text-white truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-white/50 mt-0.5">{planName} · {usage.limit - usage.used} left</div>
+                      <div className="text-[11px] text-white/50 mt-0.5">{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
                     </div>
                     <div className="p-1.5">
                       <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/8 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
@@ -546,14 +557,14 @@ export default function Chat() {
                   <Plus className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-3">
-                  <span className="text-[12px]" style={{color: '#999'}}>{usage.used}/{usage.limit}</span>
+                  <span className="text-[12px]" style={{color: '#999'}}>{usage.limit === -1 ? '∞' : usage.used + '/' + usage.limit}</span>
                   <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
               </div>
             </div>
-            {usage.used >= usage.limit && (
+            {usage.limit !== -1 && usage.used >= usage.limit && (
               <div className="text-center mt-2">
                 <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached — upgrade for more →</Link>
               </div>
@@ -596,7 +607,7 @@ export default function Chat() {
               )}
             </div>
             <div className="p-3" style={{borderTop: '1px solid rgba(255,255,255,0.08)'}}>
-              <div className="text-[12px] text-white/50 mb-2 px-2">{usage.used}/{usage.limit} messages today</div>
+              <div className="text-[12px] text-white/50 mb-2 px-2">{usage.limit === -1 ? '∞' : usage.used + '/' + usage.limit} messages today</div>
               <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg font-medium" style={{color: '#f07a62'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
               <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/6 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
               <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/6 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
