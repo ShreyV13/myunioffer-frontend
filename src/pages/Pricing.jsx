@@ -325,9 +325,9 @@ export default function Pricing() {
               <div className="text-center flex-shrink-0">
                 <div className="text-4xl font-display font-bold text-coral-500">£27.99</div>
                 <div className="text-gray-500 text-sm mb-3">per session</div>
-                <Link to="/signup" className="btn-primary text-sm px-6 py-2.5">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuFh9xiG17oow0iPtCkNAf2w8mzRIp0XsZEqjot-GoOpGnFg/viewform" target="_blank" rel="noopener noreferrer" className="btn-primary text-sm px-6 py-2.5">
                   Book a Session
-                </Link>
+                </a>
               </div>
             </div>
 
