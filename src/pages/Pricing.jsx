@@ -429,9 +429,13 @@ export default function Pricing() {
               <Shield className="w-4 h-4 text-green-500" /> Cancel anytime, no contracts
             </span>
             <span className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-green-500" /> Secure payment via Stripe
+            </span>
+            <span className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-green-500" /> Launch pricing — won't last forever
             </span>
           </div>
+          <p className="text-center text-xs text-gray-400 mt-4">All payments are processed securely through Stripe. We never see or store your card details. Full refunds available — just email support@myunioffer.com.</p>
         </motion.div>
 
         {/* Free tier reminder */}

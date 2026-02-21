@@ -40,18 +40,18 @@ export default function About() {
       name: "Adyan Shahid", 
       uni: "Cambridge", 
       course: "Computer Science",
-      role: "STEM Lead",
-      subjects: "Computer Science, Mathematics, Physics, Engineering",
+      role: "CS & Maths Lead",
+      subjects: "Computer Science, Mathematics, Data Science, Statistics",
       bio: "Reading Computer Science at the University of Cambridge. Went through one of the most rigorous admissions processes in the country, including the Cambridge interview system. Brings deep understanding of how top universities select for analytical thinking and problem-solving.",
-      contribution: "Leads the STEM agent, training it on Cambridge-style interview questions, technical problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements.",
+      contribution: "Leads the CS and Maths section of the STEM agent, training it on Cambridge-style interview questions, logical reasoning approaches, and how to demonstrate genuine intellectual curiosity in personal statements for quantitative subjects.",
       confirmed: true
     },
     { 
       name: "Girish Radhakrishnan", 
       uni: "Imperial", 
       course: "Chemical Engineering",
-      role: "Engineering Lead",
-      subjects: "Chemical Engineering, Engineering, Physics, Design",
+      role: "Engineering & Sciences Lead",
+      subjects: "Chemical Engineering, Engineering, Chemistry, Physics, Natural Sciences",
       bio: "Studying Chemical Engineering at Imperial College London — one of the top engineering schools in the world. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
       contribution: "Leads the Engineering section of the STEM agent, training it on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
       confirmed: true
@@ -101,6 +101,9 @@ export default function About() {
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
             We remember the sleepless nights rewriting our personal statements for the tenth time. The anxiety before interviews. The feeling of "is this even good enough?" We went through it all — and came out the other side with offers from the UK's best universities. Now we've built the tool that would have made it so much easier.
+          </p>
+          <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
+            We got lucky. We had incredible teachers who pushed us, spent hours with us perfecting every paragraph, and taught us what admissions tutors actually want to see. But even with that support, it was hard. Most students don't have that. We wished we'd had a mentor available whenever we needed one — so we built one. Everything our teachers taught us, every insight we gained from the application process, is now embedded in this AI.
           </p>
         </motion.div>
 

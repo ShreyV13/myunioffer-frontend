@@ -27,8 +27,8 @@ export default function Landing() {
   const team = [
     { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "Economics, PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
     { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
-    { name: "Adyan Shahid", role: "STEM Lead", subject: "Maths & Computer Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
-    { name: "Girish Radhakrishnan", role: "Engineering Lead", subject: "Engineering, Physics & Design", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
+    { name: "Adyan Shahid", role: "CS & Maths Lead", subject: "Computer Science, Maths & Data Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
+    { name: "Girish Radhakrishnan", role: "Engineering & Sciences Lead", subject: "Engineering, Chemistry & Physics", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
     { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
 
@@ -58,13 +58,13 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-white">
       {/* Announcement Banner */}
-      <div className="bg-gray-900 text-white text-center py-2.5 px-4 text-sm font-medium">
-        <span className="text-coral-400">🚀 Launch Pricing</span> — early access discount available for a limited time.{' '}
+      <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
+        <span className="text-coral-400">🚀 Launch Pricing</span> — early access discount available.{' '}
         <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">See plans →</Link>
       </div>
 
       {/* Navigation */}
-      <nav className="fixed top-10 left-0 right-0 z-50 glass border-b border-gray-100">
+      <nav className="sticky top-0 z-50 glass border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center gap-2.5">
@@ -115,7 +115,7 @@ export default function Landing() {
       </nav>
 
       {/* ==================== HERO ==================== */}
-      <section className="pt-40 pb-20 px-6 hero-pattern">
+      <section className="pt-20 pb-20 px-6 hero-pattern">
         <div className="max-w-5xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
