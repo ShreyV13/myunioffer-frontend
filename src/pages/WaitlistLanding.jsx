@@ -369,10 +369,15 @@ export default function WaitlistLanding() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Simple pricing</h2>
-            <p className="text-gray-600 max-w-xl mx-auto mb-4">Full prices shown below.</p>
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-coral-50 border border-coral-200 rounded-xl text-sm font-bold text-coral-600">
-              🔥 Waitlist members pay less — join now to lock in your discount before launch
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3 text-gray-900">Simple pricing</h2>
+            <p className="text-gray-500 max-w-xl mx-auto mb-6">These are our standard prices at launch.</p>
+            
+            <div className="max-w-lg mx-auto p-5 bg-green-50 border-2 border-green-300 rounded-2xl shadow-sm mb-4">
+              <div className="text-lg font-display font-bold text-green-800 mb-1">🎁 Waitlist members don't pay these prices</div>
+              <p className="text-green-700 text-sm">Join the waitlist to unlock a significant discount on all paid plans. This offer disappears once we launch — it will never be available again.</p>
+              <a href="#waitlist-bottom" className="inline-flex items-center gap-2 mt-3 text-sm font-bold text-green-800 hover:text-green-900 transition-colors">
+                Join the waitlist now →
+              </a>
             </div>
           </motion.div>
 
