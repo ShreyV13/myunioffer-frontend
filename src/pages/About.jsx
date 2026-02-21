@@ -100,7 +100,7 @@ export default function About() {
             We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-We remember the sleepless nights and the constant "is this good enough?" anxiety. After countless rewrites, we secured offers from the UK’s top universities—but we realised the process shouldn't be that hard.
+We remember the sleepless nights and the constant "is this good enough?" anxiety. After countless rewrites, we secured offers from the UK’s top universities. But we realised the process shouldn't be that hard.
 
 While we had teachers who coached us through what admissions tutors actually look for, most students don’t. We’ve embedded every insight and strategy we learned into this AI, giving you a 24/7 mentor to help you navigate the process with confidence.</p>
         </motion.div>
