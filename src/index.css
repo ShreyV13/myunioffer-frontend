@@ -100,8 +100,8 @@ body {
 
 .btn-secondary {
   @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-gray-700 transition-all duration-200;
-  background: #faf0ec;
-  border: 1px solid #f0ddd7;
+  background: #fef7f5;
+  border: 1px solid #f5e6e1;
 }
 
 .btn-secondary:hover {
@@ -112,8 +112,8 @@ body {
 /* Card styles */
 .card {
   @apply rounded-2xl shadow-sm;
-  background: #faf0ec;
-  border: 1px solid #f0ddd7;
+  background: #fef7f5;
+  border: 1px solid #f5e6e1;
 }
 
 .card-hover {
@@ -123,7 +123,7 @@ body {
 .card-hover:hover {
   @apply shadow-lg;
   transform: translateY(-4px);
-  background: #fff9f7;
+  background: #fff;
 }
 
 /* Input styles */
@@ -131,13 +131,13 @@ body {
   @apply w-full py-3 rounded-xl text-gray-900 placeholder-gray-400 transition-all duration-200;
   padding-left: 1rem;
   padding-right: 1rem;
-  background: #faf0ec;
-  border: 1px solid #f0ddd7;
+  background: #fef7f5;
+  border: 1px solid #f5e6e1;
 }
 
 .input:focus {
   @apply outline-none border-coral-500;
-  background: #faf0ec;
+  background: #fef7f5;
   box-shadow: 0 0 0 3px rgba(249, 106, 80, 0.1);
 }
 
