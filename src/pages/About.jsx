@@ -19,10 +19,10 @@ export default function About() {
       name: "Shrey Verma", 
       uni: "LSE", 
       course: "PPE",
-      role: "Founder",
-      subjects: "Economics, PPE, Finance, Business",
-      bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics & PPE specialist agent, training it with real application insights from the LSE admissions process.",
-      contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics interview questions and personal statement database.",
+      role: "Founder & Humanities Lead",
+      subjects: "Economics, PPE, Politics, International Relations, History, Law, Philosophy & Humanities",
+      bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics, PPE, and Humanities specialist agents, training them with real application insights from the LSE admissions process.",
+      contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics and Humanities interview questions and personal statement database. Covers all humanities and social science applications.",
       confirmed: true
     },
     { 
@@ -44,16 +44,6 @@ export default function About() {
       bio: "Reading Computer Science at the University of Cambridge. Went through one of the most rigorous admissions processes in the country, including the Cambridge interview system. Brings deep understanding of how top universities select for analytical thinking and problem-solving.",
       contribution: "Leads the STEM agent, training it on Cambridge-style interview questions, technical problem-solving approaches, and how to demonstrate genuine intellectual curiosity in personal statements.",
       confirmed: true
-    },
-    { 
-      name: "Recruiting", 
-      uni: "Top UK University", 
-      course: "Humanities",
-      role: "Humanities Lead",
-      subjects: "Law, History, English, Philosophy, Politics, Languages",
-      bio: "We're looking for a humanities student from a top UK university. Someone who understands essay-based applications, debate-style interviews, and how to construct compelling arguments in personal statements.",
-      contribution: "Will lead the Humanities agent, training it on analytical interview techniques, essay-style personal statement structures, and subject-specific admissions insights.",
-      confirmed: false
     },
     { 
       name: "Recruiting", 
