@@ -2,21 +2,18 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-// Pages - Waitlist mode
-import WaitlistLanding from './pages/WaitlistLanding';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-
-// Pages - Keep for existing/internal users
+// Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import Chat from './pages/Chat';
 import Settings from './pages/Settings';
+import Pricing from './pages/Pricing';
+import About from './pages/About';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import Success from './pages/Success';
-
-// SAVED FOR RELEASE: Landing, Pricing, About are in src/pages/saved-release/
-// When ready to launch, swap WaitlistLanding back to Landing and restore all routes
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -32,7 +29,18 @@ function ProtectedRoute({ children }) {
   const { currentUser } = useAuth();
   
   if (!currentUser) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
+  }
+  
+  return children;
+}
+
+// Public Route wrapper (redirect if logged in)
+function PublicRoute({ children }) {
+  const { currentUser } = useAuth();
+  
+  if (currentUser) {
+    return <Navigate to="/chat" />;
   }
   
   return children;
@@ -43,15 +51,16 @@ function AppRoutes() {
     <>
       <ScrollToTop />
       <Routes>
-      <Route path="/" element={<WaitlistLanding />} />
-      <Route path="/privacy" element={<Privacy />} />
-      <Route path="/terms" element={<Terms />} />
-      {/* Hidden routes - for existing/internal users only */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+      <Route path="/signup" element={<PublicRoute><Signup /></PublicRoute>} />
+      <Route path="/forgot-password" element={<PublicRoute><ForgotPassword /></PublicRoute>} />
       <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
       <Route path="/success" element={<Success />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
