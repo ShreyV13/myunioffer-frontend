@@ -272,7 +272,7 @@ export default function Pricing() {
                         : 'bg-gray-900 text-white hover:bg-gray-800'
                     }`}
                   >
-                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : 'Subscribe'}
+                    {loading === plan.id ? 'Loading...' : plan.id === 'free' ? 'Try Now' : !currentUser ? 'Sign Up to Subscribe' : 'Subscribe'}
                   </button>
                 )}
               </motion.div>

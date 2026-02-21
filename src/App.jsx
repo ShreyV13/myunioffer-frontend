@@ -57,7 +57,7 @@ function AppRoutes() {
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/pricing" element={<Pricing />} />
       <Route path="/about" element={<About />} />
-      <Route path="/success" element={<ProtectedRoute><Success /></ProtectedRoute>} />
+      <Route path="/success" element={<Success />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     </>
