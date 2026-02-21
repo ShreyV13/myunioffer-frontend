@@ -56,7 +56,7 @@ export default function Landing() {
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen" style={{background:"#ffffff"}}>
       {/* Announcement Banner */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-4 text-sm font-medium">
         <span className="text-coral-400">🚀 Launch Pricing</span> — early access discount available for a limited time.{' '}
