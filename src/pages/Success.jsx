@@ -57,7 +57,7 @@ export default function Success() {
   }, [searchParams, currentUser]);
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#f9e5df] flex flex-col items-center justify-center px-6 py-12">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
