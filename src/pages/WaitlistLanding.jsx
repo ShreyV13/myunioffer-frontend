@@ -66,41 +66,20 @@ export default function WaitlistLanding() {
     }
   ];
 
-  const WaitlistForm = ({ emailVal, setEmailVal, isSubmitted, setIsSubmitted, id }) => (
-    isSubmitted ? (
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }} 
-        animate={{ opacity: 1, scale: 1 }}
-        className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl"
-      >
-        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-          <Check className="w-5 h-5 text-green-600" />
-        </div>
-        <div>
-          <div className="font-semibold text-green-800 text-sm">You're on the list!</div>
-          <div className="text-green-600 text-xs">We'll email you the moment we launch — with your exclusive discount.</div>
-        </div>
-      </motion.div>
-    ) : (
-      <form onSubmit={(e) => handleWaitlist(e, emailVal, setIsSubmitted)} className="flex gap-3">
-        <input
-          type="email"
-          value={emailVal}
-          onChange={(e) => setEmailVal(e.target.value)}
-          placeholder="Enter your email"
-          className="input flex-1"
-          required
-          id={id}
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="btn-primary whitespace-nowrap"
-        >
-          {loading ? 'Joining...' : 'Join Waitlist'}
-        </button>
-      </form>
-    )
+  const renderSuccess = () => (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.95 }} 
+      animate={{ opacity: 1, scale: 1 }}
+      className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl"
+    >
+      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+        <Check className="w-5 h-5 text-green-600" />
+      </div>
+      <div>
+        <div className="font-semibold text-green-800 text-sm">You're on the list!</div>
+        <div className="text-green-600 text-xs">We'll email you the moment we launch — with your exclusive discount.</div>
+      </div>
+    </motion.div>
   );
 
   return (
@@ -194,7 +173,21 @@ export default function WaitlistLanding() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <WaitlistForm emailVal={email} setEmailVal={setEmail} isSubmitted={submitted} setIsSubmitted={setSubmitted} id="hero-email" />
+            {submitted ? renderSuccess() : (
+              <form onSubmit={(e) => handleWaitlist(e, email, setSubmitted)} className="flex gap-3">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="input flex-1"
+                  required
+                />
+                <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap">
+                  {loading ? 'Joining...' : 'Join Waitlist'}
+                </button>
+              </form>
+            )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p className="text-xs text-gray-400 mt-3">Free to join · No payment required · Waitlist members get early access + discount</p>
           </motion.div>
@@ -480,7 +473,21 @@ export default function WaitlistLanding() {
               🎁 Waitlist members get an exclusive discount — this offer disappears once we go live.
             </p>
             <div className="max-w-md mx-auto mb-4">
-              <WaitlistForm emailVal={bottomEmail} setEmailVal={setBottomEmail} isSubmitted={bottomSubmitted} setIsSubmitted={setBottomSubmitted} id="bottom-email" />
+              {bottomSubmitted ? renderSuccess() : (
+                <form onSubmit={(e) => handleWaitlist(e, bottomEmail, setBottomSubmitted)} className="flex gap-3">
+                  <input
+                    type="email"
+                    value={bottomEmail}
+                    onChange={(e) => setBottomEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    className="input flex-1"
+                    required
+                  />
+                  <button type="submit" disabled={loading} className="btn-primary whitespace-nowrap">
+                    {loading ? 'Joining...' : 'Join Waitlist'}
+                  </button>
+                </form>
+              )}
             </div>
             <p className="text-gray-500 text-xs">No spam · Unsubscribe anytime · Your email is safe with us</p>
           </motion.div>
