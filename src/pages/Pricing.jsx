@@ -32,7 +32,7 @@ export default function Pricing() {
       description: 'Try it out',
       icon: MessageSquare,
       features: [
-        '3 messages per day',
+        '2 messages per day',
         'All 5 subject agents',
         'Basic PS & interview coaching',
       ],
@@ -446,7 +446,7 @@ export default function Pricing() {
             <Link to={currentUser ? "/chat" : "/signup"} className="text-coral-600 font-semibold hover:text-coral-700">
               Continue with Free
             </Link>
-            {' '}— 3 messages per day, no credit card required.
+            {' '}— 2 messages per day, no credit card required.
           </p>
           <p className="text-gray-400 text-sm mt-4">
             Cancel anytime · Full refunds available · Email{' '}

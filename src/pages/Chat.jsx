@@ -135,7 +135,7 @@ export default function Chat() {
       const plan = userProfile?.plan || 'free';
       let upgradeMsg;
       if (plan === 'free') {
-        upgradeMsg = `You've used your 3 free ${mode === 'ps' ? 'Personal Statement' : 'Interview'} messages today. Subscribe to continue!`;
+        upgradeMsg = `You've used your 2 free ${mode === 'ps' ? 'Personal Statement' : 'Interview'} messages today. Subscribe to continue!`;
       } else if (plan === 'ps' && mode === 'interview') {
         upgradeMsg = "Interview prep isn't included in your PS plan. Upgrade to Premium for both PS and Interview coaching!";
       } else if (plan === 'interview' && mode === 'ps') {
