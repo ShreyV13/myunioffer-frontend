@@ -20,6 +20,7 @@ export default function About() {
       uni: "LSE", 
       course: "PPE",
       role: "Founder & Humanities Lead",
+      photo: "/team-shrey.jpg",
       subjects: "Economics, PPE, Politics, International Relations, History, Law, Philosophy & Humanities",
       bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Economics, PPE, and Humanities specialist agents, training them with real application insights from the LSE admissions process.",
       contribution: "Built the entire AI coaching system. Designed the master agent architecture with 5 subject specialists. Curated the Economics and Humanities interview questions and personal statement database. Covers all humanities and social science applications.",
@@ -141,7 +142,9 @@ export default function About() {
               >
                 {/* Photo / Status */}
                 <div className="flex-shrink-0 text-center md:text-left">
-                  {member.confirmed ? (
+                  {member.confirmed && member.photo ? (
+                    <img src={member.photo} alt={member.name} className="w-24 h-24 rounded-2xl object-cover mx-auto md:mx-0 border-2 border-coral-200" />
+                  ) : member.confirmed ? (
                     <div className="w-24 h-24 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto md:mx-0 border-2 border-coral-200">
                       <User className="w-10 h-10 text-coral-300" />
                     </div>
