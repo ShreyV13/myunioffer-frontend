@@ -179,7 +179,7 @@ export default function WaitlistLanding() {
 
           {/* Discount callout */}
           <motion.div
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-50 border border-green-200 rounded-full text-sm font-semibold text-green-700 mb-8"
+            className="inline-flex items-center gap-2 px-6 py-3.5 bg-green-50 border-2 border-green-300 rounded-2xl text-base font-bold text-green-700 mb-8 shadow-sm"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.28 }}
