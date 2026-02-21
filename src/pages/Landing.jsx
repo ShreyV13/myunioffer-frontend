@@ -266,7 +266,7 @@ export default function Landing() {
                 <Brain className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Coaches your thinking, not your writing</h3>
-              <p className="text-gray-600 leading-relaxed">Most AI tools write your PS for you — which admissions tutors can spot instantly. Ours asks you the questions that help you figure out what to say. Your statement stays authentically yours. That's what gets you the offer.</p>
+              <p className="text-gray-600 leading-relaxed">Most AI tools write your PS for you, which admissions tutors can spot instantly. Ours asks you the questions that help you figure out what to say. Your statement stays authentically yours. That's what gets you the offer.</p>
             </motion.div>
 
             <motion.div 
@@ -280,7 +280,7 @@ export default function Landing() {
                 <Target className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Subject-specialist, not generic</h3>
-              <p className="text-gray-600 leading-relaxed">A Medicine application is nothing like an Economics one. We have 5 specialist AI agents — each trained by students from LSE, Cambridge, KCL, Imperial, and Warwick on real resources from successful applications. Your coach knows your subject.</p>
+              <p className="text-gray-600 leading-relaxed">A Medicine application is nothing like an Economics one. We have 5 specialist AI agents, each trained by students from LSE, Cambridge, KCL, Imperial, and Warwick on real resources from successful applications. Your coach knows your subject.</p>
             </motion.div>
 
             <motion.div 
@@ -294,7 +294,7 @@ export default function Landing() {
                 <Users className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-xl font-display font-bold mb-2 text-gray-900">Built by people who just got in</h3>
-              <p className="text-gray-600 leading-relaxed">We're not a faceless tech company. We're first-year students who went through UCAS, PS, and interviews months ago. We know exactly what it feels like — the stress, the uncertainty, the "is this good enough?" We built the mentor we wished we'd had.</p>
+              <p className="text-gray-600 leading-relaxed">We're not a faceless tech company. We're first-year students who went through UCAS, PS, and interviews months ago. We know exactly what it feels like. The stress, the uncertainty, the "is this good enough?" We built the mentor we wished we'd had.</p>
             </motion.div>
 
             <motion.div 
@@ -320,7 +320,7 @@ export default function Landing() {
             viewport={{ once: true }}
           >
             <div className="text-3xl font-display font-bold text-coral-500 mb-1">1000+</div>
-            <p className="text-gray-600 text-sm">Real interview questions, successful personal statements, and sample answers — all from top UK universities and continually growing.</p>
+            <p className="text-gray-600 text-sm">Real interview questions, successful personal statements, and sample answers. All from top UK universities and continually growing.</p>
           </motion.div>
         </div>
       </section>
