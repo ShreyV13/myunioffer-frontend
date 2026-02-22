@@ -169,7 +169,7 @@ export default function Settings() {
                   <button
                     onClick={handleManageSubscription}
                     disabled={loadingPortal}
-                    className="btn-secondary flex-1 justify-center"
+                    className="btn-primary flex-1 justify-center"
                   >
                     {loadingPortal ? 'Loading...' : 'Manage Subscription'}
                     <ExternalLink className="w-4 h-4" />
@@ -179,9 +179,10 @@ export default function Settings() {
             </div>
 
             {userProfile?.plan !== 'free' && (
-              <p className="text-xs text-gray-400 mt-4">
-                To cancel, email <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a>. You'll keep access until the end of your billing period. Full refunds available.
-              </p>
+              <div className="mt-4 p-3 bg-gray-50 rounded-xl">
+                <p className="text-xs text-gray-500">From "Manage Subscription" you can upgrade, downgrade, or cancel your plan. If you cancel, you'll keep full access until the end of your billing period.</p>
+                <p className="text-xs text-gray-400 mt-2">Need help? Email <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a></p>
+              </div>
             )}
           </div>
 
