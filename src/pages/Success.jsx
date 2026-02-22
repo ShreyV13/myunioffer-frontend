@@ -37,9 +37,9 @@ export default function Success() {
         const data = await res.json();
 
         if (data.success) {
-          // Update local user plan
+          // Update local user plan and save Stripe IDs
           if (currentUser && data.plan) {
-            await updateUserPlan(currentUser.uid, data.plan);
+            await updateUserPlan(currentUser.uid, data.plan, data.customer_id, data.subscription_id);
           }
           
           setPlanName(data.plan_name || data.plan);

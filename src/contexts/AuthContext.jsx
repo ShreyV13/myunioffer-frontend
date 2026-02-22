@@ -203,10 +203,13 @@ export function AuthProvider({ children }) {
   }
 
   // Update user plan
-  async function updateUserPlan(uid, plan) {
+  async function updateUserPlan(uid, plan, customerId, subscriptionId) {
     const userRef = doc(db, 'users', uid);
-    await updateDoc(userRef, { plan });
-    setUserProfile(prev => ({ ...prev, plan }));
+    const updates = { plan };
+    if (customerId) updates.stripeCustomerId = customerId;
+    if (subscriptionId) updates.stripeSubscriptionId = subscriptionId;
+    await updateDoc(userRef, updates);
+    setUserProfile(prev => ({ ...prev, plan, stripeCustomerId: customerId || prev?.stripeCustomerId, stripeSubscriptionId: subscriptionId || prev?.stripeSubscriptionId }));
   }
 
   // Listen for auth changes

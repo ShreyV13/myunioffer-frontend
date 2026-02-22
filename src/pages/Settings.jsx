@@ -34,11 +34,19 @@ export default function Settings() {
   async function handleManageSubscription() {
     setLoadingPortal(true);
     try {
+      const customerId = userProfile?.stripeCustomerId;
+      if (!customerId) {
+        // Fallback: direct to support email
+        window.location.href = 'mailto:support@myunioffer.com?subject=Cancel%20Subscription&body=Hi,%20I%20would%20like%20to%20cancel%20my%20subscription.%20My%20email%20is%20' + encodeURIComponent(currentUser.email);
+        setLoadingPortal(false);
+        return;
+      }
+      
       const res = await fetch(`${API_BASE}/create-portal-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          user_id: currentUser.uid,
+          customer_id: customerId,
           return_url: window.location.href
         })
       });
@@ -49,6 +57,8 @@ export default function Settings() {
       }
     } catch (err) {
       console.error('Failed to open billing portal:', err);
+      // Fallback to email
+      window.location.href = 'mailto:support@myunioffer.com?subject=Cancel%20Subscription&body=Hi,%20I%20would%20like%20to%20cancel%20my%20subscription.%20My%20email%20is%20' + encodeURIComponent(currentUser.email);
     }
     setLoadingPortal(false);
   }
