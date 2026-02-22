@@ -57,6 +57,16 @@ export default function About() {
       confirmed: true
     },
     { 
+      name: "Pavan Kovuri", 
+      uni: "Warwick", 
+      course: "Economics",
+      role: "Economics Lead",
+      subjects: "Economics, Finance, Business, Accounting, Management",
+      bio: "Studying Economics at the University of Warwick, known for its world-class Economics department. Successfully navigated the competitive admissions process and understands what makes an Economics application stand out from the rest.",
+      contribution: "Leads the Economics section of the AI agent, training it on economics-focused interview preparation, quantitative personal statement approaches, and how to demonstrate analytical and mathematical ability.",
+      confirmed: true
+    },
+    { 
       name: "Recruiting", 
       uni: "Top UK University", 
       course: "Arts",

@@ -336,6 +336,7 @@ export default function WaitlistLanding() {
               { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine", role: "Medicine Lead" },
               { name: "Adyan Shahid", uni: "Cambridge", course: "Computer Science", role: "CS & Maths Lead" },
               { name: "Girish Radhakrishnan", uni: "Imperial", course: "Chemical Engineering", role: "Engineering & Sciences Lead" },
+              { name: "Pavan Kovuri", uni: "Warwick", course: "Economics", role: "Economics Lead" },
               { name: "More coming", uni: "Top UK Universities", course: "Arts & more", role: "Recruiting" },
             ].map((member, i) => (
               <motion.div 

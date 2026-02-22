@@ -29,6 +29,7 @@ export default function Landing() {
     { name: "Suhas Parsaboina", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: true, uni: "KCL", course: "Medicine" },
     { name: "Adyan Shahid", role: "CS & Maths Lead", subject: "Computer Science, Maths & Data Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
     { name: "Girish Radhakrishnan", role: "Engineering & Sciences Lead", subject: "Engineering, Chemistry & Physics", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
+    { name: "Pavan Kovuri", role: "Economics Lead", subject: "Economics, Finance & Business", icon: "📈", confirmed: true, uni: "Warwick", course: "Economics" },
     { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
 
