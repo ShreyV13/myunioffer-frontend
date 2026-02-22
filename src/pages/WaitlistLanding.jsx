@@ -24,6 +24,11 @@ export default function WaitlistLanding() {
   const [bottomEmail, setBottomEmail] = useState('');
   const [bottomSubmitted, setBottomSubmitted] = useState(false);
 
+  // Capture UTM source from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmSource = urlParams.get('utm_source') || 'direct';
+  const utmMedium = urlParams.get('utm_medium') || 'none';
+
   async function handleWaitlist(e, emailValue, setSubmittedFn) {
     e.preventDefault();
     if (!emailValue.trim()) return;
@@ -33,7 +38,8 @@ export default function WaitlistLanding() {
       await addDoc(collection(db, 'waitlist'), {
         email: emailValue.trim().toLowerCase(),
         joinedAt: serverTimestamp(),
-        source: 'website'
+        source: utmSource,
+        medium: utmMedium
       });
       setSubmittedFn(true);
     } catch (err) {
