@@ -252,7 +252,7 @@ export default function WaitlistLanding() {
             {[
               { icon: <MessageSquare className="w-6 h-6 text-white" />, title: "Personal Statement Coaching", desc: "The AI asks you thoughtful questions to draw out your story. It doesn't write for you — it helps you figure out what to say. Subject-specific, based on what actually gets people in." },
               { icon: <Target className="w-6 h-6 text-white" />, title: "Interview Preparation", desc: "Practise with real interview questions from top UK universities. Get feedback on your answers. Build confidence before the real thing." },
-              { icon: <Brain className="w-6 h-6 text-white" />, title: "5 Subject Specialists", desc: "Medicine, STEM, Economics, Humanities, Arts — each agent is trained by a real student in that field. Not generic advice. Real expertise." },
+              { icon: <Brain className="w-6 h-6 text-white" />, title: "Tailored to your subject", desc: "Whether you're applying for Medicine, Engineering, Economics, Law, or anything else — the AI adapts to your specific subject. Trained by real students in each field. Not generic advice. Real expertise." },
               { icon: <Users className="w-6 h-6 text-white" />, title: "Optional 1-on-1 Sessions", desc: "Book a personal session with one of our coaches for a deep-dive PS review or intensive mock interview. The AI coaches you daily, the human gives you the edge." },
             ].map((item, i) => (
               <motion.div 
