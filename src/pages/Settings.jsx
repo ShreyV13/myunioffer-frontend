@@ -23,10 +23,10 @@ export default function Settings() {
   const [loadingPortal, setLoadingPortal] = useState(false);
 
   const planDetails = {
-    free: { name: 'Free', messages: 3, features: ['Basic coaching', 'All subjects'] },
-    ps: { name: 'Personal Statement', messages: 50, features: ['Advanced PS coaching', 'Sample statements', 'Email support'] },
-    interview: { name: 'Interview Prep', messages: 50, features: ['Real interview questions', 'Sample answers', 'Email support'] },
-    premium: { name: 'Premium', messages: 200, features: ['PS + Interview prep', '1000+ resources', 'Priority support'] }
+    free: { name: 'Free', messages: '2 per mode', features: ['2 PS + 2 Interview messages/day', 'All subjects'] },
+    ps: { name: 'PS Coach', messages: '100 PS', features: ['100 PS messages/day', '2 free Interview messages/day', 'All subject specialists', 'Email support'] },
+    interview: { name: 'Interview Prep', messages: '100 Interview', features: ['100 Interview messages/day', '2 free PS messages/day', 'All subject specialists', 'Email support'] },
+    premium: { name: 'Premium', messages: 'Unlimited', features: ['Unlimited PS + Interview', 'All subject specialists', 'Priority support'] }
   };
 
   const currentPlan = planDetails[userProfile?.plan || 'free'];
@@ -155,16 +155,24 @@ export default function Settings() {
                   Upgrade Plan
                 </Link>
               ) : (
-                <button
-                  onClick={handleManageSubscription}
-                  disabled={loadingPortal}
-                  className="btn-secondary flex-1 justify-center"
-                >
-                  {loadingPortal ? 'Loading...' : 'Manage Subscription'}
-                  <ExternalLink className="w-4 h-4" />
-                </button>
+                <>
+                  <button
+                    onClick={handleManageSubscription}
+                    disabled={loadingPortal}
+                    className="btn-secondary flex-1 justify-center"
+                  >
+                    {loadingPortal ? 'Loading...' : 'Manage Subscription'}
+                    <ExternalLink className="w-4 h-4" />
+                  </button>
+                </>
               )}
             </div>
+
+            {userProfile?.plan !== 'free' && (
+              <p className="text-xs text-gray-400 mt-4">
+                To cancel, email <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a>. You'll keep access until the end of your billing period. Full refunds available.
+              </p>
+            )}
           </div>
 
           {/* Account Actions */}

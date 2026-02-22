@@ -426,7 +426,7 @@ export default function Pricing() {
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500">
             <span className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-green-500" /> Cancel anytime, no contracts
+              <Shield className="w-4 h-4 text-green-500" /> Cancel anytime — keep access until end of billing period
             </span>
             <span className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-green-500" /> Secure payment via Stripe
