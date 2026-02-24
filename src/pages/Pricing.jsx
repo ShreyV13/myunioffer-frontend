@@ -94,7 +94,7 @@ export default function Pricing() {
       description: 'PS + Interview prep',
       icon: Crown,
       features: [
-        'Unlimited messages',
+        '200 messages per day',
         'All 5 subject agents',
         'PS + Interview coaching',
         '1000+ resources',

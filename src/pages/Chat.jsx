@@ -384,7 +384,7 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">

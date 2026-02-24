@@ -21,7 +21,7 @@ const TIER_LIMITS = {
   free: { ps: 2, interview: 2 },
   ps: { ps: 100, interview: 3 },
   interview: { ps: 3, interview: 100 },
-  premium: { ps: -1, interview: -1 }
+  premium: { ps: 200, interview: 200 }
 };
 
 export function AuthProvider({ children }) {
