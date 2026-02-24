@@ -19,9 +19,9 @@ export function useAuth() {
 // Tier limits per mode
 const TIER_LIMITS = {
   free: { ps: 2, interview: 2 },
-  ps: { ps: 100, interview: 3 },
-  interview: { ps: 3, interview: 100 },
-  premium: { ps: 200, interview: 200 }
+  ps: { ps: 999, interview: 2 },
+  interview: { ps: 2, interview: 999 },
+  premium: { ps: 999, interview: 999 }
 };
 
 export function AuthProvider({ children }) {

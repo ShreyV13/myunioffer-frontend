@@ -384,7 +384,7 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit - usage.used} left</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName}</div>
             </div>
           </div>
           <div className="space-y-0.5">
@@ -436,7 +436,7 @@ export default function Chat() {
                   <div className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl z-20 overflow-hidden" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}}>
                     <div className="p-3" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
                       <div className="font-medium text-white truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-white/50 mt-0.5">{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
+                      <div className="text-[11px] text-white/50 mt-0.5">{planName}</div>
                     </div>
                     <div className="p-1.5">
                       <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/8 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>

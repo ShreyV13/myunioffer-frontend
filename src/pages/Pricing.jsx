@@ -52,7 +52,7 @@ export default function Pricing() {
       description: 'Perfect your statement',
       icon: Sparkles,
       features: [
-        '100 messages per day',
+        'Generous daily usage',
         'All 5 subject agents',
         'Advanced PS coaching',
         '1000+ resources',
@@ -73,7 +73,7 @@ export default function Pricing() {
       description: 'Ace your interviews',
       icon: Zap,
       features: [
-        '100 messages per day',
+        'Generous daily usage',
         'All 5 subject agents',
         'Interview coaching',
         '1000+ resources',
@@ -94,7 +94,7 @@ export default function Pricing() {
       description: 'PS + Interview prep',
       icon: Crown,
       features: [
-        '200 messages per day',
+        'Generous daily usage',
         'All 5 subject agents',
         'PS + Interview coaching',
         '1000+ resources',
