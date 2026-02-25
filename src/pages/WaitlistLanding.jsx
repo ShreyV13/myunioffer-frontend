@@ -10,9 +10,11 @@ import {
   Users,
   Shield,
   MessageSquare,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from 'lucide-react';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function WaitlistLanding() {
@@ -23,6 +25,7 @@ export default function WaitlistLanding() {
   const [openFaq, setOpenFaq] = useState(null);
   const [bottomEmail, setBottomEmail] = useState('');
   const [bottomSubmitted, setBottomSubmitted] = useState(false);
+  const [mobileMenu, setMobileMenu] = useState(false);
 
   // Capture UTM source from URL
   const urlParams = new URLSearchParams(window.location.search);
@@ -35,6 +38,14 @@ export default function WaitlistLanding() {
     setLoading(true);
     setError('');
     try {
+      // Check for duplicate email
+      const q = query(collection(db, 'waitlist'), where('email', '==', emailValue.trim().toLowerCase()));
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        setSubmittedFn(true); // Show success anyway — don't reveal they're already signed up
+        setLoading(false);
+        return;
+      }
       await addDoc(collection(db, 'waitlist'), {
         email: emailValue.trim().toLowerCase(),
         joinedAt: serverTimestamp(),
@@ -112,15 +123,31 @@ export default function WaitlistLanding() {
               <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
               <a href="#why-us" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
               <a href="#pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
-              <a href="https://www.linkedin.com/in/shrey-verma-669a87284" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-gray-400 hover:text-[#0A66C2] transition-colors">
-                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                <span className="text-sm font-medium">Follow</span>
-              </a>
               <a href="#waitlist-bottom" className="btn-primary">
                 Join Waitlist
               </a>
             </div>
+
+            {/* Mobile menu button */}
+            <button 
+              onClick={() => setMobileMenu(!mobileMenu)} 
+              className="md:hidden p-2 text-gray-600 hover:text-coral-500 transition-colors"
+            >
+              {mobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
+
+          {/* Mobile menu dropdown */}
+          {mobileMenu && (
+            <div className="md:hidden mt-4 pb-4 border-t border-gray-100 pt-4 flex flex-col gap-4">
+              <a href="#how-it-works" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
+              <a href="#why-us" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
+              <a href="#pricing" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
+              <a href="#waitlist-bottom" onClick={() => setMobileMenu(false)} className="btn-primary text-center">
+                Join Waitlist
+              </a>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -191,6 +218,7 @@ export default function WaitlistLanding() {
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p className="text-xs text-gray-400 mt-3">Free · No payment required · Early access + exclusive discount</p>
+            <p className="text-xs text-gray-500 mt-2 font-medium">🚀 85+ students have already joined the waitlist</p>
           </motion.div>
 
           {/* Trust bar */}
@@ -300,7 +328,7 @@ export default function WaitlistLanding() {
 
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { title: "Coaches, not writes", desc: "Other AI tools write your PS for you — admissions tutors can spot that instantly. Ours asks you the questions that help you discover what to say. Your statement stays authentically yours." },
+              { title: "Coaches, doesn't write for you", desc: "Other AI tools write your PS for you — admissions tutors can spot that instantly. Ours asks you the questions that help you discover what to say. Your statement stays authentically yours." },
               { title: "Subject-specialist, not generic", desc: "A Medicine application is nothing like an Economics one. Our AI is trained by students from LSE, Cambridge, Imperial, and Warwick — each covering their subject area." },
               { title: "Built by people who just got in", desc: "We got lucky — amazing teachers, hours of preparation, and insights into what admissions tutors want. We've embedded everything we learned into this AI. Most students don't have what we had. Now they can." },
               { title: "99% cheaper than the alternative", desc: "Private application consultants charge £6,000-35,000. A personal tutor costs £50-100/hour. We're building the same quality of coaching for less than the price of a night out." },
@@ -334,14 +362,13 @@ export default function WaitlistLanding() {
             <p className="text-gray-600 max-w-xl mx-auto">Real students at real universities who went through the same process you're about to face.</p>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
             {[
-              { name: "Shrey Verma", uni: "LSE", course: "PPE", role: "Founder & Humanities Lead" },
-              { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine", role: "Medicine Lead" },
-              { name: "Adyan Shahid", uni: "Cambridge", course: "Computer Science", role: "CS & Maths Lead" },
-              { name: "Girish Radhakrishnan", uni: "Imperial", course: "Chemical Engineering", role: "Engineering & Sciences Lead" },
-              { name: "Pavan Kovuri", uni: "Warwick", course: "Economics", role: "Economics Lead" },
-              { name: "More coming", uni: "Top UK Universities", course: "Arts & more", role: "Recruiting" },
+              { name: "Shrey Verma", uni: "LSE", course: "PPE" },
+              { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine" },
+              { name: "Adyan Shahid", uni: "Cambridge", course: "Computer Science" },
+              { name: "Girish Radhakrishnan", uni: "Imperial", course: "Chemical Engineering" },
+              { name: "Pavan Kovuri", uni: "Warwick", course: "Economics" },
             ].map((member, i) => (
               <motion.div 
                 key={i}
@@ -358,6 +385,18 @@ export default function WaitlistLanding() {
                 <div className="text-gray-500 text-xs font-medium">{member.course}</div>
               </motion.div>
             ))}
+            <motion.div
+              className="card p-5 text-center flex flex-col items-center justify-center"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
+              <div className="text-2xl mb-1">🎯</div>
+              <div className="font-display font-bold text-gray-900 text-sm mb-0.5">5 universities</div>
+              <div className="text-gray-500 text-xs font-medium">1 mission</div>
+            </motion.div>
+          </div>
           </div>
         </div>
       </section>
@@ -386,8 +425,8 @@ export default function WaitlistLanding() {
           <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {[
               { name: "Free", price: "£0", period: "", features: ["2 PS messages/day", "2 Interview messages/day", "All 5 subject specialists"], cta: "Included for everyone" },
-              { name: "Single Mode", price: "£14.99", period: "/month", features: ["Generous daily usage", "PS or Interview mode", "All subject specialists", "Email support"], cta: "Discounted for waitlist" },
-              { name: "Premium", price: "£19.99", period: "/month", features: ["Generous daily usage", "PS + Interview", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
+              { name: "Single Mode", price: "£14.99", period: "/month", features: ["100 messages/day", "PS or Interview mode", "All subject specialists", "Email support"], cta: "Discounted for waitlist" },
+              { name: "Premium", price: "£19.99", period: "/month", features: ["Unlimited messages", "PS + Interview", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
             ].map((plan, i) => (
               <motion.div 
                 key={i}
@@ -465,21 +504,29 @@ export default function WaitlistLanding() {
       </section>
 
       {/* ==================== LINKEDIN FOLLOW ==================== */}
-      <section className="py-12 px-6 bg-white">
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-gray-600 mb-1">Want to stay in the loop?</p>
-          <p className="text-gray-400 text-sm mb-5">Follow me on LinkedIn for launch updates and behind-the-scenes of building MyUniOffer.</p>
-          <a
-            href="https://www.linkedin.com/in/shrey-verma-669a87284"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold py-3 px-6 rounded-xl transition-colors"
+      <section className="py-14 px-6 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
           >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            Follow on LinkedIn
-          </a>
+            <p className="text-gray-900 font-display font-bold text-xl mb-2">Stay in the loop</p>
+            <p className="text-gray-500 text-sm mb-5">
+              Follow Shrey on LinkedIn for launch updates, behind-the-scenes, and early access announcements.
+            </p>
+            <a
+              href="https://www.linkedin.com/in/shrey-verma-b74027293/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2.5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold py-3 px-7 rounded-xl transition-colors duration-200 shadow-md shadow-blue-500/15"
+            >
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+              </svg>
+              Follow on LinkedIn
+            </a>
+          </motion.div>
         </div>
       </section>
 
