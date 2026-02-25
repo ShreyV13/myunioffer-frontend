@@ -397,7 +397,6 @@ export default function WaitlistLanding() {
               <div className="text-gray-500 text-xs font-medium">1 mission</div>
             </motion.div>
           </div>
-          </div>
         </div>
       </section>
 
@@ -516,7 +515,7 @@ export default function WaitlistLanding() {
               Follow Shrey on LinkedIn for launch updates, behind-the-scenes, and early access announcements.
             </p>
             <a
-              href="https://www.linkedin.com/in/shrey-verma-b74027293/"
+              href="https://www.linkedin.com/in/shrey-verma-669a87284"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2.5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold py-3 px-7 rounded-xl transition-colors duration-200 shadow-md shadow-blue-500/15"
