@@ -238,19 +238,7 @@ export default function WaitlistLanding() {
             </a>
           </motion.div>
 
-          {/* Trust bar */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-3 mt-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (
-              <div key={i} className="px-4 py-2 bg-white rounded-xl border border-gray-100 shadow-sm text-sm font-semibold text-gray-600">
-                🎓 {uni}
-              </div>
-            ))}
-          </motion.div>
+         
         </div>
       </section>
 
