@@ -205,7 +205,7 @@ export function AuthProvider({ children }) {
   // Update user plan
   async function updateUserPlan(uid, plan, customerId, subscriptionId) {
     const userRef = doc(db, 'users', uid);
-    const updates = { plan };
+    const updates = { plan, messagesUsed_ps: 0, messagesUsed_interview: 0, messagesUsedToday: 0 };
     if (customerId) updates.stripeCustomerId = customerId;
     if (subscriptionId) updates.stripeSubscriptionId = subscriptionId;
     await updateDoc(userRef, updates);
