@@ -37,6 +37,7 @@ export default function Chat() {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
   const [userSubject, setUserSubject] = useState(null);
+  const [deleteConfirm, setDeleteConfirm] = useState(null);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -336,10 +337,16 @@ export default function Chat() {
 
   function handleDeleteChat(chatId, e) {
     e.stopPropagation();
-    setChats(prev => prev.filter(c => c.id !== chatId));
-    if (currentChatId === chatId) {
+    setDeleteConfirm(chatId);
+  }
+
+  function confirmDeleteChat() {
+    if (!deleteConfirm) return;
+    setChats(prev => prev.filter(c => c.id !== deleteConfirm));
+    if (currentChatId === deleteConfirm) {
       handleNewChat();
     }
+    setDeleteConfirm(null);
   }
 
   async function handleLogout() {
@@ -670,6 +677,30 @@ export default function Chat() {
           </motion.aside>
         </>)}
       </AnimatePresence>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center" onClick={() => setDeleteConfirm(null)}>
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative rounded-2xl p-6 max-w-sm mx-4 shadow-2xl" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-red-500/15 flex items-center justify-center">
+                <Trash2 className="w-5 h-5 text-red-400" />
+              </div>
+              <h3 className="text-white font-semibold text-lg">Delete chat?</h3>
+            </div>
+            <p className="text-white/60 text-sm mb-6">This can't be undone. The entire conversation will be permanently deleted.</p>
+            <div className="flex gap-3">
+              <button onClick={() => setDeleteConfirm(null)} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:bg-white/8 transition-colors" style={{border: '1px solid rgba(255,255,255,0.12)'}}>
+                Cancel
+              </button>
+              <button onClick={confirmDeleteChat} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-colors">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
