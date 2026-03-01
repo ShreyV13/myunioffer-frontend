@@ -49,7 +49,9 @@ function ProtectedRoute({ children }) {
           <p className="text-white/60 text-sm mb-2">We sent a verification link to:</p>
           <p className="text-white font-medium mb-6">{currentUser.email}</p>
           <p className="text-white/50 text-sm mb-2">Click the link in the email to activate your account.</p>
-          <p className="text-white/40 text-xs mb-6">Check your spam/junk folder if you don't see it.</p>
+          <div className="px-4 py-2.5 rounded-xl mb-6" style={{background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)'}}>
+            <p className="text-yellow-300/90 text-sm font-medium">⚠️ Can't find the email? Check your spam or junk folder.</p>
+          </div>
           {notVerified && (
             <div className="mb-4 px-4 py-2.5 rounded-xl text-sm text-red-300" style={{background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.2)'}}>
               Email not verified yet. Click the link in your email first.
@@ -77,7 +79,7 @@ function ProtectedRoute({ children }) {
               className="px-6 py-3 rounded-xl font-medium text-white/60 hover:text-white/80 transition-colors"
               disabled={resent}
             >
-              {resent ? 'Verification email sent ✓' : 'Resend verification email'}
+              {resent ? 'Sent ✓ Check your spam folder!' : 'Resend verification email'}
             </button>
           </div>
         </div>
