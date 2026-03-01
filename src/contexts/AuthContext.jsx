@@ -127,8 +127,11 @@ export function AuthProvider({ children }) {
       await updateProfile(result.user, { displayName });
     }
     
-    // Send verification email
-    await sendEmailVerification(result.user);
+    // Send verification email with redirect back to our site
+    await sendEmailVerification(result.user, {
+      url: 'https://myunioffer.com/chat',
+      handleCodeInApp: false
+    });
     
     const profile = await createUserProfile(result.user, displayName);
     setUserProfile(profile);
@@ -139,8 +142,21 @@ export function AuthProvider({ children }) {
   // Resend verification email
   async function resendVerification() {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
-      await sendEmailVerification(auth.currentUser);
+      await sendEmailVerification(auth.currentUser, {
+        url: 'https://myunioffer.com/chat',
+        handleCodeInApp: false
+      });
     }
+  }
+
+  // Force reload user to check verification status
+  async function reloadUser() {
+    if (auth.currentUser) {
+      await auth.currentUser.reload();
+      setCurrentUser({...auth.currentUser});
+      return auth.currentUser.emailVerified;
+    }
+    return false;
   }
 
   // Login
@@ -254,6 +270,7 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     resendVerification,
+    reloadUser,
     checkDailyMessages,
     incrementMessageCount,
     updateUserPlan,

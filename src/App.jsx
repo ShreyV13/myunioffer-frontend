@@ -29,8 +29,10 @@ function ScrollToTop() {
 
 // Protected Route wrapper
 function ProtectedRoute({ children }) {
-  const { currentUser, resendVerification } = useAuth();
+  const { currentUser, resendVerification, reloadUser } = useAuth();
   const [resent, setResent] = React.useState(false);
+  const [checking, setChecking] = React.useState(false);
+  const [notVerified, setNotVerified] = React.useState(false);
   
   if (!currentUser) {
     return <Navigate to="/" />;
@@ -46,14 +48,29 @@ function ProtectedRoute({ children }) {
           <h1 className="text-2xl font-bold text-white mb-3">Verify your email</h1>
           <p className="text-white/60 text-sm mb-2">We sent a verification link to:</p>
           <p className="text-white font-medium mb-6">{currentUser.email}</p>
-          <p className="text-white/50 text-sm mb-6">Click the link in the email to activate your account. Check your spam folder if you don't see it.</p>
+          <p className="text-white/50 text-sm mb-2">Click the link in the email to activate your account.</p>
+          <p className="text-white/40 text-xs mb-6">Check your spam/junk folder if you don't see it.</p>
+          {notVerified && (
+            <div className="mb-4 px-4 py-2.5 rounded-xl text-sm text-red-300" style={{background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.2)'}}>
+              Email not verified yet. Click the link in your email first.
+            </div>
+          )}
           <div className="flex flex-col gap-3">
             <button 
-              onClick={() => window.location.reload()} 
+              onClick={async () => { 
+                setChecking(true); 
+                setNotVerified(false);
+                const verified = await reloadUser(); 
+                if (!verified) {
+                  setNotVerified(true);
+                }
+                setChecking(false);
+              }} 
               className="px-6 py-3 rounded-xl font-semibold text-white transition-all" 
               style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}
+              disabled={checking}
             >
-              I've verified — let me in
+              {checking ? 'Checking...' : "I've verified — let me in"}
             </button>
             <button 
               onClick={async () => { await resendVerification(); setResent(true); }} 
