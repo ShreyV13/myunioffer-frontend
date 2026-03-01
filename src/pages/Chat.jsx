@@ -525,8 +525,8 @@ export default function Chat() {
                     { text: "Help me figure out what experiences to include", label: "Brainstorm experiences" },
                     { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
                     { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
-                    { text: "What should I be doing to strengthen my application?", label: "Supercurriculars" },
-                    { text: "What books or courses should I explore for my subject?", label: "Reading & courses" },
+                    { text: "What supercurriculars should I do? I want to explore things beyond my school subjects that link to what I want to study at university. Help me find activities, reading, courses and experiences.", label: "Supercurriculars" },
+                    { text: "What books, podcasts, online courses or competitions should I explore for my subject? I want stuff that goes beyond the syllabus and will genuinely help my application.", label: "Reading & courses" },
                   ] : [
                     { text: "Give me a real interview question for my subject", label: "Practise a question" },
                     { text: "Run a full mock interview with me", label: "Mock interview" },
