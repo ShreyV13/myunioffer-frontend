@@ -182,93 +182,131 @@ export default function Chat() {
       setServerWaking(true);
     }, 5000);
 
-    // Retry function with exponential backoff
-    async function fetchWithRetry(retries = 3, delay = 2000) {
-      for (let attempt = 1; attempt <= retries; attempt++) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 45000); // 45 second timeout per attempt
-
-          const res = await fetch(`${API_BASE}/chat`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              message: userMessage,
-              mode: mode,
-              session_id: sessionId,
-              user_id: currentUser.uid,
-              tier: userProfile?.plan || 'free',
-              subject: userSubject,
-              student_profile: studentProfile
-            }),
-            signal: controller.signal
-          });
-
-          clearTimeout(timeoutId);
-
-          if (!res.ok) {
-            throw new Error('Server error');
-          }
-
-          return await res.json();
-        } catch (err) {
-          console.log(`Attempt ${attempt} failed:`, err.message);
-          
-          if (attempt === retries) {
-            throw err; // Final attempt failed
-          }
-          
-          // Wait before retrying (server might be waking up)
-          await new Promise(resolve => setTimeout(resolve, delay));
-          delay *= 1.5; // Increase delay for next attempt
-        }
-      }
-    }
-
     try {
-      const data = await fetchWithRetry(3, 3000);
+      const res = await fetch(`${API_BASE}/chat-stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: userMessage,
+          mode: mode,
+          session_id: sessionId,
+          user_id: currentUser.uid,
+          tier: userProfile?.plan || 'free',
+          subject: userSubject,
+          student_profile: studentProfile
+        })
+      });
 
       clearTimeout(wakingTimeout);
       setServerWaking(false);
-      
-      // Only increment message count AFTER successful response
-      await incrementMessageCount(currentUser.uid, mode);
-      
-      // Save detected subject for use across modes
-      if (data.detected_subject || data.detected_category) {
-        const subject = data.detected_subject || data.detected_category;
-        setUserSubject(subject);
-        // Save to Firebase via student profile
-        await updateStudentProfile(currentUser.uid, { subject });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        if (res.status === 429 && errData.detail?.upgrade_message) {
+          setMessages(prev => [...prev, { role: 'system', content: errData.detail.upgrade_message }]);
+          setLoading(false);
+          return;
+        }
+        throw new Error('Server error');
       }
-      
-      // Update student profile if AI extracted new info
-      if (data.profile_updates) {
-        const updates = data.profile_updates;
-        if (updates.subject || updates.universities?.length > 0 || updates.activities?.length > 0) {
-          await updateStudentProfile(currentUser.uid, updates);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let streamedText = '';
+      let agentName = '';
+      let detectedSubj = null;
+
+      // Add empty assistant message that we'll update
+      setMessages(prev => [...prev, { role: 'assistant', content: '', agent: '' }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            try {
+              const data = JSON.parse(line.slice(6));
+              
+              if (data.type === 'meta') {
+                agentName = data.agent;
+                detectedSubj = data.detected_subject;
+                if (detectedSubj || data.detected_category) {
+                  const subject = detectedSubj || data.detected_category;
+                  setUserSubject(subject);
+                  await updateStudentProfile(currentUser.uid, { subject });
+                }
+              } else if (data.type === 'token') {
+                streamedText += data.text;
+                setMessages(prev => {
+                  const updated = [...prev];
+                  updated[updated.length - 1] = {
+                    role: 'assistant',
+                    content: streamedText,
+                    agent: agentName,
+                    detectedSubject: detectedSubj
+                  };
+                  return updated;
+                });
+              } else if (data.type === 'done') {
+                if (data.usage) {
+                  setUsage({ used: data.usage.used || 0, limit: data.usage.limit || 3 });
+                }
+                if (data.profile_updates) {
+                  const updates = data.profile_updates;
+                  if (updates.subject || updates.universities?.length > 0 || updates.activities?.length > 0) {
+                    await updateStudentProfile(currentUser.uid, updates);
+                  }
+                }
+                await incrementMessageCount(currentUser.uid, mode);
+              }
+            } catch (parseErr) {
+              // skip malformed SSE lines
+            }
+          }
         }
       }
-      
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
-        content: data.response,
-        agent: data.agent,
-        detectedSubject: data.detected_subject
-      }]);
-
-      // Update usage
-      setUsage(prev => ({ ...prev, used: prev.used + 1 }));
 
     } catch (err) {
       clearTimeout(wakingTimeout);
       setServerWaking(false);
       console.error(err);
       
-      // Don't count failed messages - remove the user message from display
-      setMessages(prev => prev.slice(0, -1));
-      
-      setError('Couldn\'t connect to the server. Your message was not counted. Please try again.');
+      // Fallback to non-streaming endpoint
+      try {
+        const res = await fetch(`${API_BASE}/chat`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: userMessage,
+            mode: mode,
+            session_id: sessionId,
+            user_id: currentUser.uid,
+            tier: userProfile?.plan || 'free',
+            subject: userSubject,
+            student_profile: studentProfile
+          })
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          await incrementMessageCount(currentUser.uid, mode);
+          if (data.detected_subject || data.detected_category) {
+            setUserSubject(data.detected_subject || data.detected_category);
+            await updateStudentProfile(currentUser.uid, { subject: data.detected_subject || data.detected_category });
+          }
+          setMessages(prev => [...prev, { role: 'assistant', content: data.response, agent: data.agent, detectedSubject: data.detected_subject }]);
+          setUsage(prev => ({ ...prev, used: prev.used + 1 }));
+        } else {
+          throw new Error('Fallback also failed');
+        }
+      } catch (fallbackErr) {
+        setMessages(prev => prev.filter(m => m.content !== ''));
+        setError('Couldn\'t connect to the server. Your message was not counted. Please try again.');
+      }
     }
 
     setLoading(false);
