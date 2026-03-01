@@ -57,6 +57,11 @@ function ProtectedRoute({ children }) {
               Email not verified yet. Click the link in your email first.
             </div>
           )}
+          {resent && (
+            <div className="mb-4 px-4 py-2.5 rounded-xl text-sm text-green-300" style={{background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.2)'}}>
+              ✓ Verification email resent! Check your spam/junk folder.
+            </div>
+          )}
           <div className="flex flex-col gap-3">
             <button 
               onClick={async () => { 
@@ -79,7 +84,7 @@ function ProtectedRoute({ children }) {
               className="px-6 py-3 rounded-xl font-medium text-white/60 hover:text-white/80 transition-colors"
               disabled={resent}
             >
-              {resent ? 'Sent ✓ Check your spam folder!' : 'Resend verification email'}
+              {resent ? 'Email sent ✓' : 'Resend verification email'}
             </button>
           </div>
         </div>

@@ -28,8 +28,14 @@ export default function Login() {
       navigate(redirect === 'pricing' ? '/pricing' : '/chat');
     } catch (err) {
       console.error(err);
-      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
-        setError('Invalid email or password');
+      if (err.code === 'auth/user-not-found') {
+        setError('No account exists with this email. Did you mean to sign up?');
+      } else if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') {
+        setError('Incorrect password. Try again or reset your password.');
+      } else if (err.code === 'auth/invalid-email') {
+        setError('Please enter a valid email address.');
+      } else if (err.code === 'auth/too-many-requests') {
+        setError('Too many failed attempts. Please try again later.');
       } else {
         setError('Failed to sign in. Please try again.');
       }
