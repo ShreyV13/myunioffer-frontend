@@ -127,6 +127,11 @@ export default function Chat() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!input.trim() || loading) return;
+    sendMessage(input.trim());
+  }
+
+  async function sendMessage(text) {
+    if (!text || loading) return;
 
     setError(null);
 
@@ -150,7 +155,7 @@ export default function Chat() {
       return;
     }
 
-    const userMessage = input.trim();
+    const userMessage = text;
     setInput('');
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
@@ -384,7 +389,7 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px]" style={{color: '#999'}}>{planName}</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
             </div>
           </div>
           <div className="space-y-0.5">
@@ -436,7 +441,7 @@ export default function Chat() {
                   <div className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl z-20 overflow-hidden" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}}>
                     <div className="p-3" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
                       <div className="font-medium text-white truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-white/50 mt-0.5">{planName}</div>
+                      <div className="text-[11px] text-white/50 mt-0.5">{planName} · {usage.limit === -1 ? '∞' : usage.limit - usage.used} left</div>
                     </div>
                     <div className="p-1.5">
                       <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/8 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
@@ -472,13 +477,15 @@ export default function Chat() {
                     { text: "Help me figure out what experiences to include", label: "Brainstorm experiences" },
                     { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
                     { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
+                    { text: "What should I be doing to strengthen my application?", label: "Supercurriculars" },
+                    { text: "What books or courses should I explore for my subject?", label: "Reading & courses" },
                   ] : [
                     { text: "Give me a real interview question for my subject", label: "Practise a question" },
                     { text: "Run a full mock interview with me", label: "Mock interview" },
                     { text: "How should I structure my answers?", label: "Answer frameworks" },
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
                   ]).map((prompt, i) => (
-                    <button key={i} onClick={() => { setInput(prompt.text); inputRef.current?.focus(); }}
+                    <button key={i} onClick={() => sendMessage(prompt.text)}
                       className="px-4 py-3 rounded-xl text-left hover:bg-white/8 transition-all text-[13px] leading-snug" style={{border: '1px solid rgba(255,255,255,0.12)', color: '#ccc'}}>
                       {prompt.label} →
                     </button>
