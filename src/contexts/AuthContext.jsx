@@ -153,8 +153,11 @@ export function AuthProvider({ children }) {
   async function reloadUser() {
     if (auth.currentUser) {
       await auth.currentUser.reload();
-      setCurrentUser({...auth.currentUser});
-      return auth.currentUser.emailVerified;
+      if (auth.currentUser.emailVerified) {
+        window.location.reload();
+        return true;
+      }
+      return false;
     }
     return false;
   }
