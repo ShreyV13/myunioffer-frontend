@@ -48,7 +48,7 @@ export default function Signup() {
   }
 
   const benefits = [
-    '3 free messages every day',
+    '4 free messages every day',
     'Access to all subjects',
     'Personal statement coaching',
     'Interview preparation'
