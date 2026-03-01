@@ -5,7 +5,8 @@ import {
   signOut, 
   onAuthStateChanged,
   sendPasswordResetEmail,
-  updateProfile
+  updateProfile,
+  sendEmailVerification
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { auth, db } from '../firebase';
@@ -19,9 +20,9 @@ export function useAuth() {
 // Tier limits per mode
 const TIER_LIMITS = {
   free: { ps: 2, interview: 2 },
-  ps: { ps: 999, interview: 2 },
-  interview: { ps: 2, interview: 999 },
-  premium: { ps: 999, interview: 999 }
+  ps: { ps: 100, interview: 3 },
+  interview: { ps: 3, interview: 100 },
+  premium: { ps: -1, interview: -1 }
 };
 
 export function AuthProvider({ children }) {
@@ -126,10 +127,20 @@ export function AuthProvider({ children }) {
       await updateProfile(result.user, { displayName });
     }
     
+    // Send verification email
+    await sendEmailVerification(result.user);
+    
     const profile = await createUserProfile(result.user, displayName);
     setUserProfile(profile);
     
     return result;
+  }
+
+  // Resend verification email
+  async function resendVerification() {
+    if (auth.currentUser && !auth.currentUser.emailVerified) {
+      await sendEmailVerification(auth.currentUser);
+    }
   }
 
   // Login
@@ -205,7 +216,7 @@ export function AuthProvider({ children }) {
   // Update user plan
   async function updateUserPlan(uid, plan, customerId, subscriptionId) {
     const userRef = doc(db, 'users', uid);
-    const updates = { plan, messagesUsed_ps: 0, messagesUsed_interview: 0, messagesUsedToday: 0 };
+    const updates = { plan };
     if (customerId) updates.stripeCustomerId = customerId;
     if (subscriptionId) updates.stripeSubscriptionId = subscriptionId;
     await updateDoc(userRef, updates);
@@ -242,6 +253,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     resetPassword,
+    resendVerification,
     checkDailyMessages,
     incrementMessageCount,
     updateUserPlan,

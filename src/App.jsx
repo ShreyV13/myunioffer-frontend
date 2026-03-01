@@ -29,10 +29,43 @@ function ScrollToTop() {
 
 // Protected Route wrapper
 function ProtectedRoute({ children }) {
-  const { currentUser } = useAuth();
+  const { currentUser, resendVerification } = useAuth();
+  const [resent, setResent] = React.useState(false);
   
   if (!currentUser) {
     return <Navigate to="/" />;
+  }
+
+  if (!currentUser.emailVerified) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6" style={{background: '#2b2b2b'}}>
+        <div className="max-w-md w-full text-center">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+            <span className="text-2xl">📧</span>
+          </div>
+          <h1 className="text-2xl font-bold text-white mb-3">Verify your email</h1>
+          <p className="text-white/60 text-sm mb-2">We sent a verification link to:</p>
+          <p className="text-white font-medium mb-6">{currentUser.email}</p>
+          <p className="text-white/50 text-sm mb-6">Click the link in the email to activate your account. Check your spam folder if you don't see it.</p>
+          <div className="flex flex-col gap-3">
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-6 py-3 rounded-xl font-semibold text-white transition-all" 
+              style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}
+            >
+              I've verified — let me in
+            </button>
+            <button 
+              onClick={async () => { await resendVerification(); setResent(true); }} 
+              className="px-6 py-3 rounded-xl font-medium text-white/60 hover:text-white/80 transition-colors"
+              disabled={resent}
+            >
+              {resent ? 'Verification email sent ✓' : 'Resend verification email'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
   
   return children;
