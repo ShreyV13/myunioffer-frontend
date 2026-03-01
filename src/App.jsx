@@ -33,6 +33,7 @@ function ProtectedRoute({ children }) {
   const [resent, setResent] = React.useState(false);
   const [checking, setChecking] = React.useState(false);
   const [notVerified, setNotVerified] = React.useState(false);
+  const [resendError, setResendError] = React.useState('');
   
   if (!currentUser) {
     return <Navigate to="/" />;
@@ -80,12 +81,30 @@ function ProtectedRoute({ children }) {
               {checking ? 'Checking...' : "I've verified — let me in"}
             </button>
             <button 
-              onClick={async () => { await resendVerification(); setResent(true); }} 
+              onClick={async () => { 
+                try {
+                  setResendError('');
+                  await resendVerification(); 
+                  setResent(true); 
+                } catch (err) {
+                  console.error('Resend error:', err);
+                  if (err.code === 'auth/too-many-requests') {
+                    setResendError('Too many attempts. Please wait a few minutes before trying again.');
+                  } else {
+                    setResendError('Could not resend email. Please wait a moment and try again.');
+                  }
+                }
+              }} 
               className="px-6 py-3 rounded-xl font-medium text-white/60 hover:text-white/80 transition-colors"
               disabled={resent}
             >
               {resent ? 'Email sent ✓' : 'Resend verification email'}
             </button>
+            {resendError && (
+              <div className="px-4 py-2.5 rounded-xl text-sm text-red-300" style={{background: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.2)'}}>
+                {resendError}
+              </div>
+            )}
           </div>
         </div>
       </div>
