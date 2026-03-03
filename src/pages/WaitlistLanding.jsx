@@ -14,7 +14,7 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 
 export default function WaitlistLanding() {
@@ -38,14 +38,6 @@ export default function WaitlistLanding() {
     setLoading(true);
     setError('');
     try {
-      // Check for duplicate email
-      const q = query(collection(db, 'waitlist'), where('email', '==', emailValue.trim().toLowerCase()));
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) {
-        setSubmittedFn(true); // Show success anyway — don't reveal they're already signed up
-        setLoading(false);
-        return;
-      }
       await addDoc(collection(db, 'waitlist'), {
         email: emailValue.trim().toLowerCase(),
         joinedAt: serverTimestamp(),
