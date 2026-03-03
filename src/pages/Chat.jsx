@@ -39,6 +39,8 @@ export default function Chat() {
   const [userSubject, setUserSubject] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+  // Helper: only premium is truly unlimited display-wise
+  const isUnlimited = (userProfile?.plan === 'premium') && (usage.limit === -1 || usage.limit >= 999);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -46,9 +48,6 @@ export default function Chat() {
   
   const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
-
-  // Helper: only premium is truly unlimited display-wise — MUST be after useAuth()
-  const isUnlimited = (userProfile?.plan === 'premium') && (usage.limit === -1 || usage.limit >= 999);
 
   // Load userSubject from studentProfile when it changes
   useEffect(() => {
@@ -215,6 +214,25 @@ export default function Chat() {
         throw new Error('Server error');
       }
 
+      // Check if response is JSON (easter egg) instead of SSE stream
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        if (data.response && data.response.includes('---EASTER_EGG_DELAY---')) {
+          const parts = data.response.split('\n\n---EASTER_EGG_DELAY---\n\n');
+          setMessages(prev => [...prev, { role: 'assistant', content: parts[0], agent: 'myunioffer Personal Mode' }]);
+          setLoading(false);
+          await new Promise(resolve => setTimeout(resolve, 15000));
+          setMessages(prev => [...prev, { role: 'assistant', content: parts[1], agent: 'myunioffer Personal Mode' }]);
+          inputRef.current?.focus();
+          return;
+        }
+        setMessages(prev => [...prev, { role: 'assistant', content: data.response, agent: data.agent || 'myunioffer Personal Mode' }]);
+        setLoading(false);
+        inputRef.current?.focus();
+        return;
+      }
+
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let streamedText = '';
@@ -245,17 +263,38 @@ export default function Chat() {
                   await updateStudentProfile(currentUser.uid, { subject });
                 }
               } else if (data.type === 'token') {
-                streamedText += data.text;
-                setMessages(prev => {
-                  const updated = [...prev];
-                  updated[updated.length - 1] = {
-                    role: 'assistant',
-                    content: streamedText,
-                    agent: agentName,
-                    detectedSubject: detectedSubj
-                  };
-                  return updated;
-                });
+                // Check for easter egg delay marker
+                if (data.text.includes('---EASTER_EGG_DELAY---')) {
+                  // Clean up the first message (remove any trailing whitespace/newlines before marker)
+                  const cleanFirst = streamedText.replace(/\n*$/, '');
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    updated[updated.length - 1] = {
+                      role: 'assistant',
+                      content: cleanFirst,
+                      agent: agentName,
+                      detectedSubject: detectedSubj
+                    };
+                    return updated;
+                  });
+                  // Wait 15 seconds
+                  await new Promise(resolve => setTimeout(resolve, 15000));
+                  // Start a new message for the final reveal
+                  streamedText = '';
+                  setMessages(prev => [...prev, { role: 'assistant', content: '', agent: agentName }]);
+                } else {
+                  streamedText += data.text;
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    updated[updated.length - 1] = {
+                      role: 'assistant',
+                      content: streamedText,
+                      agent: agentName,
+                      detectedSubject: detectedSubj
+                    };
+                    return updated;
+                  });
+                }
               } else if (data.type === 'done') {
                 if (data.usage) {
                   setUsage({ used: data.usage.used || 0, limit: data.usage.limit || 3 });
@@ -298,6 +337,18 @@ export default function Chat() {
         
         if (res.ok) {
           const data = await res.json();
+          
+          // Handle easter egg with delayed second message
+          if (data.response && data.response.includes('---EASTER_EGG_DELAY---')) {
+            const parts = data.response.split('\n\n---EASTER_EGG_DELAY---\n\n');
+            setMessages(prev => [...prev, { role: 'assistant', content: parts[0], agent: 'myunioffer Personal Mode' }]);
+            setLoading(false);
+            // Wait 15 seconds then show the final message
+            await new Promise(resolve => setTimeout(resolve, 15000));
+            setMessages(prev => [...prev, { role: 'assistant', content: parts[1], agent: 'myunioffer Personal Mode' }]);
+            return;
+          }
+          
           await incrementMessageCount(currentUser.uid, mode);
           if (data.detected_subject || data.detected_category) {
             setUserSubject(data.detected_subject || data.detected_category);
