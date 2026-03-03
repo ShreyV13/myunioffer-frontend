@@ -39,6 +39,8 @@ export default function Chat() {
   const [userSubject, setUserSubject] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
 
+  // Helper: only premium is truly unlimited display-wise
+  const isUnlimited = (userProfile?.plan === 'premium') && (usage.limit === -1 || usage.limit >= 999);
   
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -46,9 +48,6 @@ export default function Chat() {
   
   const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
-
-  // Helper: only premium is truly unlimited display-wise
-  const isUnlimited = (userProfile?.plan === 'premium') && (usage.limit === -1 || usage.limit >= 999);
 
   // Load userSubject from studentProfile when it changes
   useEffect(() => {
