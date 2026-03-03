@@ -665,7 +665,7 @@ export default function Chat() {
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
             <div className="relative rounded-2xl focus-within:ring-1 focus-within:ring-white/10 transition-all" style={{background: '#353535', border: '1px solid rgba(255,255,255,0.1)'}}>
               <textarea ref={inputRef} value={input}
-                onChange={(e) => { setInput(e.target.value); e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
+                onChange={(e) => { const maxChars = (userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500; if (e.target.value.length <= maxChars) { setInput(e.target.value); } e.target.style.height = 'auto'; e.target.style.height = Math.min(e.target.scrollHeight, 150) + 'px'; }}
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
                 placeholder={mode === 'ps' ? "Tell me what you're applying for..." : "Ask me anything about interviews..."}
                 className="w-full bg-transparent border-none outline-none resize-none text-white placeholder-white/40 text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
@@ -675,6 +675,7 @@ export default function Chat() {
                   <Plus className="w-4 h-4" />
                 </button>
                 <div className="flex items-center gap-3">
+                  {input.length > ((userProfile?.plan === 'free' || !userProfile?.plan) ? 1500 : 4000) && <span className="text-[12px]" style={{color: input.length >= ((userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500) ? '#f07a62' : '#999'}}>{input.length}/{(userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500}</span>}
                   {!isUnlimited && <span className="text-[12px]" style={{color: '#999'}}>{usage.used + '/' + usage.limit}</span>}
                   <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
                     <Send className="w-4 h-4" />
