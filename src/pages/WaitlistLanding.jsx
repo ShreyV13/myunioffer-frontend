@@ -218,7 +218,7 @@ export default function WaitlistLanding() {
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p className="text-xs text-gray-400 mt-3">Free · No payment required · Early access + exclusive discount</p>
-            <p className="text-xs text-gray-500 mt-2 font-medium">🚀 85+ students have already joined the waitlist</p>
+            <p className="text-xs text-gray-500 mt-2 font-medium">🚀 90+ students have already joined the waitlist</p>
             <a
               href="https://www.linkedin.com/in/shrey-verma-669a87284"
               target="_blank"
