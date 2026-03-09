@@ -462,7 +462,7 @@ export default function Chat() {
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-3 mt-3">
+        <div className="flex-1 overflow-y-auto px-3 mt-3" style={{WebkitOverflowScrolling: 'touch'}}>
           {recentChats.length === 0 ? (
             <div className="text-xs text-white/40 px-2 py-8 text-center">Your conversations will appear here</div>
           ) : (
@@ -561,7 +561,7 @@ export default function Chat() {
         </header>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto" style={{WebkitOverflowScrolling: 'touch'}}>
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center px-6">
               <div className="max-w-xl w-full text-center">
@@ -604,7 +604,7 @@ export default function Chat() {
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
                   {msg.role === 'user' ? (
                     <div className="flex justify-end">
-                      <div className="max-w-[75%] bg-white/10 text-white px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
+                      <div className="max-w-[85%] sm:max-w-[75%] bg-white/10 text-white px-4 py-3 rounded-2xl rounded-br-sm text-[15px] leading-relaxed">
                         <div className="whitespace-pre-wrap">{msg.content}</div>
                       </div>
                     </div>
@@ -665,7 +665,7 @@ export default function Chat() {
         )}
 
         {/* Input */}
-        <div className="flex-shrink-0 px-4 pb-4 pt-2">
+        <div className="flex-shrink-0 px-4 pb-4 pt-2" style={{paddingBottom: 'max(1rem, env(safe-area-inset-bottom))'}}>
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
             <div className="relative rounded-2xl focus-within:ring-1 focus-within:ring-white/10 transition-all" style={{background: '#353535', border: '1px solid rgba(255,255,255,0.1)'}}>
               <textarea ref={inputRef} value={input}
@@ -713,18 +713,22 @@ export default function Chat() {
                 <Plus className="w-4 h-4" /> New chat
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto px-3 mt-3">
+            <div className="flex-1 overflow-y-auto px-3 mt-3" style={{WebkitOverflowScrolling: 'touch'}}>
               {recentChats.length === 0 ? (
                 <div className="text-xs text-white/40 px-2 py-8 text-center">Your conversations will appear here</div>
               ) : (
                 <div className="space-y-0.5">
                   <div className="text-[11px] font-medium text-white/40 uppercase tracking-wider px-2 mb-2">Recent</div>
                   {recentChats.map(chat => (
-                    <button key={chat.id} onClick={() => handleSelectChat(chat)}
-                      className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-left text-[13px] ${currentChatId === chat.id ? 'bg-white/10 text-white' : 'text-white/70 hover:bg-white/6'}`}>
-                      <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-50" />
-                      <span className="flex-1 truncate">{chat.title}</span>
-                    </button>
+                    <div key={chat.id} className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-[13px] ${currentChatId === chat.id ? 'bg-white/10 text-white' : 'text-white/70 active:bg-white/6'}`}>
+                      <button onClick={() => handleSelectChat(chat)} className="flex items-center gap-2.5 flex-1 min-w-0 text-left">
+                        <MessageSquare className="w-3.5 h-3.5 flex-shrink-0 opacity-50" />
+                        <span className="flex-1 truncate">{chat.title}</span>
+                      </button>
+                      <button onClick={(e) => handleDeleteChat(chat.id, e)} className="p-1 rounded hover:bg-white/10 flex-shrink-0">
+                        <Trash2 className="w-3.5 h-3.5 text-white/40" />
+                      </button>
+                    </div>
                   ))}
                 </div>
               )}
