@@ -34,6 +34,7 @@ export default function Chat() {
   const [mode, setMode] = useState('ps');
   const [usage, setUsage] = useState({ used: 0, limit: 3 });
   const [showSidebar, setShowSidebar] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
   const [userSubject, setUserSubject] = useState(null);
@@ -443,7 +444,7 @@ export default function Chat() {
   return (
     <div className="h-screen flex" style={{background: '#2b2b2b'}}>
       {/* Sidebar */}
-      <aside className="hidden md:flex w-[260px] flex-col" style={{background: '#242424'}}>
+      <aside className={`hidden md:flex flex-col transition-all duration-200 ${sidebarCollapsed ? 'w-0 overflow-hidden' : 'w-[260px]'}`} style={{background: '#242424'}}>
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
@@ -514,6 +515,9 @@ export default function Chat() {
         <header className="flex-shrink-0 px-4 py-2.5" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
+              <button className="hidden md:block p-2 -ml-2 text-white/60 hover:bg-white/8 rounded-lg" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+                <Menu className="w-5 h-5" />
+              </button>
               <button className="md:hidden p-2 -ml-2 text-white/60 hover:bg-white/8 rounded-lg" onClick={() => setShowSidebar(true)}>
                 <Menu className="w-5 h-5" />
               </button>
