@@ -249,6 +249,28 @@ body {
 }
 
 /* Mobile optimizations */
+
+
+/* Mobile chat layout fixes */
+.chat-container {
+  height: 100vh;
+  height: 100dvh;
+  height: -webkit-fill-available;
+}
+
+/* Prevent iOS zoom on input focus */
+@media (max-width: 768px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Fix iOS bounce scrolling */
+.no-bounce {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
 @media (max-width: 640px) {
   .btn-primary, .btn-secondary {
     @apply w-full;

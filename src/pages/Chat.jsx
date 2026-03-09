@@ -75,10 +75,13 @@ export default function Chat() {
     loadChats();
   }, [currentUser, loadChatsFromFirebase]);
 
-  // Save chats to Firebase whenever chats change
+  // Save chats to Firebase whenever chats change (debounced to avoid rapid saves during streaming)
   useEffect(() => {
     if (currentUser && chats.length > 0 && saveChatsToFirebase) {
-      saveChatsToFirebase(currentUser.uid, chats);
+      const timeout = setTimeout(() => {
+        saveChatsToFirebase(currentUser.uid, chats);
+      }, 2000);
+      return () => clearTimeout(timeout);
     }
   }, [chats, currentUser, saveChatsToFirebase]);
 
@@ -442,7 +445,7 @@ export default function Chat() {
 
 
   return (
-    <div className="h-screen flex" style={{background: '#2b2b2b'}}>
+    <div className="chat-container flex no-bounce" style={{background: '#2b2b2b'}}>
       {/* Sidebar */}
       <aside className={`hidden md:flex flex-col transition-all duration-200 ${sidebarCollapsed ? 'w-0 overflow-hidden' : 'w-[260px]'}`} style={{background: '#242424'}}>
         <div className="px-5 py-4">
@@ -521,11 +524,11 @@ export default function Chat() {
               <button className="md:hidden p-2 -ml-2 text-white/60 hover:bg-white/8 rounded-lg" onClick={() => setShowSidebar(true)}>
                 <Menu className="w-5 h-5" />
               </button>
-              <Link to="/" className="flex items-center gap-1.5 md:hidden">
+              <button onClick={() => { if (window.confirm('Leave the chat and go to the home page?')) { window.location.href = '/'; }}} className="flex items-center gap-1.5 md:hidden">
                 <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
                   <GraduationCap className="w-3.5 h-3.5 text-white" />
                 </div>
-              </Link>
+              </button>
             </div>
             <div className="flex p-0.5 rounded-lg bg-white/8">
               <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'ps' ? {color: '#aaa'} : {}}>
@@ -561,7 +564,7 @@ export default function Chat() {
         </header>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto" style={{WebkitOverflowScrolling: 'touch'}}>
+        <div className="flex-1 overflow-y-auto no-bounce" style={{WebkitOverflowScrolling: 'touch'}}>
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center px-6">
               <div className="max-w-xl w-full text-center">
