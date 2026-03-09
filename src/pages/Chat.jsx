@@ -75,15 +75,22 @@ export default function Chat() {
     loadChats();
   }, [currentUser, loadChatsFromFirebase]);
 
-  // Save chats to Firebase whenever chats change (debounced to avoid rapid saves during streaming)
+  // Save chats to Firebase whenever chats change (debounced)
   useEffect(() => {
     if (currentUser && chats.length > 0 && saveChatsToFirebase) {
       const timeout = setTimeout(() => {
         saveChatsToFirebase(currentUser.uid, chats);
-      }, 2000);
+      }, 1000);
       return () => clearTimeout(timeout);
     }
   }, [chats, currentUser, saveChatsToFirebase]);
+
+  // Force save when streaming finishes (loading goes from true to false)
+  useEffect(() => {
+    if (!loading && currentUser && chats.length > 0 && saveChatsToFirebase) {
+      saveChatsToFirebase(currentUser.uid, chats);
+    }
+  }, [loading]);
 
   // Save messages to current chat whenever messages change
   useEffect(() => {
