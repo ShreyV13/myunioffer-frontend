@@ -255,7 +255,7 @@ body {
 .chat-container {
   height: 100vh;
   height: 100dvh;
-  height: -webkit-fill-available;
+  overflow: hidden;
 }
 
 /* Prevent iOS zoom on input focus */
