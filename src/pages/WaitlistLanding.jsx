@@ -472,69 +472,6 @@ export default function WaitlistLanding() {
       </section>
 
 
-      {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <motion.div 
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-3 text-gray-900">What beta testers are saying</h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Real feedback from real students who tested MyUniOffer before launch.</p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 items-start">
-            <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0 }}
-            >
-              <img src="/testimonial-1.png" alt="Beta tester feedback" className="w-full h-auto" />
-            </motion.div>
-            <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              <img src="/testimonial-2.png" alt="Beta tester feedback" className="w-full h-auto" />
-            </motion.div>
-            <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg border border-gray-100"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <img src="/testimonial-3.jpg" alt="Beta tester feedback" className="w-full h-auto" />
-            </motion.div>
-            <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 col-span-1"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-            >
-              <img src="/testimonial-4.jpg" alt="Beta tester feedback" className="w-full h-auto" />
-            </motion.div>
-            <motion.div
-              className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 col-span-2 md:col-span-2"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-            >
-              <img src="/testimonial-5.jpg" alt="Beta tester feedback" className="w-full h-auto" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
 
       {/* ==================== TESTIMONIALS ==================== */}
       <section className="py-20 px-6 bg-white">
