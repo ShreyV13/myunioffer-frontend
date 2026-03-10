@@ -85,13 +85,6 @@ export default function Chat() {
     }
   }, [chats, currentUser, saveChatsToFirebase]);
 
-  // Force save when streaming finishes (loading goes from true to false)
-  useEffect(() => {
-    if (!loading && currentUser && chats.length > 0 && saveChatsToFirebase) {
-      saveChatsToFirebase(currentUser.uid, chats);
-    }
-  }, [loading]);
-
   // Save messages to current chat whenever messages change
   useEffect(() => {
     if (currentChatId && messages.length > 0) {
@@ -102,6 +95,17 @@ export default function Chat() {
       ));
     }
   }, [messages, currentChatId]);
+
+  // Force save when streaming finishes (loading goes from true to false)
+  // Small delay ensures messages->chats sync has completed first
+  useEffect(() => {
+    if (!loading && currentUser && chats.length > 0 && saveChatsToFirebase) {
+      const timeout = setTimeout(() => {
+        saveChatsToFirebase(currentUser.uid, chats);
+      }, 200);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
