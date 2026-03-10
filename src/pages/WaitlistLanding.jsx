@@ -88,6 +88,7 @@ export default function WaitlistLanding() {
               <a href="#why-us" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
               <a href="#testimonials" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
               <a href="#pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
+              <a href="#follow" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Follow</a>
               <a href="#waitlist-bottom" className="btn-primary">Join Waitlist</a>
             </div>
             <button onClick={() => setMobileMenu(!mobileMenu)} className="md:hidden p-2 text-gray-600 hover:text-coral-500 transition-colors">
@@ -100,6 +101,7 @@ export default function WaitlistLanding() {
               <a href="#why-us" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
               <a href="#testimonials" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
               <a href="#pricing" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</a>
+              <a href="#follow" onClick={() => setMobileMenu(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Follow</a>
               <a href="#waitlist-bottom" onClick={() => setMobileMenu(false)} className="btn-primary text-center">Join Waitlist</a>
             </div>
           )}
@@ -169,7 +171,7 @@ export default function WaitlistLanding() {
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-3 text-gray-900">Don't take our word for it</h2>
             <p className="text-gray-500 max-w-xl mx-auto">Real messages from students who tested MyUniOffer before launch. Unedited.</p>
           </motion.div>
-          <div style={{columns: '2', columnGap: '12px'}}>
+          <div className="max-w-3xl mx-auto" style={{columns: '2', columnGap: '12px'}}>
             {[
               {src: '/testimonial-1.png', delay: 0},
               {src: '/testimonial-3.jpg', delay: 0.1},
@@ -231,7 +233,10 @@ export default function WaitlistLanding() {
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-gray-50">
+
+      
+
+            <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-4xl mx-auto">
           <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">The team behind the AI</h2>
@@ -315,7 +320,7 @@ export default function WaitlistLanding() {
         </div>
       </section>
 
-      <section className="py-16 px-6 bg-white">
+      <section id="follow" className="py-16 px-6 bg-white">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-3">Follow the journey</h2>
