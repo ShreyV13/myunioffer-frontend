@@ -251,7 +251,8 @@ export default function WaitlistLanding() {
           </motion.div>
           <div className="max-w-3xl mx-auto" style={{columns: '2', columnGap: '12px'}}>
             {[
-              {src: '/testimonial-1.png', delay: 0},
+              {src: '/testimonial-6.jpg', delay: 0},
+              {src: '/testimonial-7.jpg', delay: 0.05},
               {src: '/testimonial-3.jpg', delay: 0.1},
               {src: '/testimonial-2.png', delay: 0.15},
               {src: '/testimonial-5.jpg', delay: 0.2},
