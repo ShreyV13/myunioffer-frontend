@@ -252,11 +252,11 @@ export default function WaitlistLanding() {
           <div className="max-w-3xl mx-auto" style={{columns: '2', columnGap: '12px'}}>
             {[
               {src: '/testimonial-6.jpg', delay: 0},
-              {src: '/testimonial-7.jpg', delay: 0.05},
-              {src: '/testimonial-3.jpg', delay: 0.1},
-              {src: '/testimonial-2.png', delay: 0.15},
-              {src: '/testimonial-5.jpg', delay: 0.2},
-              {src: '/testimonial-4.jpg', delay: 0.25},
+              {src: '/testimonial-3.jpg', delay: 0.05},
+              {src: '/testimonial-7.jpg', delay: 0.1},
+              {src: '/testimonial-5.jpg', delay: 0.15},
+              {src: '/testimonial-4.jpg', delay: 0.2},
+              {src: '/testimonial-2.png', delay: 0.25},
             ].map((t, i) => (
               <motion.div key={i} className="mb-3 rounded-2xl overflow-hidden shadow-lg border border-gray-100" style={{breakInside: 'avoid'}} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: t.delay }}>
                 <img src={t.src} alt="Student feedback" className="w-full h-auto block" />
