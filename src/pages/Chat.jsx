@@ -594,14 +594,14 @@ export default function Chat() {
                 </p>
                 <div className="grid grid-cols-2 gap-2.5 max-w-lg mx-auto">
                   {(mode === 'ps' ? [
-                    { text: "I'm applying for medicine — help me start my PS", label: "Start my PS" },
-                    { text: "Help me figure out what experiences to include", label: "Brainstorm experiences" },
+                    { text: "Help me start my personal statement", label: "Start my PS" },
+                    { text: "Help me figure out what experiences to include in my personal statement", label: "Brainstorm experiences" },
                     { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
                     { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
-                    { text: "What supercurriculars should I do? I want to explore things beyond my school subjects that link to what I want to study at university. Help me find activities, reading, courses and experiences.", label: "Supercurriculars" },
-                    { text: "What books, podcasts, online courses or competitions should I explore for my subject? I want stuff that goes beyond the syllabus and will genuinely help my application.", label: "Reading & courses" },
+                    { text: "What supercurriculars should I do for my subject?", label: "Supercurriculars" },
+                    { text: "What books, podcasts or courses should I explore for my subject?", label: "Reading & courses" },
                   ] : [
-                    { text: "Give me a real interview question for my subject", label: "Practise a question" },
+                    { text: "Give me a real interview question", label: "Practise a question" },
                     { text: "Run a full mock interview with me", label: "Mock interview" },
                     { text: "How should I structure my answers?", label: "Answer frameworks" },
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
