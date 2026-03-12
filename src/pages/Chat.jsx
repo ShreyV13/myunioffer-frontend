@@ -58,10 +58,12 @@ export default function Chat() {
     }
   }, [studentProfile]);
 
-  // Load chats from Firebase
+  // Load chats from Firebase (only once when user logs in)
+  const chatsLoadedRef = useRef(false);
   useEffect(() => {
     async function loadChats() {
-      if (currentUser && loadChatsFromFirebase) {
+      if (currentUser && loadChatsFromFirebase && !chatsLoadedRef.current) {
+        chatsLoadedRef.current = true;
         try {
           const savedChats = await loadChatsFromFirebase(currentUser.uid);
           if (savedChats && savedChats.length > 0) {
@@ -79,7 +81,6 @@ export default function Chat() {
   useEffect(() => {
     if (currentUser && chats.length > 0 && saveChatsToFirebase) {
       const timeout = setTimeout(() => {
-        console.log('SAVING TO FIREBASE:', chats.length, 'chats');
         saveChatsToFirebase(currentUser.uid, chats);
       }, 1000);
       return () => clearTimeout(timeout);
@@ -185,7 +186,6 @@ export default function Chat() {
     const chatTitle = userMessage.slice(0, 40) + (userMessage.length > 40 ? '...' : '');
     if (!currentChatId) {
       const newChatId = 'chat_' + Date.now();
-      console.log('CREATING NEW CHAT:', newChatId);
       setCurrentChatId(newChatId);
       activeChatRef.current = newChatId;
       setChats(prev => [{
