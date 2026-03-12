@@ -603,7 +603,7 @@ export default function Chat() {
                   ] : [
                     { text: "Give me a real interview question", label: "Practise a question" },
                     { text: "Run a full mock interview with me", label: "Mock interview" },
-                    { text: "How should I structure my answers?", label: "Answer frameworks" },
+                    { text: "How should I structure my answers?", label: "Answer structures" },
                     { text: "What mistakes do most people make in interviews?", label: "Common mistakes" },
                   ]).map((prompt, i) => (
                     <button key={i} onClick={() => sendMessage(prompt.text)}
