@@ -279,7 +279,7 @@ export default function WaitlistLanding() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {[
-              { name: "Free", price: "£0", period: "", features: ["4 messages/day", "PS + Interview mode", "All 5 subject specialists"], cta: "Included for everyone" },
+              { name: "Free", price: "£0", period: "", features: ["2 PS + 2 Interview messages/day", "PS + Interview mode", "All 5 subject specialists"], cta: "Included for everyone" },
               { name: "Single Mode", price: "£14.99", period: "/month", features: ["100 messages/day", "PS or Interview mode", "All subject specialists", "Email support"], cta: "Discounted for waitlist" },
               { name: "Premium", price: "£19.99", period: "/month", features: ["Unlimited messages", "PS + Interview", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
             ].map((plan, i) => (
