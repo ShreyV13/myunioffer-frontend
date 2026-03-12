@@ -25,6 +25,7 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.o
 
 export default function Chat() {
   const [chats, setChats] = useState([]);
+  const chatsRef = useRef([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -77,6 +78,9 @@ export default function Chat() {
     loadChats();
   }, [currentUser, loadChatsFromFirebase]);
 
+  // Keep chatsRef in sync
+  useEffect(() => { chatsRef.current = chats; }, [chats]);
+
   // Save chats to Firebase whenever chats change (debounced)
   useEffect(() => {
     if (currentUser && chats.length > 0 && saveChatsToFirebase) {
@@ -99,12 +103,12 @@ export default function Chat() {
   }, [messages, currentChatId]);
 
   // Force save when streaming finishes (loading goes from true to false)
-  // Small delay ensures messages->chats sync has completed first
+  // Uses ref to always get latest chats, small delay ensures sync has completed
   useEffect(() => {
-    if (!loading && currentUser && chats.length > 0 && saveChatsToFirebase) {
+    if (!loading && currentUser && chatsRef.current.length > 0 && saveChatsToFirebase) {
       const timeout = setTimeout(() => {
-        saveChatsToFirebase(currentUser.uid, chats);
-      }, 200);
+        saveChatsToFirebase(currentUser.uid, chatsRef.current);
+      }, 300);
       return () => clearTimeout(timeout);
     }
   }, [loading]);
