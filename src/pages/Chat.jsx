@@ -79,6 +79,7 @@ export default function Chat() {
   useEffect(() => {
     if (currentUser && chats.length > 0 && saveChatsToFirebase) {
       const timeout = setTimeout(() => {
+        console.log('SAVING TO FIREBASE:', chats.length, 'chats');
         saveChatsToFirebase(currentUser.uid, chats);
       }, 1000);
       return () => clearTimeout(timeout);
@@ -184,6 +185,7 @@ export default function Chat() {
     const chatTitle = userMessage.slice(0, 40) + (userMessage.length > 40 ? '...' : '');
     if (!currentChatId) {
       const newChatId = 'chat_' + Date.now();
+      console.log('CREATING NEW CHAT:', newChatId);
       setCurrentChatId(newChatId);
       activeChatRef.current = newChatId;
       setChats(prev => [{
