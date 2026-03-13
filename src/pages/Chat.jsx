@@ -190,6 +190,7 @@ export default function Chat() {
 
     const userMessage = text;
     setInput('');
+    if (inputRef.current) inputRef.current.style.height = 'auto';
     setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
     setLoading(true);
 
