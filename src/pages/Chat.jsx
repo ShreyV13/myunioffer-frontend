@@ -118,6 +118,13 @@ export default function Chat() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Refocus input after AI finishes responding
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
+  }, [loading]);
+
   // Check daily messages per mode
   useEffect(() => {
     async function checkMessages() {
