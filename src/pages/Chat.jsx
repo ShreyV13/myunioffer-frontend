@@ -50,7 +50,7 @@ export default function Chat() {
   const navigate = useNavigate();
 
   // CRITICAL: isUnlimited MUST be after useAuth() - DO NOT MOVE THIS
-  const isUnlimited = (userProfile?.plan === 'premium') && (usage.limit === -1 || usage.limit >= 999);
+  const isUnlimited = userProfile?.plan === 'premium';
 
   // Load userSubject from studentProfile when it changes
   useEffect(() => {
