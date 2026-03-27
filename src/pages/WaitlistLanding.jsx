@@ -73,7 +73,7 @@ export default function WaitlistLanding() {
   return (
     <div className="min-h-screen bg-white">
       <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
-        <span className="text-coral-400">🚀 Launching March 31st</span> · Join the waitlist for early access + exclusive discount
+        <span className="text-coral-400">🚀 Launching March 31st</span> · Join the waitlist for an exclusive launch discount
       </div>
 
       <nav className="sticky top-0 z-50 glass border-b border-gray-100">
