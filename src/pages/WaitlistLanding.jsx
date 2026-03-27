@@ -133,7 +133,7 @@ export default function WaitlistLanding() {
             )}
             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             <p className="text-xs text-gray-400 mt-3">Free · No payment required · Early access + exclusive discount</p>
-            <p className="text-xs text-gray-500 mt-2 font-medium">🚀 90+ students have already joined the waitlist</p>
+            <p className="text-xs text-gray-500 mt-2 font-medium">🚀 120+ students have already joined the waitlist</p>
           </motion.div>
           <motion.div className="flex flex-wrap justify-center gap-3 mt-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}>
             {['LSE', 'KCL', 'Cambridge', 'Imperial', 'Warwick'].map((uni, i) => (

@@ -312,7 +312,7 @@ export default function Pricing() {
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
-                    <Check className="w-3.5 h-3.5 text-green-500" /> 45-minute session
+                    <Check className="w-3.5 h-3.5 text-green-500" /> 60-minute session
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
                     <Check className="w-3.5 h-3.5 text-green-500" /> Subject-matched specialist

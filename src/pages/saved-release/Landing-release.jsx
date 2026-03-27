@@ -26,10 +26,10 @@ export default function Landing() {
   // Placeholder team - replace names/descriptions when you have real people
   const team = [
     { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "Economics, PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
-    { name: "Recruiting", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: false },
+    { name: "Suhas Parsaboina", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: true, uni: "KCL", course: "Medicine" },
+    { name: "Pavan Kovuri", role: "Economics & Business Lead", subject: "Economics, Business & Finance", icon: "📊", confirmed: true, uni: "Warwick", course: "Economics" },
     { name: "Adyan Shahid", role: "CS & Maths Lead", subject: "Computer Science, Maths & Data Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
     { name: "Girish Radhakrishnan", role: "Engineering & Sciences Lead", subject: "Engineering, Chemistry & Physics", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
-    { name: "Recruiting", role: "Arts Lead", subject: "Architecture, Art & Design", icon: "🎨", confirmed: false },
   ];
 
   const faqs = [
@@ -51,7 +51,7 @@ export default function Landing() {
     },
     {
       q: "Who are the specialist coaches?",
-      a: "Our founder is a PPE student at LSE who built the system. We're actively recruiting specialist coaches from universities including Cambridge, Imperial, KCL, and Warwick — each one trains the AI for their subject area and offers optional 1-on-1 sessions."
+      a: "Our team includes students from LSE, KCL, Cambridge, Imperial, and Warwick. Each specialist trains the AI for their subject area and offers optional 1-on-1 sessions. We have leads for Medicine, STEM, Economics, Engineering, and Humanities."
     }
   ];
 
@@ -144,7 +144,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI coaching for personal statements and interviews — built by students from LSE, Cambridge, Imperial, KCL, and Warwick.
+            AI coaching for personal statements and interviews. For any subject, any university. Built by students who just got in.
           </motion.p>
 
           <motion.div 
@@ -182,6 +182,7 @@ export default function Landing() {
                 🎓 {uni}
               </div>
             ))}
+            <div className="w-full text-center text-xs text-gray-400 mt-1">where our team studies</div>
           </motion.div>
         </div>
       </section>
