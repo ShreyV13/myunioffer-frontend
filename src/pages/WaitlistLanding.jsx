@@ -54,8 +54,8 @@ export default function WaitlistLanding() {
   const faqs = [
     { q: "What exactly is myunioffer ai?", a: "It's an AI coaching tool built specifically for UK university applications. It helps you craft your personal statement and prepare for interviews. It doesn't write for you. It asks the right questions to help you figure out what to say." },
     { q: "Who built this?", a: "A team of students from LSE, Cambridge, Imperial, KCL, and Warwick who literally just went through the exact same application process. We trained the AI on what actually works." },
-    { q: "What do I get for joining the waitlist?", a: "Early access before everyone else, plus an exclusive launch discount on all plans. No commitment, no payment. Just your email." },
-    { q: "When does it launch?", a: "March 31st 2026. Waitlist members get access first." },
+    { q: "What do I get for joining the waitlist?", a: "An exclusive launch discount on all plans that won't be available after launch. No commitment, no payment. Just your email." },
+    { q: "When does it launch?", a: "March 31st 2026. Waitlist members get an exclusive discount at launch." },
     { q: "Is it free?", a: "There's a free tier so you can try it out. Paid plans unlock more features and more messages. Waitlist members get a discount that won't be available after launch." },
     { q: "How is this different from ChatGPT?", a: "ChatGPT gives everyone the same generic advice and tries to write your statement for you. Admissions tutors can spot that immediately. Our AI coaches you through the process by asking questions specific to your subject and your experiences. It pushes you to think deeper instead of handing you a template." }
   ];
