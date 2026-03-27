@@ -94,10 +94,10 @@ export default function Pricing() {
       description: 'PS + Interview prep',
       icon: Crown,
       features: [
-        'Unlimited daily usage',
+        'Most daily usage',
         'All 5 subject agents',
         'PS + Interview coaching',
-        '1000+ resources',
+        'Deeper, more detailed responses',
         'Priority support',
         '1 free session after 3 months'
       ],

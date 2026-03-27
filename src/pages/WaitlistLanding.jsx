@@ -281,7 +281,7 @@ export default function WaitlistLanding() {
             {[
               { name: "Free", price: "£0", period: "", features: ["2 PS + 2 Interview messages/day", "PS + Interview mode", "All 5 subject specialists"], cta: "Included for everyone" },
               { name: "Single Mode", price: "£8.99", period: "/month", features: ["Increased daily usage", "PS or Interview mode", "All subject specialists", "Email support"], cta: "Discounted for waitlist" },
-              { name: "Premium", price: "£12.99", period: "/month", features: ["Unlimited messages", "PS + Interview mode", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
+              { name: "Premium", price: "£12.99", period: "/month", features: ["Extended daily usage", "PS + Interview mode", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
             ].map((plan, i) => (
               <motion.div key={i} className="card p-6 text-center" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
                 <div className="text-lg font-display font-bold text-gray-900 mb-1">{plan.name}</div>
