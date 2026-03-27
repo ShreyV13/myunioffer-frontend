@@ -47,8 +47,8 @@ export default function Pricing() {
     {
       id: 'ps',
       name: 'Personal Statement',
-      price: '11.99',
-      originalPrice: '14.99',
+      price: '8.99',
+      originalPrice: '12.99',
       description: 'Perfect your statement',
       icon: Sparkles,
       features: [
@@ -68,8 +68,8 @@ export default function Pricing() {
     {
       id: 'interview',
       name: 'Interview Prep',
-      price: '11.99',
-      originalPrice: '14.99',
+      price: '8.99',
+      originalPrice: '12.99',
       description: 'Ace your interviews',
       icon: Zap,
       features: [
@@ -89,8 +89,8 @@ export default function Pricing() {
     {
       id: 'premium',
       name: 'Premium',
-      price: '16.99',
-      originalPrice: '19.99',
+      price: '12.99',
+      originalPrice: '16.99',
       description: 'PS + Interview prep',
       icon: Crown,
       features: [
@@ -195,7 +195,7 @@ export default function Pricing() {
         >
           <div className="flex items-center justify-center gap-2 text-coral-600 font-semibold text-sm">
             <Clock className="w-4 h-4" />
-            🚀 Launch Discount — lock in early pricing before it increases to £14.99 / £19.99
+            🚀 Launch Discount — lock in early pricing before it increases to £12.99 / £16.99
           </div>
         </motion.div>
 
@@ -358,7 +358,7 @@ export default function Pricing() {
             <div className="text-4xl font-display font-bold text-gray-300 line-through mb-1">£200+/month</div>
             <p className="text-gray-600 text-sm mb-4">with a private admissions tutor</p>
             <div className="text-lg font-display font-bold text-gray-900">
-              With myunioffer.ai: <span className="text-coral-500">from £11.99/month</span>
+              With myunioffer.ai: <span className="text-coral-500">from £8.99/month</span>
             </div>
           </div>
         </motion.div>
@@ -408,7 +408,7 @@ export default function Pricing() {
                 </tr>
                 <tr>
                   <td className="p-4 font-semibold text-gray-900">Price</td>
-                  <td className="p-4 text-center font-bold text-coral-500">From £11.99/mo</td>
+                  <td className="p-4 text-center font-bold text-coral-500">From £8.99/mo</td>
                   <td className="p-4 text-center text-gray-500">£50–100/hr</td>
                   <td className="p-4 text-center text-gray-500">£6,000–35,000</td>
                 </tr>
