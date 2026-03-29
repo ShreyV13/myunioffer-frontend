@@ -279,7 +279,7 @@ export default function WaitlistLanding() {
           </motion.div>
           <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
             {[
-              { name: "Free", price: "£0", period: "", features: ["2 PS + 2 Interview messages/day", "PS + Interview mode", "All 5 subject specialists"], cta: "Included for everyone" },
+              { name: "Free", price: "£0", period: "", features: ["2 PS + 2 Interview messages/day", "PS + Interview mode", "Subject-specific coaching"], cta: "Included for everyone" },
               { name: "Single Mode", price: "£8.99", period: "/month", features: ["Increased daily usage", "PS or Interview mode", "All subject specialists", "Email support"], cta: "Discounted for waitlist" },
               { name: "Premium", price: "£12.99", period: "/month", features: ["Extended daily usage", "PS + Interview mode", "All subject specialists", "Priority support"], cta: "Discounted for waitlist" },
             ].map((plan, i) => (
@@ -298,7 +298,7 @@ export default function WaitlistLanding() {
               </motion.div>
             ))}
           </div>
-          <div className="text-center mt-8"><p className="text-sm text-gray-500">Secure payments via Stripe · Cancel anytime · Full refunds available</p></div>
+          <div className="text-center mt-8"><p className="text-sm text-gray-500">Secure payments via Stripe · Cancel anytime</p></div>
         </div>
       </section>
 

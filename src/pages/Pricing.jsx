@@ -33,7 +33,7 @@ export default function Pricing() {
       icon: MessageSquare,
       features: [
         '2 messages per day',
-        'All 5 subject agents',
+        'Subject-specific coaching',
         'Basic PS & interview coaching',
       ],
       notIncluded: [
@@ -53,7 +53,7 @@ export default function Pricing() {
       icon: Sparkles,
       features: [
         'Generous daily usage',
-        'All 5 subject agents',
+        'Subject-specific coaching',
         'Advanced PS coaching',
         '1000+ resources',
         'Email support'
@@ -74,7 +74,7 @@ export default function Pricing() {
       icon: Zap,
       features: [
         'Generous daily usage',
-        'All 5 subject agents',
+        'Subject-specific coaching',
         'Interview coaching',
         '1000+ resources',
         'Email support'
@@ -95,7 +95,7 @@ export default function Pricing() {
       icon: Crown,
       features: [
         'Generous daily usage',
-        'All 5 subject agents',
+        'Subject-specific coaching',
         'PS + Interview coaching',
         '1000+ resources',
         'Priority support',
@@ -182,7 +182,7 @@ export default function Pricing() {
             Don't leave your application to chance
           </h1>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation — and that's exactly what we provide.
+            Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation, and that's exactly what we provide.
           </p>
         </motion.div>
 
@@ -195,7 +195,7 @@ export default function Pricing() {
         >
           <div className="flex items-center justify-center gap-2 text-coral-600 font-semibold text-sm">
             <Clock className="w-4 h-4" />
-            🚀 Launch Discount — lock in early pricing before it increases to £12.99 / £16.99
+            🚀 Launch Discount, lock in early pricing before it increases to £12.99 / £16.99
           </div>
         </motion.div>
 
@@ -249,7 +249,7 @@ export default function Pricing() {
                   ))}
                   {plan.notIncluded.map((feature, j) => (
                     <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-gray-400">
-                      <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center">—</span>
+                      <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center">,</span>
                       {feature}
                     </li>
                   ))}
@@ -308,7 +308,7 @@ export default function Pricing() {
               <div className="flex-1 text-center md:text-left">
                 <h3 className="text-xl font-display font-bold text-gray-900 mb-2">Personal session with a specialist</h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Get matched with a real student from your chosen degree area — someone who successfully applied to the same course at a top university. They'll give you personalised PS feedback or run a realistic mock interview, tailored to your specific application.
+                  Get matched with a real student from your chosen degree area, someone who successfully applied to the same course at a top university. They'll give you personalised PS feedback or run a realistic mock interview, tailored to your specific application.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 rounded-full text-gray-600 text-xs font-medium">
@@ -338,7 +338,7 @@ export default function Pricing() {
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-1">3-Month Bundle Perk</h4>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £27.99 session — use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
+                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £27.99 session, use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
                   </p>
                 </div>
               </div>
@@ -426,16 +426,16 @@ export default function Pricing() {
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500">
             <span className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-green-500" /> Cancel anytime — keep access until end of billing period
+              <Shield className="w-4 h-4 text-green-500" /> Cancel anytime, keep access until end of billing period
             </span>
             <span className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-green-500" /> Secure payment via Stripe
             </span>
             <span className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-green-500" /> Launch pricing — won't last forever
+              <Clock className="w-4 h-4 text-green-500" /> Launch pricing, won't last forever
             </span>
           </div>
-          <p className="text-center text-xs text-gray-400 mt-4">All payments are processed securely through Stripe. We never see or store your card details. Full refunds available — just email support@myunioffer.com.</p>
+          <p className="text-center text-xs text-gray-400 mt-4">All payments are processed securely through Stripe. We never see or store your card details. Full refunds available, just email support@myunioffer.com.</p>
         </motion.div>
 
         {/* Free tier reminder */}
@@ -450,10 +450,10 @@ export default function Pricing() {
             <Link to={currentUser ? "/chat" : "/signup"} className="text-coral-600 font-semibold hover:text-coral-700">
               Continue with Free
             </Link>
-            {' '}— 2 messages per day, no credit card required.
+            {' '}, 2 messages per day, no credit card required.
           </p>
           <p className="text-gray-400 text-sm mt-4">
-            Cancel anytime · Full refunds available · Email{' '}
+            Cancel anytime · Email{' '}
             <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a>
             {' '}for help
           </p>

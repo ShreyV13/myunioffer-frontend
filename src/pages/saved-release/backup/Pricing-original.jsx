@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { 
   GraduationCap, 
   Check, 
@@ -186,7 +186,18 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-
+        {/* Launch discount banner */}
+        <motion.div 
+          className="mb-10 p-4 bg-coral-50 border border-coral-100 rounded-2xl text-center max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <div className="flex items-center justify-center gap-2 text-coral-600 font-semibold text-sm">
+            <Clock className="w-4 h-4" />
+            🚀 Launch Discount, lock in early pricing before it increases to £12.99 / £16.99
+          </div>
+        </motion.div>
 
         {/* Plans */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-16">
@@ -197,9 +208,9 @@ export default function Pricing() {
             return (
               <motion.div
                 key={plan.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.12, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ delay: i * 0.1 }}
                 className={`card p-7 relative ${
                   plan.popular 
                     ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
@@ -238,7 +249,7 @@ export default function Pricing() {
                   ))}
                   {plan.notIncluded.map((feature, j) => (
                     <li key={`no-${j}`} className="flex items-start gap-2.5 text-sm text-gray-400">
-                      <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center text-gray-300">✕</span>
+                      <span className="w-4 h-4 flex-shrink-0 mt-0.5 text-center">,</span>
                       {feature}
                     </li>
                   ))}
@@ -283,9 +294,8 @@ export default function Pricing() {
         {/* 1-on-1 Sessions Section */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
           className="mb-16"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">1-on-1 Sessions</h2>
@@ -321,16 +331,26 @@ export default function Pricing() {
               </div>
             </div>
 
-
+            {/* Bundle */}
+            <div className="mt-8 p-5 bg-amber-50 border border-amber-100 rounded-xl">
+              <div className="flex items-start gap-3">
+                <Gift className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-gray-900 mb-1">3-Month Bundle Perk</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Subscribe to any paid plan for 3 consecutive months and get <span className="font-semibold text-gray-900">1 free 1-on-1 session</span> in your third month. That's a free £27.99 session, use it for a final PS review or a pre-interview mock. The AI coaches you daily, the specialist gives you the human edge.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </motion.div>
 
         {/* Value Anchoring */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
           className="mb-16 max-w-2xl mx-auto"
         >
           <div className="card p-8 text-center bg-coral-50 border-coral-100">
@@ -346,9 +366,8 @@ export default function Pricing() {
         {/* Comparison to alternatives */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
           className="mb-16 max-w-3xl mx-auto"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">How we compare</h2>
@@ -401,9 +420,8 @@ export default function Pricing() {
         {/* Guarantees */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
           className="max-w-2xl mx-auto mb-8"
         >
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500">

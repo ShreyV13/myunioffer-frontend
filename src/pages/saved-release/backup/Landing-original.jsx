@@ -25,11 +25,11 @@ export default function Landing() {
 
   // Placeholder team - replace names/descriptions when you have real people
   const team = [
-    { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "Economics, PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE" },
+    { name: "Shrey Verma", role: "Founder & Humanities Lead", subject: "PPE, Politics, IR & Humanities", icon: "🎯", confirmed: true, uni: "LSE", course: "PPE", photo: "/team-shrey.jpg" },
+    { name: "Pavan Kovuri", role: "Economics & Business Lead", subject: "Economics, Business & Finance", icon: "📊", confirmed: true, uni: "Warwick", course: "Economics" },
     { name: "Suhas Parsaboina", role: "Medicine Lead", subject: "Medicine & Healthcare", icon: "🩺", confirmed: true, uni: "KCL", course: "Medicine" },
     { name: "Adyan Shahid", role: "CS & Maths Lead", subject: "Computer Science, Maths & Data Science", icon: "💻", confirmed: true, uni: "Cambridge", course: "Computer Science" },
     { name: "Girish Radhakrishnan", role: "Engineering & Sciences Lead", subject: "Engineering, Chemistry & Physics", icon: "⚙️", confirmed: true, uni: "Imperial", course: "Chemical Engineering" },
-    { name: "Pavan Kovuri", role: "Economics Lead", subject: "Economics, Finance & Business", icon: "📈", confirmed: true, uni: "Warwick", course: "Economics" },
   ];
 
   const faqs = [
@@ -51,7 +51,7 @@ export default function Landing() {
     },
     {
       q: "Who are the specialist coaches?",
-      a: "Our founder is a PPE student at LSE who built the system. We're actively recruiting specialist coaches from universities including Cambridge, Imperial, KCL, and Warwick, each one trains the AI for their subject area and offers optional 1-on-1 sessions."
+      a: "Our team includes students from LSE, KCL, Cambridge, Imperial, and Warwick. Each specialist trains the AI for their subject area and offers optional 1-on-1 sessions. We have leads for Medicine, STEM, Economics, Engineering, and Humanities."
     }
   ];
 
@@ -122,9 +122,8 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-coral-50 border border-coral-100 rounded-full text-coral-600 font-medium text-sm mb-8">
-              <Sparkles className="w-4 h-4" />
-              AI-Powered Application Coaching
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-coral-50 border border-coral-100 rounded-full text-sm font-medium text-coral-600 mb-8">
+              <span className="w-2 h-2 bg-coral-500 rounded-full animate-pulse" />Launch pricing available
             </div>
           </motion.div>
 
@@ -144,7 +143,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            AI coaching for personal statements and interviews, built by students from LSE, Cambridge, Imperial, KCL, and Warwick.
+            Your personal statement won't write itself. And ChatGPT can't coach you through it. We can. AI coaching for any subject, any university.
           </motion.p>
 
           <motion.div 
@@ -170,6 +169,15 @@ export default function Landing() {
             Free to try · No credit card required
           </motion.p>
 
+          <motion.p
+            className="text-sm font-medium text-gray-500 mt-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
+          >
+            120+ students already signed up before launch
+          </motion.p>
+
           {/* Uni trust bar */}
           <motion.div 
             className="flex flex-wrap justify-center gap-3 mt-12"
@@ -182,6 +190,7 @@ export default function Landing() {
                 🎓 {uni}
               </div>
             ))}
+            <div className="w-full text-center text-xs text-gray-400 mt-2">where our team studies, coaching you wherever you're applying</div>
           </motion.div>
         </div>
       </section>
@@ -349,7 +358,11 @@ export default function Landing() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
-                <div className="text-3xl mb-2">{member.icon}</div>
+                {member.photo ? (
+                  <img src={member.photo} alt={member.name} className="w-14 h-14 rounded-full object-cover mx-auto mb-2" />
+                ) : (
+                  <div className="text-3xl mb-2">{member.icon}</div>
+                )}
                 {member.confirmed && (
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-coral-50 border border-coral-200 rounded-full text-xs text-coral-600 font-bold mb-2">
                     🎓 {member.uni}

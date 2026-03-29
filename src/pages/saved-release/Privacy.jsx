@@ -50,7 +50,7 @@ export default function Privacy() {
             <p>• Provide and improve our AI coaching service</p>
             <p>• Maintain your conversation history across sessions and devices</p>
             <p>• Process payments and manage your subscription</p>
-            <p>• Send you important service updates (not marketing — we won't spam you)</p>
+            <p>• Send you important service updates (not marketing, we won't spam you)</p>
             <p>• Enforce rate limits based on your subscription tier</p>
             <p>• Detect and prevent fraud or abuse</p>
             <p>We do <strong>not</strong> sell your personal data to third parties. Ever.</p>
@@ -72,28 +72,28 @@ export default function Privacy() {
           <section>
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">6. Third-party services</h2>
             <p>We use the following third-party services that may process your data:</p>
-            <p>• <strong>Firebase (Google)</strong> — authentication and data storage</p>
-            <p>• <strong>Anthropic (Claude AI)</strong> — AI response generation</p>
-            <p>• <strong>Stripe</strong> — payment processing</p>
-            <p>• <strong>Vercel</strong> — website hosting</p>
-            <p>• <strong>Render</strong> — backend hosting</p>
+            <p>• <strong>Firebase (Google)</strong>, authentication and data storage</p>
+            <p>• <strong>Anthropic (Claude AI)</strong>, AI response generation</p>
+            <p>• <strong>Stripe</strong>, payment processing</p>
+            <p>• <strong>Vercel</strong>, website hosting</p>
+            <p>• <strong>Render</strong>, backend hosting</p>
             <p>Each of these services has their own privacy policy and data handling practices.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">7. Your rights</h2>
             <p>Under UK GDPR, you have the right to:</p>
-            <p>• <strong>Access</strong> your personal data — request a copy of what we hold</p>
-            <p>• <strong>Correct</strong> inaccurate data — update your profile or ask us to fix errors</p>
-            <p>• <strong>Delete</strong> your data — request we erase your account and all associated data</p>
-            <p>• <strong>Export</strong> your data — receive your data in a portable format</p>
-            <p>• <strong>Object</strong> to processing — in certain circumstances</p>
+            <p>• <strong>Access</strong> your personal data, request a copy of what we hold</p>
+            <p>• <strong>Correct</strong> inaccurate data, update your profile or ask us to fix errors</p>
+            <p>• <strong>Delete</strong> your data, request we erase your account and all associated data</p>
+            <p>• <strong>Export</strong> your data, receive your data in a portable format</p>
+            <p>• <strong>Object</strong> to processing, in certain circumstances</p>
             <p>To exercise any of these rights, email <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:text-coral-600">support@myunioffer.com</a>. We will respond within 30 days.</p>
           </section>
 
           <section>
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">8. Cookies</h2>
-            <p>We use essential cookies only — for authentication (keeping you logged in) and basic functionality. We do not use advertising or tracking cookies.</p>
+            <p>We use essential cookies only, for authentication (keeping you logged in) and basic functionality. We do not use advertising or tracking cookies.</p>
           </section>
 
           <section>

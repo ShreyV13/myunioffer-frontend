@@ -608,7 +608,7 @@ export default function Chat() {
                   {(mode === 'ps' ? [
                     { text: "Help me start my personal statement", label: "Start my PS" },
                     { text: "Help me figure out what experiences to include in my personal statement", label: "Brainstorm experiences" },
-                    { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
+                    { text: "I've got a draft, can you help me improve it?", label: "Review my draft" },
                     { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
                     { text: "What supercurriculars should I do for my subject?", label: "Supercurriculars" },
                     { text: "What books, podcasts or courses should I explore for my subject?", label: "Reading & courses" },
@@ -717,7 +717,7 @@ export default function Chat() {
             </div>
             {!isUnlimited && usage.used >= usage.limit && (
               <div className="text-center mt-2">
-                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached — upgrade for more →</Link>
+                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached, upgrade for more →</Link>
               </div>
             )}
           </form>

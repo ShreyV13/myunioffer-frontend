@@ -36,7 +36,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">2. What the AI does and doesn't do</h2>
-            <p>Our AI is a <strong>coaching tool</strong> — it helps you think through your application, asks questions to draw out your experiences, and gives feedback on your writing.</p>
+            <p>Our AI is a <strong>coaching tool</strong>, it helps you think through your application, asks questions to draw out your experiences, and gives feedback on your writing.</p>
             <p>The AI does <strong>not</strong>:</p>
             <p>• Write your personal statement for you</p>
             <p>• Guarantee admission to any university</p>
@@ -69,7 +69,7 @@ export default function Terms() {
 
           <section>
             <h2 className="text-lg font-display font-bold text-gray-900 mb-2">6. Your content</h2>
-            <p>You retain ownership of everything you write — your personal statement drafts, interview answers, and all other content you share through the service.</p>
+            <p>You retain ownership of everything you write, your personal statement drafts, interview answers, and all other content you share through the service.</p>
             <p>By using the service, you grant us a limited licence to process your content through our AI system solely for the purpose of providing coaching responses. We will not publish, share, or sell your content.</p>
             <p>We do not use your content to train AI models.</p>
           </section>

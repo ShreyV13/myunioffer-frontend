@@ -27,14 +27,14 @@ export default function About() {
       confirmed: true
     },
     { 
-      name: "Suhas Parsaboina", 
-      uni: "KCL", 
+      name: "Recruiting", 
+      uni: "Top UK University", 
       course: "Medicine",
       role: "Medicine Lead",
       subjects: "Medicine, Dentistry, Veterinary, Nursing, Biomedical Sciences",
-      bio: "Studying Medicine at King's College London. Went through one of the most competitive application processes in the UK, UCAT, personal statement scrutiny, and MMI interviews. Knows exactly what medical school admissions tutors look for and what trips applicants up.",
-      contribution: "Leads the Medicine AI agent, training it with real MMI questions, personal statement structures, and the specific qualities medical schools look for. Ensures the AI understands work experience reflection, ethical scenarios, and motivation questions.",
-      confirmed: true
+      bio: "We're looking for a medical student from a UK university who recently went through the competitive application process. Someone who knows exactly what medical school admissions tutors look for, and what trips applicants up.",
+      contribution: "Will train the Medicine AI agent with real MMI questions, personal statement structures, and the specific qualities medical schools look for.",
+      confirmed: false
     },
     { 
       name: "Adyan Shahid", 
@@ -54,16 +54,6 @@ export default function About() {
       subjects: "Chemical Engineering, Engineering, Chemistry, Physics, Natural Sciences",
       bio: "Studying Chemical Engineering at Imperial College London, one of the top engineering schools in the world. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
       contribution: "Leads the Engineering section of the STEM agent, training it on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
-      confirmed: true
-    },
-    { 
-      name: "Pavan Kovuri", 
-      uni: "Warwick", 
-      course: "Economics",
-      role: "Economics Lead",
-      subjects: "Economics, Finance, Business, Accounting, Management",
-      bio: "Studying Economics at the University of Warwick, known for its world-class Economics department. Successfully navigated the competitive admissions process and understands what makes an Economics application stand out from the rest.",
-      contribution: "Leads the Economics section of the AI agent, training it on economics-focused interview preparation, quantitative personal statement approaches, and how to demonstrate analytical and mathematical ability.",
       confirmed: true
     },
     { 
@@ -110,9 +100,8 @@ export default function About() {
             We got in. Now we're helping you get in.
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-We remember the sleepless nights and the constant "is this good enough?" anxiety. After countless rewrites, we secured offers from the UK’s top universities. But we realised the process shouldn't be that hard.
-
-While we had teachers who coached us through what admissions tutors actually look for, most students don’t. We’ve embedded every insight and strategy we learned into this AI, giving you a 24/7 mentor to help you navigate the process with confidence.</p>
+            We remember the sleepless nights rewriting personal statements, the anxiety before interviews, the constant "is this even good enough?" We got lucky, we had amazing teachers who spent hours helping us learn what admissions tutors actually want. But most students don't have that. So we built the mentor we wished we'd had, and embedded everything we learned into this AI.
+          </p>
         </motion.div>
 
         {/* Why trust us pillars */}

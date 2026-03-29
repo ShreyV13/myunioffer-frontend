@@ -468,9 +468,9 @@ export default function Chat() {
                 </p>
                 <div className="grid grid-cols-2 gap-2.5 max-w-lg mx-auto">
                   {(mode === 'ps' ? [
-                    { text: "I'm applying for medicine — help me start my PS", label: "Start my PS" },
+                    { text: "I'm applying for medicine, help me start my PS", label: "Start my PS" },
                     { text: "Help me figure out what experiences to include", label: "Brainstorm experiences" },
-                    { text: "I've got a draft — can you help me improve it?", label: "Review my draft" },
+                    { text: "I've got a draft, can you help me improve it?", label: "Review my draft" },
                     { text: "What do admissions tutors actually want to see?", label: "What makes a great PS" },
                   ] : [
                     { text: "Give me a real interview question for my subject", label: "Practise a question" },
@@ -576,7 +576,7 @@ export default function Chat() {
             </div>
             {usage.limit !== -1 && usage.used >= usage.limit && (
               <div className="text-center mt-2">
-                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached — upgrade for more →</Link>
+                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached, upgrade for more →</Link>
               </div>
             )}
           </form>
