@@ -38,8 +38,8 @@ export default function Pricing() {
       ],
       notIncluded: [
         'Advanced coaching',
-        '1-on-1 sessions',
-        'Priority support'
+        'Priority support',
+        'Detailed responses'
       ],
       color: 'gray',
       popular: false
@@ -99,7 +99,7 @@ export default function Pricing() {
         'PS + Interview coaching',
         'Deeper, more detailed responses',
         'Priority support',
-        '1 free session after 3 months'
+        'Longest daily sessions'
       ],
       notIncluded: [],
       color: 'amber',
@@ -313,7 +313,7 @@ export default function Pricing() {
                 </div>
               </div>
               <div className="text-center flex-shrink-0">
-                <div className="text-4xl font-display font-bold text-coral-500">£27.99</div>
+                <div className="text-4xl font-display font-bold text-coral-500">£29.99</div>
                 <div className="text-gray-500 text-sm mb-3">per session</div>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuFh9xiG17oow0iPtCkNAf2w8mzRIp0XsZEqjot-GoOpGnFg/viewform" target="_blank" rel="noopener noreferrer" className="btn-primary text-sm px-6 py-2.5">
                   Book a Session

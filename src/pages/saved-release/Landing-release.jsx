@@ -181,9 +181,9 @@ export default function Landing() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="text-coral-500 font-display font-bold text-sm uppercase tracking-wider mb-4">The reality</div>
-              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Your teacher checks your PS once. That's not coaching.</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">They have 200 other students. They'll fix your grammar and say "good effort." You need someone who says "this paragraph doesn't show what you think it shows. Try again."</p>
+              <div className="text-coral-500 font-display font-bold text-sm uppercase tracking-wider mb-4">The gap</div>
+              <h3 className="text-lg font-display font-bold text-gray-900 mb-2">Generic advice won't get you into a competitive course.</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">"Show passion." "Be yourself." "Start early." You've heard it all. None of it tells you what a Medicine admissions tutor actually wants to read, or how a Cambridge interviewer decides who gets an offer. You need subject-specific coaching, not motivational posters.</p>
             </motion.div>
           </div>
         </div>
