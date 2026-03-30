@@ -415,7 +415,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.25 }}
           >
-            AI coaching for personal statements and interviews. For any subject, any university.
+            AI that coaches you using your own experiences, your own voice, and what your specific subject actually demands.
           </motion.p>
 
           <motion.div 
