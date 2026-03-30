@@ -146,8 +146,6 @@ export default function About() {
       course: "PPE",
       role: "Founder & Humanities Lead",
       photo: "/team-shrey.jpg",
-      photoScale: 1.25,
-      photoPos: "25% 25%",
       subjects: "PPE, Politics, International Relations, History, Law, Philosophy & Humanities",
       bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Humanities specialist coaching, training the AI with real application insights from the LSE admissions process.",
       contribution: "Built the entire AI coaching system from scratch. Curated the Humanities interview questions and personal statement database. Covers all humanities and social science applications.",
@@ -158,8 +156,6 @@ export default function About() {
       uni: "Warwick", 
       course: "Economics",
       role: "Economics & Business Lead",
-      photo: "/team-pavan.jpg",
-      photoPos: "0 0%",
       subjects: "Economics, Business, Finance, Accounting, Management",
       bio: "Studying Economics at the University of Warwick. Went through the application process for one of the most competitive economics programmes in the country. Understands what economics departments want to see in personal statements and interviews.",
       contribution: "Leads the Economics and Business coaching, training the AI on economics-specific interview questions, quantitative reasoning, and how to demonstrate genuine analytical thinking in personal statements.",
@@ -170,25 +166,9 @@ export default function About() {
       uni: "KCL", 
       course: "Medicine",
       role: "Medicine Lead",
-      photo: "/team-suhas.jpg",
-      photoScale: 5.3,
-      photoPos: "52% 52%",
       subjects: "Medicine, Dentistry, Veterinary, Nursing, Biomedical Sciences",
       bio: "Studying Medicine at King's College London. Successfully navigated one of the most competitive application processes in the country, including MMIs, UCAT, and the medical school personal statement. Knows exactly what medical schools look for and what trips applicants up.",
       contribution: "Leads the Medicine coaching, training the AI with real MMI questions, medical school personal statement structures, and the specific qualities medical schools look for in applicants.",
-      color: "#f07a62",
-    },
-    { 
-      name: "Girish Radhakrishnan", 
-      uni: "Imperial", 
-      course: "Chemical Engineering",
-      role: "Engineering & Sciences Lead",
-      photo: "/team-girish.jpg",
-      photoScale: 2,
-      photoPos: "center 10%",
-      subjects: "Chemical Engineering, Engineering, Chemistry, Physics, Natural Sciences",
-      bio: "Studying Chemical Engineering at Imperial College London. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
-      contribution: "Leads the Engineering coaching, training the AI on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
       color: "#f07a62",
     },
     { 
@@ -199,6 +179,16 @@ export default function About() {
       subjects: "Computer Science, Mathematics, Data Science, Statistics",
       bio: "Reading Computer Science at the University of Cambridge. Went through one of the most rigorous admissions processes in the country, including the Cambridge interview system. Brings deep understanding of how universities select for analytical thinking and problem-solving.",
       contribution: "Leads the CS and Maths coaching, training the AI on Cambridge-style interview questions, logical reasoning approaches, and how to demonstrate genuine intellectual curiosity in personal statements for quantitative subjects.",
+      color: "#f07a62",
+    },
+    { 
+      name: "Girish Radhakrishnan", 
+      uni: "Imperial", 
+      course: "Chemical Engineering",
+      role: "Engineering & Sciences Lead",
+      subjects: "Chemical Engineering, Engineering, Chemistry, Physics, Natural Sciences",
+      bio: "Studying Chemical Engineering at Imperial College London. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
+      contribution: "Leads the Engineering coaching, training the AI on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
       color: "#f07a62",
     },
   ];
@@ -370,6 +360,9 @@ export default function About() {
                     transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     onClick={() => setExpandedMember(isExpanded ? null : i)}
                   >
+                    {/* Colored top accent line */}
+                    <div className="h-1" style={{ background: member.color }} />
+
                     {/* Always visible header */}
                     <div className="p-6 flex items-center gap-5">
                       <motion.div 
@@ -378,9 +371,7 @@ export default function About() {
                         transition={{ duration: 0.2 }}
                       >
                         {member.photo ? (
-                          <div className="w-16 h-16 rounded-xl overflow-hidden border-2 border-coral-200">
-                          <img src={member.photo} alt={member.name} className="w-full h-full object-cover" style={{transform: `scale(${member.photoScale || 1})`, transformOrigin: member.photoPos || 'top center', objectPosition: member.photoPos || 'top center'}} />
-                        </div>
+                          <img src={member.photo} alt={member.name} className="w-16 h-16 rounded-xl object-cover border-2 border-coral-200" />
                         ) : (
                           <div className="w-16 h-16 rounded-xl flex items-center justify-center border-2" style={{ borderColor: member.color, background: member.color + '10' }}>
                             <User className="w-7 h-7" style={{ color: member.color }} />
