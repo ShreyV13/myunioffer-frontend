@@ -44,7 +44,7 @@ export default function About() {
 
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
@@ -70,7 +70,7 @@ export default function About() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -238,7 +238,7 @@ export default function About() {
 
           <motion.div className="max-w-5xl mx-auto text-center relative z-10" style={{ y: heroY }}>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
@@ -247,9 +247,9 @@ export default function About() {
               </h1>
               <motion.h1 
                 className="text-3xl md:text-5xl font-display font-bold gradient-text mb-6 leading-tight pb-2"
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
               >
                 you get in.
               </motion.h1>
@@ -262,9 +262,9 @@ export default function About() {
             />
             <motion.p 
               className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
               We remember the sleepless nights rewriting personal statements, the anxiety before interviews, the constant "is this even good enough?" Most students don't have access to the guidance that makes the difference. So we built it.
             </motion.p>
@@ -284,7 +284,7 @@ export default function About() {
                 <motion.div 
                   key={i} 
                   className="text-center"
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 8 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ delay: i * 0.1, duration: 0.5 }}
@@ -302,7 +302,7 @@ export default function About() {
         {/* Our story - interactive tabs */}
         <section className="py-20 px-6 bg-white">
           <div className="max-w-4xl mx-auto">
-            <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+            <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2">Our story</h2>
               <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
             </motion.div>
@@ -323,7 +323,7 @@ export default function About() {
 
           <div className="max-w-4xl mx-auto relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               className="text-center mb-4"
@@ -336,7 +336,7 @@ export default function About() {
             {/* University visual bar */}
             <motion.div 
               className="flex flex-wrap justify-center gap-3 mb-12"
-              initial={{ opacity: 0, y: 15 }}
+              initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6 }}
@@ -364,10 +364,10 @@ export default function About() {
                   <motion.div
                     key={i}
                     className="overflow-hidden rounded-2xl bg-white border-2 border-gray-100 hover:border-coral-100 transition-all duration-300 cursor-pointer shadow-sm hover:shadow-md"
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                     onClick={() => setExpandedMember(isExpanded ? null : i)}
                   >
                     {/* Always visible header */}
@@ -470,7 +470,7 @@ export default function About() {
         {/* CTA */}
         <section className="px-6 pb-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             className="max-w-5xl mx-auto gradient-primary rounded-3xl p-12 text-center relative overflow-hidden"

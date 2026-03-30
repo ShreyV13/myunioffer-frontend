@@ -37,7 +37,7 @@ export default function Landing() {
   function TestimonialRotator() {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.6 }}
@@ -181,7 +181,7 @@ export default function Landing() {
 
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -358,15 +358,13 @@ export default function Landing() {
       <section className="pt-20 pb-24 px-6 hero-pattern relative overflow-hidden">
         {/* Floating gradient blobs */}
         <motion.div 
-          className="absolute -top-40 -right-40 w-96 h-96 bg-coral-200 rounded-full opacity-[0.08] blur-3xl pointer-events-none"
-          style={{ x: heroBlobX, y: heroBlobY }}
+          className="absolute -top-40 -right-40 w-96 h-96 bg-coral-200 rounded-full opacity-[0.08] blur-3xl pointer-events-none hidden md:block"
         />
         <motion.div 
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-coral-300 rounded-full opacity-[0.06] blur-3xl pointer-events-none"
-          style={{ x: useTransform(scrollYProgress, [0, 0.5], [0, -60]), y: useTransform(scrollYProgress, [0, 0.5], [0, 40]) }}
+          className="absolute -bottom-40 -left-40 w-80 h-80 bg-coral-300 rounded-full opacity-[0.06] blur-3xl pointer-events-none hidden md:block"
         />
-        <motion.div className="max-w-5xl mx-auto text-center relative z-10" style={{ y: heroY }}>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+        <div className="max-w-5xl mx-auto text-center relative z-10">
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-coral-50 border border-coral-100 rounded-full text-sm font-medium text-coral-600 mb-8">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
               120+ students have already signed up
@@ -375,17 +373,17 @@ export default function Landing() {
 
           <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 text-gray-900">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.9, delay: 0.1 }}
             >
               Get into your
             </motion.div>
             <motion.div
               className="mt-1"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.9, delay: 0.3 }}
             >
               <span className="gradient-text" style={{ 
                 backgroundSize: '200% auto',
@@ -404,27 +402,27 @@ export default function Landing() {
 
           <motion.p 
             className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 leading-relaxed"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
             Your personal statement won't write itself. Other AI tools will write it for you. Admissions tutors will notice. We coach you to write it yourself.
           </motion.p>
 
           <motion.p 
             className="text-base text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
+            transition={{ duration: 0.8, delay: 0.25 }}
           >
             AI coaching for personal statements and interviews. For any subject, any university.
           </motion.p>
 
           <motion.div 
             className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
           >
             <Link to="/signup" className="btn-primary text-lg px-8 py-4">
               Start Free <ArrowRight className="w-5 h-5" />
@@ -438,13 +436,13 @@ export default function Landing() {
             className="text-gray-400 text-sm mt-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
             Free to try. No credit card required.
           </motion.p>
 
 
-        </motion.div>
+        </div>
       </section>
 
       {/* ==================== PROBLEM ==================== */}
@@ -457,7 +455,7 @@ export default function Landing() {
           transition={{ duration: 2, ease: "easeOut" }}
         />
         <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">The application process is broken.</h2>
             <motion.div 
               className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-6"
@@ -490,10 +488,10 @@ export default function Landing() {
               <motion.div
                 key={i}
                 className="group cursor-default bg-white rounded-2xl p-7 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 6 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
               >
                 {/* Top accent bar */}
                 <motion.div 
@@ -501,7 +499,7 @@ export default function Landing() {
                   initial={{ width: 0 }}
                   whileInView={{ width: '100%' }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.8, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
                 />
                 <div className="text-coral-500 font-display font-bold text-xs uppercase tracking-wider mb-3">{item.label}</div>
                 <p className="text-gray-900 font-display font-semibold leading-snug mb-3">{item.text}</p>
@@ -522,8 +520,8 @@ export default function Landing() {
           {[...Array(3)].map((_, rep) => (
             <div key={rep} className="flex gap-5">
               {['Medicine', 'Economics', 'Computer Science', 'Law', 'Engineering', 'PPE', 'Maths', 'Physics', 'History', 'Psychology', 'Dentistry', 'Architecture', 'English', 'Chemistry', 'Business', 'Biology', 'Veterinary', 'Nursing', 'Politics', 'Philosophy', 'Geography', 'Sociology', 'Modern Languages', 'Music', 'Accounting', 'Data Science'].map((subject, i) => (
-                <span key={i} className="text-xs font-medium text-gray-300 flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-coral-300" />
+                <span key={i} className="text-xs font-medium text-gray-500 flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-coral-400" />
                   {subject}
                 </span>
               ))}
@@ -536,7 +534,7 @@ export default function Landing() {
       {/* ==================== LIVE DEMO ==================== */}
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2">See it in action</h2>
             <motion.div className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-4" initial={{ width: 0 }} whileInView={{ width: 64 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
             <p className="text-gray-500 text-sm">Real conversations with the AI across different subjects. Not scripts.</p>
@@ -547,29 +545,29 @@ export default function Landing() {
           {/* Before/After PS snippet */}
           <motion.div 
             className="mt-14 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
             <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">What coaching actually looks like</p>
             <div className="grid md:grid-cols-2 gap-4">
               <motion.div 
                 className="bg-white rounded-2xl p-6 border-2 border-gray-200 relative"
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 6 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="absolute -top-3 left-4 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">Before</div>
                 <p className="text-gray-500 text-sm leading-relaxed italic mt-2">"I have always been passionate about medicine since a young age. Seeing my grandmother suffer in hospital made me realise I wanted to help people and make a difference in the world."</p>
               </motion.div>
               <motion.div 
                 className="bg-white rounded-2xl p-6 border-2 border-coral-200 relative"
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 6 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               >
                 <div className="absolute -top-3 left-4 gradient-primary text-white text-xs font-bold px-3 py-1 rounded-full">After coaching</div>
                 <p className="text-gray-900 text-sm leading-relaxed mt-2">"When my grandmother was in hospital, the geriatrician knelt beside her bed and switched to simpler words because her English was fading. The junior doctor behind her was scribbling notes. I remember thinking those two people were doing completely different jobs in the same room, and I wanted to understand why."</p>
@@ -585,7 +583,7 @@ export default function Landing() {
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f07a62 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         <div className="relative z-10">
         <div className="max-w-4xl mx-auto">
-          <motion.div className="text-center mb-20" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-20" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Like having a mentor who knows your subject</h2>
             <motion.div 
               className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-6"
@@ -621,15 +619,15 @@ export default function Landing() {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.6, delay: 0.4 + i * 0.3 }}
+                  transition={{ duration: 0.8, delay: 0.4 + i * 0.3 }}
                 >
                   {/* Circle on the line */}
                   <motion.div 
                     className="w-12 h-12 md:w-14 md:h-14 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
                     initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.7, delay: 0.2 + i * 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.9, delay: 0.2 + i * 0.3, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <span className="text-white font-display font-bold text-xl">{step.num}</span>
                   </motion.div>
@@ -637,7 +635,7 @@ export default function Landing() {
                   {/* Content card */}
                   <motion.div 
                     className="flex-1 bg-gray-50 rounded-2xl p-5 md:p-7 hover:shadow-md transition-all duration-300"
-                    initial={{ opacity: 0, y: 15 }}
+                    initial={{ opacity: 0, y: 8 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 1, delay: 0.35 + i * 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -653,7 +651,7 @@ export default function Landing() {
           {/* Two modes */}
           <motion.div 
             className="mt-16 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
           >
@@ -690,7 +688,7 @@ export default function Landing() {
           transition={{ duration: 2, ease: "easeOut" }}
         />
         <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Why students choose us</h2>
             <motion.div 
               className="h-0.5 w-16 gradient-primary rounded-full mx-auto mt-2"
@@ -704,7 +702,7 @@ export default function Landing() {
           {/* Feature 1 - full width with accent */}
           <motion.div 
             className="bg-white rounded-2xl p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden mb-6"
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -719,7 +717,7 @@ export default function Landing() {
               <motion.div 
                 className="flex-shrink-0 hidden md:block"
                 initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ delay: 0.3 }}
               >
@@ -738,7 +736,7 @@ export default function Landing() {
             <motion.div 
               className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
               initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -753,7 +751,7 @@ export default function Landing() {
             <motion.div 
               className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden"
               initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -769,7 +767,7 @@ export default function Landing() {
           {/* Stats - animated counters feel */}
           <motion.div 
             className="bg-white rounded-2xl border border-gray-100 overflow-hidden"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
           >
@@ -784,7 +782,7 @@ export default function Landing() {
                 <motion.div 
                   key={i}
                   className="text-center"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ delay: 0.1 + i * 0.15 }}
@@ -804,7 +802,7 @@ export default function Landing() {
             {/* ==================== TESTIMONIALS ==================== */}
       <section id="testimonials" className="py-16 md:py-24 px-4 md:px-6 bg-white">
         <div className="max-w-3xl mx-auto">
-          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">What students are saying</h2>
             <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-4" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
             <p className="text-gray-600 max-w-lg mx-auto">Real feedback from students using myunioffer ai. Unedited.</p>
@@ -819,7 +817,7 @@ export default function Landing() {
       <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
           >
@@ -843,7 +841,7 @@ export default function Landing() {
       {/* ==================== FAQ ==================== */}
       <section id="faq" className="py-16 md:py-24 px-4 md:px-6 bg-white">
         <div className="max-w-3xl mx-auto">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900">Frequently asked questions</h2>
           </motion.div>
 
@@ -852,10 +850,10 @@ export default function Landing() {
               <motion.div 
                 key={i}
                 className="card overflow-hidden"
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 8 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
                 <button
                   className="w-full p-6 flex items-center justify-between text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
@@ -886,13 +884,13 @@ export default function Landing() {
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
         <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-white/5 rounded-full blur-xl" />
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          <motion.h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             Your application is too important to wing it.
           </motion.h2>
-          <motion.p className="text-lg text-white/90 mb-8" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.1 }}>
+          <motion.p className="text-lg text-white/90 mb-8" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.1 }}>
             Start coaching your personal statement and interviews today. It's free.
           </motion.p>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.2 }}>
+          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.2 }}>
             <Link to="/signup" className="inline-flex items-center gap-2 bg-white text-coral-600 px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all">
               Get Started Free <ArrowRight className="w-5 h-5" />
             </Link>

@@ -208,7 +208,7 @@ export default function Pricing() {
         />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-4 relative z-10"
           style={{ y: heroY }}
@@ -230,7 +230,7 @@ export default function Pricing() {
         {/* Stats bar */}
         <motion.div 
           className="flex flex-wrap justify-center gap-10 py-8 mb-8"
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
@@ -259,9 +259,9 @@ export default function Pricing() {
             return (
               <motion.div
                 key={plan.id}
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ delay: 0.2 + i * 0.12, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className={`card p-7 relative hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${
                   plan.popular 
                     ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
@@ -344,10 +344,10 @@ export default function Pricing() {
 
         {/* 1-on-1 Sessions Section */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">1-on-1 Sessions</h2>
@@ -390,10 +390,10 @@ export default function Pricing() {
 
         {/* Value Anchoring */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 max-w-2xl mx-auto"
         >
           <div className="relative overflow-hidden rounded-2xl border-2 border-coral-100">
@@ -403,7 +403,7 @@ export default function Pricing() {
               <motion.div 
                 className="text-5xl md:text-6xl font-display font-bold text-gray-200 line-through mb-2"
                 initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5 }}
               >
@@ -415,7 +415,7 @@ export default function Pricing() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
               >
                 With myunioffer.ai: <span className="gradient-text text-2xl">from £8.99/month</span>
               </motion.div>
@@ -425,10 +425,10 @@ export default function Pricing() {
 
         {/* Comparison to alternatives */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 max-w-3xl mx-auto"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">How we compare</h2>
@@ -481,7 +481,7 @@ export default function Pricing() {
 
         {/* Guarantees */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
