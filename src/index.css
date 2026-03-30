@@ -1,3 +1,10 @@
+/* Force light mode - prevent Android dark mode inversion */
+:root { color-scheme: light only; }
+html, body { background-color: #ffffff; color: #111827; }
+@media (prefers-color-scheme: dark) {
+  html, body { background-color: #ffffff; color: #111827; }
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

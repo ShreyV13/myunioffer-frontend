@@ -187,7 +187,7 @@ export default function Landing() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Subject tabs */}
-        <div className="flex items-center gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
+        <div className="flex items-center gap-1.5 md:gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide">
           {demoChats.map((c, i) => (
             <button
               key={i}
@@ -375,7 +375,7 @@ export default function Landing() {
 
           <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 text-gray-900">
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
@@ -383,7 +383,7 @@ export default function Landing() {
             </motion.div>
             <motion.div
               className="mt-1"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
@@ -404,7 +404,7 @@ export default function Landing() {
 
           <motion.p 
             className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
@@ -413,7 +413,7 @@ export default function Landing() {
 
           <motion.p 
             className="text-base text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
           >
@@ -422,7 +422,7 @@ export default function Landing() {
 
           <motion.div 
             className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
@@ -448,7 +448,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== PROBLEM ==================== */}
-      <section className="py-24 px-6 bg-gray-50 relative overflow-hidden">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-gray-50 relative overflow-hidden">
         <motion.div 
           className="absolute -top-32 right-0 w-72 h-72 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
           initial={{ x: 50 }}
@@ -490,7 +490,7 @@ export default function Landing() {
               <motion.div
                 key={i}
                 className="group cursor-default bg-white rounded-2xl p-7 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
@@ -505,7 +505,7 @@ export default function Landing() {
                 />
                 <div className="text-coral-500 font-display font-bold text-xs uppercase tracking-wider mb-3">{item.label}</div>
                 <p className="text-gray-900 font-display font-semibold leading-snug mb-3">{item.text}</p>
-                <p className="text-coral-500 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.response}</p>
+                <p className="text-coral-500 text-sm font-medium md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">{item.response}</p>
               </motion.div>
             ))}
           </div>
@@ -581,7 +581,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== HOW IT WORKS ==================== */}
-      <section id="how-it-works" className="py-24 px-6 bg-white overflow-hidden relative">
+      <section id="how-it-works" className="py-16 md:py-24 px-4 md:px-6 bg-white overflow-hidden relative">
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f07a62 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         <div className="relative z-10">
         <div className="max-w-4xl mx-auto">
@@ -601,7 +601,7 @@ export default function Landing() {
           <div className="relative max-w-3xl mx-auto">
             {/* Vertical line on the left */}
             <motion.div 
-              className="absolute left-7 top-0 hidden md:block"
+              className="absolute left-[27px] md:left-7 top-0"
               style={{width: '2px', background: 'linear-gradient(to bottom, #f9a08c, #f07a62, #e74d32)', transformOrigin: 'top'}}
               initial={{ height: 0 }}
               whileInView={{ height: '100%' }}
@@ -617,7 +617,7 @@ export default function Landing() {
               ].map((step, i) => (
                 <motion.div 
                   key={i}
-                  className="flex gap-8 items-start relative"
+                  className="flex gap-4 md:gap-8 items-start relative"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
@@ -625,7 +625,7 @@ export default function Landing() {
                 >
                   {/* Circle on the line */}
                   <motion.div 
-                    className="w-14 h-14 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
+                    className="w-12 h-12 md:w-14 md:h-14 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
                     initial={{ opacity: 0, scale: 0.5 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: "-80px" }}
@@ -636,7 +636,7 @@ export default function Landing() {
 
                   {/* Content card */}
                   <motion.div 
-                    className="flex-1 bg-gray-50 rounded-2xl p-7 hover:shadow-md transition-all duration-300"
+                    className="flex-1 bg-gray-50 rounded-2xl p-5 md:p-7 hover:shadow-md transition-all duration-300"
                     initial={{ opacity: 0, y: 15 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
@@ -681,7 +681,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== WHY US ==================== */}
-      <section id="why-us" className="py-24 px-6 bg-gray-50 overflow-hidden relative">
+      <section id="why-us" className="py-16 md:py-24 px-4 md:px-6 bg-gray-50 overflow-hidden relative">
         <motion.div 
           className="absolute -bottom-32 left-0 w-80 h-80 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
           initial={{ x: -50 }}
@@ -704,7 +704,7 @@ export default function Landing() {
           {/* Feature 1 - full width with accent */}
           <motion.div 
             className="bg-white rounded-2xl p-8 md:p-10 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 relative overflow-hidden mb-6"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -802,7 +802,7 @@ export default function Landing() {
 
       
             {/* ==================== TESTIMONIALS ==================== */}
-      <section id="testimonials" className="py-24 px-6 bg-white">
+      <section id="testimonials" className="py-16 md:py-24 px-4 md:px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">What students are saying</h2>
@@ -841,7 +841,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== FAQ ==================== */}
-      <section id="faq" className="py-24 px-6 bg-white">
+      <section id="faq" className="py-16 md:py-24 px-4 md:px-6 bg-white">
         <div className="max-w-3xl mx-auto">
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900">Frequently asked questions</h2>
@@ -880,7 +880,7 @@ export default function Landing() {
       </section>
 
       {/* ==================== FINAL CTA ==================== */}
-      <section className="py-24 px-6 gradient-primary relative overflow-hidden">
+      <section className="py-16 md:py-24 px-4 md:px-6 gradient-primary relative overflow-hidden">
         {/* Floating shapes */}
         <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
         <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
