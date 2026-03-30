@@ -261,7 +261,7 @@ export default function Pricing() {
                 key={plan.id}
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + i * 0.12, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ delay: 0.2 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className={`card p-7 relative hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${
                   plan.popular 
                     ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
@@ -347,7 +347,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">1-on-1 Sessions</h2>
@@ -393,7 +393,7 @@ export default function Pricing() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 max-w-2xl mx-auto"
         >
           <div className="relative overflow-hidden rounded-2xl border-2 border-coral-100">
@@ -428,7 +428,7 @@ export default function Pricing() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16 max-w-3xl mx-auto"
         >
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">How we compare</h2>

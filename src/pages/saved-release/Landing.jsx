@@ -399,7 +399,7 @@ export default function Landing() {
             className="h-1 gradient-primary rounded-full mx-auto mt-2 mb-4"
             initial={{ width: 0 }}
             animate={{ width: 120 }}
-            transition={{ duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           />
 
           <motion.p 
@@ -453,7 +453,7 @@ export default function Landing() {
           className="absolute -top-32 right-0 w-72 h-72 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
           initial={{ x: 50 }}
           whileInView={{ x: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 2, ease: "easeOut" }}
         />
         <div className="max-w-5xl mx-auto relative z-10">
@@ -556,8 +556,8 @@ export default function Landing() {
             <div className="grid md:grid-cols-2 gap-4">
               <motion.div 
                 className="bg-white rounded-2xl p-6 border-2 border-gray-200 relative"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               >
@@ -566,8 +566,8 @@ export default function Landing() {
               </motion.div>
               <motion.div 
                 className="bg-white rounded-2xl p-6 border-2 border-coral-200 relative"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               >
@@ -621,7 +621,7 @@ export default function Landing() {
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.3, delay: 0.4 + i * 0.3 }}
+                  transition={{ duration: 0.6, delay: 0.4 + i * 0.3 }}
                 >
                   {/* Circle on the line */}
                   <motion.div 
@@ -686,7 +686,7 @@ export default function Landing() {
           className="absolute -bottom-32 left-0 w-80 h-80 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
           initial={{ x: -50 }}
           whileInView={{ x: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 2, ease: "easeOut" }}
         />
         <div className="max-w-5xl mx-auto relative z-10">
@@ -852,10 +852,10 @@ export default function Landing() {
               <motion.div 
                 key={i}
                 className="card overflow-hidden"
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               >
                 <button
                   className="w-full p-6 flex items-center justify-between text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors"
