@@ -179,7 +179,7 @@ export default function Pricing() {
       <header className="glass border-b border-gray-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link 
-            to={currentUser ? "/chat" : "/"} 
+            to="/" 
             className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
           >
             <ArrowLeft className="w-5 h-5" />
