@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { 
   GraduationCap, 
@@ -22,6 +22,31 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.o
 export default function Pricing() {
   const { currentUser, userProfile } = useAuth();
   const [loading, setLoading] = useState(null);
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -30]);
+
+  function Counter({ target, suffix = "" }) {
+    const ref = useRef(null);
+    const [count, setCount] = useState(0);
+    const [inView, setInView] = useState(false);
+    useEffect(() => {
+      const observer = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold: 0.5 });
+      if (ref.current) observer.observe(ref.current);
+      return () => observer.disconnect();
+    }, []);
+    useEffect(() => {
+      if (!inView) return;
+      const num = parseInt(target.replace(/[^0-9]/g, ''));
+      let current = 0;
+      const timer = setInterval(() => {
+        current += num / 30;
+        if (current >= num) { setCount(num); clearInterval(timer); }
+        else setCount(Math.floor(current));
+      }, 40);
+      return () => clearInterval(timer);
+    }, [inView, target]);
+    return <span ref={ref}>{inView ? count + suffix : "0" + suffix}</span>;
+  }
 
   const plans = [
     {
@@ -172,18 +197,55 @@ export default function Pricing() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-12">
+      <main className="max-w-6xl mx-auto px-6 py-12 relative overflow-hidden">
+        <motion.div 
+          className="absolute -top-40 -right-40 w-80 h-80 bg-coral-200 rounded-full opacity-[0.06] blur-3xl pointer-events-none"
+          style={{ y: useTransform(scrollYProgress, [0, 0.3], [0, -50]) }}
+        />
+        <motion.div 
+          className="absolute top-60 -left-40 w-60 h-60 bg-coral-300 rounded-full opacity-[0.04] blur-3xl pointer-events-none"
+          style={{ y: useTransform(scrollYProgress, [0, 0.3], [0, 30]) }}
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
+          className="text-center mb-4 relative z-10"
+          style={{ y: heroY }}
         >
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">
-            Don't leave your application to chance
+          <h1 className="text-3xl md:text-5xl font-display font-bold text-gray-900 mb-4 leading-tight">
+            Don't leave your application<br /><span className="gradient-text">to chance.</span>
           </h1>
-          <p className="text-gray-600 max-w-xl mx-auto">
-            Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. The difference between an offer and a rejection is preparation, and that's exactly what we provide.
+          <motion.div 
+            className="h-0.5 gradient-primary rounded-full mx-auto mt-2 mb-6"
+            initial={{ width: 0 }}
+            animate={{ width: 80 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          />
+          <p className="text-gray-600 max-w-xl mx-auto text-lg">
+            Thousands of students with perfect grades get rejected every year because their personal statement didn't stand out or their interview fell flat. Preparation is the difference.
           </p>
+        </motion.div>
+
+        {/* Stats bar */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-10 py-8 mb-8"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          {[
+            { num: "120", suffix: "+", label: "students signed up" },
+            { num: "1000", suffix: "+", label: "resources" },
+            { num: "99", suffix: "%", label: "cheaper than tutoring" },
+          ].map((stat, i) => (
+            <div key={i} className="text-center">
+              <div className="text-2xl font-display font-bold text-coral-500">
+                <Counter target={stat.num} suffix={stat.suffix} />
+              </div>
+              <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
+            </div>
+          ))}
         </motion.div>
 
 
@@ -200,7 +262,7 @@ export default function Pricing() {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + i * 0.12, duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                className={`card p-7 relative ${
+                className={`card p-7 relative hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${
                   plan.popular 
                     ? 'border-2 border-coral-500 shadow-xl shadow-coral-500/10' 
                     : ''
@@ -284,11 +346,12 @@ export default function Pricing() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="mb-16"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">1-on-1 Sessions</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">1-on-1 Sessions</h2>
+          <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-8" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
           
           <div className="card p-8 max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-8">
@@ -329,16 +392,33 @@ export default function Pricing() {
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
           className="mb-16 max-w-2xl mx-auto"
         >
-          <div className="card p-8 text-center bg-coral-50 border-coral-100">
-            <p className="text-gray-600 text-sm mb-2">The same level of coaching would cost</p>
-            <div className="text-4xl font-display font-bold text-gray-300 line-through mb-1">£200+/month</div>
-            <p className="text-gray-600 text-sm mb-4">with a private admissions tutor</p>
-            <div className="text-lg font-display font-bold text-gray-900">
-              With myunioffer.ai: <span className="text-coral-500">from £8.99/month</span>
+          <div className="relative overflow-hidden rounded-2xl border-2 border-coral-100">
+            <div className="absolute inset-0 gradient-primary opacity-[0.04]" />
+            <div className="relative z-10 p-8 text-center">
+              <p className="text-gray-600 text-sm mb-3">The same level of coaching would cost</p>
+              <motion.div 
+                className="text-5xl md:text-6xl font-display font-bold text-gray-200 line-through mb-2"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5 }}
+              >
+                £200+/month
+              </motion.div>
+              <p className="text-gray-600 text-sm mb-5">with a private admissions tutor</p>
+              <motion.div 
+                className="text-xl font-display font-bold text-gray-900"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                With myunioffer.ai: <span className="gradient-text text-2xl">from £8.99/month</span>
+              </motion.div>
             </div>
           </div>
         </motion.div>
@@ -347,13 +427,14 @@ export default function Pricing() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
           className="mb-16 max-w-3xl mx-auto"
         >
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-8 text-center">How we compare</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 text-center">How we compare</h2>
+          <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-8" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
           <div className="card overflow-hidden">
-            <table className="w-full text-sm">
+            <table className="w-full text-sm" style={{borderCollapse: "separate", borderSpacing: 0}}>
               <thead>
                 <tr className="border-b border-gray-100">
                   <th className="text-left p-4 font-semibold text-gray-900"></th>
@@ -402,7 +483,7 @@ export default function Pricing() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
           className="max-w-2xl mx-auto mb-8"
         >
@@ -427,7 +508,7 @@ export default function Pricing() {
           transition={{ delay: 0.8 }}
           className="text-center"
         >
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-lg">
             Not ready to commit?{' '}
             <Link to={currentUser ? "/chat" : "/signup"} className="text-coral-600 font-semibold hover:text-coral-700">
               Continue with Free
