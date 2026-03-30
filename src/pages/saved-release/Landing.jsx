@@ -406,7 +406,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Your personal statement won't write itself. Other AI tools will write it for you. Admissions tutors will notice. We coach you to write it yourself.
+            The difference between an offer and a rejection? Preparation.
           </motion.p>
 
           <motion.p 
