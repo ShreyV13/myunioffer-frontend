@@ -124,7 +124,7 @@ function AppRoutes() {
       <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<AboutPage />} />
-              <Route path="/pricing" element={<PricingPageNew />} />
+              <Route path="/pricing" element={<React.Suspense fallback={<div>Loading...</div>}><PricingPageNew /></React.Suspense>} />
               <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       {/* Hidden routes - for existing/internal users only */}
