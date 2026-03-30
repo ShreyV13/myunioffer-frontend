@@ -408,7 +408,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Your personal statement won't write itself. And no AI is going to write it for you. But the right one can coach you through it.
+            Your personal statement won't write itself. Other AI tools will write it for you. Admissions tutors will notice. We coach you to write it yourself.
           </motion.p>
 
           <motion.p 
