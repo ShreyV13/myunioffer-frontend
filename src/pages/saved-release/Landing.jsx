@@ -472,7 +472,7 @@ export default function Landing() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               { 
-                label: "The ChatGPT problem", 
+                label: "The generic AI problem", 
                 text: "ChatGPT writes your PS. Admissions tutors read hundreds of AI-generated statements every cycle. They notice instantly.",
                 response: "We coach your thinking instead."
               },
