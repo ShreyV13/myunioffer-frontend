@@ -25,6 +25,48 @@ export default function Landing() {
   ];
 
   // Animated counter hook
+  const testimonials = [
+    { text: "Its great, it helped so much with figuring out the next steps like for what supercurriculars I should be doing next by building on what ive done so far", label: "Early user" },
+    { text: "And its also not just a yes-man like chatgpt, its critical of my plans", label: "Early user" },
+    { text: "i had no idea what supercurriculars to do but it gave me unique suggestions after I gave what i had already done. Like it based it off my interests", label: "Early user" },
+    { text: "I actually have a plan after using it even tho i had nothing figured out before", label: "Early user" },
+    { text: "The ai site responds within a few seconds, the quality of information that it responds with is helpful, if you ask the right questions the site guides you step by step", label: "Early user" },
+    { text: "the site is rlly good!!", label: "Early user" },
+  ];
+
+  function TestimonialRotator() {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.6 }}
+        className="overflow-hidden"
+      >
+        <motion.div
+          className="flex gap-6"
+          animate={{ x: [0, -1800] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(3)].map((_, rep) => (
+            <div key={rep} className="flex gap-6 flex-shrink-0">
+              {testimonials.map((t, i) => (
+                <div key={i} className="w-80 flex-shrink-0 bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                  <div className="text-coral-300 text-3xl font-display leading-none mb-3">"</div>
+                  <p className="text-gray-900 font-medium text-sm leading-relaxed mb-4">{t.text}</p>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-coral-400" />
+                    <span className="text-gray-400 text-xs font-medium">{t.label}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </motion.div>
+      </motion.div>
+    );
+  }
+
   function Counter({ target, suffix = "" }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true });
@@ -62,26 +104,26 @@ export default function Landing() {
     },
     {
       subject: "Economics",
-      mode: "Personal Statement",
+      mode: "Interview Prep",
       messages: [
-        { role: "user", text: "I want to study Economics at Warwick or LSE. I've read Freakonomics and I'm interested in behavioural economics." },
-        { role: "ai", text: "Every economics applicant mentions Freakonomics. That's fine as a starting point, but you need to go deeper. What specific idea from behavioural economics have you explored beyond that book? Have you read any actual papers or thought about a real-world problem through that lens?" },
-        { role: "user", text: "I read about the nudge theory and how the government uses it for pensions auto-enrolment." },
-        { role: "ai", text: "Better. Now here's what would make LSE pay attention: don't just describe what nudge theory is. Take a position. Do you think auto-enrolment is genuinely helping people, or is it paternalistic? What are the limits of nudging when people face genuine financial constraints? Show them you can think critically, not just summarise." },
-        { role: "user", text: "I think it works for people who can afford to save but just procrastinate. But for people on minimum wage, nudging them into a pension they can't afford feels like it's ignoring the real problem." },
-        { role: "ai", text: "That's a strong argument. You've just identified a distributional critique of behavioural policy that most undergrads don't reach until second year. Write that up. Lead with the tension between behavioural and structural explanations. That's the kind of thinking that gets you an offer." },
+        { role: "user", text: "I have an economics interview at Cambridge next week and I don't know what to expect, I'm really nervous" },
+        { role: "ai", text: "That's normal. Cambridge economics interviews are 20-30 minutes, a mix of conceptual questions, problem-solving, and your personal statement. They're not testing whether you know everything. They want to see how you think. Let's do a mock right now. Here's one: suppose the government introduces a new tax on carbon emissions. How might this affect inflation, employment, and consumer welfare? Think out loud." },
+        { role: "user", text: "so the tax would make energy more expensive for businesses so they'd pass that on to consumers through higher prices, so inflation goes up. and some businesses might not be able to afford the tax so they'd cut jobs. but it's supposed to be good for the environment so there's a trade-off between short term economic pain and long term benefits" },
+        { role: "ai", text: "Good start, you've got the core mechanism. But push deeper. Does this hit all households equally? Do lower-income families feel it differently? Could the tax create jobs elsewhere, like in renewables? And \"good for the environment\" is too vague for Cambridge. Frame it in economic terms. What kind of market failure are emissions?" },
+        { role: "user", text: "okay so the tax is regressive because poorer households spend more of their income on energy. and new jobs could come from renewable energy companies. and pollution is a negative externality so the tax internalises that cost, which makes the market more efficient" },
+        { role: "ai", text: "You've genuinely levelled up. The regressivity point is exactly the distributional analysis that impresses. The externality framing is the key insight: carbon imposes costs not reflected in prices, so too much gets produced. The tax moves toward the socially optimal level. Now an interviewer would press further: how do you set the right tax rate? What if other countries don't implement one? Is a tax even the best tool, or would cap-and-trade work better? That's where the real complexity sits." },
       ]
     },
     {
       subject: "Computer Science",
-      mode: "Interview Prep",
+      mode: "Personal Statement",
       messages: [
-        { role: "user", text: "I have a Cambridge interview for Computer Science next week. Can you help me practise?" },
-        { role: "ai", text: "Let's go. Cambridge CS interviews test how you think under pressure, not what you've memorised. Here's a question: you have a list of n integers. How would you find whether any two of them sum to a given target? Talk me through your thinking." },
-        { role: "user", text: "I'd use two nested loops to check every pair. That would be O(n squared)." },
-        { role: "ai", text: "That works but it's the brute force answer. They already know you can do that. They want to see you optimise. What data structure could you use to bring it down to O(n)? Think about what information you're recalculating unnecessarily in the nested loop." },
-        { role: "user", text: "A hash set? For each number, check if target minus that number is already in the set?" },
-        { role: "ai", text: "Exactly. Now the interviewer would push you further: what if the list is sorted? Can you do it without extra space? Think about two pointers. And here's the real Cambridge trick: they might then ask you to prove why the two-pointer approach is correct. Can you sketch that argument?" },
+        { role: "user", text: "I'm applying for Computer Science at Imperial and Edinburgh. I've done some coding projects but I'm not sure what to put in my personal statement, it all feels a bit basic" },
+        { role: "ai", text: "That's usually because you're underestimating what makes your work interesting. The projects matter less than why you did them and what they revealed about how you think. What have you actually built? Don't worry about whether it sounds impressive." },
+        { role: "user", text: "I made a chess game in python and a to-do list app, and I've been messing around with some machine learning stuff but nothing serious. I also did a bit of web dev for a school project" },
+        { role: "ai", text: "A chess game is way more interesting than you think. Did you build an AI opponent? Did you struggle with minimax, game tree search, optimisation? Imperial and Edinburgh want depth over breadth. One project where you genuinely problem-solved beats five polished but shallow ones. Which project taught you the most?" },
+        { role: "user", text: "the chess one probably, I spent ages trying to make the computer play smart moves. I tried minimax but it was way too slow so I had to figure out alpha-beta pruning on my own from reading about it online" },
+        { role: "ai", text: "That's your statement right there. You hit a real problem, recognised why it was happening, and independently researched a proper solution. Don't say \"I made a chess game.\" Say you wanted to build an AI opponent, discovered that a naive approach choked on search space, and dug into alpha-beta pruning to prune the game tree efficiently. That shows algorithmic thinking, self-directed learning, and genuine curiosity. That's what Imperial cares about." },
       ]
     },
     {
@@ -98,26 +140,26 @@ export default function Landing() {
     },
     {
       subject: "Music",
-      mode: "Interview Prep",
+      mode: "Personal Statement",
       messages: [
-        { role: "user", text: "I have a conservatoire interview for Music at the Royal Academy. How should I prepare beyond my performance pieces?" },
-        { role: "ai", text: "They'll almost certainly ask you to do some aural analysis or sight-reading, but the conversation part is where most people slip up. They want to know how you listen, not just how you play. Let me ask you something: what piece of music have you listened to recently that changed how you think about your own playing?" },
-        { role: "user", text: "I heard a recording of Glenn Gould playing Bach's Goldberg Variations. His tempo choices are so different from what I'd been taught." },
-        { role: "ai", text: "Good choice. But don't just say his tempos are different. The interviewer will push you: different how? Faster in some variations, slower in others? And why do those choices work even though they break convention? What does that tell you about the relationship between a score and an interpretation?" },
-        { role: "user", text: "I think he treated the score more like a starting point than a set of instructions. Like the music was a conversation between him and Bach rather than just following what was written." },
-        { role: "ai", text: "That's a sophisticated way of thinking about performance vs interpretation. Now bring it back to you: has listening to Gould changed how you approach a score? Do you feel more permission to make your own choices? If an interviewer asks what kind of musician you want to be, this is your answer. Not technical ability. Your relationship with the music itself." },
+        { role: "user", text: "I'm applying for Music at a conservatoire and I'm not sure what to write about in my personal statement, I feel like just saying I play piano isn't enough" },
+        { role: "ai", text: "You're right, that's invisible. Conservatoires want to understand why you play and what kind of musician you're becoming. Not \"I love Chopin\" but what specifically about his work fascinates you. What's something about your playing that you've genuinely puzzled over recently? Not something impressive. Something that actually bothered you." },
+        { role: "user", text: "I've been working on Chopin's Ballade No. 1 and I can play all the notes but my teacher keeps saying it doesn't sound like I mean it. I don't really know what she means by that" },
+        { role: "ai", text: "That's your statement right there. Your teacher is pointing at the gap between technical competence and musical intention. Conservatoires see hundreds of students who can play the notes. They want musicians who mean what they play. What have you learned about yourself by confronting that gap? Has it changed how you practise or how you listen to other pianists?" },
+        { role: "user", text: "she says the coda section sounds like I'm just getting through the notes instead of building towards something. like I speed up because I'm nervous not because the music needs it. I think she's right but I don't know how to fix it" },
+        { role: "ai", text: "You've just identified that your instinct in high-pressure moments is to retreat into safety. That's self-knowledge most musicians don't have at your level. Frame the Ballade as a mirror in your statement: what has wrestling with that coda taught you about the difference between technical security and artistic commitment? That's not \"I overcame a challenge.\" That's \"I'm beginning to understand what separates a pianist from a musician.\" Conservatoires want exactly that." },
       ]
     },
     {
       subject: "PPE",
       mode: "Interview Prep",
       messages: [
-        { role: "user", text: "I have an Oxford PPE interview. I'm terrified. What do they actually ask?" },
-        { role: "ai", text: "Oxford PPE interviews aren't about knowing things. They're about thinking out loud. Let me give you one: should the government tax sugary drinks? Don't just say yes or no. Think about what framework you'd use to answer that question." },
-        { role: "user", text: "Yes, because it reduces obesity and saves the NHS money." },
-        { role: "ai", text: "That's the obvious answer. The interviewer would immediately push: is it the government's role to decide what people eat? What about personal freedom? And economically, who actually bears the cost of the tax, the consumer or the producer? It depends on price elasticity. Can you explain why?" },
-        { role: "user", text: "If demand is inelastic then consumers bear most of the tax because they keep buying it anyway?" },
-        { role: "ai", text: "Exactly. Now here's the PPE twist: is demand for sugary drinks actually inelastic? And does it differ by income group? If poorer households spend a larger share of income on these drinks and demand is inelastic for them, then the tax is regressive even if it improves health outcomes. That's the tension. In the interview, showing you can hold both sides of that tension is more impressive than having the right answer." },
+        { role: "user", text: "I have an Oxford PPE interview and I'm terrified, I don't know what they're going to ask me" },
+        { role: "ai", text: "PPE interviews follow patterns. They're testing how you think, not what you know. Let's do a practice round. Here's one: teachers are leaving the profession in record numbers to become plumbers. Who should pay for their retraining, the government, the individual, or their new employer? Think out loud." },
+        { role: "user", text: "I guess the government should pay because teachers are a public good and we need them, so if they're leaving then the government has failed to make teaching attractive enough. but also the individual chose to leave so maybe they should pay for their own retraining" },
+        { role: "ai", text: "Good instincts, you've found the tension. But push back on yourself: if the government failed, should taxpayers fund people leaving? That rewards the failure. And is it really a free choice if teaching salaries can't sustain a living? The real question is what problem are you solving: keeping teachers, helping people retrain, or sharing costs fairly? An economist cares about incentives, a philosopher about fairness, a politician about feasibility. Untangle those." },
+        { role: "user", text: "okay so if the goal is keeping teachers then you raise salaries, not pay for retraining. but if someone's already decided to leave, maybe the employer who benefits should contribute. like the plumbing company gets a trained worker so they should invest in that. and I suppose fairness depends on whether you think education is a right or a service" },
+        { role: "ai", text: "Now you're thinking like a PPE student. You separated the problem from the mechanism. You recognised that raising salaries is different from funding exits. And your last point is the real killer: the entire framing changes depending on whether education is a right or a service. That's where philosophy enters economics. An Oxford interviewer will love that, because policy debates aren't really about plumbing. They're about competing values underneath." },
       ]
     },
   ];
@@ -286,8 +328,9 @@ export default function Landing() {
             <div className="hidden md:flex items-center gap-8">
               <a href="#how-it-works" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
               <a href="#why-us" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
-              <a href="#faq" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">FAQ</a>
+              <a href="#testimonials" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
               <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
+              <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">About Us</Link>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
               <Link to="/signup" className="btn-primary">Get Started</Link>
             </div>
@@ -299,8 +342,9 @@ export default function Landing() {
             <motion.div className="md:hidden py-4 flex flex-col gap-4 border-t border-gray-100 mt-4" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
               <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">How It Works</a>
               <a href="#why-us" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Why Us</a>
-              <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">FAQ</a>
+              <a href="#testimonials" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
               <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
+              <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">About Us</Link>
               <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
               <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="btn-primary text-center mt-2">Get Started</Link>
             </motion.div>
@@ -497,6 +541,40 @@ export default function Landing() {
           </motion.div>
 
           <DemoCarousel />
+
+          {/* Before/After PS snippet */}
+          <motion.div 
+            className="mt-14 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">What coaching actually looks like</p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <motion.div 
+                className="bg-white rounded-2xl p-6 border-2 border-gray-200 relative"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="absolute -top-3 left-4 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">Before</div>
+                <p className="text-gray-500 text-sm leading-relaxed italic mt-2">"I have always been passionate about medicine since a young age. Seeing my grandmother suffer in hospital made me realise I wanted to help people and make a difference in the world."</p>
+              </motion.div>
+              <motion.div 
+                className="bg-white rounded-2xl p-6 border-2 border-coral-200 relative"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="absolute -top-3 left-4 gradient-primary text-white text-xs font-bold px-3 py-1 rounded-full">After coaching</div>
+                <p className="text-gray-900 text-sm leading-relaxed mt-2">"When my grandmother was in hospital, the geriatrician knelt beside her bed and switched to simpler words because her English was fading. The junior doctor behind her was scribbling notes. I remember thinking those two people were doing completely different jobs in the same room, and I wanted to understand why."</p>
+              </motion.div>
+            </div>
+            <p className="text-center text-xs text-gray-400 mt-4">Same student. Same experience. One sounds like everyone else. The other sounds like them.</p>
+          </motion.div>
         </div>
       </section>
 
@@ -720,134 +798,33 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ==================== TEAM - integrated with credentials ==================== */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <motion.div className="text-center mb-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Built by students who just got in</h2>
-            <p className="text-gray-600 max-w-lg mx-auto mb-2">Every subject specialist is a real student who went through UCAS, wrote a personal statement, and got an offer. They train the AI for their field.</p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-6">
-            {[
-              { name: "Shrey Verma", uni: "LSE", course: "PPE", subject: "Humanities" },
-              { name: "Pavan Kovuri", uni: "Warwick", course: "Economics", subject: "Economics & Business" },
-              { name: "Suhas Parsaboina", uni: "KCL", course: "Medicine", subject: "Medicine" },
-              { name: "Adyan Shahid", uni: "Cambridge", course: "Comp Sci", subject: "CS & Maths" },
-              { name: "Girish R.", uni: "Imperial", course: "Chem Eng", subject: "Engineering" },
-            ].map((member, i) => (
-              <motion.div 
-                key={i}
-                className="card card-hover p-4 text-center"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: i * 0.1, type: "spring", stiffness: 150, damping: 15 }}
-              >
-                <div className="inline-flex items-center gap-1 px-2.5 py-1 bg-coral-50 border border-coral-200 rounded-full text-xs text-coral-600 font-bold mb-2">
-                  🎓 {member.uni}
-                </div>
-                <div className="font-display font-bold text-gray-900 text-sm">{member.name}</div>
-                <div className="text-gray-400 text-xs mt-0.5">{member.course}</div>
-                <div className="text-coral-500 text-xs font-medium mt-1">{member.subject}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/about" className="inline-flex items-center gap-2 text-coral-500 font-semibold hover:text-coral-600 transition-colors text-sm">
-              More about the team <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== TESTIMONIALS ==================== */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-5xl mx-auto">
+      
+            {/* ==================== TESTIMONIALS ==================== */}
+      <section id="testimonials" className="py-24 px-6 bg-white">
+        <div className="max-w-3xl mx-auto">
           <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">What students are saying</h2>
+            <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-4" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
             <p className="text-gray-600 max-w-lg mx-auto">Real feedback from students using myunioffer ai. Unedited.</p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <motion.div 
-              className="bg-gray-50 rounded-2xl p-7 relative"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            >
-              <div className="text-coral-300 text-4xl font-display leading-none mb-3">"</div>
-              <p className="text-gray-900 font-medium leading-relaxed mb-4">I actually have a plan after using it, even though I had nothing figured out before.</p>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-coral-400" />
-                <span className="text-gray-400 text-xs font-medium">Early user</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-50 rounded-2xl p-7 relative"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: 0.1 }}
-            >
-              <div className="text-coral-300 text-4xl font-display leading-none mb-3">"</div>
-              <p className="text-gray-900 font-medium leading-relaxed mb-4">I had no idea what supercurriculars to do, but it gave me unique suggestions based on what I'd already done. It based its recommendations off my actual interests.</p>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-coral-400" />
-                <span className="text-gray-400 text-xs font-medium">Early user</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-50 rounded-2xl p-7 relative"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: 0.15 }}
-            >
-              <div className="text-coral-300 text-4xl font-display leading-none mb-3">"</div>
-              <p className="text-gray-900 font-medium leading-relaxed mb-4">Responds within a few seconds. The quality of information is genuinely helpful. If you ask the right questions, the site guides you step by step.</p>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-coral-400" />
-                <span className="text-gray-400 text-xs font-medium">Early user</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              className="bg-gray-50 rounded-2xl p-7 relative"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ delay: 0.2 }}
-            >
-              <div className="text-coral-300 text-4xl font-display leading-none mb-3">"</div>
-              <p className="text-gray-900 font-medium leading-relaxed mb-4">It helped so much with figuring out next steps, like what supercurriculars I should be doing by building on what I've done so far. And it's not just a yes-man like ChatGPT. It's actually critical of my plans.</p>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-coral-400" />
-                <span className="text-gray-400 text-xs font-medium">Early user</span>
-              </div>
-            </motion.div>
-          </div>
+          <TestimonialRotator />
         </div>
       </section>
 
-      {/* ==================== PRICING TEASER ==================== */}
-      <section className="py-24 px-6 bg-gray-50">
+      
+            {/* ==================== PRICING TEASER ==================== */}
+      <section className="py-20 px-6 bg-gray-50">
         <div className="max-w-3xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+          >
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Start free. Upgrade when you're ready.</h2>
-            <motion.div 
-              className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-6"
-              initial={{ width: 0 }}
-              whileInView={{ width: 64 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            />
+            <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-6" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
             <p className="text-gray-600 max-w-lg mx-auto mb-8">
-              The free tier gives you daily coaching sessions, forever. Paid plans start at £8.99/month for more usage when you're doing serious drafting and interview prep. Launch pricing won't last.
+              The free tier gives you daily coaching sessions, forever. Paid plans start at £8.99/month for more usage when you're doing serious drafting and interview prep.
             </p>
             <Link to="/pricing" className="btn-primary px-8 py-4 text-lg">
               See Plans <ArrowRight className="w-5 h-5" />
