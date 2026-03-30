@@ -94,12 +94,14 @@ export default function Landing() {
       subject: "Medicine",
       mode: "Personal Statement",
       messages: [
-        { role: "user", text: "I'm applying for Medicine at Imperial and UCL. I have some work experience but I'm not sure how to write about it." },
-        { role: "ai", text: "Good. Tell me about one specific moment during your work experience that changed how you think about medicine. Not the whole placement. Just one moment." },
-        { role: "user", text: "I watched a doctor explain a terminal diagnosis to a patient's family. It was really hard to watch." },
-        { role: "ai", text: "That's a strong experience. But \"really hard to watch\" is what every applicant writes. What did you notice about how the doctor handled it? Their tone, the pauses, the way they sat? What would you have done differently? Imperial wants to see your ability to reflect on what you observed, not just that you were there." },
-        { role: "user", text: "The doctor sat down at the same level as the family. She didn't rush. She let them ask questions even though she had other patients." },
-        { role: "ai", text: "Now that's a personal statement paragraph. The detail about sitting at the same level shows you understand non-verbal communication in medicine. The observation about not rushing despite other patients shows you're thinking about the tension between empathy and efficiency. Write it exactly like you just told me." },
+        { role: "user", text: "I'm applying for Medicine at UCL and Imperial. I have some work experience but I'm not sure how to write about it in my personal statement" },
+        { role: "ai", text: "What work experience have you done? And more importantly, what actually made you think differently? Not \"I saw medicine is hard.\" What genuinely stuck with you?" },
+        { role: "user", text: "I did a week at a GP surgery and two days shadowing at a hospital. I saw some interesting stuff but I don't know what's worth writing about" },
+        { role: "ai", text: "Was there a patient interaction or a decision a doctor made that surprised you? Even small things count. The trap most students fall into is writing \"I saw a surgery and it was fascinating.\" Admissions tutors have read that thousands of times. What's something that genuinely stuck with you?" },
+        { role: "user", text: "there was one patient at the GP who kept coming back every week even though there was nothing physically wrong with them. the doctor spent ages talking to them each time and I didn't really understand why at first" },
+        { role: "ai", text: "That's gold. The gap between \"why is the doctor wasting time?\" and \"oh, I get it now\" is where your story lives. Did you figure out why, or did the doctor explain it?" },
+        { role: "user", text: "I asked the doctor after and she said the patient was lonely and coming to the GP was basically their only social interaction. she said sometimes the most important thing you do as a doctor is just listen. I hadn't thought about medicine like that before" },
+        { role: "ai", text: "That's your statement. You noticed a pattern, you were curious enough to ask, and it shifted how you understand the job. Don't write \"I learned medicine involves empathy.\" Write what you just told me: the patient returning weekly, the doctor giving them time, and the moment you realised that sometimes the most valuable thing a doctor offers isn't a diagnosis. That's what UCL and Imperial want to read." },
       ]
     },
     {
