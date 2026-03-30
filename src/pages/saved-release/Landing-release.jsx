@@ -408,7 +408,7 @@ export default function Landing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Your personal statement won't write itself. And ChatGPT can't coach you through it. We can.
+            Your personal statement won't write itself. And no AI is going to write it for you. But the right one can coach you through it.
           </motion.p>
 
           <motion.p 
@@ -473,7 +473,7 @@ export default function Landing() {
             {[
               { 
                 label: "The generic AI problem", 
-                text: "ChatGPT writes your PS. Admissions tutors read hundreds of AI-generated statements every cycle. They notice instantly.",
+                text: "Copy-paste an AI-written PS and admissions tutors will spot it instantly. They read hundreds every cycle. Same structure, same phrases, zero personality.",
                 response: "We coach your thinking instead."
               },
               { 
