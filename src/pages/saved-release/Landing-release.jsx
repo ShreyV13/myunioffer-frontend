@@ -599,7 +599,7 @@ export default function Landing() {
           <div className="relative max-w-3xl mx-auto">
             {/* Vertical line on the left */}
             <motion.div 
-              className="absolute left-[27px] md:left-7 top-0"
+              className="absolute left-[27px] md:left-[31px] top-0"
               style={{width: '2px', background: 'linear-gradient(to bottom, #f9a08c, #f07a62, #e74d32)', transformOrigin: 'top'}}
               initial={{ height: 0 }}
               whileInView={{ height: '100%' }}
@@ -623,13 +623,13 @@ export default function Landing() {
                 >
                   {/* Circle on the line */}
                   <motion.div 
-                    className="w-12 h-12 md:w-14 md:h-14 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    className="w-14 h-14 md:w-16 md:h-16 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true, margin: "-80px" }}
                     transition={{ duration: 0.9, delay: 0.2 + i * 0.3, ease: [0.16, 1, 0.3, 1] }}
                   >
-                    <span className="text-white font-display font-bold text-xl">{step.num}</span>
+                    <span className="text-white font-display font-bold text-2xl">{step.num}</span>
                   </motion.div>
 
                   {/* Content card */}
