@@ -4,6 +4,9 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 // Pages - Waitlist mode
 import WaitlistLanding from './pages/WaitlistLanding';
+import Landing from './pages/saved-release/Landing';
+import AboutPage from './pages/saved-release/About';
+import PricingPageNew from './pages/saved-release/Pricing';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 
@@ -119,8 +122,9 @@ function AppRoutes() {
     <>
       <ScrollToTop />
       <Routes>
-      <Route path="/" element={<WaitlistLanding />} />
-      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/" element={<Landing />} />
+      <Route path="/about" element={<AboutPage />} />
+              <Route path="/privacy" element={<Privacy />} />
       <Route path="/terms" element={<Terms />} />
       {/* Hidden routes - for existing/internal users only */}
       <Route path="/login" element={<Login />} />
