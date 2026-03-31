@@ -210,6 +210,7 @@ export default function Pricing() {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-4 relative z-10"
           style={{ y: heroY }}
         >
@@ -232,7 +233,7 @@ export default function Pricing() {
           className="flex flex-wrap justify-center gap-10 py-8 mb-8"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.3, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
           {[
             { num: "120", suffix: "+", label: "students signed up" },
