@@ -184,7 +184,7 @@ export default function Pricing() {
           >
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back</span>
-          </Link>
+          </button>
           <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 gradient-primary rounded-lg flex items-center justify-center">
               <GraduationCap className="w-5 h-5 text-white" />

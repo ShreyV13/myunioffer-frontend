@@ -208,10 +208,10 @@ export default function About() {
       {/* Header */}
       <header className="glass border-b border-gray-100 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
+          <button onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"} className="flex items-center gap-2 text-gray-600 hover:text-gray-900">
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Back</span>
-          </Link>
+          </button>
           <Link to="/" className="flex items-center gap-2">
             <div className="w-9 h-9 gradient-primary rounded-lg flex items-center justify-center">
               <GraduationCap className="w-5 h-5 text-white" />
