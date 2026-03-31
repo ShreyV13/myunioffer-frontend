@@ -144,7 +144,7 @@ export default function About() {
       name: "Shrey Verma", 
       uni: "LSE", 
       course: "PPE",
-      role: "Founder & Humanities Lead",
+      role: "Founder, Social Sciences & Humanities Lead",
       photo: "/team-shrey.jpg",
       photoScale: 1.25,
       photoPos: "25% 25%",
