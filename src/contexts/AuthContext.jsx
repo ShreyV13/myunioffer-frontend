@@ -129,7 +129,7 @@ export function AuthProvider({ children }) {
     
     // Send verification email with redirect back to our site
     await sendEmailVerification(result.user, {
-      url: 'https://myunioffer.com/chat',
+      url: 'https://myunioffer.com/login',
       handleCodeInApp: false
     });
     
@@ -143,7 +143,7 @@ export function AuthProvider({ children }) {
   async function resendVerification() {
     if (auth.currentUser && !auth.currentUser.emailVerified) {
       await sendEmailVerification(auth.currentUser, {
-        url: 'https://myunioffer.com/chat',
+        url: 'https://myunioffer.com/login',
         handleCodeInApp: false
       });
     }
