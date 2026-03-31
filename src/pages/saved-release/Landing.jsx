@@ -307,6 +307,13 @@ export default function Landing() {
           0% { background-position: 0% center; }
           100% { background-position: 100% center; }
         }
+        @keyframes scrollTestimonials {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+        .testimonial-scroll {
+          animation: scrollTestimonials 30s linear infinite;
+        }
       `}</style>
       {/* Top bar */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
