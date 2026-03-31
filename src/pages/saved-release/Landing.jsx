@@ -314,6 +314,13 @@ export default function Landing() {
         .testimonial-scroll {
           animation: scrollTestimonials 30s linear infinite;
         }
+        @keyframes scrollMarquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+        .marquee-scroll {
+          animation: scrollMarquee 25s linear infinite;
+        }
       `}</style>
       {/* Top bar */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
@@ -519,11 +526,7 @@ export default function Landing() {
 
       {/* ==================== SUBJECT MARQUEE ==================== */}
       <div className="py-4 bg-white overflow-hidden border-y border-gray-100">
-        <motion.div 
-          className="flex gap-5 whitespace-nowrap"
-          animate={{ x: [0, -2000] }}
-          transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-        >
+        <div className="flex gap-5 whitespace-nowrap marquee-scroll">
           {[...Array(3)].map((_, rep) => (
             <div key={rep} className="flex gap-5">
               {['Medicine', 'Economics', 'Computer Science', 'Law', 'Engineering', 'PPE', 'Maths', 'Physics', 'History', 'Psychology', 'Dentistry', 'Architecture', 'English', 'Chemistry', 'Business', 'Biology', 'Veterinary', 'Nursing', 'Politics', 'Philosophy', 'Geography', 'Sociology', 'Modern Languages', 'Music', 'Accounting', 'Data Science'].map((subject, i) => (
