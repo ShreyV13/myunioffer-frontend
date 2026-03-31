@@ -214,9 +214,9 @@ export default function Pricing() {
           className="text-center mb-4 relative z-10"
           style={{ y: heroY }}
         >
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-gray-900 mb-4 leading-tight">
+          <motion.h1 className="text-3xl md:text-5xl font-display font-bold text-gray-900 mb-4 leading-tight" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
             Don't leave your application<br /><span className="gradient-text">to chance.</span>
-          </h1>
+          </motion.h1>
           <motion.div 
             className="h-0.5 gradient-primary rounded-full mx-auto mt-2 mb-6"
             initial={{ width: 0 }}
