@@ -578,56 +578,220 @@ END OF HANDOFF DOCUMENT
 
 ---
 
-# 21. FULL COST BREAKDOWN
+# 22. TOKEN TRACKING - VERIFIED IMPLEMENTATION
 
-## Costs to Date (March 31, 2026): £15.31 total
-- Claude API: £0.24 ($0.30)
-- Domain (Cloudflare): £8.30 ($10.46) - expires Feb 2027
-- Stripe fees (test payments): £6.77 - all from refunded test transactions
-- Everything else: £0 (free tiers)
+## How It Works (confirmed from code)
 
-## Immediate Risk: Render Hours
-Cron job runs 24/7 = ~720 hours/month. Free tier is 750. Almost no buffer for deploys.
+### Cost-Weighted Formula
+```python
+cost_weighted = input_tokens + (output_tokens * 5)
+```
+Uses exact API counts: `response.usage.input_tokens` and `response.usage.output_tokens`. No estimation.
 
-## When Free Tiers Run Out
-- Render: NOW (almost at limit) → Starter $7/month
-- Firebase Firestore: ~500+ daily active users → Blaze $0.06/100K reads
-- Vercel: ~5,000+ monthly visitors → Pro $20/month
-- Brevo: 300+ emails/day → Starter £19/month
+### Where Tracking Happens
+- Non-streaming (/chat): `generate_response()` returns (text, cost_weighted). Calls `add_token_usage()` with cost_weighted value.
+- Streaming (/chat-stream): Tracks via `token_tracker` dict during stream. Calculates `cost_weighted = token_tracker["input"] + (token_tracker["output"] * 5)` after stream completes.
+- Auto-continue tokens are included in both paths.
 
-## Per User Costs (worst case monthly)
-- Free user: ~£1.12 cost, £0 revenue
-- PS/Interview no coupon: ~£6.83 cost, £8.99 revenue = +£2.16 profit
-- PS/Interview with coupon: ~£6.80 cost, £7.99 revenue = +£1.19 profit
-- Premium no coupon: ~£9.90 cost, £12.99 revenue = +£3.09 profit
-- Premium with coupon: ~£9.87 cost, £11.99 revenue = +£2.12 profit
+### Daily Budgets (in main.py)
+```python
+DAILY_TOKEN_BUDGETS = {
+    "free": 50000,
+    "ps": 275000,
+    "interview": 275000,
+    "premium": 400000
+}
+```
 
-## Full spreadsheet: myunioffer-costs.xlsx (saved alongside this document)
+### Message Limits (secondary cap)
+```python
+TIER_LIMITS = {
+    "free": {"ps": 2, "interview": 2},
+    "ps": {"ps": 100, "interview": 2},
+    "interview": {"ps": 2, "interview": 100},
+    "premium": {"ps": 999, "interview": 999}
+}
+```
+
+### Budget to Dollar Mapping
+Each budget unit = $0.000001 in cost to you.
+- 275,000 budget = max $0.275/day = ~$8.25/month
+- 400,000 budget = max $0.40/day = ~$12.00/month
+
+### Messages Per Day (verified calculations)
+
+**PS/Interview (275,000 budget):**
+| Scenario | Input/msg | Output/msg | Cost units/msg | Messages/day |
+|----------|-----------|-----------|---------------|-------------|
+| Long input, long output | 8,800 | 600 | 11,800 | 23 |
+| Long input, short output | 7,150 | 50 | 7,400 | 37 |
+| Short input, long output | 5,000 | 600 | 8,000 | 34 |
+| Short input, short output | 3,350 | 50 | 3,600 | 76 |
+
+**Premium (400,000 budget):**
+| Scenario | Input/msg | Output/msg | Cost units/msg | Messages/day |
+|----------|-----------|-----------|---------------|-------------|
+| Long input, long output | 8,800 | 600 | 11,800 | 33 |
+| Long input, short output | 7,150 | 50 | 7,400 | 54 |
+| Short input, long output | 5,000 | 600 | 8,000 | 50 |
+| Short input, short output | 3,350 | 50 | 3,600 | 111 |
+
+### Input Token Breakdown Per Message
+| Component | Tokens |
+|-----------|--------|
+| System prompt (coaching rules, confidentiality, formatting) | ~3,000 |
+| History (6 messages, short) | ~300 |
+| History (6 messages, long) | ~4,800 |
+| User message (short) | ~50 |
+| User message (max 4500 chars) | ~1,000 |
+| AI output (short) | ~50 |
+| AI output (long) | ~600 |
+| AI output (auto-continue max) | ~800 |
 
 ---
 
-# 21. FULL COST BREAKDOWN
+# 23. COMPLETE PRICING STRUCTURE
 
-## Costs to Date (March 31, 2026): £15.31 total
-- Claude API: £0.24 ($0.30)
-- Domain (Cloudflare): £8.30 ($10.46) - expires Feb 2027
-- Stripe fees (test payments): £6.77 - all from refunded test transactions
-- Everything else: £0 (free tiers)
+## Stripe Prices
+| Plan | Monthly Price | Stripe Price ID | Notes |
+|------|-------------|----------------|-------|
+| Free | £0 | N/A | No Stripe involved |
+| PS Coach | £8.99 | Same ID, amount updated in dashboard | Was £7.99, changed to £8.99 |
+| Interview Prep | £8.99 | Same ID, amount updated in dashboard | Was £7.99, changed to £8.99 |
+| Premium | £12.99 | Same ID, amount updated in dashboard | Was £11.99, changed to £12.99 |
+| 1-on-1 Session | £29.99 | Google Form booking | Not Stripe subscription |
 
-## Immediate Risk: Render Hours
-Cron job runs 24/7 = ~720 hours/month. Free tier is 750. Almost no buffer for deploys.
+## Stripe Coupons
+| Coupon ID | Amount | Duration | How Applied | Expires |
+|-----------|--------|----------|------------|---------|
+| WAITLIST_EARLY_ACCESS | £3 off | First month only | Auto if email in waitlist | July 31, 2026 |
+| SHREY | £1 off | Forever | Manual promo code at checkout | Never |
+| PAVAN | £1 off | Forever | Manual promo code at checkout | Never |
+| GIRISH | £1 off | Forever | Manual promo code at checkout | Never |
+| SUHAS | £1 off | Forever | Manual promo code at checkout | Never |
+
+Waitlist discount redemption limit: 150.
+
+## Effective Prices After Discounts
+| Scenario | PS/Interview | Premium |
+|----------|-------------|---------|
+| No discount | £8.99 | £12.99 |
+| Sales coupon (£1 off forever) | £7.99 | £11.99 |
+| Waitlist first month (£3 off) | £5.99 | £9.99 |
+| Waitlist + sales coupon | NOT POSSIBLE (mutually exclusive) | NOT POSSIBLE |
+
+## Discount Logic (in checkout endpoint)
+```
+if email in waitlist:
+    apply WAITLIST_EARLY_ACCESS coupon
+    (no promo code field shown)
+else:
+    allow_promotion_codes = True
+    (user can enter SHREY/PAVAN/etc)
+```
+These are MUTUALLY EXCLUSIVE. A user never gets both.
+
+## Margin Analysis (worst case, every user maxes daily budget every day)
+| Scenario | Revenue/month | Cost/month | Profit |
+|----------|-------------|-----------|--------|
+| PS/Int no coupon £8.99 | $11.42 | $8.22 | +$3.20 |
+| PS/Int coupon £7.99 | $10.15 | $8.22 | +$1.93 |
+| PS/Int waitlist £5.99 | $7.61 | $8.22 | -$0.61 |
+| Premium no coupon £12.99 | $16.50 | $12.00 | +$4.50 |
+| Premium coupon £11.99 | $15.23 | $12.00 | +$3.23 |
+| Premium waitlist £9.99 | $12.69 | $12.00 | +$0.69 |
+
+Only loss: PS/Interview waitlist first month, 61 cents worst case, one month only.
+
+## Stripe Transaction Fees
+1.4% + 20p per UK card transaction.
+| Payment | Stripe Fee | You Keep |
+|---------|-----------|----------|
+| £8.99 | ~33p | £8.66 |
+| £7.99 (coupon) | ~31p | £7.68 |
+| £5.99 (waitlist) | ~28p | £5.71 |
+| £12.99 | ~38p | £12.61 |
+
+---
+
+# 24. CLAUDE API RATE LIMITS
+
+| Tier | Requests/min | Input tokens/min | Output tokens/min |
+|------|-------------|-----------------|-------------------|
+| Tier 1 (current, $0-$40 spent) | 50 | 50,000 | 10,000 |
+| Tier 2 ($40+ spent) | 1,000 | 100,000 | 20,000 |
+| Tier 3 ($200+ spent) | 2,000 | 200,000 | 40,000 |
+
+50 requests/min = 50 users pressing send simultaneously. Not a concern until hundreds of daily active users.
+
+---
+
+# 25. FULL COST BREAKDOWN
+
+## Costs to Date (March 31, 2026): ~£15.31 total
+| Service | GBP | USD | Notes |
+|---------|-----|-----|-------|
+| Claude API | £0.24 | $0.30 | 152K input, 30K output tokens |
+| Domain (Cloudflare) | £8.30 | $10.46 | Expires Feb 2027 |
+| Stripe fees | £6.77 | $8.53 | Test payments refunded, fees kept |
+| Render | £0 | $0 | Free tier |
+| Vercel | £0 | $0 | Free tier |
+| Firebase | £0 | $0 | Free tier |
+| Brevo | £0 | $0 | Free tier |
+| GitHub | £0 | $0 | Free tier |
+| Gemini | £0 | $0 | Free tier |
+| **TOTAL** | **£15.31** | **$19.29** | |
 
 ## When Free Tiers Run Out
-- Render: NOW (almost at limit) → Starter $7/month
-- Firebase Firestore: ~500+ daily active users → Blaze $0.06/100K reads
-- Vercel: ~5,000+ monthly visitors → Pro $20/month
-- Brevo: 300+ emails/day → Starter £19/month
+| Service | Free Limit | Current Usage | Upgrade Cost | When |
+|---------|-----------|--------------|-------------|------|
+| Render | 750 hrs/month | ~720 hrs (cron 24/7) | $7/month | NOW - almost no buffer |
+| Firebase Firestore | 50K reads/day | <100/day | $0.06/100K reads | ~500+ DAU |
+| Vercel | 100GB bandwidth/month | <1GB | $20/month | ~5,000+ monthly visitors |
+| Brevo | 300 emails/day | <10/day | £19/month | 300+ person campaigns |
+| Domain | Annual | Paid to Feb 2027 | ~£8-10/year | February 2027 |
 
-## Per User Costs (worst case monthly)
-- Free user: ~£1.12 cost, £0 revenue
-- PS/Interview no coupon: ~£6.83 cost, £8.99 revenue = +£2.16 profit
-- PS/Interview with coupon: ~£6.80 cost, £7.99 revenue = +£1.19 profit
-- Premium no coupon: ~£9.90 cost, £12.99 revenue = +£3.09 profit
-- Premium with coupon: ~£9.87 cost, £11.99 revenue = +£2.12 profit
+## Immediate Risk
+Render free tier: 750 hours/month. Cron job uses ~720. Every backend deploy runs two instances simultaneously for a few minutes. More than ~10 deploys/month risks running out. If hours hit 750, server goes offline until the 1st of next month. Monitor at dashboard.render.com.
 
-## Full spreadsheet: myunioffer-costs.xlsx (saved alongside this document)
+## Cost Spreadsheet
+Full detailed spreadsheet saved as: myunioffer-costs.xlsx
+
+---
+
+# 26. SMTP CONFIGURATION (Firebase Email Verification)
+
+Firebase Auth now sends verification emails through Brevo SMTP:
+- Sender: support@myunioffer.com
+- SMTP host: smtp-relay.brevo.com
+- Port: 587
+- Security: STARTTLS
+- Username: a3fb39001@smtp-brevo.com
+- Password: Brevo SMTP key (in Firebase console)
+
+This prevents verification emails landing in spam.
+
+---
+
+# 27. NAMING CONVENTION
+
+NEVER write "myunioffer.ai" with a full stop before "ai". The correct name is "myunioffer ai" (two words, no dot). "myunioffer.ai" looks like a URL that doesn't exist and is misleading.
+
+Correct: myunioffer ai
+Wrong: myunioffer.ai
+
+The website URL is myunioffer.com (not .ai).
+
+---
+
+# 28. BACK BUTTON BEHAVIOUR
+
+Both About and Pricing pages use browser history for the back button:
+```javascript
+<button onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"}>
+```
+This sends users back to wherever they came from (e.g. Chat → Pricing → Back returns to Chat). Falls back to home page if no history.
+
+---
+
+END OF UPDATED HANDOFF DOCUMENT

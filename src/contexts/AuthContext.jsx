@@ -136,6 +136,17 @@ export function AuthProvider({ children }) {
     const profile = await createUserProfile(result.user, displayName);
     setUserProfile(profile);
     
+    // Sync to Brevo for onboarding emails
+    try {
+      await fetch('https://uniprep-backend-dtlq.onrender.com/register-contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email })
+      });
+    } catch (e) {
+      console.log('Brevo sync failed, non-critical');
+    }
+    
     return result;
   }
 
