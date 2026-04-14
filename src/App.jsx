@@ -17,6 +17,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Chat from './pages/Chat';
 import Settings from './pages/Settings';
 import Success from './pages/Success';
+import RateMyPS from './pages/RateMyPS';
 
 // SAVED FOR RELEASE: Landing, Pricing, About are in src/pages/saved-release/
 // When ready to launch, swap WaitlistLanding back to Landing and restore all routes
@@ -134,6 +135,7 @@ function AppRoutes() {
       <Route path="/chat" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       <Route path="/success" element={<Success />} />
+      <Route path="/rate-my-ps" element={<RateMyPS />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     </>
