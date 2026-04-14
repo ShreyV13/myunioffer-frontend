@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { GraduationCap, ArrowRight, Lock, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -18,9 +18,14 @@ function getBand(score) {
   return SCORE_BANDS.find(b => score >= b.min && score <= b.max) || SCORE_BANDS[4];
 }
 
-const CATEGORY_LABELS_SHORT = { opening_and_hook: 'Opening', academic_engagement: 'Academic', experiences_and_reflection: 'Reflection', structure_and_flow: 'Structure', voice_and_authenticity: 'Voice' };
-const CATEGORY_KEYS = Object.keys(CATEGORY_LABELS_SHORT);
-const CATEGORY_LABELS_FULL = { opening_and_hook: 'Opening & Hook', academic_engagement: 'Academic Engagement', experiences_and_reflection: 'Experiences & Reflection', structure_and_flow: 'Structure & Flow', voice_and_authenticity: 'Voice & Authenticity' };
+const CATEGORY_META = {
+  opening_and_hook:            { short: 'Opening',    full: 'Opening & Hook',            color: '#f97316', bg: 'rgba(249,115,22,0.10)', border: 'rgba(249,115,22,0.25)' },
+  academic_engagement:         { short: 'Academic',   full: 'Academic Engagement',        color: '#60a5fa', bg: 'rgba(96,165,250,0.10)', border: 'rgba(96,165,250,0.25)' },
+  experiences_and_reflection:  { short: 'Reflection', full: 'Experiences & Reflection',   color: '#34d399', bg: 'rgba(52,211,153,0.10)', border: 'rgba(52,211,153,0.25)' },
+  structure_and_flow:          { short: 'Structure',  full: 'Structure & Flow',           color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.25)' },
+  voice_and_authenticity:      { short: 'Voice',      full: 'Voice & Authenticity',       color: '#fbbf24', bg: 'rgba(251,191,36,0.10)', border: 'rgba(251,191,36,0.25)' },
+};
+const CATEGORY_KEYS = Object.keys(CATEGORY_META);
 
 const SUBJECT_SUGGESTIONS = [
   'Medicine', 'Dentistry', 'Law', 'Economics', 'Computer Science', 'Engineering',
@@ -31,18 +36,16 @@ const SUBJECT_SUGGESTIONS = [
   'Classics', 'Music', 'Art', 'Accounting', 'Data Science',
 ];
 
+// ─── Score Ring ─────────────────────────────────────────────────────
 function ScoreRing({ score, size = 180, strokeWidth = 7, band, landed }) {
-  const radius = (size - strokeWidth) / 2;
-  const circ = 2 * Math.PI * radius;
-  const offset = circ * (1 - score / 100);
+  const r = (size - strokeWidth) / 2, c = 2 * Math.PI * r, off = c * (1 - score / 100);
   return (
     <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
-      {landed && <motion.div className="absolute inset-0 rounded-full" style={{ boxShadow: `0 0 40px ${band.glow}, 0 0 80px ${band.glow}` }} initial={{ opacity: 0 }} animate={{ opacity: [0, 0.6, 0.3] }} transition={{ duration: 1.5, ease: 'easeOut' }} />}
+      {landed && <motion.div className="absolute inset-0 rounded-full" style={{ boxShadow: `0 0 40px ${band.glow}, 0 0 80px ${band.glow}` }} initial={{ opacity: 0 }} animate={{ opacity: [0, 0.6, 0.3] }} transition={{ duration: 1.5 }} />}
       <svg width={size} height={size} className="transform -rotate-90">
-        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={strokeWidth} />
-        <circle cx={size/2} cy={size/2} r={radius} fill="none" stroke={band.color} strokeWidth={strokeWidth} strokeLinecap="round"
-          strokeDasharray={circ} strokeDashoffset={offset}
-          style={{ filter: landed ? `drop-shadow(0 0 6px ${band.glow})` : 'none', transition: 'stroke-dashoffset 0.08s, stroke 0.3s' }} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={strokeWidth} />
+        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={band.color} strokeWidth={strokeWidth} strokeLinecap="round"
+          strokeDasharray={c} strokeDashoffset={off} style={{ filter: landed ? `drop-shadow(0 0 6px ${band.glow})` : 'none', transition: 'stroke-dashoffset 0.08s, stroke 0.3s' }} />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <span className="font-display font-bold tabular-nums" style={{ fontSize: size * 0.33, lineHeight: 1, color: band.color }}>{score}</span>
@@ -52,23 +55,51 @@ function ScoreRing({ score, size = 180, strokeWidth = 7, band, landed }) {
   );
 }
 
-function RadarChart({ scores, size = 220 }) {
+// ─── Radar Chart (bigger, no truncation) ────────────────────────────
+function RadarChart({ scores, size = 280 }) {
   const cx = size/2, cy = size/2, maxVal = 20, as = (2*Math.PI)/5, off = -Math.PI/2;
-  const p = (a,v) => { const r=(v/maxVal)*(size*0.38); return {x:cx+r*Math.cos(a+off),y:cy+r*Math.sin(a+off)}; };
+  const p = (a,v) => { const rad=(v/maxVal)*(size*0.34); return {x:cx+rad*Math.cos(a+off),y:cy+rad*Math.sin(a+off)}; };
   const pts = CATEGORY_KEYS.map((k,i) => p(i*as, scores[k]||0));
-  const path = pts.map((pt,i) => `${i===0?'M':'L'}${pt.x},${pt.y}`).join(' ')+'Z';
+  const path = pts.map((pt,i)=>`${i===0?'M':'L'}${pt.x},${pt.y}`).join(' ')+'Z';
   return (
     <svg width={size} height={size} className="mx-auto">
       {[5,10,15,20].map(lv => { const lps=CATEGORY_KEYS.map((_,i)=>p(i*as,lv)); return <path key={lv} d={lps.map((pt,i)=>`${i===0?'M':'L'}${pt.x},${pt.y}`).join(' ')+'Z'} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth={1}/>; })}
-      {CATEGORY_KEYS.map((_,i)=>{const e=p(i*as,maxVal);return <line key={i} x1={cx} y1={cy} x2={e.x} y2={e.y} stroke="rgba(255,255,255,0.06)" strokeWidth={1}/>;  })}
+      {CATEGORY_KEYS.map((_,i)=>{const e=p(i*as,maxVal);return <line key={i} x1={cx} y1={cy} x2={e.x} y2={e.y} stroke="rgba(255,255,255,0.06)" strokeWidth={1}/>;})}
       <motion.path d={path} fill="rgba(249,106,80,0.15)" stroke="#f96a50" strokeWidth={2} initial={{opacity:0,scale:0.3}} animate={{opacity:1,scale:1}} transition={{duration:0.8,delay:0.3,ease:[0.16,1,0.3,1]}} style={{transformOrigin:`${cx}px ${cy}px`}}/>
-      {pts.map((pt,i)=><motion.circle key={i} cx={pt.x} cy={pt.y} r={3.5} fill="#f96a50" stroke="#1a1a1a" strokeWidth={2} initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.5+i*0.08}}/>)}
-      {CATEGORY_KEYS.map((k,i)=>{const lp=p(i*as,maxVal+4.5);const cb=getBand((scores[k]||0)*5);return(<g key={k}><text x={lp.x} y={lp.y} textAnchor="middle" dominantBaseline="central" className="text-[10px] font-medium" fill="rgba(255,255,255,0.45)">{CATEGORY_LABELS_SHORT[k]}</text><text x={lp.x} y={lp.y+13} textAnchor="middle" dominantBaseline="central" className="text-[10px] font-bold" fill={cb.color}>{scores[k]}</text></g>);})}
+      {pts.map((pt,i)=><motion.circle key={i} cx={pt.x} cy={pt.y} r={4} fill="#f96a50" stroke="#1a1a1a" strokeWidth={2} initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.5+i*0.08}}/>)}
+      {CATEGORY_KEYS.map((k,i)=>{
+        const lp=p(i*as,maxVal+5.5); const meta=CATEGORY_META[k]; const sc=scores[k]||0; const cb=getBand(sc*5);
+        return (<g key={k}>
+          <text x={lp.x} y={lp.y-1} textAnchor="middle" dominantBaseline="central" className="text-[11px] font-medium" fill={meta.color}>{meta.short}</text>
+          <text x={lp.x} y={lp.y+12} textAnchor="middle" dominantBaseline="central" className="text-[11px] font-bold" fill={cb.color}>{sc}/20</text>
+        </g>);
+      })}
     </svg>
   );
 }
 
+// ─── PS Text with Highlighting ──────────────────────────────────────
+function HighlightedPS({ text, activeQuote, activeCategoryKey }) {
+  if (!activeQuote || !text.toLowerCase().includes(activeQuote.toLowerCase())) {
+    return <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{text}</p>;
+  }
+  const idx = text.toLowerCase().indexOf(activeQuote.toLowerCase());
+  const before = text.slice(0, idx);
+  const match = text.slice(idx, idx + activeQuote.length);
+  const after = text.slice(idx + activeQuote.length);
+  const meta = CATEGORY_META[activeCategoryKey] || { bg: 'rgba(249,106,80,0.2)', border: 'rgba(249,106,80,0.4)' };
 
+  return (
+    <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">
+      {before}
+      <span className="rounded px-0.5 py-0.5 transition-all duration-300" style={{ background: meta.bg, borderBottom: `2px solid ${meta.border}` }}>{match}</span>
+      {after}
+    </p>
+  );
+}
+
+
+// ═══════════════════════════════════════════════════════════════════════
 export default function RateMyPS() {
   const { currentUser, userProfile } = useAuth();
   const navigate = useNavigate();
@@ -87,14 +118,17 @@ export default function RateMyPS() {
   const [landed, setLanded] = useState(false);
   const [progress, setProgress] = useState(0);
   const [scanLine, setScanLine] = useState(0);
+  const [activeQuote, setActiveQuote] = useState(null);
+  const [activeCategoryKey, setActiveCategoryKey] = useState(null);
   const animRef = useRef(null);
   const subjectRef = useRef(null);
   const scoringStartRef = useRef(0);
   const rangeRef = useRef(90);
+  const psLeftRef = useRef(null);
 
   const charCount = psText.length;
   const filtered = subject.length > 0 ? SUBJECT_SUGGESTIONS.filter(s => s.toLowerCase().includes(subject.toLowerCase())) : SUBJECT_SUGGESTIONS;
-  const hasPaidAccess = result ? (result.detailed_feedback !== null && result.detailed_feedback !== undefined) : false;
+  const hasPaidAccess = result ? (result.detailed_feedback !== null && result.detailed_feedback !== undefined && Array.isArray(result.detailed_feedback)) : false;
 
   function handleSubmit() {
     setError('');
@@ -102,7 +136,7 @@ export default function RateMyPS() {
     const cleaned = psText.trim();
     if (cleaned.length < 100) { setError('Your statement is too short to rate. Paste your full draft.'); return; }
     if (cleaned.length > 5000) { setError('Over 5,000 characters. UCAS statements are 4,000 max. Trim it down.'); return; }
-    setPageState('scoring'); apiReturned.current = false; setResult(null); setLanded(false); setProgress(0); setScanLine(0);
+    setPageState('scoring'); apiReturned.current = false; setResult(null); setLanded(false); setProgress(0); setScanLine(0); setActiveQuote(null); setActiveCategoryKey(null);
     scoringStartRef.current = Date.now(); rangeRef.current = 90;
 
     fetch(`${API_BASE}/rate-ps`, {
@@ -114,52 +148,23 @@ export default function RateMyPS() {
       .catch(err => { setError(err.message || 'Something went wrong. Try again.'); setPageState('input'); });
   }
 
-  // Smooth animation
+  // Animation
   useEffect(() => {
     if (pageState !== 'scoring') return;
     const startTime = scoringStartRef.current || Date.now();
     let apiReturnedAt = null;
-
     function tick() {
-      const now = Date.now();
-      const totalElapsed = now - startTime;
-      const hasResult = apiReturned.current;
-      const target = targetScoreRef.current;
-
+      const now = Date.now(), totalElapsed = now - startTime, hasResult = apiReturned.current, target = targetScoreRef.current;
       if (hasResult && !apiReturnedAt) apiReturnedAt = now;
-
-      // Progress bar: ease-out, caps at 90% until API, then fills slowly to 100%
-      if (!hasResult) {
-        const raw = totalElapsed / 40000;
-        setProgress(Math.min(1 - Math.pow(1 - raw, 3), 0.90) * 100);
-      } else {
-        const sinceLanded = now - apiReturnedAt;
-        const remaining = 100 - 90;
-        setProgress(Math.min(90 + remaining * (sinceLanded / 16000), landed ? 100 : 99) );
-      }
-
-      // Scan line: loops through PS text
+      if (!hasResult) { setProgress(Math.min(1 - Math.pow(1 - totalElapsed / 40000, 3), 0.90) * 100); }
+      else { const since = now - apiReturnedAt; setProgress(Math.min(90 + 10 * (since / 16000), landed ? 100 : 99)); }
       setScanLine((totalElapsed / 5000) % 1 * 100);
-
-      // Range narrows: slow before API, moderate after
-      if (!hasResult) {
-        rangeRef.current = Math.max(rangeRef.current - 0.06, 28);
-      } else {
-        rangeRef.current = Math.max(rangeRef.current - 0.35, 0);
-      }
-
-      if (rangeRef.current <= 0 && hasResult) {
-        setDisplayNumber(target); setLanded(true); setProgress(100);
-        setTimeout(() => setPageState('results'), 1200);
-        return;
-      }
-
-      const center = hasResult ? target : 55;
-      const half = rangeRef.current / 2;
-      const lo = Math.max(0, Math.floor(center - half));
-      const hi = Math.min(100, Math.floor(center + half));
+      if (!hasResult) { rangeRef.current = Math.max(rangeRef.current - 0.06, 28); }
+      else { rangeRef.current = Math.max(rangeRef.current - 0.35, 0); }
+      if (rangeRef.current <= 0 && hasResult) { setDisplayNumber(target); setLanded(true); setProgress(100); setTimeout(() => setPageState('results'), 1200); return; }
+      const center = hasResult ? target : 55, half = rangeRef.current / 2;
+      const lo = Math.max(0, Math.floor(center - half)), hi = Math.min(100, Math.floor(center + half));
       setDisplayNumber(Math.floor(Math.random() * (hi - lo + 1)) + lo);
-
       const speed = rangeRef.current > 50 ? 50 : rangeRef.current > 20 ? 70 : rangeRef.current > 8 ? 120 : rangeRef.current > 3 ? 180 : 250;
       animRef.current = setTimeout(tick, speed);
     }
@@ -171,15 +176,21 @@ export default function RateMyPS() {
   const band = result ? getBand(result.score) : displayBand;
 
   function handleReset() {
-    setPageState('input'); setResult(null); setDisplayNumber(0); setError(''); setProgress(0); setLanded(false); setShowPsText(false); rangeRef.current = 90;
+    setPageState('input'); setResult(null); setDisplayNumber(0); setError(''); setProgress(0); setLanded(false); setShowPsText(false); rangeRef.current = 90; setActiveQuote(null); setActiveCategoryKey(null);
   }
+
+  // Scroll PS to highlighted quote
+  useEffect(() => {
+    if (activeQuote && psLeftRef.current) {
+      const highlighted = psLeftRef.current.querySelector('[data-highlighted]');
+      if (highlighted) highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [activeQuote]);
 
   useEffect(() => {
     function h(e) { if (subjectRef.current && !subjectRef.current.contains(e.target)) setShowSuggestions(false); }
     document.addEventListener('mousedown', h); return () => document.removeEventListener('mousedown', h);
   }, []);
-
-  const isActive = pageState === 'scoring' || pageState === 'results';
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#1a1a1a' }}>
@@ -204,25 +215,21 @@ export default function RateMyPS() {
         </div>
       </nav>
 
-      {/* ═══ INPUT STATE: single centered column ═══ */}
+      {/* ═══ INPUT ═══ */}
       {pageState === 'input' && (
         <div className="flex-1 flex flex-col items-center px-6 py-10 lg:py-16 relative z-10">
           <div className="w-full max-w-2xl">
-            <motion.div className="text-center mb-8" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <motion.div className="text-center mb-8" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
               <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-3">Rate My Personal Statement</h1>
               <p className="text-white/40 text-base max-w-md mx-auto">Paste your draft. Get scored against the same rubric admissions tutors use. Takes 30 seconds.</p>
             </motion.div>
-
             <motion.div className="flex flex-wrap justify-center gap-2 mb-8" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}>
-              {['Opening & Hook', 'Academic Depth', 'Reflection', 'Structure', 'Voice'].map((c, i) => (
-                <span key={i} className="px-3 py-1 rounded-full text-xs font-medium" style={{ background: 'rgba(249,106,80,0.08)', color: 'rgba(249,106,80,0.6)', border: '1px solid rgba(249,106,80,0.12)' }}>{c}</span>
+              {Object.values(CATEGORY_META).map((m, i) => (
+                <span key={i} className="px-3 py-1 rounded-full text-xs font-medium" style={{ background: m.bg, color: m.color, border: `1px solid ${m.border}` }}>{m.full}</span>
               ))}
             </motion.div>
-
             <motion.div className="mb-3 relative" ref={subjectRef} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <input type="text" value={subject}
-                onChange={e => { setSubject(e.target.value); setShowSuggestions(true); }}
-                onFocus={() => setShowSuggestions(true)}
+              <input type="text" value={subject} onChange={e => { setSubject(e.target.value); setShowSuggestions(true); }} onFocus={() => setShowSuggestions(true)}
                 placeholder="What subject are you applying for? (optional)"
                 className="w-full rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-coral-500/30 transition-all"
                 style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.08)' }} />
@@ -232,7 +239,6 @@ export default function RateMyPS() {
                 </div>
               )}
             </motion.div>
-
             <motion.div className="relative mb-4" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
               <textarea value={psText} onChange={e => { setPsText(e.target.value); setError(''); }}
                 placeholder="Paste your personal statement here..."
@@ -240,21 +246,13 @@ export default function RateMyPS() {
                 style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.08)', minHeight: '260px' }}
                 onKeyDown={e => { if (e.key === 'Enter' && e.metaKey) handleSubmit(); }} />
               <div className="absolute bottom-3 right-4">
-                <span className={`text-xs font-medium ${charCount > 4700 ? 'text-red-400' : charCount > 3500 ? 'text-amber-400' : 'text-white/20'}`}>
-                  {charCount > 0 ? `${charCount.toLocaleString()} chars` : ''}
-                </span>
+                <span className={`text-xs font-medium ${charCount > 4700 ? 'text-red-400' : charCount > 3500 ? 'text-amber-400' : 'text-white/20'}`}>{charCount > 0 ? `${charCount.toLocaleString()} chars` : ''}</span>
               </div>
             </motion.div>
-
             {error && <div className="mb-4 px-4 py-3 rounded-xl text-sm text-red-300" style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.2)' }}>{error}</div>}
-
-            <motion.button onClick={handleSubmit} disabled={psText.trim().length < 50}
-              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-              className="w-full gradient-primary text-white font-semibold py-4 rounded-xl text-base shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:translate-y-0">
-              Rate My PS
-            </motion.button>
+            <motion.button onClick={handleSubmit} disabled={psText.trim().length < 50} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+              className="w-full gradient-primary text-white font-semibold py-4 rounded-xl text-base shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:translate-y-0">Rate My PS</motion.button>
             <p className="text-xs text-white/20 text-center mt-3">{currentUser ? 'Free to use. Takes about 30 seconds.' : 'Create a free account first. Takes 10 seconds.'}</p>
-
             <motion.div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-white/25" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
               <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500/60" /> Scored out of 100</span>
               <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-coral-400/60" /> 5 admissions categories</span>
@@ -264,66 +262,52 @@ export default function RateMyPS() {
         </div>
       )}
 
-      {/* ═══ SCORING STATE: split layout with transition ═══ */}
+      {/* ═══ SCORING ═══ */}
       {pageState === 'scoring' && (
         <div className="flex-1 flex flex-col lg:flex-row relative z-10">
-          {/* Left: PS text with scanning line (hidden on mobile) */}
-          <motion.div
-            className="hidden lg:flex w-1/2 flex-col overflow-y-auto p-6 lg:p-10"
-            style={{ borderRight: '1px solid rgba(255,255,255,0.06)' }}
-            initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <motion.div className="hidden lg:flex w-1/2 flex-col overflow-y-auto p-6 lg:p-10" style={{ borderRight: '1px solid rgba(255,255,255,0.06)' }}
+            initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <h2 className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-4">Your Personal Statement</h2>
             <div className="rounded-2xl p-6 relative overflow-hidden" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <div className="absolute left-0 right-0 h-10 pointer-events-none z-20 transition-none"
-                style={{ top: `${scanLine}%`, background: 'linear-gradient(180deg, transparent 0%, rgba(249,106,80,0.1) 50%, transparent 100%)' }} />
+              <div className="absolute left-0 right-0 h-10 pointer-events-none z-20" style={{ top: `${scanLine}%`, background: 'linear-gradient(180deg, transparent 0%, rgba(249,106,80,0.1) 50%, transparent 100%)' }} />
               <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap relative z-10">{psText}</p>
             </div>
           </motion.div>
-
-          {/* Right: scoring ring */}
-          <motion.div
-            className="flex-1 lg:w-1/2 flex items-center justify-center p-6"
-            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
+          <motion.div className="flex-1 lg:w-1/2 flex items-center justify-center p-6"
+            initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
             <div className="text-center">
               <ScoreRing score={displayNumber} size={200} band={displayBand} landed={landed} />
               <div className="mt-8 flex items-center justify-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-coral-400 animate-pulse" />
-                <span className="text-sm text-white/40 font-medium">
-                  {!apiReturned.current ? 'Reading your statement...' : landed ? 'Done' : 'Finalising score...'}
-                </span>
+                <span className="text-sm text-white/40 font-medium">{!apiReturned.current ? 'Reading your statement...' : landed ? 'Done' : 'Finalising score...'}</span>
               </div>
             </div>
           </motion.div>
         </div>
       )}
 
-      {/* ═══ RESULTS STATE ═══ */}
+      {/* ═══ RESULTS ═══ */}
       {pageState === 'results' && result && (
         <div className="flex-1 flex flex-col lg:flex-row relative z-10">
-          {/* Left: PS text (desktop) */}
-          <div className="hidden lg:flex w-1/2 flex-col overflow-y-auto p-6 lg:p-10" style={{ borderRight: '1px solid rgba(255,255,255,0.06)' }}>
+          {/* Left: PS with highlighting */}
+          <div ref={psLeftRef} className="hidden lg:flex w-1/2 flex-col overflow-y-auto p-6 lg:p-10" style={{ borderRight: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xs font-semibold text-white/30 uppercase tracking-wider">Your Personal Statement</h2>
               <button onClick={handleReset} className="text-xs text-coral-400 hover:text-coral-300 font-medium transition-colors">Rate another</button>
             </div>
             <div className="rounded-2xl p-6" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{psText}</p>
+              <HighlightedPS text={psText} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} />
             </div>
           </div>
 
           {/* Right: results */}
           <div className="w-full lg:w-1/2 overflow-y-auto p-6 lg:p-10">
-            {/* Mobile: collapsible PS */}
+            {/* Mobile PS toggle */}
             <div className="lg:hidden mb-4">
               <button onClick={() => setShowPsText(!showPsText)} className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-medium text-white/40" style={{ background: '#242424' }}>
-                <span>View your statement</span>
-                {showPsText ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                <span>View your statement</span>{showPsText ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
-              {showPsText && <div className="mt-2 rounded-xl p-4" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}><p className="text-xs text-white/60 leading-relaxed whitespace-pre-wrap">{psText}</p></div>}
+              {showPsText && <div className="mt-2 rounded-xl p-4" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}><HighlightedPS text={psText} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} /></div>}
             </div>
 
             {/* Score */}
@@ -342,42 +326,87 @@ export default function RateMyPS() {
               </div>
             </motion.div>
 
-            {/* PAID */}
+            {/* PAID: Radar */}
             {hasPaidAccess && result.category_scores && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mb-6">
                 <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2 text-center">Category Breakdown</p>
                 <RadarChart scores={result.category_scores} />
               </motion.div>
             )}
-            {hasPaidAccess && result.detailed_feedback && (
+
+            {/* PAID: Structured Feedback */}
+            {hasPaidAccess && Array.isArray(result.detailed_feedback) && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mb-6">
-                <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">Detailed Feedback</p>
-                <div className="rounded-xl p-5" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{result.detailed_feedback}</p>
+                <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-4">Detailed Feedback</p>
+                <div className="space-y-3">
+                  {result.detailed_feedback.map((item, i) => {
+                    const meta = CATEGORY_META[item.category] || CATEGORY_META.opening_and_hook;
+                    const isActive = activeQuote === item.quote;
+                    return (
+                      <motion.div key={i}
+                        initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 + i * 0.1 }}
+                        className="rounded-xl p-4 cursor-pointer transition-all duration-200"
+                        style={{
+                          background: isActive ? meta.bg : '#242424',
+                          border: `1px solid ${isActive ? meta.border : 'rgba(255,255,255,0.06)'}`,
+                        }}
+                        onMouseEnter={() => { setActiveQuote(item.quote); setActiveCategoryKey(item.category); }}
+                        onMouseLeave={() => { setActiveQuote(null); setActiveCategoryKey(null); }}
+                        onClick={() => { setActiveQuote(isActive ? null : item.quote); setActiveCategoryKey(isActive ? null : item.category); }}
+                      >
+                        {/* Category tag */}
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider" style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>
+                            {meta.full}
+                          </span>
+                          {result.category_scores && (
+                            <span className="text-[10px] font-bold tabular-nums" style={{ color: meta.color }}>
+                              {result.category_scores[item.category]}/20
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Quote */}
+                        {item.quote && (
+                          <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: `2px solid ${meta.border}` }}>
+                            "{item.quote}"
+                          </p>
+                        )}
+
+                        {/* Feedback */}
+                        <p className="text-sm text-white/70 leading-relaxed mb-3">{item.feedback}</p>
+
+                        {/* Suggestion */}
+                        {item.suggestion && (
+                          <div className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                            <ArrowRight className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: meta.color }} />
+                            <p className="text-xs text-white/60 leading-relaxed"><span className="font-semibold" style={{ color: meta.color }}>Try this:</span> {item.suggestion}</p>
+                          </div>
+                        )}
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </motion.div>
             )}
 
-            {/* FREE: paywall */}
+            {/* FREE: Paywall */}
             {!hasPaidAccess && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="relative">
                 <div className="select-none mb-4" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
                   <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2 text-center">Category Breakdown</p>
                   <RadarChart scores={{ opening_and_hook: 9, academic_engagement: 11, experiences_and_reflection: 7, structure_and_flow: 12, voice_and_authenticity: 10 }} />
                 </div>
-                <div className="select-none" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
+                <div className="select-none space-y-3" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
                   <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">Detailed Feedback</p>
-                  <div className="rounded-xl p-5" style={{ background: '#242424' }}>
-                    <p className="text-sm text-white/60 leading-relaxed">
-                      Your opening relies on a generic statement that could belong to any applicant. Instead of telling the reader you've
-                      always been passionate, drop them into a specific moment that sparked your curiosity. The work experience paragraph
-                      describes what you did but never explains what it changed about your understanding. Admissions tutors want to see
-                      how your thinking evolved, not a timeline of activities. Your closing paragraph trails off without connecting back
-                      to your opening or pointing forward with conviction.
-                    </p>
-                  </div>
+                  {Object.values(CATEGORY_META).map((m, i) => (
+                    <div key={i} className="rounded-xl p-4" style={{ background: '#242424', border: `1px solid ${m.border}` }}>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: m.bg, color: m.color }}>{m.full}</span>
+                      <p className="text-sm text-white/60 mt-2">Your {m.short.toLowerCase()} section could be improved by adding more specific detail and connecting your experiences more directly to the course requirements.</p>
+                    </div>
+                  ))}
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center" style={{ top: '15%' }}>
+                <div className="absolute inset-0 flex items-center justify-center" style={{ top: '12%' }}>
                   <div className="text-center px-4">
                     <div className="relative rounded-2xl p-7 max-w-xs mx-auto overflow-hidden" style={{ background: '#242424' }}>
                       <div className="absolute inset-0 rounded-2xl" style={{ padding:'1px', background:'linear-gradient(135deg,#f96a50,#f59e0b,#f96a50,#f59e0b)', backgroundSize:'300% 300%', animation:'borderShift 4s ease infinite', mask:'linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)', maskComposite:'exclude', WebkitMaskComposite:'xor' }}/>
