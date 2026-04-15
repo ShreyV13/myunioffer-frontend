@@ -128,7 +128,8 @@ export default function RateMyPS() {
 
   const charCount = psText.length;
   const filtered = subject.length > 0 ? SUBJECT_SUGGESTIONS.filter(s => s.toLowerCase().includes(subject.toLowerCase())) : SUBJECT_SUGGESTIONS;
-  const hasPaidAccess = result ? (result.detailed_feedback !== null && result.detailed_feedback !== undefined && Array.isArray(result.detailed_feedback)) : false;
+  const isFree = tier === 'free';
+  const hasPaidAccess = !isFree;
 
   function handleSubmit() {
     setError('');
@@ -360,7 +361,7 @@ export default function RateMyPS() {
             )}
 
             {/* PAID: Structured Feedback */}
-            {hasPaidAccess && Array.isArray(result.detailed_feedback) && (
+            {hasPaidAccess && result.detailed_feedback && Array.isArray(result.detailed_feedback) && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mb-6">
                 <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-4">Detailed Feedback</p>
                 <div className="space-y-3">
@@ -379,29 +380,12 @@ export default function RateMyPS() {
                         onMouseLeave={() => { setActiveQuote(null); setActiveCategoryKey(null); }}
                         onClick={() => { setActiveQuote(isActive ? null : item.quote); setActiveCategoryKey(isActive ? null : item.category); }}
                       >
-                        {/* Category tag */}
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider" style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>
-                            {meta.full}
-                          </span>
-                          {result.category_scores && (
-                            <span className="text-[10px] font-bold tabular-nums" style={{ color: meta.color }}>
-                              {result.category_scores[item.category]}/20
-                            </span>
-                          )}
+                          <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider" style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>{meta.full}</span>
+                          {result.category_scores && <span className="text-[10px] font-bold tabular-nums" style={{ color: meta.color }}>{result.category_scores[item.category]}/20</span>}
                         </div>
-
-                        {/* Quote */}
-                        {item.quote && (
-                          <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: `2px solid ${meta.border}` }}>
-                            "{item.quote}"
-                          </p>
-                        )}
-
-                        {/* Feedback */}
+                        {item.quote && <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: `2px solid ${meta.border}` }}>"{item.quote}"</p>}
                         <p className="text-sm text-white/70 leading-relaxed mb-3">{item.feedback}</p>
-
-                        {/* Suggestion */}
                         {item.suggestion && (
                           <div className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
                             <ArrowRight className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" style={{ color: meta.color }} />
@@ -411,6 +395,26 @@ export default function RateMyPS() {
                       </motion.div>
                     );
                   })}
+                </div>
+              </motion.div>
+            )}
+
+            {/* PAID: String fallback (old cache format) */}
+            {hasPaidAccess && result.detailed_feedback && typeof result.detailed_feedback === 'string' && (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mb-6">
+                <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">Detailed Feedback</p>
+                <div className="rounded-xl p-5" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{result.detailed_feedback}</p>
+                </div>
+              </motion.div>
+            )}
+
+            {/* PAID: No feedback yet (stale cache from free tier) */}
+            {hasPaidAccess && !result.detailed_feedback && (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="mb-6">
+                <div className="rounded-xl p-5 text-center" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <p className="text-sm text-white/50 mb-3">Your detailed feedback wasn't loaded from cache. Rate your statement again to get the full breakdown.</p>
+                  <button onClick={handleReset} className="text-sm text-coral-400 hover:text-coral-300 font-medium transition-colors">Rate again</button>
                 </div>
               </motion.div>
             )}
