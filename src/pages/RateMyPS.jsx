@@ -78,22 +78,66 @@ function RadarChart({ scores, size = 280 }) {
   );
 }
 
-// ─── PS Text with Highlighting ──────────────────────────────────────
-function HighlightedPS({ text, activeQuote, activeCategoryKey }) {
-  if (!activeQuote || !text.toLowerCase().includes(activeQuote.toLowerCase())) {
+// ─── PS Text with All Highlights ────────────────────────────────────
+function HighlightedPS({ text, feedbackItems = [], activeQuote, activeCategoryKey }) {
+  if (!feedbackItems.length || !text) {
     return <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{text}</p>;
   }
-  const idx = text.toLowerCase().indexOf(activeQuote.toLowerCase());
-  const before = text.slice(0, idx);
-  const match = text.slice(idx, idx + activeQuote.length);
-  const after = text.slice(idx + activeQuote.length);
-  const meta = CATEGORY_META[activeCategoryKey] || { bg: 'rgba(249,106,80,0.2)', border: 'rgba(249,106,80,0.4)' };
+
+  // Build a list of all highlight regions (non-overlapping, first match wins)
+  const regions = [];
+  const textLower = text.toLowerCase();
+  for (const item of feedbackItems) {
+    if (!item.quote) continue;
+    const qLower = item.quote.toLowerCase();
+    const idx = textLower.indexOf(qLower);
+    if (idx === -1) continue;
+    // Check no overlap with existing regions
+    const end = idx + item.quote.length;
+    const overlaps = regions.some(r => !(end <= r.start || idx >= r.end));
+    if (!overlaps) {
+      regions.push({ start: idx, end, category: item.category, quote: item.quote });
+    }
+  }
+  regions.sort((a, b) => a.start - b.start);
+
+  if (regions.length === 0) {
+    return <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">{text}</p>;
+  }
+
+  // Build segments
+  const segments = [];
+  let cursor = 0;
+  for (const r of regions) {
+    if (cursor < r.start) segments.push({ text: text.slice(cursor, r.start), highlight: false });
+    const meta = CATEGORY_META[r.category] || CATEGORY_META.opening_and_hook;
+    const isActive = activeQuote === r.quote;
+    const hasAnyActive = !!activeQuote;
+    segments.push({
+      text: text.slice(r.start, r.end),
+      highlight: true,
+      meta,
+      isActive,
+      dimmed: hasAnyActive && !isActive,
+      category: r.category,
+    });
+    cursor = r.end;
+  }
+  if (cursor < text.length) segments.push({ text: text.slice(cursor), highlight: false });
 
   return (
     <p className="text-sm text-white/70 leading-relaxed whitespace-pre-wrap">
-      {before}
-      <span className="rounded px-0.5 py-0.5 transition-all duration-300" style={{ background: meta.bg, borderBottom: `2px solid ${meta.border}` }}>{match}</span>
-      {after}
+      {segments.map((seg, i) =>
+        seg.highlight ? (
+          <span key={i} data-highlighted className="rounded px-0.5 py-0.5 transition-all duration-300" style={{
+            background: seg.dimmed ? 'rgba(255,255,255,0.04)' : seg.meta.bg,
+            borderBottom: `2px solid ${seg.dimmed ? 'rgba(255,255,255,0.08)' : seg.meta.border}`,
+            opacity: seg.dimmed ? 0.5 : 1,
+          }}>{seg.text}</span>
+        ) : (
+          <span key={i}>{seg.text}</span>
+        )
+      )}
     </p>
   );
 }
@@ -322,7 +366,7 @@ export default function RateMyPS() {
               <button onClick={handleReset} className="text-xs text-coral-400 hover:text-coral-300 font-medium transition-colors">Rate another</button>
             </div>
             <div className="rounded-2xl p-6" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <HighlightedPS text={psText} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} />
+              <HighlightedPS text={psText} feedbackItems={hasPaidAccess && Array.isArray(result?.detailed_feedback) ? result.detailed_feedback : []} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} />
             </div>
           </div>
 
@@ -333,7 +377,7 @@ export default function RateMyPS() {
               <button onClick={() => setShowPsText(!showPsText)} className="w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-medium text-white/40" style={{ background: '#242424' }}>
                 <span>View your statement</span>{showPsText ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
-              {showPsText && <div className="mt-2 rounded-xl p-4" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}><HighlightedPS text={psText} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} /></div>}
+              {showPsText && <div className="mt-2 rounded-xl p-4" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}><HighlightedPS text={psText} feedbackItems={hasPaidAccess && Array.isArray(result?.detailed_feedback) ? result.detailed_feedback : []} activeQuote={activeQuote} activeCategoryKey={activeCategoryKey} /></div>}
             </div>
 
             {/* Score */}
