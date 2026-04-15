@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useAuth } from '../../contexts/AuthContext';
 import { 
@@ -22,6 +22,8 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.o
 export default function Pricing() {
   const { currentUser, userProfile } = useAuth();
   const [loading, setLoading] = useState(null);
+  const [searchParams] = useSearchParams();
+  const fromPage = searchParams.get('from');
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 0.2], [0, -30]);
 
@@ -152,7 +154,7 @@ export default function Pricing() {
           user_id: currentUser.uid,
           user_email: currentUser.email,
           plan_id: planId,
-          success_url: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+          success_url: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}${fromPage ? '&from=' + fromPage : ''}`,
           cancel_url: window.location.href
         })
       });

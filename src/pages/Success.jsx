@@ -15,7 +15,8 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.o
 export default function Success() {
   const [searchParams] = useSearchParams();
   const [status, setStatus] = useState('loading'); // loading, success, error
-  const [planName, setPlanName] = useState('');
+  const [planName, setPlanName] = useState("");
+  const fromPage = searchParams.get("from");
   const { currentUser, updateUserPlan } = useAuth();
 
   useEffect(() => {
@@ -101,7 +102,7 @@ export default function Success() {
               <p className="text-gray-600 mb-8">
                 Your subscription is now active. You have access to all the features included in your plan.
               </p>
-              <Link to="/chat" className="btn-primary w-full py-4">
+              <Link to={fromPage === "rate-my-ps" ? "/rate-my-ps" : "/chat"} className="btn-primary w-full py-4">
                 Start Coaching
                 <ArrowRight className="w-5 h-5" />
               </Link>
@@ -123,7 +124,7 @@ export default function Success() {
                 We couldn't verify your payment. If you were charged, please contact support and we'll sort it out.
               </p>
               <div className="space-y-3">
-                <Link to="/chat" className="btn-primary w-full py-4">
+                <Link to={fromPage === "rate-my-ps" ? "/rate-my-ps" : "/chat"} className="btn-primary w-full py-4">
                   Go to Chat
                 </Link>
                 <Link to="/pricing" className="btn-secondary w-full py-4">

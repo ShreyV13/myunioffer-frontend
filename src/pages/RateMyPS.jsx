@@ -395,20 +395,64 @@ export default function RateMyPS() {
             {/* FREE: Paywall */}
             {!hasPaidAccess && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="relative">
-                <div className="select-none mb-4" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
+                {/* Dense blurred content block */}
+                <div className="select-none" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
                   <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2 text-center">Category Breakdown</p>
                   <RadarChart scores={{ opening_and_hook: 9, academic_engagement: 11, experiences_and_reflection: 7, structure_and_flow: 12, voice_and_authenticity: 10 }} />
-                </div>
-                <div className="select-none space-y-3" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
-                  <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">Detailed Feedback</p>
-                  {Object.values(CATEGORY_META).map((m, i) => (
-                    <div key={i} className="rounded-xl p-4" style={{ background: '#242424', border: `1px solid ${m.border}` }}>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: m.bg, color: m.color }}>{m.full}</span>
-                      <p className="text-sm text-white/60 mt-2">Your {m.short.toLowerCase()} section could be improved by adding more specific detail and connecting your experiences more directly to the course requirements.</p>
+
+                  <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3 mt-4">Detailed Feedback</p>
+                  <div className="rounded-xl p-5 mb-3" style={{ background: '#242424' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: 'rgba(249,115,22,0.1)', color: '#f97316' }}>Opening & Hook</span>
+                      <span className="text-[10px] font-bold" style={{ color: '#f97316' }}>9/20</span>
                     </div>
-                  ))}
+                    <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: '2px solid rgba(249,115,22,0.25)' }}>"I have always been passionate about medicine since a young age"</p>
+                    <p className="text-sm text-white/60 mb-2">This opening is one of the most common first lines admissions tutors see. It tells them nothing specific about you. Hundreds of applicants start with nearly identical sentences, and most get filtered out immediately. The problem is not just the phrasing, it is that the sentence makes a claim without evidence. You say you have always been passionate, but the reader has no reason to believe you.</p>
+                    <div className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                      <p className="text-xs text-white/50"><span className="font-semibold" style={{ color: '#f97316' }}>Try this:</span> Replace the generic claim with a specific moment. What was the first time medicine stopped being an abstract idea and became real to you? Drop the reader into that scene in your first sentence.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-xl p-5 mb-3" style={{ background: '#242424' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: 'rgba(96,165,250,0.1)', color: '#60a5fa' }}>Academic Engagement</span>
+                      <span className="text-[10px] font-bold" style={{ color: '#60a5fa' }}>11/20</span>
+                    </div>
+                    <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: '2px solid rgba(96,165,250,0.25)' }}>"I have read books about medicine and watched documentaries"</p>
+                    <p className="text-sm text-white/60 mb-2">This tells the reader you have done some reading but gives them no evidence of intellectual engagement. Which books? What ideas in them challenged your thinking? Naming a specific book and engaging with one idea from it is worth more than vaguely referencing an entire category. Admissions tutors want to see a mind at work, not a reading list summary.</p>
+                    <div className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                      <p className="text-xs text-white/50"><span className="font-semibold" style={{ color: '#60a5fa' }}>Try this:</span> Pick one book or article that genuinely changed how you think about medicine. Name it, describe the specific idea, and explain what it made you question or understand differently.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-xl p-5 mb-3" style={{ background: '#242424' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: 'rgba(52,211,153,0.1)', color: '#34d399' }}>Experiences & Reflection</span>
+                      <span className="text-[10px] font-bold" style={{ color: '#34d399' }}>7/20</span>
+                    </div>
+                    <p className="text-xs text-white/40 italic mb-2 pl-3" style={{ borderLeft: '2px solid rgba(52,211,153,0.25)' }}>"I did work experience at a GP surgery where I shadowed a doctor"</p>
+                    <p className="text-sm text-white/60 mb-2">You describe the experience but never reflect on it. What did you actually observe that surprised you or changed your understanding? Right now this reads like a CV entry: you were there, you saw things, it was interesting. The gap between what you did and what you learned is where your statement would come alive.</p>
+                    <div className="flex items-start gap-2 rounded-lg px-3 py-2" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                      <p className="text-xs text-white/50"><span className="font-semibold" style={{ color: '#34d399' }}>Try this:</span> Pick one specific moment from the GP surgery. Describe what happened, what you expected, what actually happened, and what that taught you about medicine as a career.</p>
+                    </div>
+                  </div>
+                  <div className="rounded-xl p-5 mb-3" style={{ background: '#242424' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: 'rgba(167,139,250,0.1)', color: '#a78bfa' }}>Structure & Flow</span>
+                    </div>
+                    <p className="text-sm text-white/60 mb-2">The statement reads as a list of disconnected activities rather than a cohesive narrative. Each sentence introduces a new topic without connecting it to what came before. There is no arc from what sparked your interest through what deepened it.</p>
+                  </div>
+                  <div className="rounded-xl p-5" style={{ background: '#242424' }}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold" style={{ background: 'rgba(251,191,36,0.1)', color: '#fbbf24' }}>Voice & Authenticity</span>
+                    </div>
+                    <p className="text-sm text-white/60">The language feels generic throughout. Phrases like "hardworking and caring" and "I believe I would make a good doctor" could appear in any applicant's statement. An admissions tutor reading this would not remember it after fifty others.</p>
+                  </div>
                 </div>
-                <div className="absolute inset-0 flex items-center justify-center" style={{ top: '12%' }}>
+
+                {/* Fade at bottom suggesting more content */}
+                <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none" style={{ background: 'linear-gradient(transparent, #1a1a1a)' }} />
+
+                {/* CTA overlay */}
+                <div className="absolute inset-0 flex items-center justify-center" style={{ top: '18%' }}>
                   <div className="text-center px-4">
                     <div className="relative rounded-2xl p-7 max-w-xs mx-auto overflow-hidden" style={{ background: '#242424' }}>
                       <div className="absolute inset-0 rounded-2xl" style={{ padding:'1px', background:'linear-gradient(135deg,#f96a50,#f59e0b,#f96a50,#f59e0b)', backgroundSize:'300% 300%', animation:'borderShift 4s ease infinite', mask:'linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0)', maskComposite:'exclude', WebkitMaskComposite:'xor' }}/>
@@ -417,7 +461,7 @@ export default function RateMyPS() {
                         <Lock className="w-7 h-7 text-coral-400 mx-auto mb-3" />
                         <h3 className="font-display font-bold text-white text-base mb-2">See how to improve your score</h3>
                         <p className="text-white/40 text-xs mb-5 leading-relaxed">Category breakdown, paragraph-by-paragraph feedback, and the 3 changes that would make the biggest difference.</p>
-                        <Link to="/pricing" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3 px-5 rounded-xl shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm">
+                        <Link to="/pricing?from=rate-my-ps" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3 px-5 rounded-xl shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm">
                           Unlock Full Feedback <ArrowRight className="w-4 h-4" />
                         </Link>
                         <p className="text-xs text-white/20 mt-3">From £9.99/month. Cancel anytime.</p>
