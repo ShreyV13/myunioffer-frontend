@@ -153,11 +153,13 @@ export default function RateMyPS() {
     if (pageState !== 'scoring') return;
     const startTime = scoringStartRef.current || Date.now();
     let apiReturnedAt = null;
+    let progressAtApiReturn = 0;
     function tick() {
       const now = Date.now(), totalElapsed = now - startTime, hasResult = apiReturned.current, target = targetScoreRef.current;
-      if (hasResult && !apiReturnedAt) apiReturnedAt = now;
+      if (hasResult && !apiReturnedAt) { apiReturnedAt = now; progressAtApiReturn = Math.min(1 - Math.pow(1 - totalElapsed / 40000, 3), 0.90) * 100; }
+      // Progress: smooth from current position, no jumps
       if (!hasResult) { setProgress(Math.min(1 - Math.pow(1 - totalElapsed / 40000, 3), 0.90) * 100); }
-      else { const since = now - apiReturnedAt; setProgress(Math.min(90 + 10 * (since / 16000), landed ? 100 : 99)); }
+      else { const since = now - apiReturnedAt; const remaining = 100 - progressAtApiReturn; setProgress(Math.min(progressAtApiReturn + remaining * (since / 18000), landed ? 100 : 99.5)); }
       setScanLine((totalElapsed / 5000) % 1 * 100);
       if (!hasResult) { rangeRef.current = Math.max(rangeRef.current - 0.06, 28); }
       else { rangeRef.current = Math.max(rangeRef.current - 0.35, 0); }
