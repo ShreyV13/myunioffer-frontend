@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { GraduationCap, ArrowRight, Lock, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
+import { GraduationCap, ArrowRight, Lock, ArrowLeft, ChevronDown, ChevronUp, Settings, User, Crown, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -101,7 +101,7 @@ function HighlightedPS({ text, activeQuote, activeCategoryKey }) {
 
 // ═══════════════════════════════════════════════════════════════════════
 export default function RateMyPS() {
-  const { currentUser, userProfile } = useAuth();
+  const { currentUser, userProfile, logout } = useAuth();
   const navigate = useNavigate();
   const tier = userProfile?.plan || 'free';
 
@@ -210,9 +210,32 @@ export default function RateMyPS() {
             <div className="w-9 h-9 gradient-primary rounded-xl flex items-center justify-center"><GraduationCap className="w-4.5 h-4.5 text-white" /></div>
             <span className="text-lg font-display font-bold text-white">myuni<span className="text-coral-500">offer</span> <span className="text-white/40">ai</span></span>
           </Link>
-          <div className="flex items-center gap-4">
-            {currentUser && <Link to="/chat" className="text-white/50 hover:text-white/80 transition-colors font-medium text-sm flex items-center gap-1.5"><ArrowLeft className="w-4 h-4" /> Chat</Link>}
-            {!currentUser && <Link to="/signup" className="gradient-primary text-white font-semibold text-sm px-4 py-2 rounded-xl">Sign Up Free</Link>}
+          <div className="flex items-center gap-3">
+            {currentUser ? (
+              <>
+                <Link to="/chat" className="text-white/40 hover:text-white/70 transition-colors text-sm flex items-center gap-1.5">
+                  <ArrowLeft className="w-3.5 h-3.5" /> Chat
+                </Link>
+                <div className="w-px h-4" style={{ background: 'rgba(255,255,255,0.1)' }} />
+                {tier !== 'free' ? (
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider" style={{ background: 'rgba(249,106,80,0.15)', color: '#f96a50' }}>
+                    <Crown className="w-3 h-3" /> {tier === 'premium' ? 'Premium' : tier.toUpperCase()}
+                  </span>
+                ) : (
+                  <Link to="/pricing" className="flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider text-white/30 hover:text-coral-400 transition-colors" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                    Free Plan
+                  </Link>
+                )}
+                <Link to="/settings" className="text-white/30 hover:text-white/60 transition-colors">
+                  <Settings className="w-4 h-4" />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="text-white/50 hover:text-white/80 transition-colors font-medium text-sm">Log In</Link>
+                <Link to="/signup" className="gradient-primary text-white font-semibold text-sm px-4 py-2 rounded-xl">Sign Up Free</Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
