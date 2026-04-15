@@ -168,15 +168,42 @@ export default function DraftBuilder() {
         </div>
       )}
 
-      {/* ═══ ERROR ═══ */}
+      {/* ═══ ERROR / EMPTY STATE ═══ */}
       {pageState === 'error' && (
-        <div className="flex-1 flex items-center justify-center px-6">
-          <div className="text-center max-w-md">
-            <AlertTriangle className="w-8 h-8 text-amber-400 mx-auto mb-4" />
-            <p className="text-sm text-white/60 mb-6">{error}</p>
-            <Link to="/chat" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3 px-5 rounded-xl text-sm">
-              Go to coach <ArrowRight className="w-4 h-4" />
+        <div className="flex-1 flex items-center justify-center px-6 py-16">
+          <div className="text-center max-w-lg">
+            <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center" style={{ background: 'rgba(249,106,80,0.1)', border: '1px solid rgba(249,106,80,0.2)' }}>
+              <Sparkles className="w-7 h-7 text-coral-400" />
+            </div>
+            <h2 className="text-xl font-display font-bold text-white mb-3">Your Draft Builder isn't ready yet</h2>
+            <p className="text-sm text-white/50 leading-relaxed mb-6">
+              The Draft Builder works by turning your coaching conversations into a structured starting point for your personal statement. It needs material to work with: your subject, experiences, reflections, and academic interests.
+            </p>
+            <div className="rounded-xl p-5 mb-6 text-left" style={{ background: '#242424', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3">How to unlock it</p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5" style={{ background: 'rgba(249,106,80,0.15)', color: '#f96a50' }}>1</span>
+                  <p className="text-sm text-white/50">Chat with the coach about what subject you're applying for and why</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5" style={{ background: 'rgba(249,106,80,0.15)', color: '#f96a50' }}>2</span>
+                  <p className="text-sm text-white/50">Tell it about your experiences: work experience, volunteering, projects, books you've read</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5" style={{ background: 'rgba(249,106,80,0.15)', color: '#f96a50' }}>3</span>
+                  <p className="text-sm text-white/50">Reflect on what those experiences taught you. The coach will help draw this out</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5" style={{ background: 'rgba(249,106,80,0.15)', color: '#f96a50' }}>4</span>
+                  <p className="text-sm text-white/50">Come back here and your material will be ready to build with</p>
+                </div>
+              </div>
+            </div>
+            <Link to="/chat" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3.5 px-6 rounded-xl text-sm shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+              Start coaching <ArrowRight className="w-4 h-4" />
             </Link>
+            <p className="text-xs text-white/20 mt-4">Usually takes 5-10 minutes of conversation</p>
           </div>
         </div>
       )}
