@@ -332,7 +332,8 @@ export default function Chat() {
                 if (data.profile_updates) {
                   const updates = data.profile_updates;
                   if (updates.subject || updates.universities?.length > 0 || updates.activities?.length > 0) {
-                    await updateStudentProfile(currentUser.uid, updates);
+                    const cleanUpdates = Object.fromEntries(Object.entries(updates).filter(([_, v]) => v !== undefined && v !== null));
+                    if (Object.keys(cleanUpdates).length > 0) await updateStudentProfile(currentUser.uid, cleanUpdates);
                   }
                 }
                 await incrementMessageCount(currentUser.uid, mode);
