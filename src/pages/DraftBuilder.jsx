@@ -233,6 +233,7 @@ export default function DraftBuilder() {
   const [brief, setBrief] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [buildError, setBuildError] = useState('');
   const [scaffoldLoading, setScaffoldLoading] = useState(false);
   const [scaffold, setScaffold] = useState(null);
   const [annotations, setAnnotations] = useState([]);
@@ -309,8 +310,8 @@ export default function DraftBuilder() {
     fetch(`${API_BASE}/generate-ps`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: currentUser.uid, tier, section_assignments: Object.keys(sa).length > 0 ? sa : null }) })
       .then(res => { if (!res.ok) return res.json().then(d => { throw new Error(d.detail || 'Build failed'); }); return res.json(); })
-      .then(data => { setScaffold(data.sections); setAnnotations(data.annotations || []); setScaffoldLoading(false); setStep(2); })
-      .catch(err => { setError(err.message); setScaffoldLoading(false); });
+      .then(data => { setScaffold(data.sections); setAnnotations(data.annotations || []); setScaffoldLoading(false); setBuildError(''); setStep(2); })
+      .catch(err => { setBuildError(err.message); setScaffoldLoading(false); });
   }
 
   // Track dragover for visual feedback
@@ -468,12 +469,20 @@ export default function DraftBuilder() {
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <button onClick={() => setStep(0)} className="text-sm text-white/30 hover:text-white/50 transition-colors flex items-center gap-1.5"><ArrowLeft className="w-3.5 h-3.5" /> Back</button>
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/25">{totalAssigned}/{totalCards} placed</span>
-                    <button onClick={handleBuild} disabled={scaffoldLoading || totalAssigned === 0}
+                  <div className="flex flex-col items-end gap-2">
+                    {buildError && (
+                      <div className="rounded-lg px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }}>
+                        <AlertTriangle className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+                        <p className="text-xs text-red-300">{buildError}</p>
+                      </div>
+                    )}
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-white/25">{totalAssigned}/{totalCards} placed</span>
+                      <button onClick={handleBuild} disabled={scaffoldLoading || totalAssigned === 0}
                       className="gradient-primary text-white font-semibold py-3 px-6 rounded-xl text-sm shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-30 disabled:cursor-not-allowed inline-flex items-center gap-2">
                       {scaffoldLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Building...</> : <><Zap className="w-4 h-4" /> Build my draft</>}
                     </button>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -496,10 +505,16 @@ export default function DraftBuilder() {
                       expanded={expandedSection === key} onToggle={() => setExpandedSection(expandedSection === key ? null : key)} />
                   ))}
                 </div>
+                {buildError && (
+                  <div className="mb-4 rounded-lg px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }}>
+                    <AlertTriangle className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+                    <p className="text-xs text-red-300">{buildError}</p>
+                  </div>
+                )}
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <button onClick={() => setStep(1)} className="text-sm text-white/30 hover:text-white/50 transition-colors flex items-center gap-1.5"><ArrowLeft className="w-3.5 h-3.5" /> Rearrange</button>
                   <div className="flex items-center gap-3">
-                    <button onClick={() => { setScaffold(null); handleBuild(); }} disabled={scaffoldLoading} className="text-sm text-coral-400 hover:text-coral-300 font-medium transition-colors flex items-center gap-1.5 disabled:opacity-30"><RotateCcw className="w-3.5 h-3.5" /> Rebuild</button>
+                    <button onClick={() => { setBuildError(''); handleBuild(); }} disabled={scaffoldLoading} className="text-sm text-coral-400 hover:text-coral-300 font-medium transition-colors flex items-center gap-1.5 disabled:opacity-30"><RotateCcw className="w-3.5 h-3.5" /> Rebuild</button>
                     <Link to="/rate-my-ps" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3 px-5 rounded-xl text-sm shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Rate my draft <ArrowRight className="w-4 h-4" /></Link>
                   </div>
                 </div>
