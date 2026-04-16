@@ -89,14 +89,28 @@ function HighlightedPS({ text, feedbackItems = [], activeQuote, activeCategoryKe
   const textLower = text.toLowerCase();
   for (const item of feedbackItems) {
     if (!item.quote) continue;
-    const qLower = item.quote.toLowerCase();
-    const idx = textLower.indexOf(qLower);
-    if (idx === -1) continue;
-    // Check no overlap with existing regions
-    const end = idx + item.quote.length;
-    const overlaps = regions.some(r => !(end <= r.start || idx >= r.end));
-    if (!overlaps) {
-      regions.push({ start: idx, end, category: item.category, quote: item.quote });
+    let q = item.quote;
+    // If quote contains "..." split and try to match the longest fragment
+    if (q.includes('...')) {
+      const fragments = q.split('...').map(f => f.trim()).filter(f => f.length > 10);
+      let bestIdx = -1, bestLen = 0, bestFrag = '';
+      for (const frag of fragments) {
+        const fi = textLower.indexOf(frag.toLowerCase());
+        if (fi !== -1 && frag.length > bestLen) { bestIdx = fi; bestLen = frag.length; bestFrag = frag; }
+      }
+      if (bestIdx !== -1) {
+        const end = bestIdx + bestLen;
+        const overlaps = regions.some(r => !(end <= r.start || bestIdx >= r.end));
+        if (!overlaps) regions.push({ start: bestIdx, end, category: item.category, quote: item.quote });
+      }
+    } else {
+      const qLower = q.toLowerCase();
+      const idx = textLower.indexOf(qLower);
+      if (idx !== -1) {
+        const end = idx + q.length;
+        const overlaps = regions.some(r => !(end <= r.start || idx >= r.end));
+        if (!overlaps) regions.push({ start: idx, end, category: item.category, quote: item.quote });
+      }
     }
   }
   regions.sort((a, b) => a.start - b.start);
