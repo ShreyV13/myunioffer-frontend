@@ -27,6 +27,35 @@ const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.o
 export default function Chat() {
   const [chats, setChats] = useState([]);
   const chatsRef = useRef([]);
+  const wordQueueRef = useRef([]);
+  const smoothTextRef = useRef('');
+  const smoothAgentRef = useRef('');
+  const smoothSubjRef = useRef(null);
+
+  // Smooth streaming: drain word queue at fixed rate
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (wordQueueRef.current.length > 0) {
+        // Take up to 2 words per tick for natural pacing
+        const batch = wordQueueRef.current.splice(0, 1);
+        smoothTextRef.current += batch.join('');
+        setMessages(prev => {
+          const updated = [...prev];
+          if (updated.length > 0 && updated[updated.length - 1].role === 'assistant') {
+            updated[updated.length - 1] = {
+              role: 'assistant',
+              content: smoothTextRef.current,
+              agent: smoothAgentRef.current,
+              detectedSubject: smoothSubjRef.current
+            };
+          }
+          return updated;
+        });
+      }
+    }, 45);
+    return () => clearInterval(interval);
+  }, []);
+
   const [currentChatId, setCurrentChatId] = useState(null);
   const [thinking, setThinking] = useState(false);
   const [showInputMenu, setShowInputMenu] = useState(false);
@@ -274,6 +303,8 @@ export default function Chat() {
       let detectedSubj = null;
 
       // Add empty assistant message that we'll update
+      smoothTextRef.current = '';
+      wordQueueRef.current = [];
       setMessages(prev => [...prev, { role: 'assistant', content: '', agent: '' }]);
 
       while (true) {
@@ -291,6 +322,8 @@ export default function Chat() {
               if (data.type === 'meta') {
                 agentName = data.agent;
                 detectedSubj = data.detected_subject;
+                smoothAgentRef.current = data.agent || '';
+                smoothSubjRef.current = data.detected_subject;
                 if (detectedSubj || data.detected_category) {
                   const subject = detectedSubj || data.detected_category;
                   setUserSubject(subject);
@@ -315,21 +348,20 @@ export default function Chat() {
                   await new Promise(resolve => setTimeout(resolve, 15000));
                   // Start a new message for the final reveal
                   streamedText = '';
+                  smoothTextRef.current = '';
+                  wordQueueRef.current = [];
                   setMessages(prev => [...prev, { role: 'assistant', content: '', agent: agentName }]);
                 } else {
                   streamedText += data.text;
-                  setMessages(prev => {
-                    const updated = [...prev];
-                    updated[updated.length - 1] = {
-                      role: 'assistant',
-                      content: streamedText,
-                      agent: agentName,
-                      detectedSubject: detectedSubj
-                    };
-                    return updated;
-                  });
+                  // Queue words for smooth display instead of dumping chunks
+                  const words = data.text.split(/(?<=\s)/);
+                  wordQueueRef.current.push(...words);
                 }
               } else if (data.type === 'done') {
+                // Wait for word queue to drain smoothly instead of flushing
+                while (wordQueueRef.current.length > 0) {
+                  await new Promise(r => setTimeout(r, 50));
+                }
                 if (data.usage) {
                   setUsage({ used: data.usage.used || 0, limit: data.usage.limit || 3 });
                 }
@@ -710,7 +742,7 @@ export default function Chat() {
               <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
                 <div className="relative">
                   <button type="button" onClick={() => setShowInputMenu(!showInputMenu)} className="p-1.5 text-white/40 hover:text-white/70 hover:bg-white/8 rounded-md transition-colors" title="Options">
-                    <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />
+                    {thinking && !showInputMenu ? <Zap className="w-3.5 h-3.5" style={{color: '#f07a62'}} /> : <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />}
                   </button>
                   {showInputMenu && (
                     <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl py-2 shadow-xl" style={{background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.1)'}}>
