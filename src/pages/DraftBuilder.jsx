@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { GraduationCap, ArrowRight, ArrowLeft, Sparkles, AlertTriangle, Check, ChevronDown, ChevronUp, Loader2, Settings, Crown, BookOpen, Briefcase, Star, Lightbulb, Zap, PenTool, X, RotateCcw, GripVertical } from 'lucide-react';
+import { GraduationCap, ArrowRight, ArrowLeft, Sparkles, AlertTriangle, Check, Loader2, Settings, Crown, BookOpen, Briefcase, Star, Lightbulb, Zap, PenTool, X, RotateCcw, GripVertical } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -150,7 +150,7 @@ function DropZone({ sectionKey, cards, onDropCard, onStar, onRemove, onDragStart
   );
 }
 
-function ScaffoldSection({ sectionKey, text, annotations, expanded, onToggle }) {
+function ScaffoldSection({ sectionKey, text, annotations, index }) {
   const meta = SECTIONS[sectionKey];
   if (!meta) return null;
   const parts = (text || '').split(/(\[EXPAND[^\]]*\])/g);
@@ -159,65 +159,72 @@ function ScaffoldSection({ sectionKey, text, annotations, expanded, onToggle }) 
   const fillPct = Math.min(cleanChars / meta.target * 100, 100);
 
   return (
-    <motion.div className="rounded-2xl overflow-hidden relative"
-      style={{ border: `1px solid ${expanded ? meta.border : 'rgba(255,255,255,0.06)'}` }}
-      initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-      {expanded && <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% 0%, ${meta.glow} 0%, transparent 50%)` }} />}
+    <motion.div className="relative mb-16" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.15 }}>
+      {/* Large background number */}
+      <div className="absolute -top-6 -left-2 select-none pointer-events-none" style={{ fontSize: '120px', fontWeight: 800, lineHeight: 1, color: meta.color, opacity: 0.04 }}>
+        0{meta.num}
+      </div>
 
-      <button className="w-full px-5 py-4 flex items-center justify-between relative z-10" onClick={onToggle} style={{ background: expanded ? meta.bg : 'rgba(255,255,255,0.02)' }}>
-        <div className="flex items-center gap-3">
-          <span className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: meta.bg, color: meta.color, border: `1px solid ${meta.border}` }}>{meta.num}</span>
-          <div>
-            <span className="text-sm font-semibold text-white/80 block text-left">{meta.title}</span>
-            <div className="flex items-center gap-2 mt-1">
-              <div className="w-20 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
-                <div className="h-full rounded-full" style={{ background: meta.color, width: `${fillPct}%`, transition: 'width 0.5s' }} />
-              </div>
-              <span className="text-[10px] tabular-nums" style={{ color: meta.color }}>{cleanChars}/{meta.target}</span>
-            </div>
-          </div>
+      {/* Section header */}
+      <div className="relative z-10 mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-1 h-8 rounded-full" style={{ background: meta.color }} />
+          <h2 className="text-lg font-display font-bold" style={{ color: meta.color }}>{meta.title}</h2>
         </div>
-        {expanded ? <ChevronUp className="w-4 h-4 text-white/30" /> : <ChevronDown className="w-4 h-4 text-white/30" />}
-      </button>
+        {/* Character bar */}
+        <div className="flex items-center gap-3 ml-4 pl-3">
+          <div className="w-32 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <motion.div className="h-full rounded-full" style={{ background: meta.color }} initial={{ width: 0 }} animate={{ width: `${fillPct}%` }} transition={{ duration: 0.8, delay: 0.3 }} />
+          </div>
+          <span className="text-xs tabular-nums" style={{ color: meta.color, opacity: 0.5 }}>{cleanChars} / {meta.target} chars</span>
+        </div>
+      </div>
 
-      <AnimatePresence>
-        {expanded && (
-          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>
-            <div className="px-5 pb-5 relative z-10">
-              {sectionAnns.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {sectionAnns.map((ann, i) => (
-                    <span key={i} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-medium"
-                      style={{ background: ann.type === 'strength' ? 'rgba(52,211,153,0.1)' : ann.type === 'gap' ? 'rgba(251,191,36,0.1)' : 'rgba(248,113,113,0.1)', color: ann.type === 'strength' ? '#34d399' : ann.type === 'gap' ? '#fbbf24' : '#f87171', border: `1px solid ${ann.type === 'strength' ? 'rgba(52,211,153,0.2)' : ann.type === 'gap' ? 'rgba(251,191,36,0.2)' : 'rgba(248,113,113,0.2)'}` }}>
-                      {ann.type === 'strength' ? <Check className="w-3 h-3" /> : <AlertTriangle className="w-3 h-3" />}
-                      {ann.text}
-                    </span>
-                  ))}
-                </div>
-              )}
-              <div className="rounded-xl p-5 relative overflow-hidden" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <div className="absolute left-0 top-0 bottom-0 w-0.5" style={{ background: meta.color, opacity: 0.4 }} />
-                <div className="text-sm leading-[1.8] pl-3">
-                  {parts.map((part, i) => {
-                    if (part.startsWith('[EXPAND')) {
-                      const instruction = part.replace('[EXPAND:', '').replace('[EXPAND', '').replace(']', '').trim();
-                      return (
-                        <motion.span key={i} className="block my-2 px-3 py-2.5 rounded-xl text-xs leading-relaxed"
-                          initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.05 }}
-                          style={{ background: `linear-gradient(135deg, ${meta.bg}, rgba(255,255,255,0.02))`, border: `1px solid ${meta.border}` }}>
-                          <PenTool className="w-3 h-3 inline mr-1.5 -mt-0.5" style={{ color: meta.color }} />
-                          <span style={{ color: meta.color, opacity: 0.8 }}>{instruction || 'Expand this section in your own words.'}</span>
-                        </motion.span>
-                      );
-                    }
-                    return <span key={i} className="text-white/65">{part}</span>;
-                  })}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Annotations */}
+      {sectionAnns.length > 0 && (
+        <div className="relative z-10 mb-5 ml-4 pl-3 space-y-2">
+          {sectionAnns.map((ann, i) => {
+            const annColor = ann.type === 'strength' ? '#34d399' : ann.type === 'gap' ? '#fbbf24' : '#f87171';
+            const annBg = ann.type === 'strength' ? 'rgba(52,211,153,0.06)' : ann.type === 'gap' ? 'rgba(251,191,36,0.06)' : 'rgba(248,113,113,0.06)';
+            return (
+              <motion.div key={i} className="flex items-start gap-2.5 py-2 px-3 rounded-lg"
+                style={{ background: annBg }}
+                initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + i * 0.1 }}>
+                {ann.type === 'strength' ? <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: annColor }} /> : <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: annColor }} />}
+                <p className="text-sm leading-relaxed" style={{ color: annColor }}>{ann.text}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Scaffold text */}
+      <div className="relative z-10 ml-4 pl-3" style={{ borderLeft: `2px solid ${meta.border}` }}>
+        <div className="pl-5">
+          {parts.map((part, i) => {
+            if (part.startsWith('[EXPAND')) {
+              const instruction = part.replace('[EXPAND:', '').replace('[EXPAND', '').replace(']', '').trim();
+              return (
+                <motion.div key={i} className="my-5 py-4 px-5 rounded-xl relative overflow-hidden"
+                  initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + i * 0.05 }}
+                  style={{ background: `linear-gradient(135deg, ${meta.bg}, transparent)` }}>
+                  <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full" style={{ background: meta.color }} />
+                  <div className="flex items-start gap-3">
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: meta.bg }}>
+                      <PenTool className="w-3.5 h-3.5" style={{ color: meta.color }} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold mb-1" style={{ color: meta.color }}>Your turn</p>
+                      <p className="text-sm leading-relaxed" style={{ color: meta.color, opacity: 0.7 }}>{instruction || 'Expand this section in your own words.'}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            }
+            return <p key={i} className="text-[15px] text-white/70 leading-[1.9] mb-1">{part}</p>;
+          })}
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -237,7 +244,6 @@ export default function DraftBuilder() {
   const [scaffoldLoading, setScaffoldLoading] = useState(false);
   const [scaffold, setScaffold] = useState(null);
   const [annotations, setAnnotations] = useState([]);
-  const [expandedSection, setExpandedSection] = useState('motivation');
 
   const [pool, setPool] = useState([]);
   const [assigned, setAssigned] = useState({ motivation: [], preparation: [], experiences: [] });
@@ -491,27 +497,28 @@ export default function DraftBuilder() {
             {/* ═══ STEP 2: DRAFT ═══ */}
             {step === 2 && scaffold && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="text-center mb-6">
+                <div className="text-center mb-10">
                   <h1 className="text-2xl lg:text-3xl font-display font-bold text-white mb-2">Your draft scaffold</h1>
-                  <p className="text-white/35 text-sm">Expand the highlighted prompts. Rewrite in your voice. This is your starting point.</p>
+                  <p className="text-white/35 text-sm max-w-lg mx-auto">Expand the coaching prompts. Fill in your details. Rewrite every section in your own voice. This is a starting point, not a submission.</p>
                 </div>
-                <div className="mb-6 rounded-xl px-4 py-3 flex items-start gap-3" style={{ background: 'rgba(96,165,250,0.05)', border: '1px solid rgba(96,165,250,0.12)' }}>
+
+                <div className="mb-10 flex items-start gap-3 py-3 px-4 rounded-xl" style={{ background: 'rgba(96,165,250,0.04)', borderLeft: '3px solid rgba(96,165,250,0.3)' }}>
                   <Zap className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-blue-300/70">This is a scaffold built from your arrangement. Expand each section, replace generic phrasing, and use Rate My PS to check your score.</p>
+                  <p className="text-sm text-blue-300/60 leading-relaxed">Built from your coaching conversations and the arrangement you chose. Look for the "Your turn" prompts. Those are where your voice goes.</p>
                 </div>
-                <div className="space-y-3 mb-8">
-                  {Object.keys(SECTIONS).map(key => (
-                    <ScaffoldSection key={key} sectionKey={key} text={scaffold[key]} annotations={annotations}
-                      expanded={expandedSection === key} onToggle={() => setExpandedSection(expandedSection === key ? null : key)} />
-                  ))}
-                </div>
+
+                {/* All sections visible, no collapsing */}
+                {Object.keys(SECTIONS).map((key, i) => (
+                  <ScaffoldSection key={key} sectionKey={key} text={scaffold[key]} annotations={annotations} index={i} />
+                ))}
+
                 {buildError && (
                   <div className="mb-4 rounded-lg px-3 py-2 flex items-center gap-2" style={{ background: 'rgba(248,113,113,0.08)', border: '1px solid rgba(248,113,113,0.15)' }}>
                     <AlertTriangle className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
                     <p className="text-xs text-red-300">{buildError}</p>
                   </div>
                 )}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                   <button onClick={() => setStep(1)} className="text-sm text-white/30 hover:text-white/50 transition-colors flex items-center gap-1.5"><ArrowLeft className="w-3.5 h-3.5" /> Rearrange</button>
                   <div className="flex items-center gap-3">
                     <button onClick={() => { setBuildError(''); handleBuild(); }} disabled={scaffoldLoading} className="text-sm text-coral-400 hover:text-coral-300 font-medium transition-colors flex items-center gap-1.5 disabled:opacity-30"><RotateCcw className="w-3.5 h-3.5" /> Rebuild</button>
