@@ -19,11 +19,11 @@ function getBand(score) {
 }
 
 const CATEGORY_META = {
-  opening_and_hook:            { short: 'Opening',    full: 'Opening & Hook',            color: '#f97316', bg: 'rgba(249,115,22,0.10)', border: 'rgba(249,115,22,0.25)' },
-  academic_engagement:         { short: 'Academic',   full: 'Academic Engagement',        color: '#60a5fa', bg: 'rgba(96,165,250,0.10)', border: 'rgba(96,165,250,0.25)' },
-  experiences_and_reflection:  { short: 'Reflection', full: 'Experiences & Reflection',   color: '#34d399', bg: 'rgba(52,211,153,0.10)', border: 'rgba(52,211,153,0.25)' },
-  structure_and_flow:          { short: 'Structure',  full: 'Structure & Flow',           color: '#a78bfa', bg: 'rgba(167,139,250,0.10)', border: 'rgba(167,139,250,0.25)' },
-  voice_and_authenticity:      { short: 'Voice',      full: 'Voice & Authenticity',       color: '#fbbf24', bg: 'rgba(251,191,36,0.10)', border: 'rgba(251,191,36,0.25)' },
+  opening_and_hook:            { short: 'Opening',    full: 'Opening & Hook',            color: '#f97316', bg: 'rgba(249,115,22,0.20)', border: 'rgba(249,115,22,0.50)' },
+  academic_engagement:         { short: 'Academic',   full: 'Academic Engagement',        color: '#60a5fa', bg: 'rgba(96,165,250,0.20)', border: 'rgba(96,165,250,0.50)' },
+  experiences_and_reflection:  { short: 'Reflection', full: 'Experiences & Reflection',   color: '#34d399', bg: 'rgba(52,211,153,0.20)', border: 'rgba(52,211,153,0.50)' },
+  structure_and_flow:          { short: 'Structure',  full: 'Structure & Flow',           color: '#a78bfa', bg: 'rgba(167,139,250,0.20)', border: 'rgba(167,139,250,0.50)' },
+  voice_and_authenticity:      { short: 'Voice',      full: 'Voice & Authenticity',       color: '#fbbf24', bg: 'rgba(251,191,36,0.20)', border: 'rgba(251,191,36,0.50)' },
 };
 const CATEGORY_KEYS = Object.keys(CATEGORY_META);
 
@@ -242,10 +242,7 @@ export default function RateMyPS() {
 
   // Scroll PS to highlighted quote
   useEffect(() => {
-    if (activeQuote && psLeftRef.current) {
-      const highlighted = psLeftRef.current.querySelector('[data-highlighted]');
-      if (highlighted) highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    // Scroll only disabled - click highlights without jumping
   }, [activeQuote]);
 
   useEffect(() => {
@@ -434,8 +431,6 @@ export default function RateMyPS() {
                           background: isActive ? meta.bg : '#242424',
                           border: `1px solid ${isActive ? meta.border : 'rgba(255,255,255,0.06)'}`,
                         }}
-                        onMouseEnter={() => { setActiveQuote(item.quote); setActiveCategoryKey(item.category); }}
-                        onMouseLeave={() => { setActiveQuote(null); setActiveCategoryKey(null); }}
                         onClick={() => { setActiveQuote(isActive ? null : item.quote); setActiveCategoryKey(isActive ? null : item.category); }}
                       >
                         <div className="flex items-center gap-2 mb-2">
