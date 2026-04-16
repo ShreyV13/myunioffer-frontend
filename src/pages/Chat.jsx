@@ -18,7 +18,8 @@ import {
   Crown,
   Trash2,
   AlertCircle,
-  RefreshCw
+  RefreshCw,
+  Zap
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -27,6 +28,8 @@ export default function Chat() {
   const [chats, setChats] = useState([]);
   const chatsRef = useRef([]);
   const [currentChatId, setCurrentChatId] = useState(null);
+  const [thinking, setThinking] = useState(false);
+  const [showInputMenu, setShowInputMenu] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -227,7 +230,8 @@ export default function Chat() {
           user_id: currentUser.uid,
           tier: userProfile?.plan || 'free',
           subject: userSubject,
-          student_profile: studentProfile
+          student_profile: studentProfile,
+          thinking: thinking
         })
       });
 
@@ -704,9 +708,37 @@ export default function Chat() {
                 className="w-full bg-transparent border-none outline-none resize-none text-white placeholder-white/40 text-[15px] leading-relaxed px-4 pt-3.5 pb-12 max-h-[150px]"
                 rows={1} disabled={loading} />
               <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
-                <button type="button" onClick={handleNewChat} className="p-1.5 text-white/40 hover:text-white/70 hover:bg-white/8 rounded-md transition-colors" title="New chat">
-                  <Plus className="w-4 h-4" />
-                </button>
+                <div className="relative">
+                  <button type="button" onClick={() => setShowInputMenu(!showInputMenu)} className="p-1.5 text-white/40 hover:text-white/70 hover:bg-white/8 rounded-md transition-colors" title="Options">
+                    <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />
+                  </button>
+                  {showInputMenu && (
+                    <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl py-2 shadow-xl" style={{background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.1)'}}>
+                      <button onClick={() => { handleNewChat(); setShowInputMenu(false); }} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                        <Plus className="w-4 h-4" /> New chat
+                      </button>
+                      <div className="h-px mx-3 my-1" style={{background: 'rgba(255,255,255,0.06)'}} />
+                      <div className="px-4 py-2.5">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Zap className="w-4 h-4" style={{color: thinking ? '#f07a62' : 'rgba(255,255,255,0.4)'}} />
+                            <span className="text-sm font-medium" style={{color: thinking ? '#f07a62' : 'rgba(255,255,255,0.7)'}}>Thinking mode</span>
+                          </div>
+                          {(userProfile?.plan && userProfile.plan !== 'free') ? (
+                            <button onClick={() => setThinking(!thinking)} className="w-9 h-5 rounded-full p-0.5 transition-all duration-200" style={{background: thinking ? '#f07a62' : 'rgba(255,255,255,0.15)'}}>
+                              <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${thinking ? 'translate-x-4' : 'translate-x-0'}`} />
+                            </button>
+                          ) : (
+                            <Link to="/pricing" className="text-[10px] font-bold px-2 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f07a62'}} onClick={() => setShowInputMenu(false)}>UPGRADE</Link>
+                          )}
+                        </div>
+                        <p className="text-[11px] mt-1.5" style={{color: thinking ? 'rgba(249,106,80,0.6)' : 'rgba(255,255,255,0.25)'}}>
+                          {thinking ? 'On. Deeper coaching, fewer daily messages.' : 'Deeper responses for serious drafting.'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="flex items-center gap-3">
                   {input.length > ((userProfile?.plan === 'free' || !userProfile?.plan) ? 1500 : 4000) && <span className="text-[12px]" style={{color: input.length >= ((userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500) ? '#f07a62' : '#999'}}>{input.length}/{(userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500}</span>}
                   {!isUnlimited && <span className="text-[12px]" style={{color: '#999'}}>{usage.used + '/' + usage.limit}</span>}
