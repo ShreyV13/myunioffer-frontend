@@ -7,7 +7,7 @@ import { useAuth } from '../contexts/AuthContext';
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
 
 const SECTIONS = {
-  motivation: { num: 1, key: 'motivation', title: 'Why this subject?', target: 800, color: '#f96a50', bg: 'rgba(249,106,80,0.08)', border: 'rgba(249,106,80,0.20)', glow: 'rgba(249,106,80,0.15)' },
+  motivation: { num: 1, key: 'motivation', title: 'Why this subject?', target: 800, color: '#a78bfa', bg: 'rgba(167,139,250,0.08)', border: 'rgba(167,139,250,0.20)', glow: 'rgba(167,139,250,0.15)' },
   preparation: { num: 2, key: 'preparation', title: 'How have you prepared?', target: 1800, color: '#60a5fa', bg: 'rgba(96,165,250,0.08)', border: 'rgba(96,165,250,0.20)', glow: 'rgba(96,165,250,0.15)' },
   experiences: { num: 3, key: 'experiences', title: 'What have you done?', target: 1200, color: '#34d399', bg: 'rgba(52,211,153,0.08)', border: 'rgba(52,211,153,0.20)', glow: 'rgba(52,211,153,0.15)' },
 };
@@ -169,7 +169,7 @@ function ScaffoldSection({ sectionKey, text, annotations, index }) {
       <div className="relative z-10 mb-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-1 h-8 rounded-full" style={{ background: meta.color }} />
-          <h2 className="text-lg font-display font-bold" style={{ color: meta.color }}>{meta.title}</h2>
+          <h2 className="text-xl font-display font-bold" style={{ color: meta.color }}>{meta.title}</h2>
         </div>
         {/* Character bar */}
         <div className="flex items-center gap-3 ml-4 pl-3">
@@ -187,11 +187,11 @@ function ScaffoldSection({ sectionKey, text, annotations, index }) {
             const annColor = ann.type === 'strength' ? '#34d399' : ann.type === 'gap' ? '#fbbf24' : '#f87171';
             const annBg = ann.type === 'strength' ? 'rgba(52,211,153,0.06)' : ann.type === 'gap' ? 'rgba(251,191,36,0.06)' : 'rgba(248,113,113,0.06)';
             return (
-              <motion.div key={i} className="flex items-start gap-2.5 py-2 px-3 rounded-lg"
+              <motion.div key={i} className="flex items-start gap-2.5 py-2.5 px-4 rounded-lg"
                 style={{ background: annBg }}
                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + i * 0.1 }}>
-                {ann.type === 'strength' ? <Check className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: annColor }} /> : <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: annColor }} />}
-                <p className="text-sm leading-relaxed" style={{ color: annColor }}>{ann.text}</p>
+                {ann.type === 'strength' ? <Check className="w-4.5 h-4.5 flex-shrink-0 mt-0.5" style={{ color: annColor }} /> : <AlertTriangle className="w-4.5 h-4.5 flex-shrink-0 mt-0.5" style={{ color: annColor }} />}
+                <p className="text-[15px] leading-relaxed" style={{ color: annColor }}>{ann.text}</p>
               </motion.div>
             );
           })}
@@ -199,29 +199,29 @@ function ScaffoldSection({ sectionKey, text, annotations, index }) {
       )}
 
       {/* Scaffold text */}
-      <div className="relative z-10 ml-4 pl-3" style={{ borderLeft: `2px solid ${meta.border}` }}>
-        <div className="pl-5">
+      <div className="relative z-10 ml-4 pl-4" style={{ borderLeft: `2px solid ${meta.border}` }}>
+        <div className="pl-6">
           {parts.map((part, i) => {
             if (part.startsWith('[EXPAND')) {
               const instruction = part.replace('[EXPAND:', '').replace('[EXPAND', '').replace(']', '').trim();
               return (
-                <motion.div key={i} className="my-5 py-4 px-5 rounded-xl relative overflow-hidden"
+                <motion.div key={i} className="my-6 py-5 px-6 rounded-xl relative overflow-hidden"
                   initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 + i * 0.05 }}
                   style={{ background: `linear-gradient(135deg, ${meta.bg}, transparent)` }}>
                   <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full" style={{ background: meta.color }} />
                   <div className="flex items-start gap-3">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: meta.bg }}>
-                      <PenTool className="w-3.5 h-3.5" style={{ color: meta.color }} />
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: meta.bg }}>
+                      <PenTool className="w-4 h-4" style={{ color: meta.color }} />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold mb-1" style={{ color: meta.color }}>Your turn</p>
-                      <p className="text-sm leading-relaxed" style={{ color: meta.color, opacity: 0.7 }}>{instruction || 'Expand this section in your own words.'}</p>
+                      <p className="text-sm font-semibold mb-1" style={{ color: meta.color }}>Your turn</p>
+                      <p className="text-[15px] leading-relaxed" style={{ color: meta.color, opacity: 0.7 }}>{instruction || 'Expand this section in your own words.'}</p>
                     </div>
                   </div>
                 </motion.div>
               );
             }
-            return <p key={i} className="text-[15px] text-white/70 leading-[1.9] mb-1">{part}</p>;
+            return <p key={i} className="text-[16px] text-white/75 leading-[1.9] mb-1">{part}</p>;
           })}
         </div>
       </div>
@@ -324,11 +324,11 @@ export default function DraftBuilder() {
   function handleGlobalDragOver(e) { e.preventDefault(); }
 
   return (
-    <div className="min-h-screen flex flex-col relative" style={{ background: '#111113' }} onDragOver={handleGlobalDragOver}>
+    <div className="min-h-screen flex flex-col relative" style={{ background: '#1a1a1a' }} onDragOver={handleGlobalDragOver}>
       <div className="fixed inset-0 pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-      <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(249,106,80,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(96,165,250,0.04) 0%, transparent 50%)' }} />
+      <div className="fixed inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at 30% 20%, rgba(167,139,250,0.05) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(96,165,250,0.04) 0%, transparent 50%)' }} />
 
-      <nav className="sticky top-0 z-50 border-b" style={{ background: 'rgba(17,17,19,0.85)', backdropFilter: 'blur(16px)', borderColor: 'rgba(255,255,255,0.06)' }}>
+      <nav className="sticky top-0 z-50 border-b" style={{ background: 'rgba(26,26,26,0.85)', backdropFilter: 'blur(16px)', borderColor: 'rgba(255,255,255,0.06)' }}>
         <div className="max-w-5xl mx-auto px-6 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
             <div className="w-9 h-9 gradient-primary rounded-xl flex items-center justify-center"><GraduationCap className="w-4.5 h-4.5 text-white" /></div>
