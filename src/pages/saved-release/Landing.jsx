@@ -318,7 +318,7 @@ export default function Landing() {
             initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             <iframe
-              src="https://www.youtube.com/embed/3sA_6bfN-RQ?rel=0&modestbranding=1"
+              src="https://www.youtube.com/embed/tTKcgx3UlGw?rel=0&modestbranding=1"
               className="w-full aspect-video"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
