@@ -173,11 +173,13 @@ export default function Pricing() {
               {[
                 'More daily coaching messages',
                 'PS + Interview coaching',
+                'Subject-specific AI coaching',
                 'Rate My PS with full line-by-line feedback',
                 'Draft Builder to structure your statement',
                 'Thinking mode for deeper responses',
                 '1000+ real resources',
                 'Priority support',
+                'Cancel anytime',
               ].map((f, j) => (
                 <li key={j} className="flex items-start gap-2.5 text-sm text-gray-700">
                   <Check className="w-4 h-4 text-coral-500 flex-shrink-0 mt-0.5" />{f}
