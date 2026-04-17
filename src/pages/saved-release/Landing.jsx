@@ -362,7 +362,7 @@ export default function Landing() {
           <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Start free. Upgrade when you're ready.</h2>
             <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-6" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-600 max-w-lg mx-auto mb-8">The free tier gives you daily coaching sessions, forever. Paid plans start at £8.99/month for more usage when you're doing serious drafting and interview prep.</p>
+            <p className="text-gray-600 max-w-lg mx-auto mb-8">The free tier gives you daily coaching sessions, forever. Premium is £9.99/month for unlimited coaching, full PS feedback, and the Draft Builder.</p>
             <Link to="/pricing" className="btn-primary px-8 py-4 text-lg">See Plans <ArrowRight className="w-5 h-5" /></Link>
             <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-500">
               <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> Free tier included</span>
