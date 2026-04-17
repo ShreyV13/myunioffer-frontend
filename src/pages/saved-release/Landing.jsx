@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { GraduationCap, Check, ChevronDown, ArrowRight, Menu, X, MessageSquare, Star, PenTool, Mic, Play } from 'lucide-react';
+import { GraduationCap, Check, ChevronDown, ArrowRight, Menu, X, MessageSquare, Star, PenTool, Mic } from 'lucide-react';
 
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -317,28 +317,13 @@ export default function Landing() {
             className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/10 border border-gray-200"
             initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Replace the placeholder below with your video. Options:
-                1. YouTube: <iframe src="https://www.youtube.com/embed/YOUR_ID" ...>
-                2. Loom: <iframe src="https://www.loom.com/embed/YOUR_ID" ...>
-                3. Self-hosted: <video src="/demo.mp4" controls ...>
-            */}
-            <div className="aspect-video bg-gray-900 flex items-center justify-center relative group cursor-pointer">
-              {/* Placeholder - remove this div when you add the video */}
-              <div className="text-center relative z-10">
-                <motion.div
-                  className="w-20 h-20 md:w-24 md:h-24 gradient-primary rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl shadow-coral-500/30"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <Play className="w-8 h-8 md:w-10 md:h-10 text-white ml-1" />
-                </motion.div>
-                <p className="text-white/70 text-sm font-medium">Video coming soon</p>
-                <p className="text-white/40 text-xs mt-1">Full walkthrough: coaching, drafting, and scoring</p>
-              </div>
-              {/* Decorative elements */}
-              <div className="absolute top-8 left-8 w-32 h-32 bg-coral-500/10 rounded-full blur-2xl" />
-              <div className="absolute bottom-8 right-8 w-24 h-24 bg-coral-500/5 rounded-full blur-xl" />
-            </div>
+            <iframe
+              src="https://www.youtube.com/embed/3sA_6bfN-RQ?rel=0&modestbranding=1"
+              className="w-full aspect-video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
           </motion.div>
 
           {/* Before/After PS comparison */}
