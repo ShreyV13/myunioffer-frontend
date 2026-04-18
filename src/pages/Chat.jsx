@@ -19,7 +19,8 @@ import {
   Trash2,
   AlertCircle,
   RefreshCw,
-  Zap
+  Zap,
+  Star
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -72,6 +73,7 @@ export default function Chat() {
   const [sessionId, setSessionId] = useState(() => 'session_' + Math.random().toString(36).substr(2, 9));
   const [userSubject, setUserSubject] = useState(null);
   const [deleteConfirm, setDeleteConfirm] = useState(null);
+  const [showToolsGate, setShowToolsGate] = useState(false);
 
   
   const messagesEndRef = useRef(null);
@@ -205,11 +207,11 @@ export default function Chat() {
       const plan = userProfile?.plan || 'free';
       let upgradeMsg;
       if (plan === 'free') {
-        upgradeMsg = `You've used your 2 free ${mode === 'ps' ? 'Personal Statement' : 'Interview'} messages today. Subscribe to continue!`;
+        upgradeMsg = "You've used your free messages for today. Come back tomorrow, or upgrade for more.";
       } else if (plan === 'ps' && mode === 'interview') {
-        upgradeMsg = "Interview prep isn't included in your PS plan. Upgrade to Premium for both PS and Interview coaching!";
+        upgradeMsg = "Interview prep isn't included in your plan. Upgrade to Premium for both PS and Interview coaching!";
       } else if (plan === 'interview' && mode === 'ps') {
-        upgradeMsg = "PS coaching isn't included in your Interview plan. Upgrade to Premium for both PS and Interview coaching!";
+        upgradeMsg = "PS coaching isn't included in your plan. Upgrade to Premium for both PS and Interview coaching!";
       } else {
         upgradeMsg = "You've reached your daily limit. Upgrade for more messages!";
       }
@@ -512,11 +514,11 @@ export default function Chat() {
       <aside className={`hidden md:flex flex-col transition-all duration-200 ${sidebarCollapsed ? 'w-0 overflow-hidden' : 'w-[260px]'}`} style={{background: '#242424'}}>
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
               <GraduationCap className="w-4 h-4 text-white" />
             </div>
             <span className="font-display font-bold text-white">
-              myuni<span style={{color: '#f07a62'}}>offer</span> <span style={{color: '#666'}}>ai</span>
+              myuni<span style={{color: '#f96a50'}}>offer</span> <span style={{color: '#666'}}>ai</span>
             </span>
           </Link>
         </div>
@@ -525,6 +527,23 @@ export default function Chat() {
           <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-white/90 hover:bg-white/8 rounded-lg transition-colors" style={{border: '1px solid rgba(255,255,255,0.1)'}}>
             <Plus className="w-4 h-4" /> New chat
           </button>
+        </div>
+
+        <div className="px-3 mt-3 mb-1">
+          <div className="text-[11px] font-medium text-white/40 uppercase tracking-wider px-2 mb-2">Tools</div>
+          <Link to="/rate-my-ps" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 hover:bg-white/6 transition-colors">
+            <Star className="w-3.5 h-3.5" /> Rate My PS
+          </Link>
+          {isUnlimited ? (
+            <Link to="/draft-builder" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 hover:bg-white/6 transition-colors">
+              <FileText className="w-3.5 h-3.5" /> Draft Builder
+            </Link>
+          ) : (
+            <button onClick={() => setShowToolsGate(true)} className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 hover:bg-white/6 transition-colors text-left">
+              <FileText className="w-3.5 h-3.5" /> Draft Builder
+              <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f96a50'}}>PRO</span>
+            </button>
+          )}
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 mt-3" style={{WebkitOverflowScrolling: 'touch'}}>
@@ -556,12 +575,12 @@ export default function Chat() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-medium text-white truncate">{userProfile?.displayName || currentUser?.email?.split('@')[0]}</div>
-              <div className="text-[11px]" style={{color: '#999'}}>{planName}{!isUnlimited && userProfile?.plan === 'free' && ` · ${usage.limit - usage.used} left`}</div>
+              <div className="text-[11px]" style={{color: '#999'}}>{planName}</div>
             </div>
           </div>
           <div className="space-y-0.5">
             {userProfile?.plan === 'free' && (
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors font-medium" style={{color: '#f07a62'}}>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors font-medium" style={{color: '#f96a50'}}>
                 <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
               </Link>
             )}
@@ -587,7 +606,7 @@ export default function Chat() {
                 <Menu className="w-5 h-5" />
               </button>
               <button onClick={() => { if (window.confirm('Leave the chat and go to the home page?')) { window.location.href = '/'; }}} className="flex items-center gap-1.5 md:hidden">
-                <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                   <GraduationCap className="w-3.5 h-3.5 text-white" />
                 </div>
               </button>
@@ -601,7 +620,7 @@ export default function Chat() {
               </button>
             </div>
             <div className="flex items-center gap-2">
-              {!isUnlimited && userProfile?.plan === 'free' && <span className="text-[13px] hidden sm:inline" style={{color: '#aaa'}}>{usage.limit - usage.used} messages left</span>}
+              
               <div className="md:hidden relative">
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-1.5 hover:bg-white/8 rounded-lg">
                   <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center"><User className="w-3.5 h-3.5 text-white/60" /></div>
@@ -611,11 +630,11 @@ export default function Chat() {
                   <div className="absolute right-0 mt-2 w-52 rounded-xl shadow-2xl z-20 overflow-hidden" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}}>
                     <div className="p-3" style={{borderBottom: '1px solid rgba(255,255,255,0.08)'}}>
                       <div className="font-medium text-white truncate text-[13px]">{currentUser?.email}</div>
-                      <div className="text-[11px] text-white/50 mt-0.5">{planName}{!isUnlimited && userProfile?.plan === 'free' && ` · ${usage.limit - usage.used} left`}</div>
+                      <div className="text-[11px] text-white/50 mt-0.5">{planName}</div>
                     </div>
                     <div className="p-1.5">
                       <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/8 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/8 rounded-lg" style={{color: '#f07a62'}} onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/8 rounded-lg" style={{color: '#f96a50'}} onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
                       <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/8 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
                     </div>
                   </div>
@@ -630,7 +649,7 @@ export default function Chat() {
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center px-6">
               <div className="max-w-xl w-full text-center">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)', boxShadow: '0 8px 24px rgba(240,122,98,0.2)'}}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)', boxShadow: '0 8px 24px rgba(240,122,98,0.2)'}}>
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
                 <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
@@ -661,6 +680,35 @@ export default function Chat() {
                     </button>
                   ))}
                 </div>
+
+                {mode === 'ps' && (
+                  <div className="flex gap-2.5 max-w-lg mx-auto mt-6">
+                    <Link to="/rate-my-ps" className="flex-1 flex items-center gap-2.5 px-4 py-3 rounded-xl hover:bg-white/8 transition-all text-left" style={{border: '1px solid rgba(249,106,80,0.25)', background: 'rgba(249,106,80,0.05)'}}>
+                      <Star className="w-4 h-4 flex-shrink-0" style={{color: '#f96a50'}} />
+                      <div>
+                        <div className="text-[13px] font-medium" style={{color: '#f96a50'}}>Rate My PS</div>
+                        <div className="text-[11px] text-white/40">Already have a draft? Get a score.</div>
+                      </div>
+                    </Link>
+                    {isUnlimited ? (
+                      <Link to="/draft-builder" className="flex-1 flex items-center gap-2.5 px-4 py-3 rounded-xl hover:bg-white/8 transition-all text-left" style={{border: '1px solid rgba(249,106,80,0.25)', background: 'rgba(249,106,80,0.05)'}}>
+                        <FileText className="w-4 h-4 flex-shrink-0" style={{color: '#f96a50'}} />
+                        <div>
+                          <div className="text-[13px] font-medium" style={{color: '#f96a50'}}>Draft Builder</div>
+                          <div className="text-[11px] text-white/40">Turn coaching into a first draft.</div>
+                        </div>
+                      </Link>
+                    ) : (
+                      <button onClick={() => setShowToolsGate(true)} className="flex-1 flex items-center gap-2.5 px-4 py-3 rounded-xl hover:bg-white/8 transition-all text-left" style={{border: '1px solid rgba(255,255,255,0.12)'}}>
+                        <FileText className="w-4 h-4 flex-shrink-0 text-white/50" />
+                        <div>
+                          <div className="text-[13px] font-medium text-white/80">Draft Builder <span className="text-[10px] font-bold ml-1 px-1.5 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f96a50'}}>PRO</span></div>
+                          <div className="text-[11px] text-white/40">Turn coaching into a first draft.</div>
+                        </div>
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           ) : (
@@ -679,7 +727,7 @@ export default function Chat() {
                     </div>
                   ) : (
                     <div className="flex gap-3">
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0 text-[15px] leading-relaxed" style={{color: '#eee'}}>
@@ -701,7 +749,7 @@ export default function Chat() {
 
               {loading && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                     <GraduationCap className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div className="pt-2">
@@ -742,7 +790,7 @@ export default function Chat() {
               <div className="absolute bottom-2.5 left-3 right-3 flex items-center justify-between">
                 <div className="relative">
                   <button type="button" onClick={() => setShowInputMenu(!showInputMenu)} className="p-1.5 text-white/40 hover:text-white/70 hover:bg-white/8 rounded-md transition-colors" title="Options">
-                    {thinking && !showInputMenu ? <Zap className="w-3.5 h-3.5" style={{color: '#f07a62'}} /> : <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />}
+                    {thinking && !showInputMenu ? <Zap className="w-3.5 h-3.5" style={{color: '#f96a50'}} /> : <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />}
                   </button>
                   {showInputMenu && (
                     <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl py-2 shadow-xl" style={{background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.1)'}}>
@@ -750,18 +798,31 @@ export default function Chat() {
                         <Plus className="w-4 h-4" /> New chat
                       </button>
                       <div className="h-px mx-3 my-1" style={{background: 'rgba(255,255,255,0.06)'}} />
+                      <Link to="/rate-my-ps" className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors" onClick={() => setShowInputMenu(false)}>
+                        <Star className="w-4 h-4" /> Rate My PS
+                      </Link>
+                      {isUnlimited ? (
+                        <Link to="/draft-builder" className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors" onClick={() => setShowInputMenu(false)}>
+                          <FileText className="w-4 h-4" /> Draft Builder
+                        </Link>
+                      ) : (
+                        <button onClick={() => { setShowToolsGate(true); setShowInputMenu(false); }} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
+                          <FileText className="w-4 h-4" /> Draft Builder <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f96a50'}}>PRO</span>
+                        </button>
+                      )}
+                      <div className="h-px mx-3 my-1" style={{background: 'rgba(255,255,255,0.06)'}} />
                       <div className="px-4 py-2.5">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <Zap className="w-4 h-4" style={{color: thinking ? '#f07a62' : 'rgba(255,255,255,0.4)'}} />
-                            <span className="text-sm font-medium" style={{color: thinking ? '#f07a62' : 'rgba(255,255,255,0.7)'}}>Thinking mode</span>
+                            <Zap className="w-4 h-4" style={{color: thinking ? '#f96a50' : 'rgba(255,255,255,0.4)'}} />
+                            <span className="text-sm font-medium" style={{color: thinking ? '#f96a50' : 'rgba(255,255,255,0.7)'}}>Thinking mode</span>
                           </div>
                           {(userProfile?.plan && userProfile.plan !== 'free') ? (
-                            <button onClick={() => setThinking(!thinking)} className="w-9 h-5 rounded-full p-0.5 transition-all duration-200" style={{background: thinking ? '#f07a62' : 'rgba(255,255,255,0.15)'}}>
+                            <button onClick={() => setThinking(!thinking)} className="w-9 h-5 rounded-full p-0.5 transition-all duration-200" style={{background: thinking ? '#f96a50' : 'rgba(255,255,255,0.15)'}}>
                               <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-200 ${thinking ? 'translate-x-4' : 'translate-x-0'}`} />
                             </button>
                           ) : (
-                            <Link to="/pricing" className="text-[10px] font-bold px-2 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f07a62'}} onClick={() => setShowInputMenu(false)}>UPGRADE</Link>
+                            <Link to="/pricing" className="text-[10px] font-bold px-2 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f96a50'}} onClick={() => setShowInputMenu(false)}>UPGRADE</Link>
                           )}
                         </div>
                         <p className="text-[11px] mt-1.5" style={{color: thinking ? 'rgba(249,106,80,0.6)' : 'rgba(255,255,255,0.25)'}}>
@@ -772,9 +833,8 @@ export default function Chat() {
                   )}
                 </div>
                 <div className="flex items-center gap-3">
-                  {input.length > ((userProfile?.plan === 'free' || !userProfile?.plan) ? 1500 : 4000) && <span className="text-[12px]" style={{color: input.length >= ((userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500) ? '#f07a62' : '#999'}}>{input.length}/{(userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500}</span>}
-                  {!isUnlimited && <span className="text-[12px]" style={{color: '#999'}}>{usage.used + '/' + usage.limit}</span>}
-                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                  {input.length > ((userProfile?.plan === 'free' || !userProfile?.plan) ? 1500 : 4000) && <span className="text-[12px]" style={{color: input.length >= ((userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500) ? '#f96a50' : '#999'}}>{input.length}/{(userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500}</span>}
+                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
@@ -782,7 +842,7 @@ export default function Chat() {
             </div>
             {!isUnlimited && usage.used >= usage.limit && (
               <div className="text-center mt-2">
-                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached, upgrade for more →</Link>
+                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f96a50'}}>Daily limit reached, upgrade for more →</Link>
               </div>
             )}
           </form>
@@ -796,8 +856,8 @@ export default function Chat() {
           <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] z-50 md:hidden flex flex-col" style={{background: '#242424'}}>
             <div className="flex items-center justify-between px-5 py-4">
               <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
-                <span className="font-display font-bold text-white">myuni<span style={{color: '#f07a62'}}>offer</span> <span style={{color: '#666'}}>ai</span></span>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
+                <span className="font-display font-bold text-white">myuni<span style={{color: '#f96a50'}}>offer</span> <span style={{color: '#666'}}>ai</span></span>
               </Link>
               <button onClick={() => setShowSidebar(false)} className="p-1.5 text-white/50 hover:text-white/80"><X className="w-5 h-5" /></button>
             </div>
@@ -805,6 +865,22 @@ export default function Chat() {
               <button onClick={handleNewChat} className="w-full flex items-center gap-2 px-3 py-2.5 text-sm font-medium text-white/90 hover:bg-white/8 rounded-lg transition-colors" style={{border: '1px solid rgba(255,255,255,0.1)'}}>
                 <Plus className="w-4 h-4" /> New chat
               </button>
+            </div>
+            <div className="px-3 mt-3 mb-1">
+              <div className="text-[11px] font-medium text-white/40 uppercase tracking-wider px-2 mb-2">Tools</div>
+              <Link to="/rate-my-ps" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 active:bg-white/6 transition-colors" onClick={() => setShowSidebar(false)}>
+                <Star className="w-3.5 h-3.5" /> Rate My PS
+              </Link>
+              {isUnlimited ? (
+                <Link to="/draft-builder" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 active:bg-white/6 transition-colors" onClick={() => setShowSidebar(false)}>
+                  <FileText className="w-3.5 h-3.5" /> Draft Builder
+                </Link>
+              ) : (
+                <button onClick={() => { setShowToolsGate(true); setShowSidebar(false); }} className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] text-white/70 active:bg-white/6 transition-colors text-left">
+                  <FileText className="w-3.5 h-3.5" /> Draft Builder
+                  <span className="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded" style={{background: 'rgba(249,106,80,0.15)', color: '#f96a50'}}>PRO</span>
+                </button>
+              )}
             </div>
             <div className="flex-1 overflow-y-auto px-3 mt-3" style={{WebkitOverflowScrolling: 'touch'}}>
               {recentChats.length === 0 ? (
@@ -827,8 +903,7 @@ export default function Chat() {
               )}
             </div>
             <div className="p-3" style={{borderTop: '1px solid rgba(255,255,255,0.08)'}}>
-              {!isUnlimited && <div className="text-[12px] text-white/50 mb-2 px-2">{usage.used + '/' + usage.limit} messages today</div>}
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg font-medium" style={{color: '#f07a62'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg font-medium" style={{color: '#f96a50'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
               <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/6 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
               <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/6 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
             </div>
@@ -855,6 +930,31 @@ export default function Chat() {
               <button onClick={confirmDeleteChat} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-colors">
                 Delete
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Draft Builder Feature Gate Modal */}
+      {showToolsGate && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center" onClick={() => setShowToolsGate(false)}>
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="relative rounded-2xl p-6 max-w-sm mx-4 shadow-2xl" style={{background: '#333', border: '1px solid rgba(255,255,255,0.1)'}} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{background: 'rgba(249,106,80,0.15)'}}>
+                <FileText className="w-5 h-5" style={{color: '#f96a50'}} />
+              </div>
+              <h3 className="text-white font-semibold text-lg">Draft Builder</h3>
+            </div>
+            <p className="text-white/70 text-sm mb-2 leading-relaxed">Turn your coaching conversations into a structured first draft. The Draft Builder organises your material, lets you arrange it into UCAS sections, and generates a scaffold you fill in yourself.</p>
+            <p className="text-white/50 text-sm mb-6">Available with Premium for £9.99/month.</p>
+            <div className="flex gap-3">
+              <button onClick={() => setShowToolsGate(false)} className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white/70 hover:bg-white/8 transition-colors" style={{border: '1px solid rgba(255,255,255,0.12)'}}>
+                Not now
+              </button>
+              <Link to="/pricing" className="flex-1 px-4 py-2.5 rounded-xl text-sm font-medium text-white text-center transition-colors" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}} onClick={() => setShowToolsGate(false)}>
+                See Premium
+              </Link>
             </div>
           </div>
         </div>
