@@ -178,6 +178,7 @@ export default function RateMyPS() {
   const [scanLine, setScanLine] = useState(0);
   const [activeQuote, setActiveQuote] = useState(null);
   const [activeCategoryKey, setActiveCategoryKey] = useState(null);
+  const [anonSessionId] = useState(() => 'anon_' + Math.random().toString(36).substr(2, 12));
   const animRef = useRef(null);
   const subjectRef = useRef(null);
   const scoringStartRef = useRef(0);
@@ -191,7 +192,7 @@ export default function RateMyPS() {
 
   function handleSubmit() {
     setError('');
-    if (!currentUser) { navigate('/signup'); return; }
+    // Anonymous users can rate freely
     const cleaned = psText.trim();
     if (cleaned.length < 100) { setError('Your statement is too short to rate. Paste your full draft.'); return; }
     if (cleaned.length > 5000) { setError('Over 5,000 characters. UCAS statements are 4,000 max. Trim it down.'); return; }
@@ -200,7 +201,7 @@ export default function RateMyPS() {
 
     fetch(`${API_BASE}/rate-ps`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ user_id: currentUser.uid, tier, ps_text: cleaned, subject: subject || null }),
+      body: JSON.stringify({ user_id: currentUser ? currentUser.uid : anonSessionId, tier: currentUser ? tier : 'free', ps_text: cleaned, subject: subject || null }),
     })
       .then(res => { if (!res.ok) return res.json().then(d => { throw new Error(d.detail || 'Rating failed'); }); return res.json(); })
       .then(data => { setResult(data); targetScoreRef.current = data.score; apiReturned.current = true; })
@@ -333,7 +334,7 @@ export default function RateMyPS() {
             {error && <div className="mb-4 px-4 py-3 rounded-xl text-sm text-red-300" style={{ background: 'rgba(239,68,68,0.12)', border: '1px solid rgba(239,68,68,0.2)' }}>{error}</div>}
             <motion.button onClick={handleSubmit} disabled={psText.trim().length < 50} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
               className="w-full gradient-primary text-white font-semibold py-4 rounded-xl text-base shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:translate-y-0">Rate My PS</motion.button>
-            <p className="text-xs text-white/20 text-center mt-3">{currentUser ? 'Free to use. Takes about 30 seconds.' : 'Create a free account first. Takes 10 seconds.'}</p>
+            <p className="text-xs text-white/20 text-center mt-3">Free to use. Takes about 30 seconds.</p>
             <motion.div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-xs text-white/25" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}>
               <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500/60" /> Scored out of 100</span>
               <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-coral-400/60" /> 5 admissions categories</span>
@@ -407,6 +408,19 @@ export default function RateMyPS() {
               </div>
             </motion.div>
 
+            {/* Anonymous: signup prompt */}
+            {!currentUser && (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="mb-6">
+                <div className="rounded-xl p-5 text-center" style={{ background: 'rgba(249,106,80,0.06)', border: '1px solid rgba(249,106,80,0.15)' }}>
+                  <p className="text-sm text-white/70 mb-3">Want coaching on how to improve your score?</p>
+                  <Link to="/signup" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-2.5 px-5 rounded-xl shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm">
+                    Create a free account <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <p className="text-xs text-white/20 mt-2">Free coaching. No credit card.</p>
+                </div>
+              </motion.div>
+            )}
+
             {/* PAID: Radar */}
             {hasPaidAccess && result.category_scores && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mb-6">
@@ -473,7 +487,32 @@ export default function RateMyPS() {
             )}
 
             {/* FREE: Paywall */}
-            {!hasPaidAccess && (
+            {!hasPaidAccess && !currentUser && (
+              <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="relative">
+                <div className="select-none" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
+                  <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-2 text-center">Category Breakdown</p>
+                  <div className="h-48" style={{ background: '#242424', borderRadius: '12px' }} />
+                  <p className="text-xs font-semibold text-white/30 uppercase tracking-wider mb-3 mt-4">Detailed Feedback</p>
+                  <div className="h-32 mb-3" style={{ background: '#242424', borderRadius: '12px' }} />
+                  <div className="h-32 mb-3" style={{ background: '#242424', borderRadius: '12px' }} />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none" style={{ background: 'linear-gradient(transparent, #1a1a1a)' }} />
+                <div className="absolute inset-0 flex items-center justify-center" style={{ top: '10%' }}>
+                  <div className="text-center px-4">
+                    <div className="rounded-2xl p-7 max-w-xs mx-auto" style={{ background: '#242424', border: '1px solid rgba(249,106,80,0.2)' }}>
+                      <Lock className="w-7 h-7 text-coral-400 mx-auto mb-3" />
+                      <h3 className="font-display font-bold text-white text-base mb-2">See how to improve your score</h3>
+                      <p className="text-white/40 text-xs mb-5 leading-relaxed">Create a free account to save your score, then upgrade to Premium for paragraph-by-paragraph feedback.</p>
+                      <Link to="/signup" className="inline-flex items-center gap-2 gradient-primary text-white font-semibold py-3 px-5 rounded-xl shadow-lg shadow-coral-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm">
+                        Sign Up Free <ArrowRight className="w-4 h-4" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+            {/* FREE LOGGED IN: Paywall */}
+            {!hasPaidAccess && currentUser && (
               <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="relative">
                 {/* Dense blurred content block */}
                 <div className="select-none" style={{ filter: 'blur(6px)', pointerEvents: 'none' }}>
@@ -556,7 +595,7 @@ export default function RateMyPS() {
               <button onClick={handleReset} className="text-sm text-coral-400 hover:text-coral-300 font-medium transition-colors">Rate another statement</button>
             </div>
             <div className="mt-4 text-center">
-              <span className="text-xs text-white/20">{result.ratings_used}/{result.ratings_limit} ratings used this month</span>
+              {currentUser && <span className="text-xs text-white/20">{result.ratings_used}/{result.ratings_limit} ratings used this month</span>}
             </div>
           </div>
         </div>
