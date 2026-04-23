@@ -26,7 +26,7 @@ export default function Settings() {
     free: { name: 'Free', messages: '2 per mode', features: ['2 PS + 2 Interview messages/day', 'All subjects'] },
     ps: { name: 'PS Coach', messages: '100 PS', features: ['100 PS messages/day', '2 free Interview messages/day', 'All subject specialists', 'Email support'] },
     interview: { name: 'Interview Prep', messages: '100 Interview', features: ['100 Interview messages/day', '2 free PS messages/day', 'All subject specialists', 'Email support'] },
-    premium: { name: 'Premium', messages: 'Unlimited', features: ['Unlimited PS + Interview', 'All subject specialists', 'Priority support'] }
+    premium: { name: 'Premium', messages: 'Extended daily coaching', features: ['Full PS + Interview coaching', 'All subject specialists', 'Priority support'] }
   };
 
   const currentPlan = planDetails[userProfile?.plan || 'free'];
