@@ -12,7 +12,7 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   
-  const { signup } = useAuth();
+  const { signup, currentUser } = useAuth();
   const navigate = useNavigate();
   const redirect = searchParams.get('redirect');
 
