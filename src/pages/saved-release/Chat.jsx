@@ -340,11 +340,11 @@ export default function Chat() {
       <aside className="hidden md:flex w-[260px] flex-col" style={{background: '#242424'}}>
         <div className="px-5 py-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
               <GraduationCap className="w-4 h-4 text-white" />
             </div>
             <span className="font-display font-bold text-white">
-              myuni<span style={{color: '#f07a62'}}>offer</span> <span style={{color: '#666'}}>ai</span>
+              myuni<span style={{color: '#f96a50'}}>offer</span> <span style={{color: '#666'}}>ai</span>
             </span>
           </Link>
         </div>
@@ -389,7 +389,7 @@ export default function Chat() {
           </div>
           <div className="space-y-0.5">
             {userProfile?.plan === 'free' && (
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors font-medium" style={{color: '#f07a62'}}>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg transition-colors font-medium" style={{color: '#f96a50'}}>
                 <Sparkles className="w-3.5 h-3.5" /> Upgrade plan
               </Link>
             )}
@@ -412,7 +412,7 @@ export default function Chat() {
                 <Menu className="w-5 h-5" />
               </button>
               <Link to="/" className="flex items-center gap-1.5 md:hidden">
-                <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                   <GraduationCap className="w-3.5 h-3.5 text-white" />
                 </div>
               </Link>
@@ -440,7 +440,7 @@ export default function Chat() {
                     </div>
                     <div className="p-1.5">
                       <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/8 rounded-lg" onClick={() => setShowUserMenu(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
-                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/8 rounded-lg" style={{color: '#f07a62'}} onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+                      <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/8 rounded-lg" style={{color: '#f96a50'}} onClick={() => setShowUserMenu(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
                       <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/8 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
                     </div>
                   </div>
@@ -455,7 +455,7 @@ export default function Chat() {
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center px-6">
               <div className="max-w-xl w-full text-center">
-                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)', boxShadow: '0 8px 24px rgba(240,122,98,0.2)'}}>
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)', boxShadow: '0 8px 24px rgba(240,122,98,0.2)'}}>
                   <GraduationCap className="w-7 h-7 text-white" />
                 </div>
                 <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">
@@ -502,7 +502,7 @@ export default function Chat() {
                     </div>
                   ) : (
                     <div className="flex gap-3">
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0 text-[15px] leading-relaxed" style={{color: '#eee'}}>
@@ -524,7 +524,7 @@ export default function Chat() {
 
               {loading && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                     <GraduationCap className="w-3.5 h-3.5 text-white" />
                   </div>
                   <div className="pt-2">
@@ -568,7 +568,7 @@ export default function Chat() {
                 </button>
                 <div className="flex items-center gap-3">
                   <span className="text-[12px]" style={{color: '#999'}}>{usage.limit === -1 ? '∞' : usage.used + '/' + usage.limit}</span>
-                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+                  <button type="submit" disabled={loading || !input.trim()} className="p-1.5 rounded-lg text-white disabled:opacity-20 disabled:cursor-not-allowed transition-all" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
                     <Send className="w-4 h-4" />
                   </button>
                 </div>
@@ -576,7 +576,7 @@ export default function Chat() {
             </div>
             {usage.limit !== -1 && usage.used >= usage.limit && (
               <div className="text-center mt-2">
-                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f07a62'}}>Daily limit reached, upgrade for more →</Link>
+                <Link to="/pricing" className="text-[12px] font-medium" style={{color: '#f96a50'}}>Daily limit reached, upgrade for more →</Link>
               </div>
             )}
           </form>
@@ -590,8 +590,8 @@ export default function Chat() {
           <motion.aside initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: 'spring', damping: 25 }} className="fixed inset-y-0 left-0 w-[260px] z-50 md:hidden flex flex-col" style={{background: '#242424'}}>
             <div className="flex items-center justify-between px-5 py-4">
               <Link to="/" className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
-                <span className="font-display font-bold text-white">myuni<span style={{color: '#f07a62'}}>offer</span> <span style={{color: '#666'}}>ai</span></span>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}><GraduationCap className="w-4 h-4 text-white" /></div>
+                <span className="font-display font-bold text-white">myuni<span style={{color: '#f96a50'}}>offer</span> <span style={{color: '#666'}}>ai</span></span>
               </Link>
               <button onClick={() => setShowSidebar(false)} className="p-1.5 text-white/50 hover:text-white/80"><X className="w-5 h-5" /></button>
             </div>
@@ -618,7 +618,7 @@ export default function Chat() {
             </div>
             <div className="p-3" style={{borderTop: '1px solid rgba(255,255,255,0.08)'}}>
               <div className="text-[12px] text-white/50 mb-2 px-2">{usage.limit === -1 ? '∞' : usage.used + '/' + usage.limit} messages today</div>
-              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg font-medium" style={{color: '#f07a62'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
+              <Link to="/pricing" className="flex items-center gap-2.5 px-3 py-2 text-[13px] hover:bg-white/6 rounded-lg font-medium" style={{color: '#f96a50'}} onClick={() => setShowSidebar(false)}><Sparkles className="w-3.5 h-3.5" /> Upgrade</Link>
               <Link to="/settings" className="flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/70 hover:bg-white/6 rounded-lg" onClick={() => setShowSidebar(false)}><Settings className="w-3.5 h-3.5" /> Settings</Link>
               <button onClick={handleLogout} className="w-full flex items-center gap-2.5 px-3 py-2 text-[13px] text-white/50 hover:bg-white/6 rounded-lg"><LogOut className="w-3.5 h-3.5" /> Sign out</button>
             </div>

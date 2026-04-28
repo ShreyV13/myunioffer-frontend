@@ -198,7 +198,7 @@ export default function Landing() {
 
       {/* ==================== FEATURES - CREATIVE FLOW ==================== */}
       <section id="features" className="py-16 md:py-24 px-4 md:px-6 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f07a62 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f96a50 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         <motion.div className="absolute -bottom-32 left-0 w-80 h-80 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none" />
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
@@ -230,7 +230,7 @@ export default function Landing() {
             {/* Vertical connecting line */}
             <motion.div
               className="absolute left-[27px] md:left-[31px] top-0 bottom-0 hidden sm:block"
-              style={{ width: '2px', background: 'linear-gradient(to bottom, #f9a08c, #f07a62, #e74d32)' }}
+              style={{ width: '2px', background: 'linear-gradient(to bottom, #f9a08c, #f96a50, #e74d32)' }}
               initial={{ height: 0 }}
               whileInView={{ height: '100%' }}
               viewport={{ once: true, margin: "-80px" }}

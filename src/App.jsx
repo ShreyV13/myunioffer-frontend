@@ -48,7 +48,7 @@ function ProtectedRoute({ children }) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6" style={{background: '#2b2b2b'}}>
         <div className="max-w-md w-full text-center">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f07a62, #d9614d)'}}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
             <span className="text-2xl">📧</span>
           </div>
           <h1 className="text-2xl font-bold text-white mb-3">Verify your email</h1>

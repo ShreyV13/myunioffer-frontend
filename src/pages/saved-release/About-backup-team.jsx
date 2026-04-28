@@ -149,7 +149,7 @@ export default function About() {
       subjects: "PPE, Politics, International Relations, History, Law, Philosophy & Humanities",
       bio: "Founded myunioffer ai after going through the UCAS process and realising how expensive and inaccessible good application coaching is. Leads the Humanities specialist coaching, training the AI with real application insights from the LSE admissions process.",
       contribution: "Built the entire AI coaching system from scratch. Curated the Humanities interview questions and personal statement database. Covers all humanities and social science applications.",
-      color: "#f07a62",
+      color: "#f96a50",
     },
     { 
       name: "Pavan Kovuri", 
@@ -159,7 +159,7 @@ export default function About() {
       subjects: "Economics, Business, Finance, Accounting, Management",
       bio: "Studying Economics at the University of Warwick. Went through the application process for one of the most competitive economics programmes in the country. Understands what economics departments want to see in personal statements and interviews.",
       contribution: "Leads the Economics and Business coaching, training the AI on economics-specific interview questions, quantitative reasoning, and how to demonstrate genuine analytical thinking in personal statements.",
-      color: "#f07a62",
+      color: "#f96a50",
     },
     { 
       name: "Suhas Parsaboina", 
@@ -169,7 +169,7 @@ export default function About() {
       subjects: "Medicine, Dentistry, Veterinary, Nursing, Biomedical Sciences",
       bio: "Studying Medicine at King's College London. Successfully navigated one of the most competitive application processes in the country, including MMIs, UCAT, and the medical school personal statement. Knows exactly what medical schools look for and what trips applicants up.",
       contribution: "Leads the Medicine coaching, training the AI with real MMI questions, medical school personal statement structures, and the specific qualities medical schools look for in applicants.",
-      color: "#f07a62",
+      color: "#f96a50",
     },
     { 
       name: "Adyan Shahid", 
@@ -179,7 +179,7 @@ export default function About() {
       subjects: "Computer Science, Mathematics, Data Science, Statistics",
       bio: "Reading Computer Science at the University of Cambridge. Went through one of the most rigorous admissions processes in the country, including the Cambridge interview system. Brings deep understanding of how universities select for analytical thinking and problem-solving.",
       contribution: "Leads the CS and Maths coaching, training the AI on Cambridge-style interview questions, logical reasoning approaches, and how to demonstrate genuine intellectual curiosity in personal statements for quantitative subjects.",
-      color: "#f07a62",
+      color: "#f96a50",
     },
     { 
       name: "Girish Radhakrishnan", 
@@ -189,7 +189,7 @@ export default function About() {
       subjects: "Chemical Engineering, Engineering, Chemistry, Physics, Natural Sciences",
       bio: "Studying Chemical Engineering at Imperial College London. Experienced the Imperial application process first-hand including their specific interview and admissions testing requirements.",
       contribution: "Leads the Engineering coaching, training the AI on Imperial-style application approaches, engineering personal statements, technical interviews, and how to demonstrate practical problem-solving ability.",
-      color: "#f07a62",
+      color: "#f96a50",
     },
   ];
 
@@ -339,7 +339,7 @@ export default function About() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ delay: 0.1 + i * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  whileHover={{ scale: 1.05, borderColor: '#f07a62' }}
+                  whileHover={{ scale: 1.05, borderColor: '#f96a50' }}
                 >
                   🎓 {uni}
                 </motion.div>
