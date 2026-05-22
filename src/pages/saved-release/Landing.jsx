@@ -109,6 +109,7 @@ export default function Landing() {
               <a href="#features" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Features</a>
               <a href="#demo" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Demo</a>
               <a href="#testimonials" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
+              <Link to="/blog" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Blog</Link>
               <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
               <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">About Us</Link>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
@@ -123,6 +124,7 @@ export default function Landing() {
               {[['#features','Features'],['#demo','Demo'],['#testimonials','Testimonials']].map(([href,label]) => (
                 <a key={label} href={href} onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">{label}</a>
               ))}
+              <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Blog</Link>
               <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Pricing</Link>
               <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">About Us</Link>
               <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Log In</Link>
@@ -430,6 +432,7 @@ export default function Landing() {
             <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
           </Link>
           <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm text-gray-600">
+            <Link to="/blog" className="hover:text-coral-500 transition-colors">Blog</Link>
             <Link to="/privacy" className="hover:text-coral-500 transition-colors">Privacy</Link>
             <Link to="/terms" className="hover:text-coral-500 transition-colors">Terms</Link>
             <Link to="/about" className="hover:text-coral-500 transition-colors">Team</Link>
