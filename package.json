@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node prerender.js",
-    "preview": "vite preview"
+    "build": "vite build && node copy-prerendered.js",
+    "preview": "vite preview",
+    "prerender": "vite build && node prerender.js && node save-prerendered.js"
   },
   "dependencies": {
     "@stripe/stripe-js": "^2.4.0",
