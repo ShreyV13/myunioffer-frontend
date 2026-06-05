@@ -90,9 +90,9 @@ export default function Landing() {
 
       {/* Top bar */}
       <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
-        <span className="text-coral-400">120+ students already signed up.</span>{' '}
-        Launch pricing available for a limited time.{' '}
-        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">See plans</Link>
+        <span className="text-coral-400">Free to start.</span>{' '}
+        Premium is £9.99/month.{' '}
+        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">See plans →</Link>
       </div>
 
       {/* Nav */}
@@ -106,12 +106,8 @@ export default function Landing() {
               <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
             </Link>
             <div className="hidden md:flex items-center gap-8">
-              <a href="#features" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Features</a>
-              <a href="#demo" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Demo</a>
-              <a href="#testimonials" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Testimonials</a>
-              <Link to="/blog" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Blog</Link>
               <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
-              <Link to="/about" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">About Us</Link>
+              <Link to="/rate-my-ps" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Rate My PS</Link>
               <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
               <Link to="/signup" className="btn-primary">Get Started</Link>
             </div>
@@ -121,12 +117,8 @@ export default function Landing() {
           </div>
           {mobileMenuOpen && (
             <motion.div className="md:hidden py-4 flex flex-col gap-4 border-t border-gray-100 mt-4" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-              {[['#features','Features'],['#demo','Demo'],['#testimonials','Testimonials']].map(([href,label]) => (
-                <a key={label} href={href} onClick={() => setMobileMenuOpen(false)} className="text-gray-600 hover:text-coral-500 transition-colors font-medium">{label}</a>
-              ))}
-              <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Blog</Link>
               <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Pricing</Link>
-              <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">About Us</Link>
+              <Link to="/rate-my-ps" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Rate My PS</Link>
               <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Log In</Link>
               <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="btn-primary text-center mt-2">Get Started</Link>
             </motion.div>
@@ -142,7 +134,7 @@ export default function Landing() {
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-coral-50 border border-coral-100 rounded-full text-sm font-medium text-coral-600 mb-8">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              120+ students have already signed up
+              Built by students from LSE, Cambridge, Imperial, KCL &amp; Warwick
             </div>
           </motion.div>
 
@@ -432,11 +424,12 @@ export default function Landing() {
             <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
           </Link>
           <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm text-gray-600">
+            <Link to="/subjects" className="hover:text-coral-500 transition-colors">Subjects</Link>
             <Link to="/blog" className="hover:text-coral-500 transition-colors">Blog</Link>
+            <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
+            <Link to="/about" className="hover:text-coral-500 transition-colors">Team</Link>
             <Link to="/privacy" className="hover:text-coral-500 transition-colors">Privacy</Link>
             <Link to="/terms" className="hover:text-coral-500 transition-colors">Terms</Link>
-            <Link to="/about" className="hover:text-coral-500 transition-colors">Team</Link>
-            <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
             <a href="mailto:support@myunioffer.com" className="hover:text-coral-500 transition-colors">Support</a>
           </div>
           <div className="flex items-center gap-4">

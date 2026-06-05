@@ -32,7 +32,8 @@ export default function Signup() {
       fetch(import.meta.env.VITE_API_URL + '/health').catch(() => {});
       
       await signup(email, password, name);
-      navigate(redirect === 'pricing' ? '/pricing' : '/chat');
+      const subjectParam = searchParams.get('subject');
+      navigate(redirect === 'pricing' ? '/pricing' : subjectParam ? '/chat?subject=' + encodeURIComponent(subjectParam) : '/chat');
     } catch (err) {
       console.error(err);
       if (err.code === 'auth/email-already-in-use') {

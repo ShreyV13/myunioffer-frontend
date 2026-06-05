@@ -21,6 +21,8 @@ import RateMyPS from './pages/RateMyPS';
 import DraftBuilder from './pages/DraftBuilder';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
+import Subjects from './pages/Subjects';
+import SubjectPage from './pages/SubjectPage';
 
 // SAVED FOR RELEASE: Landing, Pricing, About are in src/pages/saved-release/
 // When ready to launch, swap WaitlistLanding back to Landing and restore all routes
@@ -140,6 +142,8 @@ function AppRoutes() {
       <Route path="/success" element={<Success />} />
       <Route path="/draft-builder" element={<DraftBuilder />} />
               <Route path="/rate-my-ps" element={<RateMyPS />} />
+      <Route path="/subjects" element={<Subjects />} />
+      <Route path="/subjects/:slug" element={<SubjectPage />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogArticle />} />
       <Route path="*" element={<Navigate to="/" />} />

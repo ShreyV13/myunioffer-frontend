@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { useAuth } from '../contexts/AuthContext';
@@ -82,6 +82,17 @@ export default function Chat() {
   
   const { currentUser, userProfile, studentProfile, logout, checkDailyMessages, incrementMessageCount, updateStudentProfile, saveChatsToFirebase, loadChatsFromFirebase } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // Read subject from URL param (from subject pages)
+  useEffect(() => {
+    const subjectParam = searchParams.get('subject');
+    if (subjectParam && !userSubject) {
+      const formatted = subjectParam.charAt(0).toUpperCase() + subjectParam.slice(1);
+      setUserSubject(formatted);
+      if (currentUser) updateStudentProfile(currentUser.uid, { subject: formatted });
+    }
+  }, [searchParams]);
 
   // CRITICAL: isUnlimited MUST be after useAuth() - DO NOT MOVE THIS
   const isUnlimited = userProfile?.plan === 'premium';
