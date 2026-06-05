@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@stripe/stripe-js": "^2.4.0",
+    "@studio-freight/lenis": "^1.0.42",
     "firebase": "^10.8.0",
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.330.0",
