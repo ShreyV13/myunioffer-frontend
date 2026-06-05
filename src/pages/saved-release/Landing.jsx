@@ -159,9 +159,12 @@ export default function Landing() {
             <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
           </Link>
           <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.2rem" }}>Pricing</Link>
-            <Link to="/rate-my-ps" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.2rem" }}>Rate My PS</Link>
-            <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500, padding: "0.5rem 0.2rem" }}>Log In</Link>
+            <Link to="/subjects" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Subjects</Link>
+            <Link to="/blog" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Blog</Link>
+            <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Pricing</Link>
+            <Link to="/rate-my-ps" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Rate My PS</Link>
+            <Link to="/about" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Team</Link>
+            <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Log In</Link>
             <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.3rem", borderRadius: "0.55rem", fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
           </div>
         </div>
