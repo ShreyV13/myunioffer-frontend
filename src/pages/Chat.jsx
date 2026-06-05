@@ -94,6 +94,34 @@ export default function Chat() {
     }
   }, [searchParams]);
 
+  // Security: check if account is blocked
+  if (userProfile?.securityStatus === 'blocked') {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-6">
+        <div className="max-w-md text-center">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h2 className="text-white text-xl font-display font-bold mb-2">Account suspended</h2>
+          <p className="text-gray-400 text-sm mb-6">Your account has been suspended by our automated security system due to repeated policy violations. If you believe this is an error, contact <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:underline">support@myunioffer.com</a></p>
+        </div>
+      </div>
+    );
+  }
+  if (userProfile?.securityStatus === 'restricted') {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-6">
+        <div className="max-w-md text-center">
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-6" style={{background: 'linear-gradient(135deg, #f96a50, #e74d32)'}}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h2 className="text-white text-xl font-display font-bold mb-2">Account temporarily restricted</h2>
+          <p className="text-gray-400 text-sm mb-6">Your account has been temporarily restricted by our automated security system. You'll be able to use myunioffer again in 24 hours. If you believe this is an error, contact <a href="mailto:support@myunioffer.com" className="text-coral-500 hover:underline">support@myunioffer.com</a></p>
+        </div>
+      </div>
+    );
+  }
+
   // CRITICAL: isUnlimited MUST be after useAuth() - DO NOT MOVE THIS
   const isUnlimited = userProfile?.plan === 'premium';
 

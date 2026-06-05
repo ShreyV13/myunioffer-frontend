@@ -1,449 +1,516 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
-import { GraduationCap, Check, ChevronDown, ArrowRight, Menu, X, MessageSquare, Star, PenTool, Mic } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, useMotionTemplate } from 'framer-motion';
+import { GraduationCap, ArrowRight, ChevronDown, Play, Check } from 'lucide-react';
+
+const D = { fontFamily: "'Outfit', sans-serif" };
+const coral = "#f96a50";
+const bg = "#151519";
+const cardBg = "rgba(255,255,255,0.025)";
+const border = "rgba(255,255,255,0.06)";
+const mutedText = "rgba(255,255,255,0.42)";
+const bodyText = "rgba(255,255,255,0.55)";
+
+function Reveal({ children, delay = 0, style = {} }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <motion.div ref={ref} style={style}
+      initial={{ opacity: 0, y: 40 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+    >{children}</motion.div>
+  );
+}
+
+/* ── LineReveal: Framer-style line-by-line mask reveal ────────────── */
+/* Each line slides up from behind an overflow clip as one unit.     */
+/* Reusable across all pages as the standard heading animation.      */
+function LineReveal({ lines, delay = 0, show = true, style = {} }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const shouldAnimate = show && inView;
+  return (
+    <div ref={ref} style={style}>
+      {lines.map((line, i) => {
+        const text = typeof line === "string" ? line : line.text;
+        const color = typeof line === "string" ? undefined : line.color;
+        return (
+          <div key={i} style={{ overflow: "hidden", paddingBottom: "0.05em" }}>
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={shouldAnimate ? { y: "0%" } : {}}
+              transition={{ duration: 0.7, delay: delay + i * 0.12, ease: [0.4, 0, 0.15, 1] }}
+              style={{ color: color || "inherit" }}
+            >{text}</motion.div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ── SectionReveal: heading + subtitle with mask reveal ──────────── */
+function SectionReveal({ label, heading, subtitle, center = true }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  return (
+    <div ref={ref} style={{ textAlign: center ? "center" : "left", marginBottom: "5rem" }}>
+      {label && (
+        <div style={{ overflow: "hidden" }}>
+          <motion.div initial={{ y: "100%" }} animate={inView ? { y: "0%" } : {}} transition={{ duration: 0.5, ease: [0.4, 0, 0.15, 1] }}>
+            <Label text={label} />
+          </motion.div>
+        </div>
+      )}
+      <div style={{ overflow: "hidden" }}>
+        <motion.h2
+          initial={{ y: "100%" }}
+          animate={inView ? { y: "0%" } : {}}
+          transition={{ duration: 0.7, delay: 0.08, ease: [0.4, 0, 0.15, 1] }}
+          style={{ ...D, fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, margin: "0 0 1.2rem" }}
+        >{heading}</motion.h2>
+      </div>
+      {subtitle && (
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          style={{ color: mutedText, fontSize: "0.95rem", maxWidth: 520, margin: center ? "0 auto" : 0 }}
+        >{subtitle}</motion.p>
+      )}
+    </div>
+  );
+}
+
+function ScaleImg({ src, alt }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
+  return (
+    <motion.div ref={ref} style={{ y }}
+      initial={{ opacity: 0, scale: 0.88 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <motion.img src={src} alt={alt}
+        whileHover={{ scale: 1.015 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        style={{ width: "100%", display: "block", borderRadius: "0.9rem", border: `1px solid ${border}`, boxShadow: `0 25px 60px rgba(0,0,0,0.35)` }}
+      />
+    </motion.div>
+  );
+}
+
+function Counter({ target, suffix = "" }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!isInView) return;
+    const num = parseInt(target.replace(/[^0-9]/g, ''));
+    let current = 0;
+    const timer = setInterval(() => { current += num / 35; if (current >= num) { setCount(num); clearInterval(timer); } else setCount(Math.floor(current)); }, 40);
+    return () => clearInterval(timer);
+  }, [isInView, target]);
+  return <span ref={ref}>{isInView ? count + suffix : "0" + suffix}</span>;
+}
+
+function Label({ text }) {
+  return <p style={{ fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: coral, marginBottom: "1rem" }}>{text}</p>;
+}
+
+/* ── Circle reveal transition (Mythic-style) ─────────────────────── */
+function CircleReveal({ children, bgColor = bg }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end 60%"] });
+  const radius = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const clipPath = useMotionTemplate`circle(${radius}% at 50% 50%)`;
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <motion.div style={{ clipPath, background: bgColor }}>
+        {children}
+      </motion.div>
+    </div>
+  );
+}
 
 export default function Landing() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [introPhase, setIntroPhase] = useState(0); // 0=centered, 1=moving, 2=settled
+  const loaded = introPhase >= 1;
   const [openFaq, setOpenFaq] = useState(null);
+  const [videoPlaying, setVideoPlaying] = useState(false);
+  const [navLogoPos, setNavLogoPos] = useState({ top: 11, left: 32 });
+
+  useEffect(() => {
+    // Calculate where the nav logo sits
+    const calcPos = () => {
+      const left = Math.max(32, (window.innerWidth - 1300) / 2 + 32);
+      setNavLogoPos({ top: 11, left });
+    };
+    calcPos();
+    window.addEventListener("resize", calcPos);
+    const t1 = setTimeout(() => setIntroPhase(1), 900);
+    const t2 = setTimeout(() => setIntroPhase(2), 1900);
+    return () => { clearTimeout(t1); clearTimeout(t2); window.removeEventListener("resize", calcPos); };
+  }, []);
+
+  /* ── Hero scroll-away ──────────────────────────────────────────── */
+  const heroRef = useRef(null);
+  const { scrollYProgress: heroProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroOpacity = useTransform(heroProgress, [0, 0.5], [1, 0]);
+  const heroY = useTransform(heroProgress, [0, 0.5], [0, -80]);
 
   const faqs = [
-    { q: "Will the AI write my personal statement for me?", a: "No. Your statement should sound like you, not a robot. Our AI asks you questions, challenges your thinking, and helps you figure out what to say. It coaches you through the process instead of handing you a template. That's what admissions tutors want to see." },
-    { q: "How is this different from ChatGPT?", a: "ChatGPT gives everyone the same generic advice and tries to write your statement for you. Admissions tutors can spot that immediately. Our AI is built specifically for UK university applications. It knows what different subjects require, has access to 1000+ real resources, and coaches you to find your own voice instead of giving you someone else's." },
-    { q: "What subjects do you cover?", a: "Everything. Medicine, Dentistry, Law, Economics, Engineering, Computer Science, Maths, Physics, History, English, PPE, Psychology, Architecture, and more. Tell the AI what you're applying for and it automatically tailors its coaching to your subject." },
-    { q: "What is Rate My PS?", a: "Paste your personal statement and get an instant score out of 100 with a detailed breakdown across five categories: opening, academic engagement, experiences, structure, and voice. It highlights specific phrases that work and flags anything that sounds generic or AI-written. Think of it as getting admissions tutor feedback in 10 seconds." },
-    { q: "What does the Draft Builder do?", a: "It takes everything you've discussed with the AI coach, your experiences, reflections, reading, and lets you arrange it into the three UCAS sections. Then it generates a structured scaffold with coaching prompts showing you exactly where to expand. You fill in the gaps in your own voice." },
-    { q: "Can I cancel my subscription?", a: "Yes, cancel anytime. You keep access until the end of your billing period. If you want a refund, email support@myunioffer.com and we'll sort it out, no questions asked." },
-    { q: "Who built this?", a: "A team of first-year students from LSE, KCL, Cambridge, Imperial, and Warwick who went through UCAS months ago. We built the tool we wished we had when we were applying." },
-    { q: "Is there a free option?", a: "Yes. The free tier gives you 2 personal statement and 2 interview coaching messages every day, forever. No credit card needed. Paid plans give you more daily usage for when you're doing serious drafting." },
+    { q: "Will the AI write my personal statement for me?", a: "No. Our AI asks you questions, challenges your thinking, and helps you figure out what to say. It coaches instead of writing." },
+    { q: "How is this different from ChatGPT?", a: "ChatGPT gives generic advice and tries to write for you. Our AI is built specifically for UK university applications and coaches you to find your own voice." },
+    { q: "What subjects do you cover?", a: "Everything. Medicine, Dentistry, Law, Economics, Engineering, Computer Science, Maths, Physics, History, English, PPE, Psychology, Architecture, and more." },
+    { q: "What is Rate My PS?", a: "Paste your personal statement and get a score out of 100 with a breakdown across five categories. It flags what works and what sounds generic." },
+    { q: "What does the Draft Builder do?", a: "Arrange your material into three UCAS sections. The AI generates a structured scaffold. You fill in the gaps in your own voice." },
+    { q: "Can I cancel?", a: "Yes, anytime. You keep access until the end of your billing period." },
+    { q: "Who built this?", a: "First-year students from LSE, KCL, Cambridge, Imperial, and Warwick who went through UCAS months ago." },
+    { q: "Is there a free option?", a: "Yes. Daily coaching sessions, forever. No credit card needed." },
   ];
 
   const testimonials = [
-    { text: "Its great, it helped so much with figuring out the next steps like for what supercurriculars I should be doing next by building on what ive done so far", label: "Early user" },
-    { text: "And its also not just a yes-man like chatgpt, its critical of my plans", label: "Early user" },
-    { text: "i had no idea what supercurriculars to do but it gave me unique suggestions after I gave what i had already done. Like it based it off my interests", label: "Early user" },
-    { text: "I actually have a plan after using it even tho i had nothing figured out before", label: "Early user" },
-    { text: "The ai site responds within a few seconds, the quality of information that it responds with is helpful, if you ask the right questions the site guides you step by step", label: "Early user" },
-    { text: "the site is rlly good!!", label: "Early user" },
+    { text: "Its great, it helped so much with figuring out the next steps like for what supercurriculars I should be doing next by building on what ive done so far" },
+    { text: "And its also not just a yes-man like chatgpt, its critical of my plans" },
+    { text: "i had no idea what supercurriculars to do but it gave me unique suggestions after I gave what i had already done. Like it based it off my interests" },
+    { text: "I actually have a plan after using it even tho i had nothing figured out before" },
+    { text: "The ai site responds within a few seconds, the quality of information that it responds with is helpful, if you ask the right questions the site guides you step by step" },
+    { text: "the site is rlly good!!" },
   ];
 
-  function TestimonialRotator() {
-    return (
-      <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.6 }} className="overflow-hidden">
-        <motion.div className="flex gap-6" animate={{ x: [0, -1800] }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }}>
-          {[...Array(3)].map((_, rep) => (
-            <div key={rep} className="flex gap-6 flex-shrink-0">
-              {testimonials.map((t, i) => (
-                <div key={i} className="w-80 flex-shrink-0 bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                  <div className="text-coral-300 text-3xl font-display leading-none mb-3">"</div>
-                  <p className="text-gray-900 font-medium text-sm leading-relaxed mb-4">{t.text}</p>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-coral-400" />
-                    <span className="text-gray-400 text-xs font-medium">{t.label}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ))}
-        </motion.div>
-      </motion.div>
-    );
-  }
-
-  function Counter({ target, suffix = "" }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-      if (!isInView) return;
-      const num = parseInt(target.replace(/[^0-9]/g, ''));
-      const duration = 1500;
-      const steps = 40;
-      const increment = num / steps;
-      let current = 0;
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= num) { setCount(num); clearInterval(timer); }
-        else setCount(Math.floor(current));
-      }, duration / steps);
-      return () => clearInterval(timer);
-    }, [isInView, target]);
-    return <span ref={ref}>{isInView ? count + suffix : "0" + suffix}</span>;
-  }
-
-  const { scrollYProgress } = useScroll();
-  const subjects = ['Medicine', 'Economics', 'Computer Science', 'Law', 'Engineering', 'PPE', 'Maths', 'Physics', 'History', 'Psychology', 'Dentistry', 'Architecture', 'English', 'Chemistry', 'Business', 'Biology', 'Veterinary', 'Nursing', 'Politics', 'Philosophy', 'Geography', 'Sociology', 'Modern Languages', 'Music', 'Accounting', 'Data Science'];
-
-  const tools = [
-    { icon: Star, num: "01", label: "Rate My PS", title: "Know exactly where you stand", desc: "Paste your personal statement and get a score out of 100, with a breakdown across five categories. It highlights specific phrases that work, flags anything that sounds generic or AI-written, and tells you exactly what to fix. Like getting admissions tutor feedback in 10 seconds." },
-    { icon: PenTool, num: "02", label: "Draft Builder", title: "From conversations to first draft", desc: "The AI organises everything you've discussed into building blocks. You drag them into the three UCAS sections, star your strongest material, and it generates a structured scaffold with coaching prompts showing you where to expand. You fill the gaps in your own voice." },
-    { icon: Mic, num: "03", label: "Interview Prep", title: "Practice with real questions", desc: "Questions that actually come up in interviews for your specific course, sourced from real applicants. Get honest feedback on your answers. Walk into your interview having already practised the hard ones." },
-  ];
+  const subjects = ['Medicine','Economics','Computer Science','Law','Engineering','PPE','Maths','Physics','History','Psychology','Dentistry','Architecture','English','Chemistry','Business','Biology','Veterinary','Nursing','Politics','Philosophy','Geography','Sociology','Modern Languages','Music','Data Science'];
 
   return (
-    <div className="min-h-screen bg-white">
-      <style>{`
-        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 100% center; } }
-        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
-        .marquee-scroll { animation: scrollMarquee 25s linear infinite; }
-      `}</style>
+    <div style={{ background: bg, color: "#fff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
 
-      {/* Top bar */}
-      <div className="bg-gray-900 text-white text-center py-2.5 px-6 text-sm font-medium">
-        <span className="text-coral-400">Free to start.</span>{' '}
-        Premium is £9.99/month.{' '}
-        <Link to="/pricing" className="underline hover:text-coral-300 transition-colors">See plans →</Link>
-      </div>
+      {/* ── Dark overlay (fades out when logo starts moving) ────────── */}
+      {(
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: introPhase >= 1 ? 0 : 1 }}
+          transition={{ duration: 0.7 }}
+          style={{ position: "fixed", inset: 0, zIndex: 99, background: bg, pointerEvents: "none" }}
+        />
+      )}
 
-      {/* Nav */}
-      <nav className="sticky top-0 z-50 glass border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-coral-500/20">
-                <GraduationCap className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
-            </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
-              <Link to="/rate-my-ps" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Rate My PS</Link>
-              <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
-              <Link to="/signup" className="btn-primary">Get Started</Link>
-            </div>
-            <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+      {/* ── Moving logo (travels from center to nav position) ─────── */}
+      {(
+        <motion.div
+          initial={{ top: "calc(50vh - 32px)", left: "calc(50vw - 80px)", scale: 2.2, opacity: 0 }}
+          animate={
+            introPhase === 0
+              ? { top: "calc(50vh - 32px)", left: "calc(50vw - 80px)", scale: 2.2, opacity: 1 }
+              : { top: navLogoPos.top, left: navLogoPos.left, scale: 1, opacity: introPhase >= 2 ? 0 : 1 }
+          }
+          transition={{ duration: introPhase === 0 ? 0.4 : 0.85, ease: [0.4, 0, 0.15, 1] }}
+          style={{ position: "fixed", zIndex: 101, display: "flex", alignItems: "center", gap: "0.55rem", pointerEvents: "none" }}
+        >
+          <div style={{ width: 34, height: 34, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <GraduationCap size={18} color="#fff" />
           </div>
-          {mobileMenuOpen && (
-            <motion.div className="md:hidden py-4 flex flex-col gap-4 border-t border-gray-100 mt-4" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-              <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Pricing</Link>
-              <Link to="/rate-my-ps" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Rate My PS</Link>
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Log In</Link>
-              <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="btn-primary text-center mt-2">Get Started</Link>
+          <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
+        </motion.div>
+      )}
+
+      {/* ── Nav ──────────────────────────────────────────────────────── */}
+      <motion.nav
+        initial={{ opacity: 0 }}
+        animate={loaded ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        style={{
+          position: "sticky", top: 0, zIndex: 50,
+          background: "rgba(21,21,25,0.82)", backdropFilter: "blur(20px)",
+          borderBottom: `1px solid ${border}`,
+        }}
+      >
+        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.55rem", textDecoration: "none", opacity: introPhase >= 2 ? 1 : 0, transition: "opacity 0.3s" }}>
+            <div style={{ width: 34, height: 34, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <GraduationCap size={18} color="#fff" />
+            </div>
+            <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
+          </Link>
+          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+            <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}>Pricing</Link>
+            <Link to="/rate-my-ps" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}>Rate My PS</Link>
+            <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.85rem", fontWeight: 500 }}>Log In</Link>
+            <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.3rem", borderRadius: "0.55rem", fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* ── Hero (sticky, scrolls away) ───────────────────────────────── */}
+      <div ref={heroRef} style={{ position: "relative" }}>
+        <section style={{ position: "sticky", top: 56, height: "calc(100vh - 56px)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
+          {/* Background elements */}
+          <motion.div animate={{ scale: [1, 1.15, 1], opacity: [0.035, 0.06, 0.035] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            style={{ position: "absolute", top: "-25%", right: "-12%", width: "60vw", height: "60vw", maxWidth: 800, maxHeight: 800, borderRadius: "50%", background: coral, filter: "blur(120px)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px)", backgroundSize: "40px 40px", pointerEvents: "none" }} />
+
+          <motion.div style={{ opacity: heroOpacity, y: heroY, textAlign: "center", padding: "0 2rem", maxWidth: 1100, position: "relative", zIndex: 2 }}>
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={loaded ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.2 }}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", padding: "0.3rem 0.85rem", borderRadius: 100, background: `${coral}0c`, border: `1px solid ${coral}20`, marginBottom: "2.5rem" }}>
+              <motion.span animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "block" }} />
+              <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "rgba(255,255,255,0.55)" }}>Built by students from LSE, Cambridge, Imperial, KCL & Warwick</span>
             </motion.div>
-          )}
-        </div>
-      </nav>
 
-      {/* ==================== HERO ==================== */}
-      <section className="pt-20 pb-24 px-6 hero-pattern relative overflow-hidden">
-        <motion.div className="absolute -top-40 -right-40 w-96 h-96 bg-coral-200 rounded-full opacity-[0.08] blur-3xl pointer-events-none hidden md:block" />
-        <motion.div className="absolute -bottom-40 -left-40 w-80 h-80 bg-coral-300 rounded-full opacity-[0.06] blur-3xl pointer-events-none hidden md:block" />
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-coral-50 border border-coral-100 rounded-full text-sm font-medium text-coral-600 mb-8">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              Built by students from LSE, Cambridge, Imperial, KCL &amp; Warwick
-            </div>
-          </motion.div>
-
-          <div className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-[1.1] mb-6 text-gray-900">
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.1 }}>Get into your</motion.div>
-            <motion.div className="mt-1" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.3 }}>
-              <span className="gradient-text" style={{ backgroundSize: '200% auto', animation: 'shimmer 3s ease-in-out infinite alternate' }}>dream university.</span>
-            </motion.div>
-          </div>
-
-          <motion.div className="h-1 gradient-primary rounded-full mx-auto mt-2 mb-4" initial={{ width: 0 }} animate={{ width: 120 }} transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }} />
-
-          <motion.p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-4 leading-relaxed" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-            AI coaching, PS scoring, draft building, and interview prep. Everything you need to stand out, built by students who just got in.
-          </motion.p>
-          <motion.p className="text-base text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}>
-            Tailored to your subject. Trained on 1000+ real resources. Available 24/7.
-          </motion.p>
-
-          <motion.div className="flex flex-col sm:flex-row gap-4 justify-center" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            <Link to="/signup" className="btn-primary text-lg px-8 py-4">Start Free <ArrowRight className="w-5 h-5" /></Link>
-            <a href="#demo" className="btn-secondary text-lg px-8 py-4">Watch the Demo</a>
-          </motion.div>
-          <motion.p className="text-gray-400 text-sm mt-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.4 }}>Free to try. No credit card required.</motion.p>
-        </div>
-      </section>
-
-      {/* ==================== PROBLEM ==================== */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-gray-50 relative overflow-hidden">
-        <motion.div className="absolute -top-32 right-0 w-72 h-72 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none" initial={{ x: 50 }} whileInView={{ x: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 2, ease: "easeOut" }} />
-        <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">The application process is broken.</h2>
-            <motion.div className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-6" initial={{ width: 0 }} whileInView={{ width: 64 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-600 max-w-xl mx-auto">Everyone tells you to "be yourself" and "show passion." Nobody actually shows you how.</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { label: "The generic AI problem", text: "Copy-paste an AI-written PS and admissions tutors will spot it instantly. They read hundreds every cycle. Same structure, same phrases, zero personality.", response: "We coach your thinking instead." },
-              { label: "The cost barrier", text: "Private consultants charge £6,000 to £35,000. Tutors charge £50 to £100 an hour. Most families can't afford that.", response: "We start at £8.99/month. Free tier included." },
-              { label: "The gap", text: '"Show passion." "Be yourself." None of it tells you what a Medicine tutor wants to read or how a Cambridge interviewer picks who gets an offer.', response: "Our AI knows your subject." },
-            ].map((item, i) => (
-              <motion.div key={i} className="group cursor-default bg-white rounded-2xl p-7 border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
-                initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.9, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}>
-                <motion.div className="h-1 rounded-full gradient-primary mb-5" initial={{ width: 0 }} whileInView={{ width: '100%' }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }} />
-                <div className="text-coral-500 font-display font-bold text-xs uppercase tracking-wider mb-3">{item.label}</div>
-                <p className="text-gray-900 font-display font-semibold leading-snug mb-3">{item.text}</p>
-                <p className="text-coral-500 text-sm font-medium md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">{item.response}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== FEATURES - CREATIVE FLOW ==================== */}
-      <section id="features" className="py-16 md:py-24 px-4 md:px-6 bg-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle, #f96a50 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
-        <motion.div className="absolute -bottom-32 left-0 w-80 h-80 bg-coral-200 rounded-full opacity-[0.04] blur-3xl pointer-events-none" />
-        <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Everything you need to stand out</h2>
-            <motion.div className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-6" initial={{ width: 0 }} whileInView={{ width: 64 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-600 max-w-xl mx-auto">Not just a chatbot. A complete application toolkit that coaches, scores, builds, and prepares.</p>
-          </motion.div>
-
-          {/* AI Coach - hero feature with accent bar */}
-          <motion.div className="relative p-8 md:p-10 mb-16 overflow-hidden" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}>
-            <div className="absolute top-0 left-0 w-1.5 h-full gradient-primary rounded-full" />
-            <div className="absolute top-0 right-0 w-40 h-40 bg-coral-100 rounded-full opacity-[0.08] blur-2xl" />
-            <div className="flex flex-col md:flex-row gap-8 items-start pl-6 relative z-10">
-              <div className="flex-1">
-                <div className="text-coral-500 font-display font-bold text-sm uppercase tracking-wider mb-3">AI Coach</div>
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-3">A mentor that asks the hard questions <span className="gradient-text">so your statement sounds like you.</span></h3>
-                <p className="text-gray-600 leading-relaxed text-base md:text-lg">Most AI tools hand you a finished statement. Admissions tutors spot that in seconds. Our AI never writes a word for you. It asks the questions that help you figure out what you actually want to say, tailored to what your subject demands.</p>
-              </div>
-              <motion.div className="flex-shrink-0 hidden md:block" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.3, duration: 0.6 }}>
-                <div className="w-36 h-36 bg-coral-50 rounded-2xl flex items-center justify-center border border-coral-100">
-                  <MessageSquare className="w-14 h-14 text-coral-400" />
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-
-          {/* Three tools - connected timeline flow */}
-          <div className="relative max-w-3xl mx-auto">
-            {/* Vertical connecting line */}
-            <motion.div
-              className="absolute left-[27px] md:left-[31px] top-0 bottom-0 hidden sm:block"
-              style={{ width: '2px', background: 'linear-gradient(to bottom, #f9a08c, #f96a50, #e74d32)' }}
-              initial={{ height: 0 }}
-              whileInView={{ height: '100%' }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            <LineReveal
+              lines={[
+                { text: "Get into your" },
+                { text: "dream university.", color: coral },
+              ]}
+              delay={0.3}
+              show={loaded}
+              style={{ ...D, fontSize: "clamp(3rem, 8vw, 6.5rem)", fontWeight: 800, lineHeight: 0.95, letterSpacing: "-0.04em", marginBottom: "1.8rem" }}
             />
 
-            <div className="space-y-10">
-              {tools.map((tool, i) => {
-                const Icon = tool.icon;
-                return (
-                  <motion.div key={i} className="flex gap-4 md:gap-8 items-start relative"
-                    initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2 + i * 0.2 }}>
-                    {/* Circle node */}
-                    <motion.div className="w-14 h-14 md:w-16 md:h-16 gradient-primary rounded-full flex items-center justify-center flex-shrink-0 shadow-lg shadow-coral-500/20 relative z-10"
-                      initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.5, delay: 0.3 + i * 0.2, type: 'spring', stiffness: 200 }}>
-                      <Icon className="w-6 h-6 md:w-7 md:h-7 text-white" />
-                    </motion.div>
+            <motion.p initial={{ opacity: 0 }} animate={loaded ? { opacity: 1 } : {}} transition={{ delay: 0.8, duration: 0.6 }}
+              style={{ fontSize: "clamp(1rem, 1.6vw, 1.15rem)", color: mutedText, lineHeight: 1.65, maxWidth: 560, margin: "0 auto 0.8rem" }}>
+              AI coaching, PS scoring, draft building, and interview prep. Built by students who just got in.
+            </motion.p>
+            <motion.p initial={{ opacity: 0 }} animate={loaded ? { opacity: 1 } : {}} transition={{ delay: 0.9 }}
+              style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.25)", marginBottom: "2.5rem" }}>
+              Tailored to your subject. Available 24/7.
+            </motion.p>
 
-                    {/* Content */}
-                    <div className="flex-1 bg-gray-50 rounded-2xl p-6 md:p-8 hover:shadow-md transition-all duration-300 relative overflow-hidden group">
-                      <motion.div className="absolute top-0 left-0 w-full h-1 gradient-primary origin-left"
-                        initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.4 + i * 0.2, ease: [0.16, 1, 0.3, 1] }} />
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-coral-500 font-display font-bold text-sm uppercase tracking-wider">{tool.label}</span>
-                        <span className="text-gray-300 font-display font-bold text-xs">{tool.num}</span>
-                      </div>
-                      <h3 className="text-xl md:text-2xl font-display font-bold text-gray-900 mb-3">{tool.title}</h3>
-                      <p className="text-gray-600 leading-relaxed">{tool.desc}</p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Stats bar with animated counters */}
-          <motion.div className="mt-16 rounded-2xl border border-gray-100 overflow-hidden" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <div className="h-1 gradient-primary" />
-            <div className="p-6 md:p-8 flex flex-wrap justify-center gap-8 md:gap-14">
-              {[
-                { num: "1000", suffix: "+", label: "real resources" },
-                { num: "24", suffix: "/7", label: "always available" },
-                { num: "99", suffix: "%", label: "cheaper than tutoring" },
-                { num: "120", suffix: "+", label: "students signed up" },
-              ].map((stat, i) => (
-                <motion.div key={i} className="text-center" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.1 + i * 0.15 }}>
-                  <div className="text-2xl md:text-3xl font-display font-bold text-coral-500">
-                    <Counter target={stat.num} suffix={stat.suffix} />
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={loaded ? { opacity: 1, y: 0 } : {}} transition={{ delay: 0.95 }}
+              style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", justifyContent: "center" }}>
+              <Link to="/signup" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.85rem 1.8rem", borderRadius: "0.7rem", fontSize: "1rem", fontWeight: 700, textDecoration: "none", boxShadow: `0 4px 30px ${coral}25` }}>
+                Start Free <ArrowRight size={16} />
+              </Link>
+              <a href="#demo" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "transparent", color: "rgba(255,255,255,0.55)", padding: "0.85rem 1.8rem", borderRadius: "0.7rem", fontSize: "1rem", fontWeight: 600, textDecoration: "none", border: `1px solid ${border}` }}>
+                Watch Demo
+              </a>
+            </motion.div>
           </motion.div>
-        </div>
-      </section>
+        </section>
+        {/* Extra scroll space so hero can fade */}
+        <div style={{ height: "40vh" }} />
+      </div>
 
-      {/* ==================== SUBJECT MARQUEE ==================== */}
-      <div className="py-4 bg-white overflow-hidden border-y border-gray-100">
-        <div className="flex gap-5 whitespace-nowrap marquee-scroll">
+      {/* ── Subject marquee ───────────────────────────────────────────── */}
+      <div style={{ overflow: "hidden", borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}`, padding: "0.75rem 0", background: bg, position: "relative", zIndex: 2 }}>
+        <motion.div style={{ display: "flex", gap: "1.5rem", whiteSpace: "nowrap" }} animate={{ x: ["0%", "-33.333%"] }} transition={{ duration: 28, repeat: Infinity, ease: "linear" }}>
           {[...Array(3)].map((_, rep) => (
-            <div key={rep} className="flex gap-5">
+            <div key={rep} style={{ display: "flex", gap: "1.5rem", flexShrink: 0 }}>
               {subjects.map((s, i) => (
-                <span key={i} className="text-xs font-medium text-gray-500 flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-coral-400" />{s}
+                <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontSize: "0.7rem", fontWeight: 600, color: "rgba(255,255,255,0.18)" }}>
+                  <span style={{ width: 3, height: 3, borderRadius: "50%", background: coral, display: "block", opacity: 0.5 }} />{s}
                 </span>
               ))}
             </div>
           ))}
+        </motion.div>
+      </div>
+
+      {/* ── Video showcase ────────────────────────────────────────────── */}
+      <section id="demo" style={{ padding: "7rem 2rem", maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <Reveal>
+          <div style={{ position: "relative", borderRadius: "1rem", overflow: "hidden", border: `1px solid ${border}`, boxShadow: `0 40px 100px rgba(0,0,0,0.5), 0 0 80px ${coral}06` }}>
+            {!videoPlaying ? (
+              <div style={{ position: "relative", cursor: "pointer" }} onClick={() => setVideoPlaying(true)}>
+                <img src="/screenshots/rate-my-ps.png" alt="Rate My PS" style={{ width: "100%", display: "block" }} />
+                <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <motion.div whileHover={{ scale: 1.1 }}
+                    animate={{ boxShadow: [`0 0 0px ${coral}00`, `0 0 50px ${coral}50`, `0 0 0px ${coral}00`] }}
+                    transition={{ boxShadow: { duration: 2, repeat: Infinity }, scale: { type: "spring", stiffness: 300 } }}
+                    style={{ width: 85, height: 85, borderRadius: "50%", background: `linear-gradient(135deg, ${coral}, #e74d32)`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <Play size={32} color="#fff" fill="#fff" style={{ marginLeft: 4 }} />
+                  </motion.div>
+                </div>
+                <div style={{ position: "absolute", bottom: "1.5rem", left: "1.5rem" }}>
+                  <span style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>Watch the full walkthrough</span>
+                </div>
+              </div>
+            ) : (
+              <iframe src="https://www.youtube.com/embed/tTKcgx3UlGw?rel=0&modestbranding=1&autoplay=1" style={{ width: "100%", aspectRatio: "16/9", border: "none" }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+            )}
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ── Problem (circle reveal transition) ────────────────────────── */}
+      <CircleReveal bgColor="#1c1c22">
+        <section style={{ padding: "7rem 2rem 8rem", maxWidth: 1200, margin: "0 auto" }}>
+          <SectionReveal label="The problem" heading="The application process is broken." subtitle='Everyone tells you to "be yourself" and "show passion." Nobody actually shows you how.' />
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem" }}>
+            {[
+              { label: "The generic AI problem", text: 'Copy-paste an AI-written PS and admissions tutors will spot it instantly. Same structure, same phrases, zero personality.', response: "We coach your thinking instead." },
+              { label: "The cost barrier", text: "Private consultants charge £6,000 to £35,000. Tutors charge £50 to £100 an hour. Most families can't afford that.", response: "We start at £9.99/month." },
+              { label: "The gap", text: '"Show passion." "Be yourself." None of it tells you what a Medicine tutor wants to read or how a Cambridge interviewer picks who gets an offer.', response: "Our AI knows your subject." },
+            ].map((item, i) => (
+              <Reveal key={i} delay={i * 0.1}>
+                <motion.div
+                  whileHover={{ y: -6, borderColor: `${coral}25` }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  style={{ padding: "2.2rem", borderRadius: "1.1rem", background: "rgba(255,255,255,0.02)", border: `1px solid rgba(255,255,255,0.05)`, height: "100%", display: "flex", flexDirection: "column" }}
+                >
+                  <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.2 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ height: 3, width: "100%", background: `linear-gradient(90deg, ${coral}, #e74d32)`, borderRadius: 2, marginBottom: "1.5rem", transformOrigin: "left" }} />
+                  <p style={{ fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: coral, marginBottom: "0.8rem" }}>{item.label}</p>
+                  <p style={{ fontSize: "0.92rem", color: bodyText, lineHeight: 1.65, flex: 1, marginBottom: "1.2rem" }}>{item.text}</p>
+                  <p style={{ fontSize: "0.82rem", color: coral, fontWeight: 600 }}>{item.response}</p>
+                </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      </CircleReveal>
+
+      {/* ── Product showcase ──────────────────────────────────────────── */}
+      <section style={{ padding: "6rem 2rem 8rem", maxWidth: 1300, margin: "0 auto", position: "relative", zIndex: 2 }}>
+        <SectionReveal label="How it works" heading="Everything you need to stand out" subtitle="Not just a chatbot. A complete application toolkit." />
+
+        {[
+          { num: "01", label: "AI Coach", title: <>A mentor that asks the hard questions <span style={{ color: coral }}>so your statement sounds like you.</span></>, desc: "Our AI never writes a word for you. It asks the questions that help you figure out what you actually want to say, tailored to what your subject demands.", img: "/screenshots/chatbot.png", alt: "AI coaching", flip: false },
+          { num: "02", label: "Rate My PS", title: <>Know exactly where you stand. <span style={{ color: coral }}>In 10 seconds.</span></>, desc: "Paste your personal statement and get a score out of 100 with a breakdown across five categories. It flags what works and what sounds generic.", img: "/screenshots/rate-my-ps.png", alt: "PS scoring", flip: true },
+          { num: "03", label: "Draft Builder", title: <>From conversations <span style={{ color: coral }}>to first draft.</span></>, desc: "Drag your strongest material into three UCAS sections. The AI generates a structured scaffold. You fill the gaps in your own voice.", img: "/screenshots/draft-builder.png", alt: "Draft Builder", flip: false },
+        ].map((f, i) => (
+          <div key={i} style={{ display: "grid", gridTemplateColumns: f.flip ? "8fr 4fr" : "4fr 8fr", gap: "3rem", alignItems: "center", marginBottom: i < 2 ? "10rem" : 0 }}>
+            {f.flip && <ScaleImg src={f.img} alt={f.alt} />}
+            <Reveal>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.2rem" }}>
+                <span style={{ ...D, fontSize: "3.5rem", fontWeight: 800, color: `${coral}12`, lineHeight: 1 }}>{f.num}</span>
+                <span style={{ fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: coral }}>{f.label}</span>
+              </div>
+              <h3 style={{ ...D, fontSize: "clamp(1.6rem, 2.8vw, 2.3rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.1, margin: "0 0 1.2rem" }}>{f.title}</h3>
+              <p style={{ fontSize: "0.95rem", color: bodyText, lineHeight: 1.75 }}>{f.desc}</p>
+            </Reveal>
+            {!f.flip && <ScaleImg src={f.img} alt={f.alt} />}
+          </div>
+        ))}
+      </section>
+
+      {/* ── Stats ─────────────────────────────────────────────────────── */}
+      <div style={{ borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}` }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "2.5rem 2rem", display: "flex", justifyContent: "center", gap: "5rem", flexWrap: "wrap" }}>
+          {[{ num: "1000", suffix: "+", label: "real resources" }, { num: "24", suffix: "/7", label: "always available" }, { num: "99", suffix: "%", label: "cheaper than tutoring" }].map((s, i) => (
+            <Reveal key={i} delay={i * 0.1}>
+              <div style={{ textAlign: "center" }}>
+                <div style={{ ...D, fontSize: "2rem", fontWeight: 800, color: coral }}><Counter target={s.num} suffix={s.suffix} /></div>
+                <div style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.22)", marginTop: "0.2rem" }}>{s.label}</div>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
 
-      {/* ==================== VIDEO DEMO ==================== */}
-      <section id="demo" className="py-16 md:py-24 px-4 md:px-6 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <motion.div className="text-center mb-10" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2">See it in action</h2>
-            <motion.div className="h-0.5 w-16 gradient-primary rounded-full mx-auto mb-4" initial={{ width: 0 }} whileInView={{ width: 64 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-500 text-sm">Watch a real walkthrough: coaching, drafting, and scoring a personal statement.</p>
-          </motion.div>
-
-          {/* Video embed container */}
-          <motion.div
-            className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-900/10 border border-gray-200"
-            initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <iframe
-              src="https://www.youtube.com/embed/tTKcgx3UlGw?rel=0&modestbranding=1"
-              className="w-full aspect-video"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </motion.div>
-
-          {/* Before/After PS comparison */}
-          <motion.div className="mt-14 max-w-2xl mx-auto" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}>
-            <p className="text-center text-sm font-semibold text-gray-500 uppercase tracking-wider mb-6">What coaching actually looks like</p>
-            <div className="grid md:grid-cols-2 gap-4">
-              <motion.div className="bg-white rounded-2xl p-6 border-2 border-gray-200 relative" initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8 }}>
-                <div className="absolute -top-3 left-4 bg-gray-200 text-gray-600 text-xs font-bold px-3 py-1 rounded-full">Before</div>
-                <p className="text-gray-500 text-sm leading-relaxed italic mt-2">"I have always been passionate about medicine since a young age. Seeing my grandmother suffer in hospital made me realise I wanted to help people and make a difference in the world."</p>
-              </motion.div>
-              <motion.div className="bg-white rounded-2xl p-6 border-2 border-coral-200 relative" initial={{ opacity: 0, y: 6 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.15 }}>
-                <div className="absolute -top-3 left-4 gradient-primary text-white text-xs font-bold px-3 py-1 rounded-full">After coaching</div>
-                <p className="text-gray-900 text-sm leading-relaxed mt-2">"When my grandmother was in hospital, the geriatrician knelt beside her bed and switched to simpler words because her English was fading. The junior doctor behind her was scribbling notes. I remember thinking those two people were doing completely different jobs in the same room, and I wanted to understand why."</p>
-              </motion.div>
+      {/* ── Before / After ────────────────────────────────────────────── */}
+      <section style={{ padding: "8rem 2rem", maxWidth: 900, margin: "0 auto" }}>
+        <SectionReveal label="What coaching looks like" heading="Same student. Same experience." />
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
+          <Reveal>
+            <div style={{ padding: "2rem", borderRadius: "1rem", background: cardBg, border: `2px solid rgba(255,255,255,0.06)`, position: "relative", height: "100%" }}>
+              <span style={{ position: "absolute", top: -11, left: 18, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.35)", fontSize: "0.68rem", fontWeight: 700, padding: "0.2rem 0.7rem", borderRadius: 100 }}>Before</span>
+              <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.75, fontStyle: "italic", marginTop: "0.8rem" }}>"I have always been passionate about medicine since a young age. Seeing my grandmother suffer in hospital made me realise I wanted to help people and make a difference in the world."</p>
             </div>
-            <p className="text-center text-xs text-gray-400 mt-4">Same student. Same experience. One sounds like everyone else. The other sounds like them.</p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ==================== TESTIMONIALS ==================== */}
-      <section id="testimonials" className="py-16 md:py-24 px-4 md:px-6 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">What students are saying</h2>
-            <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-4" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-600 max-w-lg mx-auto">Real feedback from students using myunioffer ai. Unedited.</p>
-          </motion.div>
-          <TestimonialRotator />
-        </div>
-      </section>
-
-      {/* ==================== PRICING TEASER ==================== */}
-      <section className="py-20 px-6 bg-gray-50">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-gray-900">Start free. Upgrade when you're ready.</h2>
-            <motion.div className="h-0.5 w-12 gradient-primary rounded-full mx-auto mb-6" initial={{ width: 0 }} whileInView={{ width: 48 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }} />
-            <p className="text-gray-600 max-w-lg mx-auto mb-8">The free tier gives you daily coaching sessions, forever. Premium is £9.99/month for full PS and Interview coaching, detailed PS feedback, and the Draft Builder.</p>
-            <Link to="/pricing" className="btn-primary px-8 py-4 text-lg">See Plans <ArrowRight className="w-5 h-5" /></Link>
-            <div className="flex flex-wrap justify-center gap-4 mt-6 text-sm text-gray-500">
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> Free tier included</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> No credit card needed</span>
-              <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-500" /> Cancel anytime</span>
+          </Reveal>
+          <Reveal delay={0.12}>
+            <div style={{ padding: "2rem", borderRadius: "1rem", background: cardBg, border: `2px solid ${coral}20`, position: "relative", height: "100%" }}>
+              <span style={{ position: "absolute", top: -11, left: 18, background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", fontSize: "0.68rem", fontWeight: 700, padding: "0.2rem 0.7rem", borderRadius: 100 }}>After coaching</span>
+              <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.75, marginTop: "0.8rem" }}>"When my grandmother was in hospital, the geriatrician knelt beside her bed and switched to simpler words because her English was fading. The junior doctor behind her was scribbling notes. I remember thinking those two people were doing completely different jobs in the same room, and I wanted to understand why."</p>
             </div>
+          </Reveal>
+        </div>
+        <Reveal delay={0.2}><p style={{ textAlign: "center", fontSize: "0.78rem", color: "rgba(255,255,255,0.18)", marginTop: "1.5rem" }}>One sounds like everyone else. The other sounds like them.</p></Reveal>
+      </section>
+
+      {/* ── Testimonials ──────────────────────────────────────────────── */}
+      <section style={{ padding: "4rem 0 8rem" }}>
+        <div style={{ padding: "0 2rem" }}>
+          <SectionReveal heading="What students are saying" subtitle="Real feedback. Unedited." />
+        </div>
+        <div style={{ maxWidth: 1100, margin: "0 auto", overflow: "hidden", padding: "0 2rem" }}>
+          <motion.div style={{ display: "flex", gap: "1rem" }} animate={{ x: [0, -1500] }} transition={{ duration: 35, repeat: Infinity, ease: "linear" }}>
+            {[...Array(3)].map((_, rep) => (
+              <div key={rep} style={{ display: "flex", gap: "1rem", flexShrink: 0 }}>
+                {testimonials.map((t, i) => (
+                  <div key={i} style={{ width: 300, flexShrink: 0, padding: "1.6rem", borderRadius: "1rem", background: cardBg, border: `1px solid ${border}` }}>
+                    <span style={{ fontSize: "2rem", lineHeight: 1, color: `${coral}35`, ...D }}>"</span>
+                    <p style={{ fontSize: "0.84rem", color: bodyText, lineHeight: 1.65, marginBottom: "1rem" }}>{t.text}</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: coral, display: "block", opacity: 0.5 }} />
+                      <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.2)", fontWeight: 600 }}>Early user</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* ==================== FAQ ==================== */}
-      <section id="faq" className="py-16 md:py-24 px-4 md:px-6 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900">Frequently asked questions</h2>
-          </motion.div>
-          <div className="space-y-4">
-            {faqs.map((faq, i) => (
-              <motion.div key={i} className="card overflow-hidden" initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.9, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}>
-                <button className="w-full p-6 flex items-center justify-between text-left font-semibold text-gray-900 hover:bg-gray-50 transition-colors" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                  {faq.q}
-                  <ChevronDown className={`w-5 h-5 text-gray-400 transition-transform flex-shrink-0 ml-4 ${openFaq === i ? 'rotate-180' : ''}`} />
-                </button>
-                {openFaq === i && (
-                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} className="px-6 pb-6 text-gray-600 leading-relaxed">{faq.a}</motion.div>
-                )}
-              </motion.div>
+      {/* ── Pricing ───────────────────────────────────────────────────── */}
+      <section style={{ padding: "4rem 2rem 8rem", maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
+        <Reveal>
+          <Label text="Pricing" />
+          <h2 style={{ ...D, fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 800, letterSpacing: "-0.03em", marginBottom: "1rem" }}>Start free. Upgrade when you're ready.</h2>
+          <p style={{ color: mutedText, fontSize: "0.95rem", maxWidth: 520, margin: "0 auto 2.5rem" }}>The free tier gives you daily coaching sessions, forever. Premium is £9.99/month for full access.</p>
+          <Link to="/pricing" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.85rem 1.8rem", borderRadius: "0.7rem", fontSize: "0.95rem", fontWeight: 700, textDecoration: "none", boxShadow: `0 4px 30px ${coral}20` }}>See Plans <ArrowRight size={15} /></Link>
+          <div style={{ display: "flex", justifyContent: "center", gap: "1.5rem", marginTop: "1.5rem", flexWrap: "wrap" }}>
+            {["Free tier included", "No credit card needed", "Cancel anytime"].map((t, i) => (
+              <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.25)" }}><Check size={13} color="#22c55e" />{t}</span>
             ))}
           </div>
+        </Reveal>
+      </section>
+
+      {/* ── FAQ ───────────────────────────────────────────────────────── */}
+      <section style={{ padding: "4rem 2rem 8rem", maxWidth: 800, margin: "0 auto" }}>
+        <SectionReveal heading="Frequently asked questions" />
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {faqs.map((faq, i) => (
+            <Reveal key={i} delay={i * 0.04}>
+              <motion.div whileHover={{ borderColor: `${coral}20` }} style={{ borderRadius: "0.8rem", background: cardBg, border: `1px solid ${border}`, overflow: "hidden" }}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ width: "100%", padding: "1.2rem 1.4rem", display: "flex", alignItems: "center", justifyContent: "space-between", background: "transparent", border: "none", cursor: "pointer", color: "#fff", fontSize: "0.92rem", fontWeight: 600, textAlign: "left" }}>
+                  {faq.q}
+                  <ChevronDown size={16} style={{ color: "rgba(255,255,255,0.2)", flexShrink: 0, marginLeft: "1rem", transform: openFaq === i ? "rotate(180deg)" : "rotate(0)", transition: "transform 0.25s" }} />
+                </button>
+                {openFaq === i && (
+                  <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} transition={{ duration: 0.3 }} style={{ padding: "0 1.4rem 1.2rem", color: bodyText, fontSize: "0.88rem", lineHeight: 1.7 }}>{faq.a}</motion.div>
+                )}
+              </motion.div>
+            </Reveal>
+          ))}
         </div>
       </section>
 
-      {/* ==================== FINAL CTA ==================== */}
-      <section className="py-16 md:py-24 px-4 md:px-6 gradient-primary relative overflow-hidden">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl" />
-        <div className="absolute top-1/2 left-1/4 w-20 h-20 bg-white/5 rounded-full blur-xl" />
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <motion.h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-white" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }}>
-            Your application is too important to wing it.
-          </motion.h2>
-          <motion.p className="text-lg text-white/90 mb-8" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.1 }}>
-            Start coaching your personal statement and interviews today. It's free.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ delay: 0.2 }}>
-            <Link to="/signup" className="inline-flex items-center gap-2 bg-white text-coral-600 px-8 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all">
-              Get Started Free <ArrowRight className="w-5 h-5" />
-            </Link>
-          </motion.div>
-        </div>
+      {/* ── Final CTA ─────────────────────────────────────────────────── */}
+      <section style={{ padding: "0 2rem 5rem", maxWidth: 1200, margin: "0 auto" }}>
+        <Reveal>
+          <div style={{ borderRadius: "1.3rem", padding: "5rem 3rem", textAlign: "center", background: `linear-gradient(135deg, ${coral}, #e74d32)`, position: "relative", overflow: "hidden" }}>
+            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 25% 20%, rgba(255,255,255,0.08), transparent 50%)", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 80% 80%, rgba(255,255,255,0.06), transparent 50%)", pointerEvents: "none" }} />
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <h2 style={{ ...D, fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 800, color: "#fff", lineHeight: 1.05, margin: "0 0 0.8rem" }}>Your application is too important to wing it.</h2>
+              <p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.75)", marginBottom: "2rem" }}>Start coaching your personal statement today. It's free.</p>
+              <Link to="/signup" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#fff", color: "#e74d32", padding: "0.9rem 2rem", borderRadius: "0.7rem", fontSize: "1rem", fontWeight: 700, textDecoration: "none" }}>Get Started Free <ArrowRight size={16} /></Link>
+            </div>
+          </div>
+        </Reveal>
       </section>
 
-      {/* ==================== FOOTER ==================== */}
-      <section className="py-10 px-6 bg-white border-t border-gray-100">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-gray-600 text-sm mb-2">Questions? <a href="mailto:support@myunioffer.com" className="text-coral-500 font-semibold hover:text-coral-600 transition-colors">support@myunioffer.com</a></p>
-          <p className="text-gray-400 text-xs">We respond within 24 hours</p>
-        </div>
-      </section>
-
-      <footer className="py-10 px-6 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center"><GraduationCap className="w-5 h-5 text-white" /></div>
-            <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
+      {/* ── Footer ────────────────────────────────────────────────────── */}
+      <footer style={{ borderTop: `1px solid ${border}`, padding: "3rem 2rem" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "1.5rem" }}>
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
+            <div style={{ width: 30, height: 30, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.45rem", display: "flex", alignItems: "center", justifyContent: "center" }}><GraduationCap size={15} color="#fff" /></div>
+            <span style={{ ...D, fontSize: "0.95rem", fontWeight: 700, color: "#fff" }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.3)" }}>ai</span></span>
           </Link>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm text-gray-600">
-            <Link to="/subjects" className="hover:text-coral-500 transition-colors">Subjects</Link>
-            <Link to="/blog" className="hover:text-coral-500 transition-colors">Blog</Link>
-            <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
-            <Link to="/about" className="hover:text-coral-500 transition-colors">Team</Link>
-            <Link to="/privacy" className="hover:text-coral-500 transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-coral-500 transition-colors">Terms</Link>
-            <a href="mailto:support@myunioffer.com" className="hover:text-coral-500 transition-colors">Support</a>
-          </div>
-          <div className="flex items-center gap-4">
-            <a href="https://instagram.com/myunioffer_ai" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold" style={{ background: '#E4405F' }}>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" /></svg>
-              Instagram
-            </a>
-            <a href="https://www.linkedin.com/in/shrey-verma-669a87284" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 rounded-full text-white text-sm font-semibold" style={{ background: '#0A66C2' }}>
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-              LinkedIn
-            </a>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
+            {[{ l: "Subjects", t: "/subjects" }, { l: "Blog", t: "/blog" }, { l: "Pricing", t: "/pricing" }, { l: "Team", t: "/about" }, { l: "Privacy", t: "/privacy" }, { l: "Terms", t: "/terms" }].map((link, i) => (
+              <Link key={i} to={link.t} style={{ color: "rgba(255,255,255,0.22)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>{link.l}</Link>
+            ))}
+            <a href="mailto:support@myunioffer.com" style={{ color: "rgba(255,255,255,0.22)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>Support</a>
           </div>
         </div>
-        <div className="max-w-6xl mx-auto mt-6 text-center text-sm text-gray-400">© 2026 myunioffer ai</div>
+        <div style={{ maxWidth: 1200, margin: "1.5rem auto 0", textAlign: "center", fontSize: "0.72rem", color: "rgba(255,255,255,0.12)" }}>© 2026 myunioffer ai</div>
       </footer>
     </div>
   );
