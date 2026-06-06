@@ -61,7 +61,7 @@ export default function SubjectPage() {
   useEffect(() => { if (!data) navigate("/subjects"); window.scrollTo(0, 0); }, [slug]);
   if (!data) return null;
 
-  const { name, heroHook, whatTutorsLookFor, reading = [], supercurriculars: supercurricularsRaw, commonMistakes: commonMistakesRaw = [], howWeHelp: howWeHelpRaw, relatedSubjects = [] } = data;
+  const { name, heroHook, whatTutorsLookFor, reading = [], supercurriculars: supercurricularsRaw, commonMistakes: commonMistakesRaw = [], howWeHelp: howWeHelpRaw, relatedSubjects = [], formatGuide, workExperience, readingIntro, examPrep, schoolSelection } = data;
   const tutorParas = whatTutorsLookFor ? whatTutorsLookFor.split(/\n\n+/).filter(p => p.trim()) : [];
   const superParas = typeof supercurricularsRaw === "string" ? supercurricularsRaw.split(/\n\n+/).filter(p => p.trim()) : [];
   const mistakes = Array.isArray(commonMistakesRaw) ? commonMistakesRaw : [];
@@ -69,6 +69,11 @@ export default function SubjectPage() {
   const books = reading.map(r => ({ ...r, note: r.desc || r.note || "" }));
   const allSentences = tutorParas.join(" ").split(/(?<=[.!?])\s+/);
   const pullQuote = allSentences.filter(s => s.length > 60 && s.length < 200).sort((a, b) => b.length - a.length)[0] || "";
+  const formatParas = formatGuide ? formatGuide.split(/\n\n+/).filter(p => p.trim()) : [];
+  const workExpParas = workExperience ? workExperience.split(/\n\n+/).filter(p => p.trim()) : [];
+  const readingIntroParas = readingIntro ? readingIntro.split(/\n\n+/).filter(p => p.trim()) : [];
+  const examParas = examPrep ? examPrep.split(/\n\n+/).filter(p => p.trim()) : [];
+  const schoolParas = schoolSelection ? schoolSelection.split(/\n\n+/).filter(p => p.trim()) : [];
 
   return (
     <div style={{ background: bg, color: "#fff", overflowX: "hidden", fontFamily: "'DM Sans', sans-serif" }}>
@@ -107,7 +112,7 @@ export default function SubjectPage() {
           </h1>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem" }}>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4, duration: 0.7 }}
-              style={{ fontSize: "clamp(1rem, 1.7vw, 1.2rem)", color: "rgba(255,255,255,0.38)", lineHeight: 1.6, maxWidth: 500, margin: 0 }}>{heroHook}</motion.p>
+              style={{ fontSize: "clamp(1rem, 1.7vw, 1.2rem)", color: "rgba(255,255,255,0.62)", lineHeight: 1.6, maxWidth: 500, margin: 0 }}>{heroHook}</motion.p>
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.55 }} style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
               <Magnetic onClick={() => navigate(`/signup?subject=${slug}`)} style={{
                 display: "inline-flex", alignItems: "center", gap: "0.45rem",
@@ -142,7 +147,7 @@ export default function SubjectPage() {
                 {i === 1 && pullQuote && (
                   <Reveal><blockquote style={{ margin: "2.5rem 0", padding: "1.8rem 0 1.8rem 1.8rem", borderLeft: `3px solid ${coral}`, ...D, fontSize: "clamp(1.15rem, 2vw, 1.45rem)", fontWeight: 500, lineHeight: 1.5, color: "rgba(255,255,255,0.5)", fontStyle: "italic" }}>{pullQuote}</blockquote></Reveal>
                 )}
-                <Reveal delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.48)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+                <Reveal delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
               </div>
             ))}
           </div>
@@ -151,12 +156,54 @@ export default function SubjectPage() {
 
       {/* Coral CTA strip */}
       <section style={{ padding: "0 2rem", maxWidth: 1400, margin: "0 auto" }}>
+
+      {/* Format guide (optional, e.g. Medicine new UCAS format) */}
+      {formatParas.length > 0 && (<>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem", background: "#18181d" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
+          <div>
+            {formatParas.map((para, i) => (
+              <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+            ))}
+          </div>
+          <div style={{ position: "sticky", top: 76 }}>
+            <Reveal><Label text="The new format" />
+              <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
+                Three questions.<br /><span style={{ color: coral }}>Not one essay.</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={0.12}><p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.7, maxWidth: 370, marginTop: "1.4rem" }}>UCAS changed the personal statement format in 2026. Most advice online is outdated.</p></Reveal>
+          </div>
+        </div>
+      </section>
+      <Line /></>)}
+
+      {/* Work experience (optional) */}
+      {workExpParas.length > 0 && (<>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
+          <div style={{ position: "sticky", top: 76 }}>
+            <Reveal><Label text="Work experience" />
+              <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
+                What actually counts.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.15}><p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.7, maxWidth: 370, marginTop: "1.4rem" }}>It's not about how many hours. It's about what you noticed.</p></Reveal>
+          </div>
+          <div>
+            {workExpParas.map((para, i) => (
+              <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+      <Line /></>)}
         <Reveal>
           <div style={{ borderRadius: "1.1rem", padding: "2.5rem 2.2rem", background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1.2rem", position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 85% 50%, rgba(255,255,255,0.1), transparent 55%)", pointerEvents: "none" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
               <h3 style={{ ...D, fontSize: "clamp(1.3rem, 2.5vw, 1.9rem)", fontWeight: 800, color: "#fff", lineHeight: 1.15, margin: 0 }}>Get coached on your {name} statement</h3>
-              <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.82rem", margin: "0.3rem 0 0", fontWeight: 500 }}>Free to start. No card required.</p>
+              <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.82rem", margin: "0.3rem 0 0", fontWeight: 500 }}>Free to start. No card required.</p>
             </div>
             <button onClick={() => navigate(`/signup?subject=${slug}`)} style={{ position: "relative", zIndex: 1, background: "#fff", color: coralEnd, fontWeight: 700, fontSize: "0.88rem", padding: "0.7rem 1.4rem", borderRadius: "0.6rem", border: "none", cursor: "pointer" }}>Start free</button>
           </div>
@@ -171,6 +218,13 @@ export default function SubjectPage() {
           <Label text="Recommended reading" />
           <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>What to read before you apply.</h2>
         </Reveal>
+        {readingIntroParas.length > 0 && (
+          <div style={{ maxWidth: 700, marginBottom: "3rem" }}>
+            {readingIntroParas.map((para, i) => (
+              <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.8, marginBottom: "1.2rem" }}>{para}</p></Reveal>
+            ))}
+          </div>
+        )}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
           {books.map((book, i) => (
             <Reveal key={i} delay={i * 0.03}>
@@ -182,7 +236,7 @@ export default function SubjectPage() {
                     <span style={{ fontWeight: 700, fontSize: "0.95rem" }}>{book.title}</span>
                     {book.author && <span style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.25)" }}>{book.author}</span>}
                   </div>
-                  <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.65, margin: 0 }}>{book.note}</p>
+                  <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.62)", lineHeight: 1.65, margin: 0 }}>{book.note}</p>
                 </div>
               </motion.div>
             </Reveal>
@@ -197,7 +251,7 @@ export default function SubjectPage() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
           <div>
             {superParas.map((para, i) => (
-              <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.48)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+              <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
             ))}
           </div>
           <div style={{ position: "sticky", top: 76 }}>
@@ -213,6 +267,40 @@ export default function SubjectPage() {
       </section>
 
       <Line />
+
+      {/* Exam prep (optional, e.g. UCAT for Medicine) */}
+      {examParas.length > 0 && (<>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem", background: "#18181d" }}>
+        <Reveal style={{ marginBottom: "3rem", maxWidth: 700 }}>
+          <Label text="Exam preparation" />
+          <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
+            The admissions test.
+          </h2>
+        </Reveal>
+        <div style={{ maxWidth: 700 }}>
+          {examParas.map((para, i) => (
+            <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+          ))}
+        </div>
+      </section>
+      <Line /></>)}
+
+      {/* School selection (optional) */}
+      {schoolParas.length > 0 && (<>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
+        <Reveal style={{ marginBottom: "3rem", maxWidth: 700 }}>
+          <Label text="Choosing your universities" />
+          <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
+            <span style={{ color: coral }}>Strategy matters</span> as much as strength.
+          </h2>
+        </Reveal>
+        <div style={{ maxWidth: 700 }}>
+          {schoolParas.map((para, i) => (
+            <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
+          ))}
+        </div>
+      </section>
+      <Line /></>)}
 
       {/* Common mistakes */}
       <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
@@ -230,7 +318,7 @@ export default function SubjectPage() {
                 <motion.div whileHover={{ y: -4 }} transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   style={{ display: "grid", gridTemplateColumns: "4rem 1fr", gap: "0.6rem", padding: "1.8rem", borderRadius: "1rem", background: `${coral}06`, border: `1px solid ${coral}10`, height: "100%" }}>
                   <span style={{ ...D, fontSize: "3rem", fontWeight: 800, lineHeight: 1, color: `${coral}18` }}>{String(i + 1).padStart(2, "0")}</span>
-                  <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.48)", lineHeight: 1.75, margin: 0, alignSelf: "center" }}>{text}</p>
+                  <p style={{ fontSize: "0.9rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.75, margin: 0, alignSelf: "center" }}>{text}</p>
                 </motion.div>
               </Reveal>
             );
@@ -247,11 +335,11 @@ export default function SubjectPage() {
             <Reveal><Label text="How myunioffer ai helps" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: "0 0 1.8rem" }}>Your {name} coach.</h2>
             </Reveal>
-            <Reveal delay={0.08}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.42)", lineHeight: 1.85, marginBottom: "2.2rem" }}>{helpText}</p></Reveal>
+            <Reveal delay={0.08}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.65)", lineHeight: 1.85, marginBottom: "2.2rem" }}>{helpText}</p></Reveal>
             <Reveal delay={0.16}>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
                 <Magnetic onClick={() => navigate(`/signup?subject=${slug}`)} style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, border: "none", cursor: "pointer", color: "#fff", fontWeight: 700, fontSize: "0.88rem", padding: "0.8rem 1.5rem", borderRadius: "0.7rem", boxShadow: `0 4px 20px ${coral}20` }}>Start free coaching <ArrowRight size={14} /></Magnetic>
-                <Magnetic onClick={() => navigate("/rate-my-ps")} style={{ background: "transparent", border: `1px solid ${border}`, cursor: "pointer", color: "rgba(255,255,255,0.42)", fontWeight: 600, fontSize: "0.88rem", padding: "0.8rem 1.5rem", borderRadius: "0.7rem" }}>Try Rate My PS free</Magnetic>
+                <Magnetic onClick={() => navigate("/rate-my-ps")} style={{ background: "transparent", border: `1px solid ${border}`, cursor: "pointer", color: "rgba(255,255,255,0.65)", fontWeight: 600, fontSize: "0.88rem", padding: "0.8rem 1.5rem", borderRadius: "0.7rem" }}>Try Rate My PS free</Magnetic>
               </div>
             </Reveal>
           </div>
@@ -264,9 +352,9 @@ export default function SubjectPage() {
               </div>
               <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "0.65rem", minHeight: 260 }}>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}><div style={{ background: coral, borderRadius: "0.9rem 0.9rem 0.25rem 0.9rem", padding: "0.55rem 0.8rem", maxWidth: "72%", fontSize: "0.78rem", lineHeight: 1.5, color: "#fff" }}>I'm applying for {name} but I'm not sure what to write about.</div></div>
-                <div style={{ display: "flex", justifyContent: "flex-start" }}><div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "0.9rem 0.9rem 0.9rem 0.25rem", padding: "0.55rem 0.8rem", maxWidth: "78%", fontSize: "0.78rem", lineHeight: 1.5, color: "rgba(255,255,255,0.65)" }}>That's normal at this stage. Have you had any experiences or reading about {name.toLowerCase()} that genuinely made you think?</div></div>
+                <div style={{ display: "flex", justifyContent: "flex-start" }}><div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "0.9rem 0.9rem 0.9rem 0.25rem", padding: "0.55rem 0.8rem", maxWidth: "78%", fontSize: "0.78rem", lineHeight: 1.5, color: "rgba(255,255,255,0.72)" }}>That's normal at this stage. Have you had any experiences or reading about {name.toLowerCase()} that genuinely made you think?</div></div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}><div style={{ background: coral, borderRadius: "0.9rem 0.9rem 0.25rem 0.9rem", padding: "0.55rem 0.8rem", maxWidth: "72%", fontSize: "0.78rem", lineHeight: 1.5, color: "#fff" }}>I did some work experience and I've been reading a bit...</div></div>
-                <div style={{ display: "flex", justifyContent: "flex-start" }}><div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "0.9rem 0.9rem 0.9rem 0.25rem", padding: "0.55rem 0.8rem", maxWidth: "78%", fontSize: "0.78rem", lineHeight: 1.5, color: "rgba(255,255,255,0.65)" }}>Tell me about one specific moment during work experience that surprised you or changed how you think.</div></div>
+                <div style={{ display: "flex", justifyContent: "flex-start" }}><div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "0.9rem 0.9rem 0.9rem 0.25rem", padding: "0.55rem 0.8rem", maxWidth: "78%", fontSize: "0.78rem", lineHeight: 1.5, color: "rgba(255,255,255,0.72)" }}>Tell me about one specific moment during work experience that surprised you or changed how you think.</div></div>
                 <div style={{ display: "flex", justifyContent: "flex-end" }}><motion.div animate={{ opacity: [0.3, 0.65, 0.3] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ background: `${coral}55`, borderRadius: "0.8rem", padding: "0.4rem 0.7rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)" }}>...</motion.div></div>
               </div>
             </div>
@@ -281,7 +369,7 @@ export default function SubjectPage() {
           {relatedSubjects.map((s, i) => (
             <Reveal key={s} delay={i * 0.025}><Link to={`/subjects/${s}`} style={{ textDecoration: "none" }}>
               <motion.div whileHover={{ scale: 1.05, borderColor: `${coral}30` }} transition={{ type: "spring", stiffness: 320, damping: 22 }}
-                style={{ padding: "0.4rem 0.85rem", borderRadius: "0.5rem", border: `1px solid ${border}`, color: "rgba(255,255,255,0.42)", fontSize: "0.8rem", fontWeight: 600, textTransform: "capitalize" }}>{s.replace(/-/g, " ")}</motion.div>
+                style={{ padding: "0.4rem 0.85rem", borderRadius: "0.5rem", border: `1px solid ${border}`, color: "rgba(255,255,255,0.65)", fontSize: "0.8rem", fontWeight: 600, textTransform: "capitalize" }}>{s.replace(/-/g, " ")}</motion.div>
             </Link></Reveal>
           ))}
         </div>
