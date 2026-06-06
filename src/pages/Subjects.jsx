@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { GraduationCap, Menu, X, ArrowRight } from 'lucide-react';
+import { GraduationCap, ArrowRight } from 'lucide-react';
 import { subjects } from '../subjects/subjectData';
 
-export default function Subjects() {
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+const D = { fontFamily: "'Outfit', sans-serif" };
+const coral = "#f96a50";
+const bg = "#131316";
+const border = "rgba(255,255,255,0.06)";
+const mutedText = "rgba(255,255,255,0.52)";
 
+export default function Subjects() {
   useEffect(() => {
     document.title = 'UCAS subject guides — personalised advice for every course | myunioffer';
     const setOrCreate = (attr, key, value) => {
@@ -14,102 +18,63 @@ export default function Subjects() {
       if (!el) { el = document.createElement('meta'); el.setAttribute(attr, key); document.head.appendChild(el); }
       el.setAttribute('content', value);
     };
-    setOrCreate('name', 'description', 'Free UCAS application advice for every subject. What admissions tutors look for, recommended reading, supercurriculars, and common mistakes. Written by students who just got in.');
+    setOrCreate('name', 'description', 'Free UCAS application advice for every subject. What admissions tutors look for, recommended reading, supercurriculars, and common mistakes.');
   }, []);
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Nav */}
-      <nav className="sticky top-0 z-50 glass border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-coral-500/20">
-                <GraduationCap className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
-            </Link>
-            <div className="hidden md:flex items-center gap-8">
-              <Link to="/#features" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Features</Link>
-              <Link to="/subjects" className="text-coral-500 font-medium">Subjects</Link>
-              <Link to="/blog" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Blog</Link>
-              <Link to="/pricing" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Pricing</Link>
-              <Link to="/login" className="text-gray-600 hover:text-coral-500 transition-colors font-medium">Log In</Link>
-              <Link to="/signup" className="btn-primary">Get Started</Link>
-            </div>
-            <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+    <div style={{ background: bg, color: "#fff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
+      <nav style={{ position: "sticky", top: 0, zIndex: 50, borderBottom: `1px solid ${border}`, background: "rgba(19,19,22,0.8)", backdropFilter: "blur(20px)" }}>
+        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.55rem", textDecoration: "none" }}>
+            <div style={{ width: 34, height: 34, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center" }}><GraduationCap size={18} color="#fff" /></div>
+            <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
+          </Link>
+          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+            <Link to="/subjects" style={{ color: coral, textDecoration: "none", fontSize: "0.82rem", fontWeight: 600 }}>Subjects</Link>
+            <Link to="/blog" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500 }}>Blog</Link>
+            <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500 }}>Pricing</Link>
+            <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500 }}>Log In</Link>
+            <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.3rem", borderRadius: "0.55rem", fontSize: "0.82rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
           </div>
-          {mobileMenuOpen && (
-            <motion.div className="md:hidden py-4 flex flex-col gap-4 border-t border-gray-100 mt-4" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Home</Link>
-              <Link to="/subjects" onClick={() => setMobileMenuOpen(false)} className="text-coral-500 font-medium">Subjects</Link>
-              <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Blog</Link>
-              <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Pricing</Link>
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-gray-600 font-medium">Log In</Link>
-              <Link to="/signup" onClick={() => setMobileMenuOpen(false)} className="btn-primary text-center mt-2">Get Started</Link>
-            </motion.div>
-          )}
         </div>
       </nav>
 
-      {/* Header */}
-      <section className="pt-16 pb-8 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <p className="text-coral-500 font-display font-bold text-sm uppercase tracking-wider mb-3">Subject guides</p>
-            <h1 className="text-3xl md:text-4xl font-display font-bold text-gray-900 mb-4">UCAS advice for your subject</h1>
-            <p className="text-gray-500 max-w-lg mx-auto">What admissions tutors look for, what to read, what supercurriculars matter, and the mistakes everyone else makes. Pick your subject.</p>
-          </motion.div>
+      <section style={{ padding: "5rem 2rem 2rem", textAlign: "center" }}>
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+          <p style={{ fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: coral, marginBottom: "1rem" }}>Subject guides</p>
+          <h1 style={{ ...D, fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, marginBottom: "1rem" }}>UCAS advice for <span style={{ color: coral }}>your subject</span></h1>
+          <p style={{ color: mutedText, fontSize: "0.95rem", maxWidth: 500, margin: "0 auto" }}>What admissions tutors look for, what to read, what supercurriculars matter, and the mistakes everyone else makes.</p>
+        </motion.div>
+      </section>
+
+      <section style={{ padding: "2rem 2rem 5rem" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.7rem" }}>
+          {subjects.map((s, i) => (
+            <motion.div key={s.slug} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.025 }}>
+              <Link to={`/subjects/${s.slug}`} style={{ display: "block", padding: "1.2rem 1.4rem", borderRadius: "0.8rem", background: "rgba(255,255,255,0.025)", border: `1px solid ${border}`, textDecoration: "none", transition: "border-color 0.2s" }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = `${coral}30`}
+                onMouseLeave={e => e.currentTarget.style.borderColor = border}>
+                <p style={{ ...D, fontWeight: 700, fontSize: "0.95rem", color: "#fff", marginBottom: "0.3rem" }}>{s.name}</p>
+                <p style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{s.heroHook}</p>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Subject Grid */}
-      <section className="pb-20 px-6">
-        <div className="max-w-4xl mx-auto">
-          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {subjects.map((subject, i) => (
-              <motion.div key={subject.slug} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: i * 0.03 }}>
-                <Link to={`/subjects/${subject.slug}`} className="block px-5 py-4 rounded-xl border border-gray-100 hover:border-coral-200 hover:shadow-sm transition-all group">
-                  <p className="font-display font-semibold text-gray-900 group-hover:text-coral-500 transition-colors">{subject.name}</p>
-                  <p className="text-xs text-gray-400 mt-1 line-clamp-2">{subject.heroHook}</p>
-                </Link>
-              </motion.div>
-            ))}
+      <section style={{ padding: "4rem 2rem", maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ borderRadius: "1.1rem", padding: "3.5rem 2rem", textAlign: "center", background: `linear-gradient(135deg, ${coral}, #e74d32)`, position: "relative", overflow: "hidden" }}>
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 25% 20%, rgba(255,255,255,0.08), transparent 50%)", pointerEvents: "none" }} />
+          <div style={{ position: "relative", zIndex: 1 }}>
+            <h2 style={{ ...D, fontSize: "1.6rem", fontWeight: 800, color: "#fff", marginBottom: "0.5rem" }}>Don't see your subject?</h2>
+            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.9rem", marginBottom: "1.5rem" }}>The AI coach covers every UCAS subject. Tell it what you're applying for.</p>
+            <Link to="/signup" style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "#fff", color: "#e74d32", padding: "0.7rem 1.4rem", borderRadius: "0.6rem", fontSize: "0.9rem", fontWeight: 700, textDecoration: "none" }}>Start free <ArrowRight size={15} /></Link>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 px-6 gradient-primary">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-white mb-3">Don't see your subject?</h2>
-          <p className="text-white/80 mb-6">The AI coach covers every UCAS subject. Tell it what you're applying for and it tailors the advice.</p>
-          <Link to="/signup" className="inline-flex items-center gap-2 bg-white text-coral-600 px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all">
-            Start free <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-10 px-6 border-t border-gray-100">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center"><GraduationCap className="w-5 h-5 text-white" /></div>
-            <span className="text-xl font-display font-bold">myuni<span className="text-coral-500">offer</span> <span className="text-gray-400">ai</span></span>
-          </Link>
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8 text-sm text-gray-600">
-            <Link to="/subjects" className="hover:text-coral-500 transition-colors">Subjects</Link>
-            <Link to="/blog" className="hover:text-coral-500 transition-colors">Blog</Link>
-            <Link to="/privacy" className="hover:text-coral-500 transition-colors">Privacy</Link>
-            <Link to="/terms" className="hover:text-coral-500 transition-colors">Terms</Link>
-            <Link to="/about" className="hover:text-coral-500 transition-colors">Team</Link>
-            <Link to="/pricing" className="hover:text-coral-500 transition-colors">Pricing</Link>
-            <a href="mailto:support@myunioffer.com" className="hover:text-coral-500 transition-colors">Support</a>
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto mt-6 text-center text-sm text-gray-400">&copy; 2026 myunioffer ai</div>
+      <footer style={{ borderTop: `1px solid ${border}`, padding: "2rem" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto", textAlign: "center", fontSize: "0.72rem", color: "rgba(255,255,255,0.12)" }}>© 2026 myunioffer ai</div>
       </footer>
     </div>
   );
