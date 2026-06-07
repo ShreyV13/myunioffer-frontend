@@ -227,7 +227,7 @@ export default function Landing() {
                 {!videoPlaying ? (
                   <img src="/screenshots/rate-my-ps.png" alt="myunioffer demo" style={{ width: "100%", display: "block" }} />
                 ) : (
-                  <iframe src="https://www.youtube.com/embed/tTKcgx3UlGw?rel=0&modestbranding=1&autoplay=1" style={{ width: "100%", aspectRatio: "16/9", border: "none" }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
+                  <iframe src="https://www.youtube.com/embed/_UWX6z-YPIk?rel=0&modestbranding=1&autoplay=1" style={{ width: "100%", aspectRatio: "16/9", border: "none" }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
                 )}
                 {!videoPlaying && <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.2)" }}>
                   <motion.div whileHover={{ scale: 1.1 }}

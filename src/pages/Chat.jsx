@@ -770,6 +770,7 @@ export default function Chat() {
                         <GraduationCap className="w-3.5 h-3.5 text-white" />
                       </div>
                       <div className="flex-1 min-w-0 text-[15px] leading-relaxed" style={{color: '#eee'}}>
+
                         <div className="prose-ai"><ReactMarkdown components={{
                           p: ({children}) => <p className="mb-3 last:mb-0">{children}</p>,
                           strong: ({children}) => <strong className="font-semibold" style={{color: 'inherit'}}>{children}</strong>,
@@ -780,6 +781,7 @@ export default function Chat() {
                           h2: ({children}) => <p className="font-semibold mb-2" style={{color: 'inherit'}}>{children}</p>,
                           code: ({children}) => <span>{children}</span>,
                         }}>{(msg.content || '').replace(/\\\(.*?\\\)/g, '').replace(/\\\[.*?\\\]/g, '').replace(/\$\$.*?\$\$/g, '').replace(/\$.*?\$/g, '')}</ReactMarkdown></div>
+
                       </div>
                     </div>
                   )}
