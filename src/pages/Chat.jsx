@@ -365,7 +365,8 @@ export default function Chat() {
                 detectedSubj = data.detected_subject;
                 smoothAgentRef.current = data.agent || '';
                 smoothSubjRef.current = data.detected_subject;
-                if (detectedSubj || data.detected_category) {
+                if ((detectedSubj || data.detected_category) && !userSubject) {
+                  // Subject locking: only set subject if not already set
                   const subject = detectedSubj || data.detected_category;
                   setUserSubject(subject);
                   await updateStudentProfile(currentUser.uid, { subject });
@@ -427,7 +428,12 @@ export default function Chat() {
       setServerWaking(false);
       console.error(err);
       
-      // Fallback to non-streaming endpoint
+      // Fallback to non-streaming endpoint - remove empty streaming message if it exists
+      setMessages(prev => {
+        const last = prev[prev.length - 1];
+        if (last && last.role === 'assistant' && !last.content) return prev.slice(0, -1);
+        return prev;
+      });
       try {
         const res = await fetch(`${API_BASE}/chat`, {
           method: 'POST',
@@ -458,7 +464,7 @@ export default function Chat() {
           }
           
           await incrementMessageCount(currentUser.uid, mode);
-          if (data.detected_subject || data.detected_category) {
+          if ((data.detected_subject || data.detected_category) && !userSubject) {
             setUserSubject(data.detected_subject || data.detected_category);
             await updateStudentProfile(currentUser.uid, { subject: data.detected_subject || data.detected_category });
           }
