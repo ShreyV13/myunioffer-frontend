@@ -149,7 +149,7 @@ export default function Subjects() {
       <section style={{ padding: "2rem 2rem 6rem" }}>
         <div style={{ maxWidth: 900, margin: "0 auto" }}>
           <div style={{ borderTop: `1px solid ${border}` }}>
-            {subjects.filter(s => ["medicine","law","economics","computer-science","engineering","ppe","maths"].includes(s.slug)).map((s, i) => (
+            {subjects.filter(s => ["medicine","law","economics","computer-science","engineering","ppe","mathematics"].includes(s.slug)).map((s, i) => (
               <SubjectRow key={s.slug} subject={s} index={i} />
             ))}
           </div>
