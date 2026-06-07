@@ -67,7 +67,7 @@ function ScaleImg({ src, alt }) {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.img src={src} alt={alt} whileHover={{ scale: 1.01 }} transition={{ duration: 0.4 }}
-        style={{ width: "100%", display: "block", borderRadius: "0.9rem", border: `1px solid ${border}`, boxShadow: "0 25px 60px rgba(0,0,0,0.4)" }} />
+        style={{ width: "100%", display: "block", borderRadius: "0.9rem", overflow: "hidden", border: `1px solid ${border}`, boxShadow: "0 25px 60px rgba(0,0,0,0.4)" }} />
     </motion.div>
   );
 }
@@ -92,8 +92,7 @@ export default function Landing() {
   const [introPhase, setIntroPhase] = useState(0);
   const loaded = introPhase >= 1;
   const [openFaq, setOpenFaq] = useState(null);
-  const [videoPlaying, setVideoPlaying] = useState(false);
-  const [navLogoPos, setNavLogoPos] = useState({ top: 11, left: 32 });
+    const [navLogoPos, setNavLogoPos] = useState({ top: 11, left: 32 });
 
   useEffect(() => {
     const calcPos = () => setNavLogoPos({ top: 11, left: Math.max(32, (window.innerWidth - 1300) / 2 + 32) });
@@ -217,26 +216,20 @@ export default function Landing() {
             {/* Glow behind screenshot */}
             <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: "70%", height: "60%", background: `radial-gradient(ellipse, ${coral}15, transparent 70%)`, filter: "blur(40px)", pointerEvents: "none" }} />
 
-            <div onClick={() => !videoPlaying && setVideoPlaying(true)}
-              style={{ cursor: videoPlaying ? "default" : "pointer", position: "relative", width: "100%", maxWidth: 1200, perspective: "1400px" }}>
+            <div style={{ position: "relative", width: "100%", maxWidth: 1200, perspective: "1400px", paddingBottom: "2.5rem" }}>
               <motion.div
-                
-                
-                style={{ rotateX: heroImgRotate, transformOrigin: "bottom center", borderRadius: "0.9rem", overflow: "hidden", border: `1px solid rgba(255,255,255,0.08)`, boxShadow: `0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset` }}
+                style={{ rotateX: heroImgRotate, transformOrigin: "bottom center", borderRadius: "0.9rem 0.9rem 0 0", boxShadow: `0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset` }}
               >
-                {!videoPlaying ? (
-                  <img src="/screenshots/rate-my-ps.png" alt="myunioffer demo" style={{ width: "100%", display: "block" }} />
-                ) : (
-                  <iframe src="https://www.youtube.com/embed/_UWX6z-YPIk?rel=0&modestbranding=1&autoplay=1" style={{ width: "100%", aspectRatio: "16/9", border: "none" }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-                )}
-                {!videoPlaying && <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(0,0,0,0.2)" }}>
-                  <motion.div whileHover={{ scale: 1.1 }}
-                    animate={{ boxShadow: [`0 0 0px ${coral}00`, `0 0 40px ${coral}40`, `0 0 0px ${coral}00`] }}
-                    transition={{ boxShadow: { duration: 2, repeat: Infinity } }}
-                    style={{ width: 64, height: 64, borderRadius: "50%", background: `${coral}dd`, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(8px)" }}>
-                    <Play size={24} color="#fff" fill="#fff" style={{ marginLeft: 2 }} />
-                  </motion.div>
-                </div>}
+                <div style={{ overflow: "hidden", borderRadius: "0.9rem 0.9rem 0 0" }}>
+                  <video
+                    src="/demo.mp4"
+                    poster="/screenshots/rate-my-ps.png"
+                    controls
+                    playsInline
+                    preload="metadata"
+                    style={{ width: "100%", display: "block", transform: "scale(1.02)", transformOrigin: "center center" }}
+                  />
+                </div>
               </motion.div>
             </div>
           </motion.div>
