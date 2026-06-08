@@ -26,6 +26,15 @@ const TIER_LIMITS = {
 };
 
 export function AuthProvider({ children }) {
+  // Capture UTM source from URL on first load
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const utmSource = params.get('utm_source');
+    if (utmSource) {
+      localStorage.setItem('utm_source', utmSource);
+    }
+  }, []);
+
   const [currentUser, setCurrentUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [studentProfile, setStudentProfile] = useState(null);
@@ -34,6 +43,7 @@ export function AuthProvider({ children }) {
   // Create user profile in Firestore
   async function createUserProfile(user, displayName = '') {
     const userRef = doc(db, 'users', user.uid);
+    const acquisitionSource = localStorage.getItem('utm_source') || 'organic';
     const userData = {
       email: user.email,
       displayName: displayName || user.displayName || '',
@@ -41,6 +51,7 @@ export function AuthProvider({ children }) {
       messagesUsedToday: 0,
       lastMessageDate: new Date().toISOString().split('T')[0],
       createdAt: serverTimestamp(),
+      acquisitionSource: acquisitionSource,
       studentProfile: {
         subject: null,
         universities: [],

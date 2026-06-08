@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Nav from '../../components/Nav';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { GraduationCap, ArrowLeft, ArrowRight, User, ChevronDown, Check } from 'lucide-react';
@@ -54,16 +55,7 @@ export default function About() {
   return (
     <div style={{ background: bg, color: "#fff", minHeight: "100vh", fontFamily: "'DM Sans', sans-serif" }}>
       {/* Nav */}
-      <nav style={{ borderBottom: `1px solid ${border}`, background: "rgba(19,19,22,0.8)", backdropFilter: "blur(20px)" }}>
-        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <button onClick={() => window.history.length > 1 ? window.history.back() : window.location.href = "/"} style={{ display: "flex", alignItems: "center", gap: "0.4rem", background: "none", border: "none", color: "rgba(255,255,255,0.45)", cursor: "pointer", fontSize: "0.85rem", fontWeight: 500 }}><ArrowLeft size={16} /> Back</button>
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
-            <div style={{ width: 34, height: 34, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center" }}><GraduationCap size={18} color="#fff" /></div>
-            <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
-          </Link>
-          <div style={{ width: 60 }} />
-        </div>
-      </nav>
+      <Nav active="Team" />
 
       <main style={{ maxWidth: 1000, margin: "0 auto", padding: "4rem 2rem" }}>
         {/* Hero */}

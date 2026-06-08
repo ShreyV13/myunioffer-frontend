@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
+import Nav from '../components/Nav';
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring } from "framer-motion";
 import { subjects } from "../subjects/subjectData";
@@ -51,6 +52,12 @@ function Line() { return <div style={{ height: 1, background: border, margin: "0
 
 export default function SubjectPage() {
   const { slug } = useParams();
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" && window.innerWidth < 768);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const navigate = useNavigate();
   const heroRef = useRef(null);
   const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
@@ -79,27 +86,10 @@ export default function SubjectPage() {
     <div style={{ background: bg, color: "#fff", overflowX: "hidden", fontFamily: "'DM Sans', sans-serif" }}>
 
       {/* Nav */}
-      <nav style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(19,19,22,0.8)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${border}` }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 2rem", height: 52, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.25)" }}>
-            <Link to="/" style={{ display: "flex", alignItems: "center", gap: "0.4rem", color: "inherit", textDecoration: "none" }}>
-              <div style={{ width: 24, height: 24, background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, borderRadius: "0.35rem", display: "flex", alignItems: "center", justifyContent: "center" }}><GraduationCap size={13} color="#fff" /></div>
-              myunioffer ai
-            </Link>
-            <ChevronRight size={11} />
-            <Link to="/subjects" style={{ color: "inherit", textDecoration: "none" }}>Subjects</Link>
-            <ChevronRight size={11} />
-            <span style={{ color: "#fff", fontWeight: 600 }}>{name}</span>
-          </div>
-          <Magnetic onClick={() => navigate(`/signup?subject=${slug}`)} style={{
-            background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, border: "none", cursor: "pointer",
-            color: "#fff", fontWeight: 700, fontSize: "0.78rem", padding: "0.45rem 1.2rem", borderRadius: "0.55rem",
-          }}>Start free</Magnetic>
-        </div>
-      </nav>
+      <Nav active="Subjects" />
 
       {/* Hero */}
-      <section ref={heroRef} style={{ minHeight: "90vh", display: "flex", alignItems: "flex-end", position: "relative", overflow: "hidden" }}>
+      <section ref={heroRef} style={{ minHeight: isMobile ? "auto" : "90vh", display: "flex", alignItems: "flex-end", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-10%", right: "-8%", width: "50vw", height: "50vw", maxWidth: 700, maxHeight: 700, borderRadius: "50%", background: coral, opacity: 0.04, filter: "blur(120px)", pointerEvents: "none" }} />
         <motion.div style={{ opacity: heroOpacity, scale: heroScale, width: "100%", position: "relative", zIndex: 2, maxWidth: 1400, margin: "0 auto", padding: "0 2rem 5rem" }}>
           <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
@@ -107,7 +97,7 @@ export default function SubjectPage() {
             <motion.span animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 2, repeat: Infinity }} style={{ width: 6, height: 6, borderRadius: "50%", background: coral, display: "block" }} />
             <span style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: coral }}>UCAS {name} Guide</span>
           </motion.div>
-          <h1 style={{ ...D, fontSize: "clamp(4rem, 12vw, 11rem)", fontWeight: 800, lineHeight: 0.88, letterSpacing: "-0.045em", margin: "0 0 2.5rem" }}>
+          <h1 style={{ ...D, fontSize: isMobile ? "clamp(2.5rem, 10vw, 4rem)" : "clamp(4rem, 12vw, 11rem)", fontWeight: 800, lineHeight: 0.88, letterSpacing: "-0.045em", margin: "0 0 2.5rem" }}>
             <WordReveal words={name} delay={0.1} />
           </h1>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "2rem" }}>
@@ -131,9 +121,9 @@ export default function SubjectPage() {
       <Line />
 
       {/* What tutors look for */}
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
-          <div style={{ position: "sticky", top: 76 }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "start" }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 76 }}>
             <Reveal><Label text="What tutors actually look for" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
                 The real criteria.<br /><span style={{ color: coral }}>Not the prospectus version.</span>
@@ -159,14 +149,14 @@ export default function SubjectPage() {
 
       {/* Format guide (optional, e.g. Medicine new UCAS format) */}
       {formatParas.length > 0 && (<>
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem", background: "#18181d" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem", background: "#18181d" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "start" }}>
           <div>
             {formatParas.map((para, i) => (
               <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
             ))}
           </div>
-          <div style={{ position: "sticky", top: 76 }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 76 }}>
             <Reveal><Label text="The new format" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
                 Three questions.<br /><span style={{ color: coral }}>Not one essay.</span>
@@ -180,9 +170,9 @@ export default function SubjectPage() {
 
       {/* Work experience (optional) */}
       {workExpParas.length > 0 && (<>
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
-          <div style={{ position: "sticky", top: 76 }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "start" }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 76 }}>
             <Reveal><Label text="Work experience" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
                 What actually counts.
@@ -247,14 +237,14 @@ export default function SubjectPage() {
       <Line />
 
       {/* Supercurriculars */}
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "start" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "start" }}>
           <div>
             {superParas.map((para, i) => (
               <Reveal key={i} delay={i * 0.04}><p style={{ fontSize: "1rem", color: "rgba(255,255,255,0.72)", lineHeight: 1.85, marginBottom: "1.8rem" }}>{para}</p></Reveal>
             ))}
           </div>
-          <div style={{ position: "sticky", top: 76 }}>
+          <div style={{ position: isMobile ? "static" : "sticky", top: 76 }}>
             <Reveal><Label text="Supercurriculars" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>What to do outside school.</h2>
             </Reveal>
@@ -270,7 +260,7 @@ export default function SubjectPage() {
 
       {/* Exam prep (optional, e.g. UCAT for Medicine) */}
       {examParas.length > 0 && (<>
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem", background: "#18181d" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem", background: "#18181d" }}>
         <Reveal style={{ marginBottom: "3rem", maxWidth: 700 }}>
           <Label text="Exam preparation" />
           <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
@@ -287,7 +277,7 @@ export default function SubjectPage() {
 
       {/* School selection (optional) */}
       {schoolParas.length > 0 && (<>
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
         <Reveal style={{ marginBottom: "3rem", maxWidth: 700 }}>
           <Label text="Choosing your universities" />
           <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
@@ -303,7 +293,7 @@ export default function SubjectPage() {
       <Line /></>)}
 
       {/* Common mistakes */}
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
         <Reveal style={{ marginBottom: "4rem", textAlign: "center" }}>
           <Label text="Common mistakes" />
           <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: 0 }}>
@@ -329,8 +319,8 @@ export default function SubjectPage() {
       <Line />
 
       {/* How we help + chat preview */}
-      <section style={{ maxWidth: 1400, margin: "0 auto", padding: "7rem 2rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4rem", alignItems: "center" }}>
+      <section style={{ maxWidth: 1400, margin: "0 auto", padding: isMobile ? "3rem 1.2rem" : "7rem 2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "center" }}>
           <div>
             <Reveal><Label text="How myunioffer ai helps" />
               <h2 style={{ ...D, fontSize: "clamp(2.2rem, 4.5vw, 3.8rem)", fontWeight: 800, letterSpacing: "-0.04em", lineHeight: 1.02, margin: "0 0 1.8rem" }}>Your {name} coach.</h2>
@@ -378,7 +368,7 @@ export default function SubjectPage() {
       {/* Final CTA */}
       <section style={{ padding: "0 2rem", maxWidth: 1400, margin: "0 auto" }}>
         <Reveal>
-          <div style={{ borderRadius: "1.4rem", padding: "5rem 3rem", textAlign: "center", background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, position: "relative", overflow: "hidden" }}>
+          <div style={{ borderRadius: "1.4rem", padding: isMobile ? "3rem 1.5rem" : "5rem 3rem", textAlign: "center", background: `linear-gradient(135deg, ${coral}, ${coralEnd})`, position: "relative", overflow: "hidden" }}>
             <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.1), transparent 50%)", pointerEvents: "none" }} />
             <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08), transparent 50%)", pointerEvents: "none" }} />
             <div style={{ position: "relative", zIndex: 1 }}>
