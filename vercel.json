@@ -1,5 +1,10 @@
 {
   "rewrites": [
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/demo.mp4", "destination": "/demo.mp4" },
+    { "source": "/screenshots/(.*)", "destination": "/screenshots/$1" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
