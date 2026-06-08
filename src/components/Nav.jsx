@@ -39,7 +39,7 @@ export default function Nav({ active }) {
 
           {!isMobile && (
             <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-              <Link to="/subjects" style={linkStyle("Subjects")}>Subjects</Link>
+              <Link to="/subjects" style={linkStyle("Subjects")}>Subject Guides</Link>
               <Link to="/blog" style={linkStyle("Blog")}>Blog</Link>
               <Link to="/pricing" style={linkStyle("Pricing")}>Pricing</Link>
               <Link to="/login" style={linkStyle("Log In")}>Log In</Link>
@@ -66,7 +66,7 @@ export default function Nav({ active }) {
           style={{ position: "fixed", top: 56, left: 0, right: 0, zIndex: 49, background: "rgba(19,19,22,0.95)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${border}`, padding: "1rem 2rem" }}
         >
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <Link to="/subjects" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Subjects</Link>
+            <Link to="/subjects" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Subject Guides</Link>
             <Link to="/blog" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Blog</Link>
             <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Pricing</Link>
             <Link to="/login" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Log In</Link>
