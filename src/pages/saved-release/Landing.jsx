@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useInView, useMotionTemplate } from 'framer-motion';
-import { GraduationCap, ArrowRight, ChevronDown, Play, Check } from 'lucide-react';
+import { GraduationCap, Menu, X, ArrowRight, ChevronDown, Play, Check } from 'lucide-react';
 
 const D = { fontFamily: "'Outfit', sans-serif" };
 const coral = "#f96a50";
@@ -49,7 +49,7 @@ function SectionReveal({ label, heading, subtitle, center = true }) {
   return (
     <div ref={ref} style={{ textAlign: center ? "center" : "left", marginBottom: "4rem" }}>
       {label && <div style={{ overflow: "hidden" }}><motion.div initial={{ y: "100%" }} animate={inView ? { y: "0%" } : {}} transition={{ duration: 0.5, ease: [0.4, 0, 0.15, 1] }}><p style={{ fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.22em", textTransform: "uppercase", color: coral, marginBottom: "1rem" }}>{label}</p></motion.div></div>}
-      <div style={{ overflow: "hidden" }}><motion.h2 initial={{ y: "100%" }} animate={inView ? { y: "0%" } : {}} transition={{ duration: 0.6, delay: 0.06, ease: [0.4, 0, 0.15, 1] }} style={{ ...D, fontSize: "clamp(2rem, 4vw, 3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, margin: "0 0 1rem" }}>{heading}</motion.h2></div>
+      <div style={{ overflow: "hidden" }}><motion.h2 initial={{ y: "100%" }} animate={inView ? { y: "0%" } : {}} transition={{ duration: 0.6, delay: 0.06, ease: [0.4, 0, 0.15, 1] }} style={{ ...D, fontSize: "clamp(1.5rem, 4vw, 3.2rem)", fontWeight: 800, letterSpacing: "-0.03em", lineHeight: 1.05, margin: "0 0 1rem" }}>{heading}</motion.h2></div>
       {subtitle && <motion.p initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.18 }} style={{ color: mutedText, fontSize: "0.95rem", maxWidth: 520, margin: center ? "0 auto" : 0 }}>{subtitle}</motion.p>}
     </div>
   );
@@ -92,10 +92,12 @@ export default function Landing() {
   const [introPhase, setIntroPhase] = useState(0);
   const loaded = introPhase >= 1;
   const [openFaq, setOpenFaq] = useState(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(typeof window !== "undefined" && window.innerWidth < 768);
     const [navLogoPos, setNavLogoPos] = useState({ top: 11, left: 32 });
 
   useEffect(() => {
-    const calcPos = () => setNavLogoPos({ top: 11, left: Math.max(32, (window.innerWidth - 1300) / 2 + 32) });
+    const calcPos = () => { setNavLogoPos({ top: 11, left: Math.max(32, (window.innerWidth - 1300) / 2 + 32) }); setIsMobile(window.innerWidth < 768); };
     calcPos(); window.addEventListener("resize", calcPos);
     const t1 = setTimeout(() => setIntroPhase(1), 900);
     const t2 = setTimeout(() => setIntroPhase(2), 1900);
@@ -157,17 +159,44 @@ export default function Landing() {
             <div style={{ width: 34, height: 34, background: `linear-gradient(135deg, ${coral}, #e74d32)`, borderRadius: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center" }}><GraduationCap size={18} color="#fff" /></div>
             <span style={{ ...D, fontSize: "1.1rem", fontWeight: 700 }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.35)" }}>ai</span></span>
           </Link>
-          <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
-            <Link to="/subjects" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Subjects</Link>
-            <Link to="/blog" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Blog</Link>
-            <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Pricing</Link>
-            <Link to="/rate-my-ps" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Rate My PS</Link>
-            <Link to="/about" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Team</Link>
-            <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Log In</Link>
-            <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.3rem", borderRadius: "0.55rem", fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
-          </div>
+          {/* Desktop nav */}
+          {!isMobile && (
+            <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+              <Link to="/subjects" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Subjects</Link>
+              <Link to="/blog" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Blog</Link>
+              <Link to="/pricing" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Pricing</Link>
+              <Link to="/login" style={{ color: mutedText, textDecoration: "none", fontSize: "0.82rem", fontWeight: 500, padding: "0.5rem 0.15rem" }}>Log In</Link>
+              <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.3rem", borderRadius: "0.55rem", fontSize: "0.85rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
+            </div>
+          )}
+          {/* Mobile nav */}
+          {isMobile && (
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <Link to="/signup" style={{ background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.45rem 1rem", borderRadius: "0.55rem", fontSize: "0.78rem", fontWeight: 700, textDecoration: "none" }}>Get Started</Link>
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ background: "none", border: "none", cursor: "pointer", padding: "0.25rem", color: "#fff" }}>
+                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            </div>
+          )}
         </div>
       </motion.nav>
+
+      {/* Mobile dropdown menu */}
+      {isMobile && mobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          style={{ position: "fixed", top: 56, left: 0, right: 0, zIndex: 49, background: "rgba(19,19,22,0.95)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${border}`, padding: "1rem 2rem" }}
+        >
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <Link to="/subjects" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Subjects</Link>
+            <Link to="/blog" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Blog</Link>
+            <Link to="/pricing" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Pricing</Link>
+            <Link to="/login" onClick={() => setMobileMenuOpen(false)} style={{ color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: "0.95rem", fontWeight: 500, padding: "0.5rem 0" }}>Log In</Link>
+          </div>
+        </motion.div>
+      )}
 
       {/* ══ HERO with product visual ═══════════════════════════════════ */}
       <div ref={heroRef} style={{ position: "relative" }}>
@@ -216,9 +245,9 @@ export default function Landing() {
             {/* Glow behind screenshot */}
             <div style={{ position: "absolute", top: "20%", left: "50%", transform: "translateX(-50%)", width: "70%", height: "60%", background: `radial-gradient(ellipse, ${coral}15, transparent 70%)`, filter: "blur(40px)", pointerEvents: "none" }} />
 
-            <div style={{ position: "relative", width: "100%", maxWidth: 1200, perspective: "1400px", paddingBottom: "2.5rem" }}>
+            <div style={{ position: "relative", width: "100%", maxWidth: 1200, perspective: isMobile ? "none" : "1400px", paddingBottom: "2.5rem" }}>
               <motion.div
-                style={{ rotateX: heroImgRotate, transformOrigin: "bottom center", borderRadius: "0.9rem 0.9rem 0 0", boxShadow: `0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset` }}
+                style={{ rotateX: isMobile ? 0 : heroImgRotate, transformOrigin: "bottom center", borderRadius: "0.9rem 0.9rem 0 0", boxShadow: `0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04) inset` }}
               >
                 <div style={{ overflow: "hidden", borderRadius: "0.9rem 0.9rem 0 0" }}>
                   <video
@@ -249,7 +278,7 @@ export default function Landing() {
       <CircleReveal bgColor="#1a1a1f">
         <section style={{ padding: "7rem 2rem 8rem", maxWidth: 1200, margin: "0 auto" }}>
           <SectionReveal label="The problem" heading="The application process is broken." subtitle='Everyone tells you to "be yourself" and "show passion." Nobody shows you how.' />
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1.2rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(3, 1fr)", gap: "1.2rem" }}>
             {[
               { label: "The generic AI problem", text: "Copy-paste an AI-written PS and admissions tutors will spot it instantly. Same structure, same phrases, zero personality.", response: "We coach your thinking instead." },
               { label: "The cost barrier", text: "Private consultants charge £6,000 to £35,000. Tutors charge £50 to £100 an hour. Most families can't afford that.", response: "We start at £9.99/month." },
@@ -271,8 +300,8 @@ export default function Landing() {
       </CircleReveal>
 
       {/* ── Product: AI Coach (full-width screenshot left) ─────────── */}
-      <section style={{ padding: "8rem 2rem", maxWidth: 1300, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "8fr 4fr", gap: "3rem", alignItems: "center" }}>
+      <section style={{ padding: isMobile ? "3rem 1.2rem" : "8rem 2rem", maxWidth: 1300, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "8fr 4fr", gap: "3rem", alignItems: "center" }}>
           <ScaleImg src="/screenshots/chatbot.png" alt="AI coaching" />
           <div>
             <Reveal>
@@ -292,8 +321,8 @@ export default function Landing() {
 
 
       {/* ── Product: Rate My PS (different bg) ──────────────────── */}
-      <section style={{ padding: "6rem 0", background: "#18181d" }}>
-        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", display: "grid", gridTemplateColumns: "4fr 8fr", gap: "3rem", alignItems: "center" }}>
+      <section style={{ padding: isMobile ? "3rem 0" : "6rem 0", background: "#18181d" }}>
+        <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 2rem", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "4fr 8fr", gap: "3rem", alignItems: "center" }}>
           <div>
             <Reveal>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
@@ -311,8 +340,8 @@ export default function Landing() {
       </section>
 
             {/* ── Product: Draft Builder (full-width screenshot) ─────────── */}
-      <section style={{ padding: "8rem 2rem", maxWidth: 1300, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "8fr 4fr", gap: "3rem", alignItems: "center" }}>
+      <section style={{ padding: isMobile ? "3rem 1.2rem" : "8rem 2rem", maxWidth: 1300, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "8fr 4fr", gap: "3rem", alignItems: "center" }}>
           <ScaleImg src="/screenshots/draft-builder.png" alt="Draft Builder" />
           <div>
             <Reveal>
@@ -341,7 +370,7 @@ export default function Landing() {
       {/* ── Before / After ────────────────────────────────────────────── */}
       <section style={{ padding: "8rem 2rem", maxWidth: 900, margin: "0 auto" }}>
         <SectionReveal label="What coaching looks like" heading="Same student. Same experience." />
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1.2rem" }}>
           <Reveal><div style={{ padding: "2rem", borderRadius: "1rem", background: cardBg, border: "2px solid rgba(255,255,255,0.06)", position: "relative", height: "100%" }}>
             <span style={{ position: "absolute", top: -11, left: 18, background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.35)", fontSize: "0.68rem", fontWeight: 700, padding: "0.2rem 0.7rem", borderRadius: 100 }}>Before</span>
             <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.3)", lineHeight: 1.75, fontStyle: "italic", marginTop: "0.8rem" }}>"I have always been passionate about medicine since a young age. Seeing my grandmother suffer in hospital made me realise I wanted to help people and make a difference in the world."</p>
