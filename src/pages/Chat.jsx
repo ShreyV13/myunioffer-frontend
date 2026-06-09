@@ -20,7 +20,8 @@ import {
   AlertCircle,
   RefreshCw,
   Zap,
-  Star
+  Star,
+  ChevronDown
 } from 'lucide-react';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'https://uniprep-backend-dtlq.onrender.com';
@@ -67,6 +68,17 @@ export default function Chat() {
   const [error, setError] = useState(null);
   const [mode, setMode] = useState('ps');
   const draftBuilderShownRef = useRef(false);
+  const subjectChipLockedRef = useRef(false);
+  const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
+  const [subjectInput, setSubjectInput] = useState("");
+
+
+
+  function handleSubjectChipSelect(subject) {
+    setUserSubject(subject);
+    subjectChipLockedRef.current = true;
+    setShowSubjectDropdown(false);
+  }
   const [usage, setUsage] = useState({ used: 0, limit: 3 });
   const [showSidebar, setShowSidebar] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -88,7 +100,7 @@ export default function Chat() {
   // Read subject from URL param (from subject pages)
   useEffect(() => {
     const subjectParam = searchParams.get('subject');
-    if (subjectParam && !userSubject) {
+    if (subjectParam && !userSubject && !subjectChipLockedRef.current) {
       const formatted = subjectParam.charAt(0).toUpperCase() + subjectParam.slice(1);
       setUserSubject(formatted);
       if (currentUser) updateStudentProfile(currentUser.uid, { subject: formatted });
@@ -128,7 +140,7 @@ export default function Chat() {
 
   // Load userSubject from studentProfile when it changes
   useEffect(() => {
-    if (studentProfile?.subject) {
+    if (studentProfile?.subject && !userSubject && !subjectChipLockedRef.current) {
       setUserSubject(studentProfile.subject);
     }
   }, [studentProfile]);
@@ -307,6 +319,7 @@ export default function Chat() {
     if (!currentChatId) {
       const newChatId = 'chat_' + Date.now();
       draftBuilderShownRef.current = false;
+      subjectChipLockedRef.current = false;
       setCurrentChatId(newChatId);
       activeChatRef.current = newChatId;
       setChats(prev => [{
@@ -401,10 +414,10 @@ export default function Chat() {
                 detectedSubj = data.detected_subject;
                 smoothAgentRef.current = data.agent || '';
                 smoothSubjRef.current = data.detected_subject;
-                if ((detectedSubj || data.detected_category) && !userSubject) {
+                if ((detectedSubj || data.detected_category) && !subjectChipLockedRef.current) {
                   // Subject locking: only set subject if not already set
                   const subject = detectedSubj || data.detected_category;
-                  setUserSubject(subject);
+                  setUserSubject(subject); subjectChipLockedRef.current = true;
                   await updateStudentProfile(currentUser.uid, { subject });
                 }
               } else if (data.type === 'token') {
@@ -514,7 +527,7 @@ export default function Chat() {
           }
           
           await incrementMessageCount(currentUser.uid, mode);
-          if ((data.detected_subject || data.detected_category) && !userSubject) {
+          if ((data.detected_subject || data.detected_category) && !subjectChipLockedRef.current) {
             setUserSubject(data.detected_subject || data.detected_category);
             await updateStudentProfile(currentUser.uid, { subject: data.detected_subject || data.detected_category });
           }
@@ -707,7 +720,46 @@ export default function Chat() {
               </button>
             </div>
             <div className="flex p-0.5 rounded-lg bg-white/8">
-              <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'ps' ? {color: '#aaa'} : {}}>
+              {userSubject && (
+              <div style={{ position: "relative" }}>
+                <button
+                  onClick={() => setShowSubjectDropdown(!showSubjectDropdown)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: "0.35rem",
+                    background: "rgba(249,106,80,0.12)", border: "1px solid rgba(249,106,80,0.25)",
+                    borderRadius: "0.45rem", padding: "0.3rem 0.7rem",
+                    color: "#f96a50", fontSize: "0.75rem", fontWeight: 600,
+                    cursor: "pointer", whiteSpace: "nowrap"
+                  }}
+                >
+                  {userSubject}
+                  <ChevronDown size={12} />
+                </button>
+                {showSubjectDropdown && (
+                  <div style={{
+                    position: "absolute", top: "100%", left: 0, marginTop: "0.3rem",
+                    background: "#1e1e24", border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "0.5rem", padding: "0.4rem", zIndex: 100,
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.4)"
+                  }}>
+                    <input
+                      autoFocus
+                      type="text"
+                      value={subjectInput}
+                      onChange={e => setSubjectInput(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') handleSubjectChipSelect(subjectInput); }}
+                      placeholder="Type your subject..."
+                      style={{
+                        width: 170, padding: "0.4rem 0.6rem", borderRadius: "0.35rem",
+                        background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                        color: "#fff", fontSize: "0.78rem", outline: "none"
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+            <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'ps' ? {color: '#aaa'} : {}}>
                 <span className="hidden sm:inline">Personal Statement</span><span className="sm:hidden">PS</span>
               </button>
               <button onClick={() => setMode('interview')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'interview' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'interview' ? {color: '#aaa'} : {}}>
