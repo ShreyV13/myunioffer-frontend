@@ -454,11 +454,11 @@ export default function Landing() {
             <span style={{ ...D, fontSize: "0.95rem", fontWeight: 700, color: "#fff" }}>myuni<span style={{ color: coral }}>offer</span> <span style={{ color: "rgba(255,255,255,0.3)" }}>ai</span></span>
           </Link>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "1.5rem" }}>
-            {[{l:"Subjects",t:"/subjects"},{l:"Blog",t:"/blog"},{l:"Pricing",t:"/pricing"},{l:"Team",t:"/about"},{l:"Privacy",t:"/privacy"},{l:"Terms",t:"/terms"}].map((lk, i) => <Link key={i} to={lk.t} style={{ color: "rgba(255,255,255,0.22)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>{lk.l}</Link>)}
-            <a href="mailto:support@myunioffer.com" style={{ color: "rgba(255,255,255,0.22)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>Support</a>
+            {[{l:"Subjects",t:"/subjects"},{l:"Blog",t:"/blog"},{l:"Pricing",t:"/pricing"},{l:"Team",t:"/about"},{l:"Privacy",t:"/privacy"},{l:"Terms",t:"/terms"}].map((lk, i) => <Link key={i} to={lk.t} style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>{lk.l}</Link>)}
+            <a href="mailto:support@myunioffer.com" style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem", textDecoration: "none", fontWeight: 500 }}>Support</a>
           </div>
         </div>
-        <div style={{ maxWidth: 1200, margin: "1.5rem auto 0", textAlign: "center", fontSize: "0.72rem", color: "rgba(255,255,255,0.12)" }}>© 2026 myunioffer ai</div>
+        <div style={{ maxWidth: 1200, margin: "1.5rem auto 0", textAlign: "center", fontSize: "0.72rem", color: "rgba(255,255,255,0.35)" }}>© 2026 myunioffer ai</div>
       </footer>
     </div>
   );

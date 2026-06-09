@@ -74,8 +74,8 @@ export default function Chat() {
 
 
 
-  function handleSubjectChipSelect(subject) {
-    setUserSubject(subject);
+  function handleSubjectChipSelect(subj) {
+    if (subj.trim()) { setUserSubject(subj.trim()); if (currentUser) updateStudentProfile(currentUser.uid, { subject: subj.trim() }); }
     subjectChipLockedRef.current = true;
     setShowSubjectDropdown(false);
   }
@@ -417,7 +417,7 @@ export default function Chat() {
                 if ((detectedSubj || data.detected_category) && !subjectChipLockedRef.current) {
                   // Subject locking: only set subject if not already set
                   const subject = detectedSubj || data.detected_category;
-                  setUserSubject(subject); subjectChipLockedRef.current = true;
+                  if (subj.trim()) { setUserSubject(subj.trim()); if (currentUser) updateStudentProfile(currentUser.uid, { subject: subj.trim() }); } subjectChipLockedRef.current = true;
                   await updateStudentProfile(currentUser.uid, { subject });
                 }
               } else if (data.type === 'token') {

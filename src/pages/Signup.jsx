@@ -48,7 +48,7 @@ export default function Signup() {
         </Link>
 
         <div style={{ padding: "2.2rem", borderRadius: "1.1rem", background: "rgba(255,255,255,0.025)", border: `1px solid ${border}` }}>
-          <h1 style={{ ...D, fontSize: "1.5rem", fontWeight: 800, textAlign: "center", marginBottom: "0.3rem" }}>Create your account</h1>
+          <h1 style={{ ...D, fontSize: "1.5rem", fontWeight: 800, textAlign: "center", marginBottom: "0.3rem", color: "#fff" }}>Create your account</h1>
           <p style={{ color: "rgba(255,255,255,0.35)", textAlign: "center", fontSize: "0.85rem", marginBottom: "2rem" }}>Start your journey to your dream university</p>
 
           {error && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ display: "flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem", borderRadius: "0.6rem", background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.15)", color: "#f87171", fontSize: "0.82rem", marginBottom: "1.2rem" }}><AlertCircle size={16} />{error}</motion.div>}

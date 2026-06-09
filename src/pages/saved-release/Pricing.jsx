@@ -63,7 +63,7 @@ export default function Pricing() {
 
         {/* Value anchor */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} style={{ maxWidth: 600, margin: "0 auto 3rem", borderRadius: "1rem", border: `1px solid ${coral}20`, background: `${coral}06`, padding: "1.8rem", textAlign: "center" }}>
-          <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.82rem", marginBottom: "0.4rem" }}>A private admissions tutor costs</p>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.82rem", marginBottom: "0.4rem" }}>A private admissions tutor costs</p>
           <div style={{ ...D, fontSize: "2.8rem", fontWeight: 800, color: "rgba(255,255,255,0.12)", textDecoration: "line-through", marginBottom: "0.3rem" }}>£200+/month</div>
           <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.88rem" }}>myunioffer ai is <span style={{ color: coral, fontWeight: 700 }}>£9.99/month</span>. Less than £2.50 a week.</p>
         </motion.div>
@@ -77,17 +77,17 @@ export default function Pricing() {
               <MessageSquare size={20} color="rgba(255,255,255,0.4)" />
             </div>
             <h3 style={{ ...D, fontSize: "1.5rem", fontWeight: 800, marginBottom: "0.3rem" }}>Free</h3>
-            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.82rem", marginBottom: "1.2rem" }}>Try the coaching. See if it works.</p>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.82rem", marginBottom: "1.2rem" }}>Try the coaching. See if it works.</p>
             <div style={{ marginBottom: "1.5rem" }}>
               <span style={{ ...D, fontSize: "2.5rem", fontWeight: 800 }}>£0</span>
-              <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.82rem" }}> /forever</span>
+              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.82rem" }}> /forever</span>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.8rem" }}>
               {['PS + Interview coaching daily', 'Subject-specific AI', 'Rate My PS (score only)', 'Interview coaching'].map((f, j) => (
                 <div key={j} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.55)" }}><Check size={14} color="#22c55e" />{f}</div>
               ))}
               {['Full PS feedback', 'Draft Builder', 'Thinking mode', '1000+ resources'].map((f, j) => (
-                <div key={`n${j}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.2)" }}><X size={14} color="rgba(255,255,255,0.15)" />{f}</div>
+                <div key={`n${j}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: "rgba(255,255,255,0.4)" }}><X size={14} color="rgba(255,255,255,0.3)" />{f}</div>
               ))}
             </div>
             <Link to={currentUser ? "/chat" : "/signup"} style={{ display: "block", textAlign: "center", padding: "0.75rem", borderRadius: "0.65rem", background: "rgba(255,255,255,0.06)", color: "#fff", fontWeight: 700, fontSize: "0.88rem", textDecoration: "none", border: `1px solid ${border}` }}>
@@ -103,10 +103,10 @@ export default function Pricing() {
               <Crown size={20} color="#fff" />
             </div>
             <h3 style={{ ...D, fontSize: "1.5rem", fontWeight: 800, marginBottom: "0.3rem" }}>Premium</h3>
-            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.82rem", marginBottom: "1.2rem" }}>Everything you need. No limits on access.</p>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.82rem", marginBottom: "1.2rem" }}>Everything you need. No limits on access.</p>
             <div style={{ marginBottom: "0.3rem" }}>
               <span style={{ ...D, fontSize: "2.5rem", fontWeight: 800 }}>£9.99</span>
-              <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.82rem" }}> /mo</span>
+              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.82rem" }}> /mo</span>
             </div>
             <p style={{ color: coral, fontSize: "0.68rem", fontWeight: 600, marginBottom: "1.5rem" }}>Less than £2.50/week. Cancel anytime.</p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.8rem" }}>
@@ -131,12 +131,12 @@ export default function Pricing() {
             <CalendarCheck size={24} color="#fff" />
           </div>
           <div style={{ flex: 1, minWidth: 250 }}>
-            <h3 style={{ ...D, fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.4rem" }}>1-on-1 with a specialist</h3>
+            <h3 style={{ ...D, fontSize: "1.2rem", fontWeight: 800, marginBottom: "0.4rem" }}>1-on-1 with a student at a top university</h3>
             <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", lineHeight: 1.6 }}>Get matched with a real student from your degree area. 60-minute PS feedback or mock interview session.</p>
           </div>
           <div style={{ textAlign: "center", flexShrink: 0 }}>
             <div style={{ ...D, fontSize: "2rem", fontWeight: 800, color: coral }}>£29.99</div>
-            <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.75rem", marginBottom: "0.6rem" }}>per session</div>
+            <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.75rem" }}>per session</div><div style={{ color: "rgba(249,106,80,0.7)", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.6rem" }}>Launch pricing. Increasing to £34.99 soon.</div>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeuFh9xiG17oow0iPtCkNAf2w8mzRIp0XsZEqjot-GoOpGnFg/viewform" target="_blank" rel="noopener noreferrer"
               style={{ display: "inline-block", background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", padding: "0.5rem 1.2rem", borderRadius: "0.5rem", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" }}>Book a Session</a>
           </div>
@@ -146,10 +146,10 @@ export default function Pricing() {
         <div style={{ display: "flex", justifyContent: "center", gap: "2rem", flexWrap: "wrap", marginBottom: "2rem" }}>
           {[{ icon: Shield, text: "Cancel anytime" }, { icon: Shield, text: "Secure via Stripe" }, { icon: Clock, text: "Launch pricing" }].map((g, i) => {
             const Icon = g.icon;
-            return <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.3)" }}><Icon size={14} color="#22c55e" />{g.text}</span>;
+            return <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.78rem", color: "rgba(255,255,255,0.5)" }}><Icon size={14} color="#22c55e" />{g.text}</span>;
           })}
         </div>
-        <p style={{ textAlign: "center", fontSize: "0.75rem", color: "rgba(255,255,255,0.18)", marginBottom: "2rem" }}>
+        <p style={{ textAlign: "center", fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginBottom: "2rem" }}>
           Not ready? <Link to={currentUser ? "/chat" : "/signup"} style={{ color: coral, fontWeight: 600, textDecoration: "none" }}>Try it free</Link>. No credit card required.
         </p>
       </main>
