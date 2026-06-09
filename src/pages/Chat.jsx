@@ -249,10 +249,14 @@ export default function Chat() {
 
   const WRITING_TRIGGERS = [
     "help me start", "help me write", "can we write", "how do i begin",
-    "how do i start", "start writing", "begin writing", "write my",
-    "draft my", "structure my", "how should i structure", "what should i write",
-    "where do i start writing", "ready to write", "start my statement",
-    "help me with my statement", "put it together", "how do i put this together"
+    "how do i start", "how should i start", "start writing", "begin writing",
+    "write my", "draft my", "structure my", "how should i structure",
+    "what should i write", "where do i start writing", "ready to write",
+    "start my statement", "start on my ps", "start my ps", "begin my ps",
+    "help me with my statement", "put it together", "how do i put this together",
+    "how should i open", "how do i open", "help me begin", "just start",
+    "can we start", "let's start writing", "lets start writing",
+    "how's the best way", "best way to start", "what's the best way"
   ];
 
   function shouldShowDraftBuilder(userMsg, msgCount) {
@@ -437,7 +441,7 @@ export default function Chat() {
                   await new Promise(r => setTimeout(r, 50));
                 }
                 // Inject Draft Builder recommendation if appropriate
-                const userMsgCount = messages.filter(m => m.role === 'user').length;
+                const userMsgCount = messages.filter(m => m.role === 'user').length + 1; // +1 for current message not yet in state
                 if (shouldShowDraftBuilder(userMessage, userMsgCount)) {
                   const dbSentence = getDraftBuilderSentence();
                   streamedText += dbSentence;
