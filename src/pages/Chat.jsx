@@ -66,6 +66,7 @@ export default function Chat() {
   const [serverWaking, setServerWaking] = useState(false);
   const [error, setError] = useState(null);
   const [mode, setMode] = useState('ps');
+  const draftBuilderShownRef = useRef(false);
   const [usage, setUsage] = useState({ used: 0, limit: 3 });
   const [showSidebar, setShowSidebar] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -236,7 +237,37 @@ export default function Chat() {
     sendMessage(input.trim());
   }
 
-  async function sendMessage(text) {
+  // Draft Builder recommendation sentences (rotated randomly)
+  const DRAFT_BUILDER_SENTENCES = [
+    "\n\nIf you want to turn everything we've discussed into a structured first draft across the three UCAS sections, [try the Draft Builder](/draft-builder).",
+    "\n\nWhen you're ready to put this all together, the [Draft Builder](/draft-builder) can lay out your material across the three UCAS sections for you.",
+    "\n\nI'm an advisory coach, so I can't write it for you, but the [Draft Builder](/draft-builder) can take what we've discussed and structure it across your three sections.",
+    "\n\nOnce you've got your opening sentences down, the [Draft Builder](/draft-builder) can help you organise everything else into the three UCAS sections.",
+    "\n\nIf you want a structured scaffold to work from, the [Draft Builder](/draft-builder) takes your material and lays it out across all three UCAS sections.",
+    "\n\nReady to start putting it all together? The [Draft Builder](/draft-builder) can structure everything we've covered into the three UCAS sections for you."
+  ];
+
+  const WRITING_TRIGGERS = [
+    "help me start", "help me write", "can we write", "how do i begin",
+    "how do i start", "start writing", "begin writing", "write my",
+    "draft my", "structure my", "how should i structure", "what should i write",
+    "where do i start writing", "ready to write", "start my statement",
+    "help me with my statement", "put it together", "how do i put this together"
+  ];
+
+  function shouldShowDraftBuilder(userMsg, msgCount) {
+    if (draftBuilderShownRef.current) return false;
+    if (msgCount < 5) return false;
+    const lower = userMsg.toLowerCase();
+    return WRITING_TRIGGERS.some(trigger => lower.includes(trigger));
+  }
+
+  function getDraftBuilderSentence() {
+    draftBuilderShownRef.current = true;
+    return DRAFT_BUILDER_SENTENCES[Math.floor(Math.random() * DRAFT_BUILDER_SENTENCES.length)];
+  }
+
+    async function sendMessage(text) {
     if (!text || loading) return;
 
     setError(null);
@@ -271,6 +302,7 @@ export default function Chat() {
     const chatTitle = userMessage.slice(0, 40) + (userMessage.length > 40 ? '...' : '');
     if (!currentChatId) {
       const newChatId = 'chat_' + Date.now();
+      draftBuilderShownRef.current = false;
       setCurrentChatId(newChatId);
       activeChatRef.current = newChatId;
       setChats(prev => [{
@@ -403,6 +435,20 @@ export default function Chat() {
                 // Wait for word queue to drain smoothly instead of flushing
                 while (wordQueueRef.current.length > 0) {
                   await new Promise(r => setTimeout(r, 50));
+                }
+                // Inject Draft Builder recommendation if appropriate
+                const userMsgCount = messages.filter(m => m.role === 'user').length;
+                if (shouldShowDraftBuilder(userMessage, userMsgCount)) {
+                  const dbSentence = getDraftBuilderSentence();
+                  streamedText += dbSentence;
+                  smoothTextRef.current += dbSentence;
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    if (updated.length > 0 && updated[updated.length - 1].role === 'assistant') {
+                      updated[updated.length - 1] = { ...updated[updated.length - 1], content: smoothTextRef.current };
+                    }
+                    return updated;
+                  });
                 }
                 if (data.usage) {
                   setUsage({ used: data.usage.used || 0, limit: data.usage.limit || 3 });
