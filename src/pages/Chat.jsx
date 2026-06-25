@@ -735,7 +735,8 @@ export default function Chat() {
                   {userSubject}
                   <ChevronDown size={12} />
                 </button>
-                {showSubjectDropdown && (
+                {showSubjectDropdown && (<>
+                  <div className="fixed inset-0 z-10" onClick={() => setShowSubjectDropdown(false)} />
                   <div style={{
                     position: "absolute", top: "100%", left: 0, marginTop: "0.3rem",
                     background: "#1e1e24", border: "1px solid rgba(255,255,255,0.1)",
@@ -756,7 +757,7 @@ export default function Chat() {
                       }}
                     />
                   </div>
-                )}
+                </>)}
               </div>
             )}
             <button onClick={() => setMode('ps')} className={`px-3.5 py-1.5 rounded-md text-[13px] font-medium transition-all ${mode === 'ps' ? 'bg-white/12 text-white' : 'hover:bg-white/6'}`} style={mode !== 'ps' ? {color: '#aaa'} : {}}>
@@ -941,8 +942,9 @@ export default function Chat() {
                   <button type="button" onClick={() => setShowInputMenu(!showInputMenu)} className="p-1.5 text-white/40 hover:text-white/70 hover:bg-white/8 rounded-md transition-colors" title="Options">
                     {thinking && !showInputMenu ? <Zap className="w-3.5 h-3.5" style={{color: '#f96a50'}} /> : <Plus className={`w-4 h-4 transition-transform duration-200 ${showInputMenu ? 'rotate-45' : ''}`} />}
                   </button>
-                  {showInputMenu && (
-                    <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl py-2 shadow-xl" style={{background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.1)'}}>
+                  {showInputMenu && (<>
+                    <div className="fixed inset-0 z-10" onClick={() => setShowInputMenu(false)} />
+                    <div className="absolute bottom-full left-0 mb-2 w-56 rounded-xl py-2 shadow-xl z-20" style={{background: '#2a2a2a', border: '1px solid rgba(255,255,255,0.1)'}}>
                       <button onClick={() => { handleNewChat(); setShowInputMenu(false); }} className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors">
                         <Plus className="w-4 h-4" /> New chat
                       </button>
@@ -979,7 +981,7 @@ export default function Chat() {
                         </p>
                       </div>
                     </div>
-                  )}
+                  </>)}
                 </div>
                 <div className="flex items-center gap-3">
                   {input.length > ((userProfile?.plan === 'free' || !userProfile?.plan) ? 1500 : 4000) && <span className="text-[12px]" style={{color: input.length >= ((userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500) ? '#f96a50' : '#999'}}>{input.length}/{(userProfile?.plan === 'free' || !userProfile?.plan) ? 2000 : 4500}</span>}

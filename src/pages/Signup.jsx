@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 import { GraduationCap, Mail, Lock, User, ArrowRight, AlertCircle, Check } from 'lucide-react';
 
 const coral = "#f96a50";
@@ -15,6 +17,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [hearAboutUs, setHearAboutUs] = useState('');
   const [searchParams] = useSearchParams();
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -27,6 +30,17 @@ export default function Signup() {
     try {
       fetch(import.meta.env.VITE_API_URL + '/health').catch(() => {});
       await signup(email, password, name);
+      // Save acquisition data
+      const user = (await import('firebase/auth')).getAuth().currentUser;
+      if (user) {
+        const updates = {};
+        if (hearAboutUs) updates.hearAboutUs = hearAboutUs;
+        const utmSource = searchParams.get('utm_source');
+        if (utmSource) updates.acquisitionSource = utmSource;
+        if (Object.keys(updates).length > 0) {
+          await updateDoc(doc(db, 'users', user.uid), updates);
+        }
+      }
       const sub = searchParams.get('subject');
       navigate(redirect === 'pricing' ? '/pricing' : sub ? '/chat?subject=' + encodeURIComponent(sub) : '/chat');
     } catch (err) {
@@ -74,6 +88,20 @@ export default function Signup() {
                 <Lock size={16} style={{ position: "absolute", left: "0.85rem", top: "50%", transform: "translateY(-50%)", color: "rgba(255,255,255,0.2)" }} />
                 <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} placeholder="At least 6 characters" required minLength={6} />
               </div>
+            </div>
+            <div style={{ marginBottom: "1rem" }}>
+              <label style={{ display: "block", fontSize: "0.8rem", fontWeight: 600, color: "rgba(255,255,255,0.5)", marginBottom: "0.4rem" }}>How did you hear about us? <span style={{ fontWeight: 400 }}>(optional)</span></label>
+              <select value={hearAboutUs} onChange={e => setHearAboutUs(e.target.value)} style={{ width: "100%", padding: "0.75rem", borderRadius: "0.6rem", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: hearAboutUs ? "#fff" : "rgba(255,255,255,0.3)", fontSize: "0.88rem", outline: "none", appearance: "none", cursor: "pointer" }}>
+                <option value="" style={{ background: "#1a1a1a" }}>Select...</option>
+                <option value="tiktok" style={{ background: "#1a1a1a" }}>TikTok</option>
+                <option value="instagram" style={{ background: "#1a1a1a" }}>Instagram</option>
+                <option value="linkedin" style={{ background: "#1a1a1a" }}>LinkedIn</option>
+                <option value="friend" style={{ background: "#1a1a1a" }}>A friend</option>
+                <option value="google" style={{ background: "#1a1a1a" }}>Google</option>
+                <option value="reddit" style={{ background: "#1a1a1a" }}>Reddit</option>
+                <option value="school" style={{ background: "#1a1a1a" }}>School / teacher</option>
+                <option value="other" style={{ background: "#1a1a1a" }}>Other</option>
+              </select>
             </div>
             <button type="submit" disabled={loading} style={{ width: "100%", padding: "0.8rem", borderRadius: "0.65rem", background: `linear-gradient(135deg, ${coral}, #e74d32)`, color: "#fff", fontWeight: 700, fontSize: "0.9rem", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", marginTop: "0.5rem" }}>
               {loading ? 'Creating account...' : 'Create Account'}{!loading && <ArrowRight size={15} />}
