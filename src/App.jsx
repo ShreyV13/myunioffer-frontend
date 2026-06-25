@@ -23,6 +23,7 @@ import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import Subjects from './pages/Subjects';
 import SubjectPage from './pages/SubjectPage';
+import Admin from './pages/Admin';
 
 // SAVED FOR RELEASE: Landing, Pricing, About are in src/pages/saved-release/
 // When ready to launch, swap WaitlistLanding back to Landing and restore all routes
@@ -146,6 +147,7 @@ function AppRoutes() {
       <Route path="/subjects/:slug" element={<SubjectPage />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/blog/:slug" element={<BlogArticle />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
     </>
