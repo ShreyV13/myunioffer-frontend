@@ -69,7 +69,7 @@ export default function Pricing() {
         </motion.div>
 
         {/* Two plans */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem", maxWidth: 900, margin: "0 auto 5rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.2rem", maxWidth: 900, margin: "0 auto 5rem" }}>
           {/* Free */}
           <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
             style={{ padding: "2.2rem", borderRadius: "1.1rem", background: cardBg, border: `1px solid ${border}` }}>
